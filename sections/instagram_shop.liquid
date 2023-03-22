@@ -1,0 +1,121 @@
+{%- include 'style_mp_section' -%}
+<div class="jas_custom_{{section.id}} {%- if section.settings.use_container %} jas-container{%- else %} jas-full{%- endif -%}">
+  {%- assign sett_title = section.settings.title -%}
+  {%- assign sett_sub_title = section.settings.sub_title -%}
+  {%- assign style_title = section.settings.style_title -%}
+  {%- include 'jas_section_title' -%}
+  {%- assign content_page = section.settings.content_page -%}
+  <div class="jas-row">
+     <div class="jas-col-md-12 jas-col-sm-12 jas-col-xs-12">
+      {%- if content_page != blank -%}
+      {{ pages[content_page].content | html }}
+     {%- else -%}
+          {%- include 'no-blocks' -%}
+     {%- endif -%}
+     </div>
+   </div>
+</div>
+{%- schema -%}
+  {
+    "name": "Instagram Shop",
+    "class": "jas-section type_jas_instagram_shop",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Instagram Shop"
+      },
+      {
+        "type": "textarea",
+        "id": "sub_title",
+        "label": "Sub Text",
+        "default": "Sub Text"
+      },
+      {
+        "type": "select",
+        "id": "style_title",
+        "options": [
+         {
+            "value": "1",
+            "label": "Style 1"
+         },
+         {
+            "value": "2",
+            "label": "Style 2"
+          }
+        ],
+        "label": "Style title"
+      },
+      {
+        "id": "content_page",
+        "type": "page",
+        "label": "Page"
+      },
+      {
+        "type": "header",
+        "content": "== Design Options"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_container",
+        "label": "Use container?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_left",
+        "label": "Margin left",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_right",
+        "label": "Margin right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_top",
+        "label": "Padding top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_right",
+        "label": "Padding right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_bottom",
+        "label": "Padding bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_left",
+        "label": "Padding left",
+        "info": "60px"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Instagram Shop",
+         "category": "== Instagram"
+      }
+    ]
+  }
+{% endschema %}

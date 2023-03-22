@@ -1,0 +1,100 @@
+{%- include 'current_variant' -%}
+{%- include 'jas_check_label' -%}
+{%- include 'jas_check_color' -%}
+{%- unless collection -%}
+{%- assign collection = product.collections.last -%}
+{%- endunless -%}
+{%- unless show_vendor -%}
+{%- assign show_vendor = false -%}
+{%- endunless -%}
+{%- unless class_sm -%}
+{%- assign class_sm = '4' -%}
+{%- endunless -%}
+{%- unless settings_pr_img_size -%}
+{%- assign settings_pr_img_size = false -%}
+{%- endunless -%}
+{%- assign user_countdown = '' -%}
+{%- if template contains 'collection' and current_tags.size > 0 and product.has_only_default_variant == false -%}
+   {%- assign url_nt = current_variant.url -%}
+{%- assign url_nt_bl = true -%}
+{%- else -%}
+{%- assign url_nt_bl = false -%}
+   {%- assign url_nt = product.url -%}
+{%- endif -%}
+
+{%- if product.metafields.external -%}
+  {%- assign check = product.metafields.external | first | last -%}
+  {%- if check contains 'https:' or check  contains 'http:' -%}{%- assign check_external = true -%}{%-else-%}{%- assign check_external = false -%}{%-endif-%}
+{%-endif-%}
+
+<div class="jas-grid-item jas-col-md-{{grid_columns}} jas-col-sm-{{class_sm}} jas-col-xs-{{grid_columns_mb}} mt__30 product has-post-thumbnail{%- if settings_pr_img_size %} user_custom{%- endif %}{%- if product.variants.size > 1 %} has_variant{%- endif -%}">
+   <div class="jas-product-image jas-product-image-equal pr oh">
+      {%- include 'product_labels' -%}
+      {%- include 'product_img' -%} 
+      {%- if section_settings_countdown and product.metafields.meta.countdown != blank -%}
+         {%- assign user_countdown = product.metafields.meta.countdown -%}
+         {%- include 'gecko_count_down' -%}
+      {%- endif -%}  
+      <div class="jas-product-button pa flex">
+         {%- if settings.use_wishlist and pages['wishlist'].empty? != true -%}{%- include 'jas-wishlist-product' -%}{%- endif -%}
+         {%- if settings.use_quickview -%}
+         <div class="quick-view">
+            <a href="javascript void(0);" data-ajax="{{ url_nt }}{%- if url_nt_bl -%}&{%- else %}/?{%- endif -%}view=quick_view" class="open-quick-view gecko-tooltip"><span class="gecko-tooltip-label">{{ 'products.grid_items.quick_view' | t }}</span>{{ 'products.grid_items.quick_view' | t }}</a>
+         </div>
+         {%- endif -%}
+      </div>
+      {%- if linklists[product.handle].links.size == 0 -%}
+         {%- if product.variants.size > 1 -%}
+         <div class="jas-add-btn pa btn-jas-3d">
+            {%- if sold_out -%}
+                <a href="{{ url_nt | within: collection }}" class="button read-more">{{ 'products.product.read_more' | t }}</a>
+            {%- elsif check_external -%}
+                <a href="{{ check }}" class="button external">{{ product.metafields.external | first | first }}</a>
+            {%- elsif settings.use_quickshop -%}
+              <a rel="nofollow" href="javascript void(0);" data-ajax="{{ url_nt }}{%- if url_nt_bl -%}&{%- else %}/?{%- endif -%}view=json" class="button btn-quick-shop"><span>{{ 'products.grid_items.quick_shop' | t }}</span></a>
+            {%- else -%}
+              <a rel="nofollow" href="{{ url_nt | within: collection }}" class="button"><span>{{ 'products.product.select_option' | t }}</span></a>
+            {%- endif -%}
+         </div>
+         {%- else -%}
+            <div class="jas-add-btn pa btn-jas-3d">
+               {%- if sold_out -%}
+                <a href="{{ url_nt | within: collection }}" class="button read-more">{{ 'products.product.read_more' | t }}</a>
+                {%- elsif check_external -%}
+                <a href="{{ check }}" class="button external">{{ product.metafields.external | first | first }}</a>
+                {%- else -%}
+                <a href="{{ url_nt | within: collection }}" class="button ajax_add_to_cart" data-pid="{{ product.variants.first.id }}">{{ 'products.product.add_to_cart' | t }}</a>
+                {%- endif -%} 
+            </div>
+         {%- endif -%}
+      {%- else -%}
+         <div class="jas-add-btn pa btn-jas-3d"><a rel="nofollow" href="{{ url_nt | within: collection }}" class="button"><span>{{'products.product.view'|t}}</span></a></div>
+      {%- endif -%}
+      {%- if product.has_only_default_variant == false -%}
+         <div class="jas-qs-wrapper pa"><div class="jas-qs-close pa"></div><div class="jas-qs-form flex" id="product-{{product.id}}"></div></div>
+      {%- endif -%}
+   </div>
+   <!-- .product-image -->
+   <div class="product-info mt__15">
+      <h3 class="product-title pr fs__14 mg__0 fwm"><a class="cd chp" style="color: {{ block.settings.color_title_product }}" href="{{ url_nt | within: collection }}">{{ product.title }}</a></h3>
+      {%- if product.vendor.size > 0 -%}{%- if show_vendor or show_vendor == 'true' -%}<div class="product-brand"><a style="color: {{ block.settings.color_vendor }}" href="{{ product.vendor | url_for_vendor }}">{{ product.vendor }}</a></div>{%- endif -%}{%- endif -%}
+      {%- if settings.show_product_rating -%}<div class="shopify-product-reviews-badge" data-id="{{ product.id }}"></div>{%- endif -%}
+      <span class="price" style="color: {{ block.settings.color_price }}">
+         {%- if linklists[product.handle].links.size > 0 -%}
+          {{ product.price | money }}{%- if product.compare_at_price != blank -%}–{{ product.compare_at_price | money }}{%- endif -%}
+         {%- else -%}
+           {%- if product.price_varies -%}
+           {{ product.price_min | money }}–{{ product.price_max | money }}
+           {%- elsif on_sale -%}<ins style="color: {{ block.settings.sale_color_price }}">{{ current_variant.price | money }}</ins> <del>{{ current_variant.compare_at_price  | money }}</del>
+           {%- else -%}
+           {{ current_variant.price | money }}
+           {%- endif -%}
+          {%- endif -%}
+      </span> 
+      {%- if settings.show_product_color and colour_count > 1 -%}{%- include 'swatches_on_grid' -%}{%- endif -%}
+      {%- if section_settings_countdown and product.metafields.meta.countdown != blank -%}
+         {%- assign user_countdown = product.metafields.meta.countdown -%}
+         {%- include 'gecko_count_down' -%}
+      {%- endif -%} 
+   </div>
+</div>

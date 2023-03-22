@@ -1,0 +1,4 @@
+<div class="instagram product-extra mt__60">
+  <h3 class="jas_title divider pr "> {%- if product.metafields.meta.hashtag -%}{{ 'products.product.instagram_intro_html' | t: has_tag: product.metafields.meta.hashtag }}{%-else-%}{{ 'products.product.instagram_intro_html' | t: has_tag: product.metafields.meta.username }}{%-endif-%}</h3>
+  <div class="ins-jas-carousel jas-sc-instagram instagram-pics columns-6 clearfix mt__30"></div>
+</div>

@@ -1,0 +1,177 @@
+<div class="third-module-section" style="background-color : {{section.settings.background_color}} !important; ">
+<div class="container">
+<div class="home-imagebox-main" {% if section.settings.text_alighment != blank %} {{section.settings.text_alighment}} {% endif %}>
+<div id="home-imagebox" class="index-section home-section">
+  <div class="one-half one-half-column-left">
+  
+    
+    <h2 class="h2_sub" style="color: {{section.settings.heading_color}} !important;">
+      {% if section.settings.Heading != blank %}
+      {{section.settings.Heading}}
+      {% endif %}
+    </h2>
+    
+    <h2 class="h2_title" style="color: {{section.settings.title_color}} !important;">
+      {% if section.settings.title != blank %}
+      {{section.settings.title}}
+      {% endif %}
+    </h2>
+    
+    <h4 style="color: {{section.settings.content_color}} !important;">
+      {% if section.settings.content_one != blank %}
+      {{section.settings.content_one}}
+      {% endif %}
+    </h4>
+    
+  
+  </div>
+  
+  <div class="one-half one-half-column-right">
+  {% for block in section.blocks %}
+    
+    <div class="logo-heading">
+    {% if block.settings.image %}
+    <div class="logo"><img src="{{ block.settings.image | img_url: '1024x1024' }}"></div>
+    {% endif %}
+      
+        <div class="right-logo-content">
+    {% unless block.settings.home-featured-title == blank %}
+							<h3 class="main-heading" style="color : {{block.settings.home-featured-title-color}};">{{ block.settings.home-featured-title  }}</h3>
+						  {% endunless %}
+						  {% unless block.settings.home-featured-content == blank %}
+      <p>	{{ block.settings.home-featured-content }} </p>
+						  {% endunless %}
+						  {% unless block.settings.home-featured-btn-label == blank %}
+							<a class="btn btn--regular btn--outline btn--light" href="{{ block.settings.home-featured-btn-url }}">{{ block.settings.home-featured-btn-label | escape }}</a>
+						  {% endunless %}
+    
+      </div>
+    </div>
+    
+    {% endfor %}
+    
+</div>
+</div>
+</div>
+</div>
+</div>
+{% schema %}
+	{
+		"name": "Industry Third Section",
+        "settings": [
+                {
+				"type": "color",
+                    "id": "background_color",
+                    "label": "Background Color",
+                     "default": "#fff"
+               }, 
+             
+          		{
+                  "type": "text",
+                  "id": "Heading",
+                  "label": "Heading"
+                  
+            	},
+                {
+                    "type": "color",
+                    "id": "heading_color",
+                    "label": "Heading Color",
+                    "default": "#000"
+                 },
+            	{
+                  "type": "text",
+                  "id": "title",
+                  "label": "Title"
+                 
+            	},
+                {
+                    "type": "color",
+                    "id": "title_color",
+                    "label": "title Color",
+                     "default": "#000"
+                 },
+                {
+                  "type": "html",
+                   "id": "content_one",
+                   "label": "content"
+                },
+ {
+                    "type": "color",
+                    "id": "content_color",
+                    "label": "content Color",
+                    "default": "#000"
+                 },
+                  {
+            "type": "select",
+            "id": "text_alighment",
+            "label": "Text alignment",
+            "default": "class-left-right",
+            "options": [
+              {
+                "value": "class-left-right",
+                "label": "Text to Right"
+              },
+              {
+                "value": "class-right-left",
+                "label": "Text to Left"
+              }
+             
+            ]
+          }
+        ],
+
+		"blocks": [
+			{
+				"type": "text",
+				"name": "Image with text",
+				"settings": [
+					
+					{
+						"type": "image_picker",
+						"id": "image",
+						"label": "Image"
+					},
+					{
+						"type": "html",
+						"id": "home-featured-title",
+						"label": "Heading",
+						"default": "Talk about your brand"
+					},
+                    {
+						"type": "color",
+						"id": "home-featured-title-color",
+						"label": "Heading Color",
+						"default": "#fff"
+					},
+					{
+						"type": "html",
+						"id": "home-featured-content",
+						"label": "Text",
+						"default": "<p>Use this text to share information about your brand with your customers. <b>Describe a product, share announcements, or welcome customers to your store.</b></p>"
+					},
+					{
+						"type": "text",
+						"id": "home-featured-btn-label",
+						"label": "Button label"
+					},
+					{
+						"type": "url",
+						"id": "home-featured-btn-url",
+						"label": "Button link"
+					}
+				]
+			}
+		],
+		"presets": [
+			{
+				"name": "Home Module Three",
+				"category": "Image",
+				"blocks": [
+					{
+						"type": "text"
+					}
+				]
+			}
+		]
+	}
+{% endschema %}

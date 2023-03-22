@@ -1,0 +1,530 @@
+{%- include 'style_mp_section' -%}
+{%- if section.settings.section_bg_color != blank -%}
+<style type="text/css">.jas_custom_{{section.id}} {background-color: {{section.settings.section_bg_color}}}</style>
+{%- endif -%}
+{%- assign blog = blogs[section.settings.blog] -%}
+{%- assign settings_pr_img_size = section.settings.use_eq_height -%}
+{%- assign jas_blog_comment = false -%}
+{%- case section.settings.post_per_row -%}
+   {%- when 1 -%}
+     {%- assign class_colum = '12' -%}
+   {%- when 2 -%}
+     {%- assign class_colum = '6' -%}
+  {%- when 3 -%}
+    {%- assign class_colum = '4' -%}
+  {%- when 4 -%}
+    {%- assign class_colum = '3' -%}
+{%- endcase -%}
+<div class="custom_common_blg col-sm-12 jas_custom_{{section.id}} {{section.settings.image_size}} {{section.settings.image_ratio}} position_{{section.settings.image_position}}{%- if settings_pr_img_size %} equal-nt{%- endif -%}">
+   <div class="jas-container clearfix">
+         {%- assign sett_title = section.settings.title -%}
+         {%- assign sett_sub_title = section.settings.sub_title -%}
+         {%- assign style_title = section.settings.style_title -%}
+        {%- assign sett_btn = section.settings.sett_btn -%}
+        {%- assign sett_url = section.settings.sett_url | default:collection.url -%}
+        {%- assign sett_cl = section.settings.sett_cl -%}
+            {%- include 'jas_section_title',mg_class:"mb__40" -%}
+      <div class="jas-sc-blog jas-parent-equal clearfix">
+         <div class="jas-row{%- if section.settings.post_design == 'slider' %} jas-carousel{%- endif -%}"{%- if section.settings.post_design == 'slider' %} data-slick='{"slidesToShow": {{ section.settings.sidetoshow }},"slidesToScroll": 1, "autoplay": {{ section.settings.use_autoplay }}, "autoplaySpeed": {{ section.settings.slider_speed }}000,"rtl": {{ settings.use_rtl }}, "infinite": {{section.settings.use_loop}}, "arrows": {{section.settings.use_arrows}},"dots": {{section.settings.use_dots}}, "responsive":[{"breakpoint": 1024,"settings":{"slidesToShow": {{ section.settings.sidetoshow_first}} }},{"breakpoint": 600,"settings":{"slidesToShow": {{ section.settings.sidetoshow_center}} }},{"breakpoint": 480,"settings":{"slidesToShow": {{ section.settings.sidetoshow_last}} }}]}'{%- endif -%}>
+            {%- if blog != blank and blog.articles_count > 0 -%}
+               {% for article in blog.articles limit: section.settings.post_limit %}
+                 <div class="jas-post-slide jas-col-md-{{class_colum}} jas-col-sm-6 jas-col-xs-12 mb__40">
+                    <article class="post-{{ article.id }}{%- if article.image %} has-post-thumbnail{%- endif -%}">
+                        {%- if settings_pr_img_size and article.image -%}
+                           <div class="article__grid-image-wrapper jas-product-image-equal pr mb__15 user_custom">
+                              <a class="db pr lazyload jas-pr-image-link nt_bg_lz" href="{{ article.url }}" data-bgset="{%- include 'bgset', image: article.image -%}" data-sizes="auto" data-parent-fit="cover"></a>
+                           </div>
+                        {%- elsif article.image -%}
+                           {%- assign img_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                           <div class="article__grid-image-wrapper mb__15">
+                              <a class="db pr" href="{{ article.url }}">
+                                <img class="article__grid-image w__100 lazyload" src="{{ article.image | img_url: 'master' }}" data-src="{{ article.image | img_url: 'master' }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"  data-sizes="auto" alt="{{ article.image.alt | escape }}">
+                                <div class="jas-wrap-lazy"></div>
+                              </a>
+                           </div>
+                        {%- endif -%}
+                        <div class="post-info mb__10">
+                           <h4 class="mg__0 fs__16 mb__5 ls__0"><a class="cd chp" href="{{ article.url }}">{{ article.title }}</a></h4>
+                           {%- if section.settings.blog_show_author -%}<span class="post-author mr__5">{{ 'blogs.article.by' | t }}{%- if article.user.image and section.settings.blog_show_author_img %} <img class="avatar" src="{{ article.user.image | img_url: '32x32' }}" height="32" width="32">{%- endif %} <span class="cd">{{ article.author }}</span></span>{%- endif -%}{%- if section.settings.blog_show_date -%}<span class="post-time"><span class="cd">{{ article.published_at | time_tag: format: 'month_day_year' }}</span></span>{%- endif -%}
+                        </div>
+                        <div class="post-content" style="display:none;">
+                           {%- if article.excerpt.size > 0 -%}
+                              {{ article.excerpt | strip_html }}
+                           {%- else -%}
+                              {{ article.content | strip_html | truncatewords: 15 }}
+                           {%- endif -%}
+                        </div>
+                        {%- if blog.comments_enabled? and section.settings.blog_show_comments -%}
+                           {%- assign jas_blog_comment = true -%}
+                        {%- endif -%}
+                        {%- if section.settings.blog_show_read_more or jas_blog_comment -%}
+                        <div class="post-action flex between-xs middle-xs mt__10">
+                           {%- if jas_blog_comment -%}<div class="comments-link"><i class="pe-7s-comment dib pr mr__5"></i><a href="{{ article.url }}#comments">{{ 'blogs.comments.with_count' | t: count: article.comments_count }}</a></div>{%- endif -%}
+                           {%- if section.settings.blog_show_read_more -%}<a class="read-more pr" href="{{ article.url }}">{{ 'blogs.article.read_more' | t }}<span> →</span></a>{%- endif -%}
+                        </div>
+                        {%- endif -%}
+                     </article>
+                 </div>
+               {%- endfor -%}
+            {%- else -%}
+               {%- for i in (1..section.settings.post_limit) -%}
+                  <div class="jas-post-slide jas-col-md-{{class_colum}} jas-col-sm-{{class_colum}} jas-col-xs-12 mb__40">
+                    <article class="post-{{ i }}">
+                        <div class="post-info mb__10">
+                           <h4 class="mg__0 fs__16 mb__5 ls__0"><a class="cd chp" href="/admin/blogs">{{ 'homepage.onboarding.blog_title' | t }}</a></h4>
+                           {%- if section.settings.blog_show_author -%}<span class="post-author mr__5">{{ 'blogs.article.by' | t }} <span class="cd">{{ 'homepage.onboarding.blog_author' | t }}</span></span>{%- endif -%}{%- if section.settings.blog_show_date -%}<span class="post-time"><span class="cd">{{ 'now' | date: "%B" }} {{ 'now' | date: "%d" }}, {{ 'now' | date: "%Y" }}</span></span>{%- endif -%}
+                        </div>
+                        <div class="post-content" style="display:none;">{{ 'homepage.onboarding.blog_excerpt' | t }}</div>
+                     </article>
+                 </div>
+               {%- endfor -%}
+            {%- endif -%}
+         </div>
+      </div>
+      {%- if blog != blank and blog.articles_count > section.settings.post_limit and section.settings.show_view_all -%}
+      <div class="tc mt__15 clearfix">
+         <a href="{{ blog.url }}" class="button-o">{{ 'blogs.article.view_all' | t }}</a>
+       </div>
+      {%- endif -%}
+   </div>
+</div>
+
+{%- schema -%}
+  {
+    "name": "Custom Blog posts",
+    "class": "jas-section type_jas_featured-blog clearfix row",
+    "settings": [
+      {
+        "type": "header",
+        "content": "== General Settings"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Blog posts"
+      },
+      {
+        "type": "text",
+        "id": "sub_title",
+        "label": "Sub Title",
+        "default": "Sub Blog posts"
+      },
+      {
+        "type": "text",
+        "id": "sett_btn",
+        "label": "Link title",
+        "info": "only active with style title 3",
+        "default": "view all product"
+      },
+      {
+        "type": "color",
+        "id": "sett_cl",
+        "label": "Link color",
+        "info": "only active with style title 3",
+        "default": "#d73737"
+      },
+       {
+        "label": "Link to",
+        "id": "sett_url",
+        "info": "only active with style title 3",
+        "type": "url"
+      },
+      {
+        "type": "select",
+        "id": "style_title",
+        "options": [
+         {
+            "value": "1",
+            "label": "Style 1"
+         },
+         {
+            "value": "2",
+            "label": "Style 2"
+          },
+         {
+            "value": "3",
+            "label": "Style 3"
+          },
+         {
+            "value": "4",
+            "label": "Style 4"
+          }
+        ],
+        "label": "Style title"
+      },
+      {
+        "id": "blog",
+        "type": "blog",
+        "label": "Blog"
+      },
+      {
+        "type": "range",
+        "id": "post_limit",
+        "label": "Posts",
+        "min": 1,
+        "max": 12,
+        "step": 1,
+        "default": 3
+      },
+      {
+        "type": "select",
+        "id": "post_design",
+        "options": [
+         {
+            "value": "grid",
+            "label": "Grid"
+         },
+         {
+            "value": "slider",
+            "label": "Slider"
+          }
+        ],
+        "label": "Design",
+        "default": "grid"
+      },
+      {
+        "type": "range",
+        "id": "post_per_row",
+        "min": 1,
+        "max": 4,
+        "step": 1,
+        "label": "posts per row",
+        "info":"Number of posts per row for grid design",
+        "default": 4
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_author",
+        "label": "Show author",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_author_img",
+        "label": "Show author avatar",
+        "info": "Returns the image of the author uploaded through the Staff members options on the [Account page](https:\/\/www.shopify.com\/admin\/settings\/account)",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_date",
+        "label": "Show date",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_read_more",
+        "label": "Show 'read more' button",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_comments",
+        "label": "Show comments with count",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_view_all",
+        "label": "Show 'View all' button",
+        "default": false
+      },
+      {
+       "type": "header",
+       "content": "== settings Slider ( Only for Carousel layout )"
+      },
+     {
+        "type": "range",
+        "id": "slider_speed",
+        "min": 1,
+        "max": 30,
+        "step": 1,
+        "label": "Autoplay Speed in milliseconds",
+        "unit": "sec",
+        "default": 6
+      },
+      {
+        "type": "checkbox",
+        "id": "use_autoplay",
+        "label": "Use autoplay?",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "use_arrows",
+        "label": "Use Arrows?",
+        "default": true
+      },
+{
+        "type": "checkbox",
+        "id": "use_dots",
+        "default": false,
+        "label": "Use pagination control?"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_loop",
+        "label": "Use Infinite loop sliding?",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "sidetoshow",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "slides To Show",
+        "default": 3
+      },
+      {
+       "type": "header",
+       "content": "=== breakpoint: 1024"
+      },
+      {
+        "type": "range",
+        "id": "sidetoshow_first",
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "label": "slides To Show",
+        "default": 3
+      },
+      {
+       "type": "header",
+       "content": "=== breakpoint: 600"
+      },
+      {
+        "type": "range",
+        "id": "sidetoshow_center",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "slides To Show",
+        "default": 2
+      },
+      {
+       "type": "header",
+       "content": "=== breakpoint: 480"
+      },
+      {
+        "type": "range",
+        "id": "sidetoshow_last",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "slides To Show",
+        "default": 2
+      },
+      {
+        "type": "header",
+        "content": "== Design Image"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_eq_height",
+        "label": "Use equal height images?",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "image_ratio",
+        "label": "Aspect Ratio",
+        "default": "ratio_nt",
+        "options": [
+          {
+            "value": "ratio2_1",
+            "label": "2:1"
+          },
+          {
+            "value": "ratio16_9",
+            "label": "16:9"
+          },
+          {
+            "value": "ratio8_5",
+            "label": "8:5"
+          },
+          {
+            "value": "ratio3_2",
+            "label": "3:2"
+          },
+          {
+            "value": "ratio4_3",
+            "label": "4:3 (Landscape)"
+          },
+          {
+            "value": "ratio1_1",
+            "label": "1:1 (Square)"
+          },
+          {
+            "value": "ratio_nt",
+            "label": "Ratio ASOS"
+          },
+          {
+            "value": "ratio2_3",
+            "label": "2:3 (Portrait)"
+          },
+          {
+            "value": "ratio1_2",
+            "label": "1:2"
+          },
+          {
+            "value": "ratio_cus1",
+            "label": "Ratio Custom 1"
+          },
+          {
+            "value": "ratio_cus2",
+            "label": "Ratio Custom 2"
+          },
+          {
+            "value": "ratio_cus3",
+            "label": "Ratio Custom 3"
+          },
+          {
+            "value": "ratio_cus4",
+            "label": "Ratio Custom 4"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_size",
+        "label": "Image Size",
+        "default": "nt_cover",
+        "options": [
+          {
+            "value": "nt_cover",
+            "label": "Full"
+          },
+          {
+            "value": "nt_contain",
+            "label": "Auto"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_position",
+        "info":"The first value is the horizontal position and the second value is the vertical.",
+        "options": [
+          {
+            "value": "default",
+            "label": "Default"
+          },
+          {
+            "value": "1",
+            "label": "Left Top"
+          },
+          {
+            "value": "2",
+            "label": "Left Center"
+          },
+          {
+            "value": "3",
+            "label": "Left Bottom"
+          },
+          {
+            "value": "4",
+            "label": "Right Top"
+          },
+          {
+            "value": "5",
+            "label": "Right Center"
+          },
+          {
+            "value": "6",
+            "label": "Right Bottom"
+          },
+          {
+            "value": "7",
+            "label": "Center Top"
+          },
+          {
+            "value": "8",
+            "label": "Center Center"
+          },
+          {
+            "value": "9",
+            "label": "Center Bottom"
+          }
+        ],
+        "label": "Image Position",
+        "default": "8"
+      },
+     {
+        "type": "header",
+        "content": "== Design Options"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_container",
+        "label": "Use container?",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "section_bg_color",
+        "label": "Background color",
+        "default": "#fff"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_left",
+        "label": "Margin left",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_right",
+        "label": "Margin right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_top",
+        "label": "Padding top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_right",
+        "label": "Padding right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_bottom",
+        "label": "Padding bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_left",
+        "label": "Padding left",
+        "info": "60px"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Blog posts",
+        "category": "== Blog",
+        "settings": {
+          "blog": "News",
+          "post_limit": 3
+        }
+      }
+    ]
+  }
+{% endschema %}

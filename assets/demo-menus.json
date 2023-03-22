@@ -1,0 +1,20 @@
+[
+  {
+    "changes": [
+      {
+        "action": "create",
+        "id": -1,
+        "title": "Shop",
+        "menu_item_type": "collections",
+        "subject": "\/collections",
+        "subject_id": "",
+        "position": 1,
+        "subject_params": ""
+      }
+    ],
+    "root": {
+      "title": "Just test",
+      "handle": "just-tes-ok"
+    }
+  }
+]

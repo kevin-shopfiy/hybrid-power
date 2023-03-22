@@ -1,0 +1,195 @@
+{%- include 'style_mp_section' -%}
+{%- assign image = section.settings.image -%}{%- assign url = section.settings.url -%}{%- assign color = section.settings.color -%}
+<div class="slider jas_custom_{{section.id}} jas_banner_hero{%- if section.settings.use_container %} jas-container{%- else %} jas-full{%- endif -%}">
+    <div class="jas_hero_wrap pr oh">
+      {%- if image != blank -%}
+      <div class="banner_img lazyload" style="padding-bottom:{{ 1 | divided_by: image.aspect_ratio | times: 100}}%" data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover">
+      {%- else -%}
+      <div class="banner_img" style="padding-bottom:56.25%;background-image: url(https://placehold.it/1170x600.png?text=Banner+Image)">
+      {%- endif -%}
+        {%- if url != blank -%} <a href="{{url}}" class="link_over_nt pa"></a>{%- endif -%}
+        <div class="hero-inner-text pa flex column {{section.settings.pos}}-xs {{section.settings.al}}-xs pe_none">
+          {%- if section.settings.title != blank -%}<h3 class="fs__36 tu {{color}} fw__7 mt__0 mb__5">{{section.settings.title}}</h3>{%- endif -%}
+          {%- if section.settings.title_2 != blank -%}<h3 class="fs__20 {{color}} fw__5 mt__0 mb__20">{{section.settings.title_2}}</h3>{%- endif -%}
+          {%- if section.settings.btn_title != blank and url != blank -%}<a href="{{url}}" class="pe_auto cw tc" style="background-color: {{section.settings.btn_color}}">{{section.settings.btn_title}}</a>{%- endif -%}
+        </div>
+      </div>
+    </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Banner hero",
+    "class": "jas-section type_jas_banner_hero clearfix",
+    "settings": [
+     {
+        "type": "header",
+        "content": "== Image Options"
+      },
+      {
+         "type": "image_picker",
+         "id": "image",
+         "label": "Image"
+       },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Text",
+        "default": "Banner title"
+      },
+      {
+        "type": "text",
+        "id": "title_2",
+        "label": "Text 2",
+        "default": "Banner title 2"
+      },
+      {
+        "type": "select",
+        "id": "color",
+        "options": [
+         {
+            "value": "cb",
+            "label": "Dark"
+         },
+         {
+            "value": "cw",
+            "label": "Light"
+          }
+        ],
+        "label": "Color text"
+      },
+      {
+        "type": "text",
+        "id": "btn_title",
+        "label": "Button title",
+        "default": "Button title"
+      },
+      {
+        "type": "color",
+        "id": "btn_color",
+        "label": "Button Color",
+        "default": "#ef3288"
+      },
+       {
+        "label": "Link to",
+        "id": "url",
+        "type": "url"
+      },
+      {
+        "type": "select",
+        "id": "pos",
+        "options": [
+         {
+            "value": "start",
+            "label": "Top"
+         },
+         {
+            "value": "center",
+            "label": "Middle"
+          },
+         {
+            "value": "end",
+            "label": "Bottom"
+          }
+        ],
+        "label": "Content position"
+      },
+      {
+        "type": "select",
+        "id": "al",
+        "options": [
+         {
+            "value": "top",
+            "label": "Left"
+         },
+         {
+            "value": "middle ",
+            "label": "Center"
+          },
+         {
+            "value": "bottom",
+            "label": "Right"
+          }
+        ],
+        "label": "Text align"
+      },
+      {
+        "type": "select",
+        "id": "style_title",
+        "options": [
+         {
+            "value": "1",
+            "label": "Style 1"
+         },
+         {
+            "value": "2",
+            "label": "Style 2"
+          },
+         {
+            "value": "3",
+            "label": "Style 3"
+          }
+        ],
+        "label": "Style title"
+      },
+     {
+        "type": "header",
+        "content": "== Design Options"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_container",
+        "label": "Use container?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_left",
+        "label": "Margin left",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_right",
+        "label": "Margin right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_top",
+        "label": "Padding top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_right",
+        "label": "Padding right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_bottom",
+        "label": "Padding bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_left",
+        "label": "Padding left",
+        "info": "60px"
+      }
+    ]
+  }
+{% endschema %}

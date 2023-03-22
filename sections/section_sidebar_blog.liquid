@@ -1,0 +1,396 @@
+{%- if section.blocks.size > 0 -%}
+	{%- for block in section.blocks -%}
+	   {%- case block.type -%}
+	      {%- when 'search' -%}
+			  <aside id="search-{{ block.id }}" class="widget widget_search">
+			     <h4 class="widget-title">{{ block.settings.title }}</h4>
+			     <form class="search-form nt_shopify" method="get" action="/search" role="search">
+			        <label class="wrap_nt_shopify">
+			        <span class="screen-reader-text">Search for:</span>
+			        <input class="search-field text_nt_shopify" type="search"  placeholder="{{ 'general.search.blog_placeholder' | t }}" name="q"{% if search.performed %} value="{{ search.terms | escape | downcase }}"{% endif %} /> 
+			        <input type="hidden" name="type" value="article" />
+			        </label>
+			        <input type="submit" class="search-submit nt_shopify_submit" value="{{ 'general.search.search_submit' | t }}">
+			     </form>
+			  </aside>  
+			{%- when 'categories' -%}
+			  <aside id="categories-{{ block.id }}" class="widget widget_categories">
+			     <h4 class="widget-title">{{ block.settings.title }}</h4>
+			     <ul>
+			      {%- for link in linklists[block.settings.menu].links -%}
+			        {%- if link.type == 'blog_link' -%}
+			          {%- assign gl_blog = link.object -%}
+			            <li class="cat-item{%- if blog.handle == gl_blog.handle %} current-cat{%- endif -%}"><a href="{{ gl_blog.url }}">{{ gl_blog.title }}</a> ({{ gl_blog.articles_count }})</li>
+			        {%- endif -%}
+			      {%- else -%}
+			        {% capture theme_settings_footer_linklist_path %}<strong>Blog sidebar</strong> > <strong>Quick links link list</strong>{% endcapture %}
+			        <li class="cat-item">{{ 'general.layout.footer.instructions_for_linklist_html' | t: theme_settings_link: theme_settings_link, theme_settings_footer_linklist_path: theme_settings_footer_linklist_path }}</li>
+			      {%- endfor -%}
+			     </ul>
+			  </aside>
+	      {%- when 'collection' -%}
+			  <aside class="widget widget_products clearfix">
+			      <h4 class="widget-title">{{ block.settings.title }}</h4>
+			      {%- if block.settings.featured_product_list_collection == blank -%}
+			         <p class="mg__0 mb__30">{{ 'homepage.onboarding.no_content' | t }}</p>
+			      {%- else -%}
+			      <ul class="product_list_widget">
+			      {%- for product in collections[block.settings.featured_product_list_collection].products limit:block.settings.featured_product_limit_all -%}
+			         {%- include 'product_group_loop' -%}
+			      {%- endfor -%}
+			      </ul>
+			      {%- endif -%}
+			  </aside>
+			  {%- when 'recently' -%}
+			   <aside id="recently-viewed-products" class="widget widget_recently_viewed_products clearfix" style="display:none">
+			     <h4 class="widget-title">{{ block.settings.title }}</h4>
+			     <ul id="recently_wrap" class="product_list_widget jas_recently_wrap"></ul>
+			   </aside>
+		   {%- when 'instagram' -%}
+		      <aside id="jas_gecko_instagram-3" class="widget widget_jas_gecko_instagram jas_instagram_section ratio1_1 equal-nt" data-username='{{block.settings.username | default:'no_user_name_xxx'}}' data-limit='{{block.settings.limit }}' data-target='{{block.settings.open_link}}'>
+				     <h4 class="widget-title">{{ block.settings.title }}</h4>
+				     <div class="jas-instagram jas-instagram-pics clearfix columns-{{block.settings.columns}}"></div>
+				</aside>
+		   {%- when 'shipping' -%}
+		      <aside id="jas_widget-{{block.id}}" class="widget widget_shipping">
+				     <h4 class="widget-title">{{ block.settings.title }}</h4>
+				     {%- for i in (1..6) -%}
+	                     {%- assign shipping = 'shipping_' | append:i -%}
+	                     {%- assign shipping_id = block.settings[shipping] -%}
+	                     {%- if shipping_id != blank -%}
+	                        {%- assign shipping = shipping_id | replace: ' ,', ',' | replace: ', ', ',' | split: ',' -%}
+	                           <div class="jas-service tl clearfix mt__30">
+	                           	{%- if shipping[0] != blank -%}<div class="icon medium cp"><i class="{%- if shipping[0] contains 'pe-' -%}{{shipping[0]}}{%- else -%}fa fa-{{shipping[0]}}{%- endif -%}">&nbsp;</i></div>{%- endif -%}
+	                              <div class="content">
+	                              	<h3 class="title cp tu fs__14 mg__0 mb__5">{{shipping[1]}}</h3>
+	                                 <p class="mg__0">{{shipping[2]}}</p>
+	                              </div>
+	                           </div>
+	                     {%- endif -%}
+	                  {%- endfor -%}
+				</aside>
+		   {%- when 'html' -%}
+		      <aside id="jas_widget-{{block.id}}" class="widget">
+				     <h4 class="widget-title">{{ block.settings.title }}</h4>
+				     {%- if block.settings.code != blank -%}{{block.settings.code}}{%- endif -%}
+				</aside>
+		   {%- when 'text' -%}
+		      <aside id="jas_widget-{{block.id}}" class="widget">
+				     <h4 class="widget-title">{{ block.settings.title }}</h4>
+				     {%- if block.settings.text != blank -%}{{block.settings.text}}{%- endif -%}
+				</aside>
+            {%- when 'tags' -%}
+               {%- if blog.all_tags.size > 0 -%}
+               <aside id="tag_cloud-{{ block.id }}" class="widget mb__30 widget_layered_nav">
+                  <h4 class="widget-title">{{ block.settings.title }}</h4>
+                  <ul class="yith-wcan-label yith-wcan yith-wcan-group">
+                   {%- for tag in blog.all_tags -%}
+                      {% if current_tags contains tag %}
+                          <li class="chosen"><a class="chosen" href="/blogs/{{blog.handle}}">{{ tag }}{%- if block.settings.count %} ({{ tag.total_count }}){%- endif -%}</a></li>
+                      {% else %}
+                    <li><a href="/blogs/{{blog.handle}}/tagged/{{ tag | handleize }}">{{ tag }}{%- if block.settings.count %} ({{ tag.total_count }}){%- endif -%}</a></li>
+                      {% endif %}
+                   {%- endfor -%}
+                  </ul>
+               </aside>
+               {%- endif -%}
+			{%- when 'recent' -%}
+			   {%- assign featured_posts_limit_all = block.settings.featured_posts_limit_all | plus:0 -%}
+			   {%- if template.name == 'blog' and blogs[blog.handle].articles_count > 0 -%}
+			   <aside id="recent-posts-{{ block.id }}" class="widget widget_recent_entries">
+			      <h4 class="widget-title tu fwsb">{{ block.settings.title }}</h4>
+			      <ul>
+			         {% for article in blogs[blog.handle].articles limit:featured_posts_limit_all %}
+			         <li>
+			            <a href="{{ article.url }}">{{ article.title }}</a>
+			            <span class="post-date">{{ article.published_at | date: format: 'month_day_year' }}</span>
+			         </li>
+			         {% endfor %}
+			      </ul>
+			   </aside>
+			   {%- elsif template == "article" and blogs[blog.handle].articles_count > 1 -%}
+				  <aside id="recent-posts-{{ block.id }}" class="widget widget_recent_entries">
+				     <h4 class="widget-title tu fwsb">{{ block.settings.title }}</h4>
+				     <ul>
+				     {% for f_article in blogs[blog.handle].articles limit:featured_posts_limit_all %}
+				      {%- if article.id != f_article.id -%}
+				            <li>
+				              <a href="{{ f_article.url }}">{{ f_article.title }}</a>
+				              <span class="post-date">{{ f_article.published_at | date: format: 'month_day_year' }}</span>
+				           </li>
+				         {%- endif -%}
+				    {% endfor %}
+				     </ul>
+				  </aside>
+				{%- endif -%}
+	   {%- endcase -%}
+	{%- endfor -%}
+{%- else -%}
+<div class="text-center">{%- include 'no-blocks'-%}</div>   
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Blog sidebar",
+    "class": "sidebar mt__60 mb__60",
+    "max_blocks": 9,
+    "blocks": [
+      {
+        "type": "search",
+        "name": "Search",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Search"
+          }
+        ]
+      },
+      {
+        "type": "categories",
+        "name": "Categories",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Categories"
+          },
+          {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Blogs Categories menu",
+            "default": "main-menu"
+          }
+        ]
+      },
+      {
+        "type": "collection",
+        "name": "Featured Products",
+        "settings": [
+         {
+          "type":"text",
+          "id":"title",
+          "label":"Title",
+          "default":"Sale Products"
+          },
+          {
+           "type": "collection",
+           "id": "featured_product_list_collection",
+           "label": "Collection to use"
+         },
+          {
+           "type": "text",
+           "id": "featured_product_limit_all",
+           "label": "Number of products to show",
+           "default": "3"
+         }
+        ]
+      },
+      {
+        "type": "recently",
+        "name": "Recently Viewed Products",
+        "limit": 1,
+        "settings": [
+          {
+          "type":"text",
+          "id":"title",
+          "label":"Title",
+          "default":"Recently Viewed Products"
+          }
+        ]
+      },
+      {
+        "type": "recent",
+        "name": "Recent Post",
+        "limit": 1,
+        "settings": [
+         {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Recent Post"
+         },
+         {
+           "type": "text",
+           "id": "featured_posts_limit_all",
+           "label": "Number of posts to show",
+           "default": "5"
+         }
+        ]
+      },
+      {
+        "type": "instagram",
+        "name": "Instagram feed",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Instagram"
+          },
+          {
+	        "type": "range",
+	        "id": "columns",
+	        "min": 2,
+	        "max": 10,
+	        "step": 1,
+	        "label": "columns",
+	        "default": 3
+	      },
+         {
+	        "type": "text",
+	        "id": "username",
+	        "label": "Username Instagram",
+	        "default": "jsfashionstock",
+	         "info":"Ex: https://www.instagram.com/asos/, please enter:asos"
+	      },
+	      {
+	        "type": "range",
+	        "id": "limit",
+	        "min": 1,
+	        "max": 12,
+	        "step": 1,
+	        "unit": "img",
+	        "label": "Number of photos",
+	        "default": 12
+	      },
+	      {
+	        "type": "select",
+	        "id": "open_link",
+	        "options": [
+	          {
+	            "value": "_self",
+	            "label": "Current window (_self)"
+	          },
+	         {
+	            "value": "_blank",
+	            "label": "New window (_blank)"
+	          }
+	        ],
+	        "label": "Open link in",
+	        "default": "_self"
+	      }
+        ]
+      },
+      {
+        "type": "shipping",
+        "name": "SHIPPING DELIVERY",
+        "limit": 1,
+        "settings": [
+         {
+          "type":"text",
+          "id":"title",
+          "label":"Title",
+          "default":"SHIPPING & DELIVERY"
+         },
+         {
+           "type": "select",
+           "id": "style",
+           "label": "Style",
+           "default": "2",
+           "options": [
+             {
+               "value": "1",
+               "label": "Style 1"
+             },
+             {
+               "value": "2",
+               "label": "Style 2"
+             }
+           ]
+         },
+         {
+           "type": "paragraph",
+           "content": "Example: clock-o,Save up to 20%,limited time [Get icons fa your](http:\/\/fontawesome.io\/icons\/)"
+         },
+         {
+           "type": "paragraph",
+           "content": "Example: pe-7s-car,Save up to 20%,limited time [Get icons pe your](http:\/\/themes-pixeden.com\/font-demos\/7-stroke/)"
+         },
+         {
+           "type": "textarea",
+           "id": "shipping_1",
+           "label":"Shipping Block 1"
+         },
+         {
+           "type": "textarea",
+           "id": "shipping_2",
+           "label":"Shipping Block 2"
+         },
+         {
+           "type": "textarea",
+           "id": "shipping_3",
+           "label":"Shipping Block 3"
+         },
+         {
+           "type": "textarea",
+           "id": "shipping_4",
+           "label":"Shipping Block 4"
+         },
+         {
+           "type": "textarea",
+           "id": "shipping_5",
+           "label":"Shipping Block 5"
+         },
+         {
+           "type": "textarea",
+           "id": "shipping_6",
+           "label":"Shipping Block 6"
+         }
+        ]
+      },
+      {
+        "type": "html",
+        "name": "Custom HTML",
+        "settings": [
+         {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Custom HTML"
+          },
+          {
+            "type": "html",
+            "id": "code",
+            "label": "HTML"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "name": "Text",
+        "settings": [
+            {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Talk about your brand"
+            },
+            {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+            }
+         ]
+      },
+      {
+        "type": "tags",
+        "name": "Blog Tags",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Blog Tags"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

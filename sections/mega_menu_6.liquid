@@ -1,0 +1,2188 @@
+<style>.mega_app_menu-item-4 {width: 25% !important;}</style>
+{%- if section.blocks.size > 0 -%}
+   <nav role="navigation nave3">
+     <ul id="jas-main-menu" class="jas-menu clearfix customjtpl-mega-menu">  
+       {%- for block in section.blocks -%}
+       {%- case block.type -%}
+       {%- when 'sub_mega_product' -%}
+                  {%- assign label = block.settings.label -%}
+                  {%- assign icon = block.settings.icon -%}
+                  {%- assign position = block.settings.position -%}
+                  {%- assign label_dow = label | downcase -%}
+                  {%- assign link_list = block.settings.menu -%}
+       
+       <li id="menu-item-{{block.id}}" class="nav-sub_mega_product menu-item-pr menu-item menu-item-has-children menu_has_offsets menu-{{position}} menu-item-{{block.id}}{%- if label_dow == 'sale' or label_dow == 'sale!' %} sale{%- endif -%}">
+                     <a href="{{block.settings.button_link}}">{%- if icon != blank -%}<i class="fa fa-{{icon}}"></i>{%- endif -%}{{block.settings.title}}{%- if label != blank and block.settings.color != blank -%}<span class="jas-menu-label jas-menu-label-{{ label | handleize}}">{{label}}</span>{%- endif -%}</a>
+                     {%- if link_list != blank -%}
+                        <ul class="sub-menu mega-menu rr">
+                           {%- if forloop.index == 6 -%}{%- break -%}{%- endif -%}
+                           {%- for link in linklists[link_list].links -%}
+                              {%- if forloop.index == 6 -%}{%- assign position = 'right' -%}{%- endif -%}
+                              {%- assign child_list_handle = link.title | handleize -%}
+                              {%- if linklists[child_list_handle].links != blank -%}
+                                  <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}">
+                                       <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                       <ul class="sub-column">
+                                           {%- for thirdlink in linklists[child_list_handle].links -%}
+                                             {%- assign icon_third  = thirdlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                             {%- assign label_third  = thirdlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                             {%- assign third_list_handle = thirdlink.title | handleize -%}
+                                             {%- if linklists[third_list_handle].links != blank -%}
+                                                <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                   <ul class="sub-column">
+                                                      {%- for fourlink in linklists[third_list_handle].links -%}
+                                                         {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                         {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                         <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                      {%- endfor -%}
+                                                   </ul>
+                                                </li>
+                                             {%- elsif thirdlink.links != blank -%}
+                                                  <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                      <ul class="sub-column">
+                                                         {%- for fourlink in thirdlink.links -%}
+                                                            {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                            {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                            <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                         {%- endfor -%}
+                                                      </ul>
+                                                   </li>
+                                             {%- else -%}
+                                                <li class="menu-item"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a></li>
+                                             {%- endif -%}
+                                          {%- endfor -%}
+                                       </ul>
+                                    </li>
+                              {%- elsif link.links != blank -%}
+                                 <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}">
+                                       <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                       <ul class="sub-column">
+                                          {%- for thirdlink in link.links -%}
+                                          {%- assign icon_third  = thirdlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                          {%- assign label_third  = thirdlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                          {%- if thirdlink.links != blank -%}
+                                               <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                   <ul class="sub-column">
+                                                      {%- for fourlink in thirdlink.links -%}
+                                                         {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                         {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                         <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                      {%- endfor -%}
+                                                   </ul>
+                                                </li>
+                                          {%- else -%}
+                                             <li class="menu-item"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a></li>
+                                          {%- endif -%}
+                                       {%- endfor -%}
+                                       </ul>
+                                    </li>
+                              {%- else -%}
+                                 <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}"><a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a></li>
+                              {%- endif -%}
+                              {%- if forloop.index == 6 -%}{%- break -%}{%- endif -%}
+                           {%- endfor -%}
+                           {%- if block.settings.conditions_setting == '1' -%}
+                              {%- if block.settings.id_collection == blank -%}
+                                 {%- assign collection = collections["all"] -%}
+                              {%- else -%}
+                                 {%- assign collection = collections[block.settings.id_collection] -%}
+                              {%- endif -%}
+                              {%- if collection.products.size > 0 -%}
+                                 {%- assign pr_style = block.settings.style -%}
+                                 {%- assign show_vendor = block.settings.show_vendor -%}
+                                 {%- assign settings_pr_img_size = block.settings.use_eq_height -%}
+                                 {%- assign section_settings_countdown = block.settings.sale_countdown -%}
+                                 {%- assign grid_columns = '12' -%}
+                                 {%- assign grid_columns_mb = '12' -%}
+                                 {%- assign many_products = block.settings.many_products -%}
+                                 {%if  block.settings.enable_disable_section == true %}
+                                 <li class="menu-item menu-item-pr sub-column-item {{pr_style}}">
+                                    <a href="#" class="hide_menu_banner">Product menu gecko</a>
+                                    <div class="products jas-row jas-products-holder jas-carousel {{block.settings.image_size}}{%- if settings_pr_img_size %} jas_section_eqh{%- endif -%}" data-slick='{"slidesToShow": 1,"slidesToScroll": 1,"arrows":false}'>
+                                       {%- for product in collection.products -%}
+                                          {%- include 'jas_product_loop' -%}
+                                          {%- if forloop.index == many_products -%}{%- break -%}{%- endif -%}
+                                       {%- endfor -%}
+                                    </div>
+                                 </li>
+                          {%endif%}
+                              {%- endif -%}
+                           {%- else -%}
+                              {%- assign check_product_id = '' -%}
+                              {%- assign pr_style = block.settings.style -%}
+                              {%- assign show_vendor = block.settings.show_vendor -%}
+                              {%- assign settings_pr_img_size = block.settings.use_eq_height -%}
+                              {%- assign section_settings_countdown = block.settings.sale_countdown -%}
+                              {%- assign grid_columns = '12' -%}
+                              {%- assign grid_columns_mb = '12' -%}
+                                 {%- capture html_pr -%}
+                                    {%- for i in (1..5) -%}
+                                       {%- assign product_id = 'product_id_' | append:i -%}
+                                       {%- assign block_product_id = block.settings[product_id] -%}
+                                       {%- if block_product_id != blank -%}
+                                          {% assign product = all_products[block_product_id] %}
+                                          {%- unless check_product_id contains product.id -%}
+                                             {%- include 'jas_product_loop' -%}
+                                          {%- endunless -%}
+                                          {%- assign check_product_id = check_product_id | append: product.id -%}
+                                       {%- endif -%}
+                                    {%- endfor-%}
+                                 {%- endcapture -%}
+                                 {%- if check_product_id != blank -%}
+                                    <li class="menu-item menu-item-pr sub-column-item {{pr_style}}">
+                                       <a href="#" class="hide_menu_banner">Product menu gecko</a>
+                                       <div class="products jas-row jas-products-holder jas-carousel {{block.settings.image_size}}{%- if settings_pr_img_size %} jas_section_eqh{%- endif -%}" data-slick='{"slidesToShow": 1,"slidesToScroll": 1,"arrows":false}'>
+                                          {{html_pr}}
+                                       </div>
+                                    </li>
+                                 {%- endif -%}
+                           {%- endif -%}
+                        </ul>
+                     {%- endif -%}
+                     {%- if label != blank and block.settings.color != blank -%}<style type="text/css">.menu-item-{{block.id}} >a>.jas-menu-label-{{label | handleize}}{ background-color: {{block.settings.color}} }</style>{%- endif -%} 
+                  </li>
+       
+        {%- when 'collection_banner_6' -%}
+                  
+       {%- assign label = block.settings.label -%}
+                  {%- assign icon = block.settings.icon -%}
+                  {%- assign position = block.settings.position -%}
+                  {%- assign label_dow = label | downcase -%}
+                  {%- assign link_list = block.settings.menu -%}
+       
+       <li id="menu-item-{{block.id}}" class="nav-collection_banner_6 menu-item-pr menu-item-has-children menu_has_offsets menu-{{position}} menu-item-{{block.id}}{%- if label_dow == 'sale' or label_dow == 'sale!' %} sale{%- endif -%}">
+         
+         <a href="{{block.settings.button_link}}">{%- if icon != blank -%}<i class="fa fa-{{icon}}"></i>{%- endif -%}{{block.settings.title}}{%- if label != blank and block.settings.color != blank -%}<span class="jas-menu-label jas-menu-label-{{ label | handleize}}">{{label}}</span>{%- endif -%}</a>
+         
+         {%- if link_list != blank -%}
+                        <ul class="sub-menu mega-menu">
+                           {%- assign position = 'left' -%}
+                           {%- for link in linklists[link_list].links -%}
+                              {%- if forloop.index == 6 -%}{%- assign position = 'right' -%}{%- endif -%}
+                              {%- assign child_list_handle = link.title | handleize -%}
+                              {%- if linklists[child_list_handle].links != blank -%}
+                                  <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}">
+                                    {%- assign image_i = 'banner_' | append:forloop.index -%}
+                                    {%- assign image = block.settings[image_i] -%}
+                                    {%- if image == blank -%}
+                                       <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                    {%- else -%}
+                                       
+                                        {%- if block.settings.use_eq_height == false -%}
+                                             <div class="banner-image naveen1"> 
+                                                {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                                <img src="{{ image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ image.aspect_ratio }}"  data-sizes="auto" class="lazyload attachment-shop_catalog size-shop_catalog" alt="{{image.alt}}">       
+                                                <div class="jas-wrap-lazy"></div>
+                                             </div>
+                                             {%- endif -%}
+                                        
+                                       
+                                     {%- endif -%}
+                                    <ul class="sub-column">
+                                           {%- for thirdlink in linklists[child_list_handle].links -%}
+                                             {%- assign icon_third  = thirdlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                             {%- assign label_third  = thirdlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                             {%- assign third_list_handle = thirdlink.title | handleize -%}
+                                             {%- if linklists[third_list_handle].links != blank -%}
+                                                <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                   <ul class="sub-column">
+                                                      {%- for fourlink in linklists[third_list_handle].links -%}
+                                                         {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                         {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                         <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                      {%- endfor -%}
+                                                   </ul>
+                                                </li>
+                                             {%- elsif thirdlink.links != blank -%}
+                                                  <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                      <ul class="sub-column">
+                                                         {%- for fourlink in thirdlink.links -%}
+                                                            {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                            {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                            <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                         {%- endfor -%}
+                                                      </ul>
+                                                   </li>
+                                             {%- else -%}
+                                                <li class="menu-item"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a></li>
+                                             {%- endif -%}
+                                          {%- endfor -%}
+                                       </ul>
+                                 </li>
+                              {%- elsif link.links != blank -%}
+                                 <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}">
+                                    {%- assign image_i = 'banner_' | append:forloop.index -%}
+                                    {%- assign image = block.settings[image_i] -%}
+                                    {%- if image == blank -%}
+                                       <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                    {%- else -%}
+                                       
+                                             <div class="banner-image naveen-six-sec">
+                                                {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                                <img src="{{ image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ image.aspect_ratio }}"  data-sizes="auto" class="lazyload attachment-shop_catalog size-shop_catalog" alt="{{image.alt}}">       
+                                                <div class="jas-wrap-lazy"></div>
+                                             </div>
+                                             
+                                         
+                                     {%- endif -%}
+                                    <ul class="sub-column">
+                                          {%- for thirdlink in link.links -%}
+                                          {%- assign icon_third  = thirdlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                          {%- assign label_third  = thirdlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                          {%- if thirdlink.links != blank -%}
+                                               <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                   <ul class="sub-column">
+                                                      {%- for fourlink in thirdlink.links -%}
+                                                         {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                         {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                         <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                      {%- endfor -%}
+                                                   </ul>
+                                                </li>
+                                          {%- else -%}
+                                             <li class="menu-item"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a></li>
+                                          {%- endif -%}
+                                       {%- endfor -%}
+                                       </ul>
+                                 </li>
+                              {%- else -%}
+                                 <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}">
+                                    {%- assign image_i = 'banner_' | append:forloop.index -%}
+                                    {%- assign image = block.settings[image_i] -%}
+                                    {%- if image == blank -%}
+                                       <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                    {%- else -%}
+                                   <a href="{{ link.url }}" class="inner-submenu-link">
+                                       <div class="banner-image rahul">
+                                                {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                                <img dat-src="{{ image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ image.aspect_ratio }}"  data-sizes="auto" class="lazyload attachment-shop_catalog size-shop_catalog" alt="{{image.alt}}">       
+                                                <div class="jas-wrap-lazy"></div>
+                                             </div>
+                                   </a>
+                                    {%- endif -%}
+                                    
+                                   <div class="banner-inner"><h3 class="mg__0">
+                                     <a class="inner-submenu-link" href="{{ link.url }}"><div class="arrow-div">{{ link.title | split: '[' | first }}</div><i class="fas fa-long-arrow-alt-right"></i></a></h3></div>
+                                    
+                                 </li>
+                              {%- endif -%}
+                              {%- if forloop.index == 6 -%}{%- break -%}{%- endif -%}
+                           {%- endfor -%}
+                        </ul>
+                     {%- endif -%}
+         {%- if label != blank and block.settings.color != blank -%}<style type="text/css">.menu-item-{{block.id}} >a>.jas-menu-label-{{label | handleize}}{ background-color: {{block.settings.color}} }</style>{%- endif -%} 
+       </li>
+       
+       
+       {%- when 'collection_with_text' %}
+       
+       {%- assign label = block.settings.label -%}
+                  {%- assign icon = block.settings.icon -%}
+                  {%- assign position = block.settings.position -%}
+                  {%- assign label_dow = label | downcase -%}
+                  {%- assign link_list = block.settings.menu -%}
+       
+       <li id="menu-item-{{block.id}}" class="nav-collection_with_text menu-item-pr menu-item-has-children menu_has_offsets menu-{{position}} menu-item-{{block.id}}{%- if label_dow == 'sale' or label_dow == 'sale!' %} sale{%- endif -%}">
+         <a href="{{block.settings.button_link}}">{%- if icon != blank -%}<i class="fa fa-{{icon}}"></i>{%- endif -%}{{block.settings.title}}{%- if label != blank and block.settings.color != blank -%}<span class="jas-menu-label jas-menu-label-{{ label | handleize}}">{{label}}</span>{%- endif -%}</a>
+        {%- if link_list != blank -%}
+         
+         <ul class="sub-menu mega-menu">
+                           {%- assign position = 'left' -%}
+                           {%- for link in linklists[link_list].links -%}
+                              {%- if forloop.index == 6 -%}{%- assign position = 'right' -%}{%- endif -%}
+                              {%- assign child_list_handle = link.title | handleize -%}
+                              {%- if linklists[child_list_handle].links != blank -%}
+                                  <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}">
+                                    {%- assign image_i = 'banner_' | append:forloop.index -%}
+                                    {%- assign image = block.settings[image_i] -%}
+                                    {%- if image == blank -%}
+                                       <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                    {%- else -%}
+                                       <div class="menu-banner tc hover-1 cursor-pointer{%- if block.settings.use_eq_height %} jas_bg lazyload{%- endif -%}" onclick="window.location.href='{{ link.url }}'"{%- if block.settings.use_eq_height %} data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ image | img_url: '50x50' }});"{%- endif -%}>
+                                          <div class="main-wrapp-img"{%- if block.settings.use_eq_height %} style="height: {{ block.settings.height_int | escape | default: '200' | remove: 'px' | append: 'px' }}"{%- endif -%}>
+                                             {%- if block.settings.use_eq_height == false -%}
+                                             <div class="banner-image">
+                                                {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                                <img src="{{ image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ image.aspect_ratio }}"  data-sizes="auto" class="lazyload attachment-shop_catalog size-shop_catalog" alt="{{image.alt}}">       
+                                                <div class="jas-wrap-lazy"></div>
+                                             </div>
+                                             {%- endif -%}
+                                          </div>
+                                          <div class="wrapper-content-baner">
+                                             <div class="banner-inner arrow-text-learn">
+                                             
+                                             <h3 class="mg__0">{{ link.title | split: '[' | first }}</h3>
+                                              <span><i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i> </span>
+                                             </div>
+                                          </div>
+                                          {%- if block.settings.use_eq_height -%}<div class="jas-wrap-lazy"></div>{%- endif -%}
+                                       </div>
+                                     {%- endif -%}
+                                    <ul class="sub-column">
+                                           {%- for thirdlink in linklists[child_list_handle].links -%}
+                                             {%- assign icon_third  = thirdlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                             {%- assign label_third  = thirdlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                             {%- assign third_list_handle = thirdlink.title | handleize -%}
+                                             {%- if linklists[third_list_handle].links != blank -%}
+                                                <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                   <ul class="sub-column">
+                                                      {%- for fourlink in linklists[third_list_handle].links -%}
+                                                         {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                         {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                         <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                      {%- endfor -%}
+                                                   </ul>
+                                                </li>
+                                             {%- elsif thirdlink.links != blank -%}
+                                                  <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                      <ul class="sub-column">
+                                                         {%- for fourlink in thirdlink.links -%}
+                                                            {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                            {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                            <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                         {%- endfor -%}
+                                                      </ul>
+                                                   </li>
+                                             {%- else -%}
+                                                <li class="menu-item"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a></li>
+                                             {%- endif -%}
+                                          {%- endfor -%}
+                                       </ul>
+                                 </li>
+                              {%- elsif link.links != blank -%}
+                                 <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}">
+                                    {%- assign image_i = 'banner_' | append:forloop.index -%}
+                                    {%- assign image = block.settings[image_i] -%}
+                                    {%- if image == blank -%}
+                                       <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                    {%- else -%}
+                                       <div class="menu-banner tc hover-1 cursor-pointer{%- if block.settings.use_eq_height %} jas_bg lazyload{%- endif -%}" onclick="window.location.href='{{ link.url }}'"{%- if block.settings.use_eq_height %} data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ image | img_url: '50x50' }});"{%- endif -%}>
+                                          <div class="main-wrapp-img"{%- if block.settings.use_eq_height %} style="height: {{ block.settings.height_int | escape | default: '200' | remove: 'px' | append: 'px' }}"{%- endif -%}>
+                                             {%- if block.settings.use_eq_height == false -%}
+                                             <div class="banner-image">
+                                                {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                                <img src="{{ image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ image.aspect_ratio }}"  data-sizes="auto" class="lazyload attachment-shop_catalog size-shop_catalog" alt="{{image.alt}}">       
+                                                <div class="jas-wrap-lazy"></div>
+                                             </div>
+                                             {%- endif -%}
+                                          </div>
+                                          <div class="wrapper-content-baner">
+                                             <div class="banner-inner arrow-text-learn"><h3 class="mg__0">{{ link.title | split: '[' | first }}</h3>
+                                                                                                          <span><i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i> </span>
+                                                                                                         </div>
+                                          </div>
+                                          {%- if block.settings.use_eq_height -%}<div class="jas-wrap-lazy"></div>{%- endif -%}
+                                       </div>
+                                     {%- endif -%}
+                                    <ul class="sub-column naveen">
+                                          {%- for thirdlink in link.links -%}
+                                          {%- assign icon_third  = thirdlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                          {%- assign label_third  = thirdlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                          {%- if thirdlink.links != blank -%}
+                                               <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                   <ul class="sub-column">
+                                                      {%- for fourlink in thirdlink.links -%}
+                                                         {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                         {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                         <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                      {%- endfor -%}
+                                                   </ul>
+                                                </li>
+                                          {%- else -%}
+                                             <li class="menu-item"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a></li>
+                                          {%- endif -%}
+                                       {%- endfor -%}
+                                       </ul>
+                                 </li>
+                              {%- else -%}
+                                 <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}">
+                                    {%- assign image_i = 'banner_' | append:forloop.index -%}
+                                    {%- assign image = block.settings[image_i] -%}
+                                    {%- if image == blank -%}
+                                       <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                    {%- else -%}
+                                       <div class="menu-banner tc hover-1 cursor-pointer{%- if block.settings.use_eq_height %} jas_bg lazyload{%- endif -%}" onclick="window.location.href='{{ link.url }}'"{%- if block.settings.use_eq_height %} data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ image | img_url: '50x50' }});"{%- endif -%}>
+                                          <div class="main-wrapp-img"{%- if block.settings.use_eq_height %} style="height: {{ block.settings.height_int | escape | default: '200' | remove: 'px' | append: 'px' }}"{%- endif -%}>
+                                             {%- if block.settings.use_eq_height == false -%}
+                                             <div class="banner-image">
+                                                {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                                <img src="{{ image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ image.aspect_ratio }}"  data-sizes="auto" class="lazyload attachment-shop_catalog size-shop_catalog" alt="{{image.alt}}">       
+                                                <div class="jas-wrap-lazy"></div>
+                                             </div>
+                                             {%- endif -%}
+                                          </div>
+                                          <div class="wrapper-content-baner ">
+                                             <div class="banner-inner arrow-text-learn"><h3 class="mg__0">{{ link.title | split: '[' | first }}</h3>
+                                             <span><i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i> </span>
+                                            </div>
+                                          </div>
+                                       </div>
+                                    {%- endif -%}
+                                 </li>
+           
+                                   
+           
+                              {%- endif -%}
+                              {%- if forloop.index == 6 -%}{%- break -%}{%- endif -%}
+                           {%- endfor -%}
+           
+           <li class="custom-desc">
+           
+             <div class="custom-desc-div">
+               <h2>{{block.settings.titlebox}}</h2>   
+               <p>{{block.settings.contentbox}}</p>
+               
+             </div>
+            </li>
+           
+                        </ul>
+         
+         
+         
+         
+         {%- endif -%}
+         
+         {%- if label != blank and block.settings.color != blank -%}<style type="text/css">.menu-item-{{block.id}} >a>.jas-menu-label-{{label | handleize}}{ background-color: {{block.settings.color}} }</style>{%- endif -%} 
+
+         
+       </li>
+       
+       {%- when 'coll_product' -%}
+       {%- assign label = block.settings.label -%}
+       {%- assign icon = block.settings.icon -%}
+       {%- assign position = block.settings.position -%}
+       {%- assign label_dow = label | downcase -%}
+       {%- assign link_list = block.settings.menu -%}
+       
+       <li id="menu-item-{{block.id}}" class="nav-collection_with_text menu-item-pr menu-item-has-children menu_has_offsets menu-{{position}} menu-item-{{block.id}}{%- if label_dow == 'sale' or label_dow == 'sale!' %} sale{%- endif -%}">
+         <a href="{{block.settings.button_link}}">{%- if icon != blank -%}<i class="fa fa-{{icon}}"></i>{%- endif -%}{{block.settings.title}}{%- if label != blank and block.settings.color != blank -%}<span class="jas-menu-label jas-menu-label-{{ label | handleize}}">{{label}}</span>{%- endif -%}</a>
+        {%- if link_list != blank -%}
+         
+         <ul class="sub-menu mega-menu">
+                           {%- assign position = 'left' -%}
+                           {%- for link in linklists[link_list].links -%}
+                              {%- if forloop.index == 2 -%}{%- assign position = 'right' -%}{%- endif -%}
+                              {%- assign child_list_handle = link.title | handleize -%}
+                              {%- if linklists[child_list_handle].links != blank -%}
+                                  <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}">
+                                    {%- assign image_i = 'banner_' | append:forloop.index -%}
+                                    {%- assign image = block.settings[image_i] -%}
+                                    {%- if image == blank -%}
+                                       <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                    {%- else -%}
+                                       <div class="menu-banner tc hover-1 cursor-pointer{%- if block.settings.use_eq_height %} jas_bg lazyload{%- endif -%}" onclick="window.location.href='{{ link.url }}'"{%- if block.settings.use_eq_height %} data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ image | img_url: '50x50' }});"{%- endif -%}>
+                                          <div class="main-wrapp-img"{%- if block.settings.use_eq_height %} style="height: {{ block.settings.height_int | escape | default: '200' | remove: 'px' | append: 'px' }}"{%- endif -%}>
+                                             {%- if block.settings.use_eq_height == false -%}
+                                             <div class="banner-image">
+                                                {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                                <img src="{{ image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ image.aspect_ratio }}"  data-sizes="auto" class="lazyload attachment-shop_catalog size-shop_catalog" alt="{{image.alt}}">       
+                                                <div class="jas-wrap-lazy"></div>
+                                             </div>
+                                             {%- endif -%}
+                                          </div>
+                                          <div class="wrapper-content-baner">
+                                             <div class="banner-inner arrow-text-learn">
+                                             
+                                             <h3 class="mg__0">{{ link.title | split: '[' | first }}</h3>
+                                              <span><i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i> </span>
+                                             </div>
+                                          </div>
+                                          {%- if block.settings.use_eq_height -%}<div class="jas-wrap-lazy"></div>{%- endif -%}
+                                       </div>
+                                     {%- endif -%}
+                                    <ul class="sub-column">
+                                           {%- for thirdlink in linklists[child_list_handle].links -%}
+                                             {%- assign icon_third  = thirdlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                             {%- assign label_third  = thirdlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                             {%- assign third_list_handle = thirdlink.title | handleize -%}
+                                             {%- if linklists[third_list_handle].links != blank -%}
+                                                <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                   <ul class="sub-column">
+                                                      {%- for fourlink in linklists[third_list_handle].links -%}
+                                                         {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                         {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                         <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                      {%- endfor -%}
+                                                   </ul>
+                                                </li>
+                                             {%- elsif thirdlink.links != blank -%}
+                                                  <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                      <ul class="sub-column">
+                                                         {%- for fourlink in thirdlink.links -%}
+                                                            {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                            {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                            <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                         {%- endfor -%}
+                                                      </ul>
+                                                   </li>
+                                             {%- else -%}
+                                                <li class="menu-item"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a></li>
+                                             {%- endif -%}
+                                          {%- endfor -%}
+                                       </ul>
+                                 </li>
+                              {%- elsif link.links != blank -%}
+                                 <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}">
+                                    {%- assign image_i = 'banner_' | append:forloop.index -%}
+                                    {%- assign image = block.settings[image_i] -%}
+                                    {%- if image == blank -%}
+                                       <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                    {%- else -%}
+                                       <div class="menu-banner tc hover-1 cursor-pointer{%- if block.settings.use_eq_height %} jas_bg lazyload{%- endif -%}" onclick="window.location.href='{{ link.url }}'"{%- if block.settings.use_eq_height %} data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ image | img_url: '50x50' }});"{%- endif -%}>
+                                          <div class="main-wrapp-img"{%- if block.settings.use_eq_height %} style="height: {{ block.settings.height_int | escape | default: '200' | remove: 'px' | append: 'px' }}"{%- endif -%}>
+                                             {%- if block.settings.use_eq_height == false -%}
+                                             <div class="banner-image">
+                                                {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                                <img src="{{ image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ image.aspect_ratio }}"  data-sizes="auto" class="lazyload attachment-shop_catalog size-shop_catalog" alt="{{image.alt}}">       
+                                                <div class="jas-wrap-lazy"></div>
+                                             </div>
+                                             {%- endif -%}
+                                          </div>
+                                          <div class="wrapper-content-baner">
+                                             <div class="banner-inner arrow-text-learn"><h3 class="mg__0">{{ link.title | split: '[' | first }}</h3>
+                                                                                                          <span><i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i> </span>
+                                                                                                         </div>
+                                          </div>
+                                          {%- if block.settings.use_eq_height -%}<div class="jas-wrap-lazy"></div>{%- endif -%}
+                                       </div>
+                                     {%- endif -%}
+                                    <ul class="sub-column naveen">
+                                          {%- for thirdlink in link.links -%}
+                                          {%- assign icon_third  = thirdlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                          {%- assign label_third  = thirdlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                          {%- if thirdlink.links != blank -%}
+                                               <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                   <ul class="sub-column">
+                                                      {%- for fourlink in thirdlink.links -%}
+                                                         {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                         {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                         <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                      {%- endfor -%}
+                                                   </ul>
+                                                </li>
+                                          {%- else -%}
+                                             <li class="menu-item"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a></li>
+                                          {%- endif -%}
+                                       {%- endfor -%}
+                                       </ul>
+                                 </li>
+                              {%- else -%}
+                                 <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}">
+                                    {%- assign image_i = 'banner_' | append:forloop.index -%}
+                                    {%- assign image = block.settings[image_i] -%}
+                                    {%- if image == blank -%}
+                                       <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                    {%- else -%}
+                                       <div class="menu-banner tc hover-1 cursor-pointer{%- if block.settings.use_eq_height %} jas_bg lazyload{%- endif -%}" onclick="window.location.href='{{ link.url }}'"{%- if block.settings.use_eq_height %} data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ image | img_url: '50x50' }});"{%- endif -%}>
+                                          <div class="main-wrapp-img"{%- if block.settings.use_eq_height %} style="height: {{ block.settings.height_int | escape | default: '200' | remove: 'px' | append: 'px' }}"{%- endif -%}>
+                                             {%- if block.settings.use_eq_height == false -%}
+                                             <div class="banner-image">
+                                                {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                                <img src="{{ image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ image.aspect_ratio }}"  data-sizes="auto" class="lazyload attachment-shop_catalog size-shop_catalog" alt="{{image.alt}}">       
+                                                <div class="jas-wrap-lazy"></div>
+                                             </div>
+                                             {%- endif -%}
+                                          </div>
+                                          <div class="wrapper-content-baner ">
+                                             <div class="banner-inner arrow-text-learn"><h3 class="mg__0">{{ link.title | split: '[' | first }}</h3>
+                                             <span><i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i> </span>
+                                            </div>
+                                          </div>
+                                       </div>
+                                    {%- endif -%}
+                                 </li>
+           
+                                   
+           
+                              {%- endif -%}
+                              {%- if forloop.index == 2 -%}{%- break -%}{%- endif -%}
+                           {%- endfor -%}
+           
+           <li class="custom-desc">
+           
+             <div class="custom-desc-div">
+               
+              <div class="products jas-row jas-products-holder jas-carousel {{block.settings.image_size}}{%- if settings_pr_img_size %} jas_section_eqh{%- endif -%}" data-slick='{"slidesToShow": 1,"slidesToScroll": 1,"arrows":false}'>
+                                       {%- for product in collection.products -%}
+                                          {%- include 'jas_product_loop' -%}
+                                          {%- if forloop.index == many_products -%}{%- break -%}{%- endif -%}
+                                       {%- endfor -%}
+                                    </div>
+               
+             </div>
+            </li>
+           
+                        </ul>
+         
+         
+         
+         
+         {%- endif -%}
+         
+         {%- if label != blank and block.settings.color != blank -%}<style type="text/css">.menu-item-{{block.id}} >a>.jas-menu-label-{{label | handleize}}{ background-color: {{block.settings.color}} }</style>{%- endif -%} 
+
+         
+       </li>
+       
+       {%- endcase -%}
+         {%- endfor -%}
+     </ul>
+     
+     
+      <ul id="jas-main-menu" class="jas-menu clearfix">
+         {%- for block in section.blocks -%}
+            {%- case block.type -%}
+               {%- when 'html_block' -%}
+                  {%- assign label = block.settings.label -%}
+                  {%- assign icon = block.settings.icon -%}
+                  {%- assign position = block.settings.position -%}
+                  {%- assign label_dow = label | downcase -%}
+                  <li id="menu-item-{{block.id}}" class="menu-item menu-item-has-children menu_has_offsets menu-{{position}} menu-item-{{block.id}}{%- if label_dow == 'sale' or label_dow == 'sale!' %} sale{%- endif -%}">
+                     <a href="{{block.settings.button_link}}">{%- if icon != blank -%}<i class="fa fa-{{icon}}"></i>{%- endif -%}{{block.settings.title}}{%- if label != blank and block.settings.color != blank -%}<span class="jas-menu-label jas-menu-label-{{ label | handleize}}">{{label}}</span>{%- endif -%}</a>
+                     <ul class="sub-menu mega-menu mega-menu-html">{{block.settings.html}}</ul>
+                     {%- if label != blank and block.settings.color != blank -%}<style type="text/css">.menu-item-{{block.id}} >a>.jas-menu-label-{{label | handleize}}{ background-color: {{block.settings.color}} }</style>{%- endif -%} 
+                  </li>
+               {%- when 'sub_mega_product' -%}
+                  {%- assign label = block.settings.label -%}
+                  {%- assign icon = block.settings.icon -%}
+                  {%- assign position = block.settings.position -%}
+                  {%- assign label_dow = label | downcase -%}
+                  {%- assign link_list = block.settings.menu -%}
+                  <li id="menu-item-{{block.id}}" style="display:none;" class="menu-item-pr menu-item menu-item-has-children menu_has_offsets menu-{{position}} menu-item-{{block.id}}{%- if label_dow == 'sale' or label_dow == 'sale!' %} sale{%- endif -%}">
+                     <a href="{{block.settings.button_link}}">{%- if icon != blank -%}<i class="fa fa-{{icon}}"></i>{%- endif -%}{{block.settings.title}}{%- if label != blank and block.settings.color != blank -%}<span class="jas-menu-label jas-menu-label-{{ label | handleize}}">{{label}}</span>{%- endif -%}</a>
+                     {%- if link_list != blank -%}
+                        <ul class="sub-menu mega-menu">
+                           {%- if forloop.index == 6 -%}{%- break -%}{%- endif -%}
+                           {%- for link in linklists[link_list].links -%}
+                              {%- if forloop.index == 6 -%}{%- assign position = 'right' -%}{%- endif -%}
+                              {%- assign child_list_handle = link.title | handleize -%}
+                              {%- if linklists[child_list_handle].links != blank -%}
+                                  <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}">
+                                       <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                       <ul class="sub-column">
+                                           {%- for thirdlink in linklists[child_list_handle].links -%}
+                                             {%- assign icon_third  = thirdlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                             {%- assign label_third  = thirdlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                             {%- assign third_list_handle = thirdlink.title | handleize -%}
+                                             {%- if linklists[third_list_handle].links != blank -%}
+                                                <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                   <ul class="sub-column">
+                                                      {%- for fourlink in linklists[third_list_handle].links -%}
+                                                         {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                         {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                         <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                      {%- endfor -%}
+                                                   </ul>
+                                                </li>
+                                             {%- elsif thirdlink.links != blank -%}
+                                                  <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                      <ul class="sub-column">
+                                                         {%- for fourlink in thirdlink.links -%}
+                                                            {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                            {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                            <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                         {%- endfor -%}
+                                                      </ul>
+                                                   </li>
+                                             {%- else -%}
+                                                <li class="menu-item"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a></li>
+                                             {%- endif -%}
+                                          {%- endfor -%}
+                                       </ul>
+                                    </li>
+                              {%- elsif link.links != blank -%}
+                                 <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}">
+                                       <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                       <ul class="sub-column">
+                                          {%- for thirdlink in link.links -%}
+                                          {%- assign icon_third  = thirdlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                          {%- assign label_third  = thirdlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                          {%- if thirdlink.links != blank -%}
+                                               <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                   <ul class="sub-column">
+                                                      {%- for fourlink in thirdlink.links -%}
+                                                         {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                         {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                         <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                      {%- endfor -%}
+                                                   </ul>
+                                                </li>
+                                          {%- else -%}
+                                             <li class="menu-item"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a></li>
+                                          {%- endif -%}
+                                       {%- endfor -%}
+                                       </ul>
+                                    </li>
+                              {%- else -%}
+                                 <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}"><a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a></li>
+                              {%- endif -%}
+                              {%- if forloop.index == 6 -%}{%- break -%}{%- endif -%}
+                           {%- endfor -%}
+                           {%- if block.settings.conditions_setting == '1' -%}
+                              {%- if block.settings.id_collection == blank -%}
+                                 {%- assign collection = collections["all"] -%}
+                              {%- else -%}
+                                 {%- assign collection = collections[block.settings.id_collection] -%}
+                              {%- endif -%}
+                              {%- if collection.products.size > 0 -%}
+                                 {%- assign pr_style = block.settings.style -%}
+                                 {%- assign show_vendor = block.settings.show_vendor -%}
+                                 {%- assign settings_pr_img_size = block.settings.use_eq_height -%}
+                                 {%- assign section_settings_countdown = block.settings.sale_countdown -%}
+                                 {%- assign grid_columns = '12' -%}
+                                 {%- assign grid_columns_mb = '12' -%}
+                                 {%- assign many_products = block.settings.many_products -%}
+                                 <li class="menu-item menu-item-pr sub-column-item {{pr_style}}">
+                                    <a href="#" class="hide_menu_banner">Product menu gecko</a>
+                                    <div class="products jas-row jas-products-holder jas-carousel {{block.settings.image_size}}{%- if settings_pr_img_size %} jas_section_eqh{%- endif -%}" data-slick='{"slidesToShow": 1,"slidesToScroll": 1,"arrows":false}'>
+                                       {%- for product in collection.products -%}
+                                          {%- include 'jas_product_loop' -%}
+                                          {%- if forloop.index == many_products -%}{%- break -%}{%- endif -%}
+                                       {%- endfor -%}
+                                    </div>
+                                 </li>
+                              {%- endif -%}
+                           {%- else -%}
+                              {%- assign check_product_id = '' -%}
+                              {%- assign pr_style = block.settings.style -%}
+                              {%- assign show_vendor = block.settings.show_vendor -%}
+                              {%- assign settings_pr_img_size = block.settings.use_eq_height -%}
+                              {%- assign section_settings_countdown = block.settings.sale_countdown -%}
+                              {%- assign grid_columns = '12' -%}
+                              {%- assign grid_columns_mb = '12' -%}
+                                 {%- capture html_pr -%}
+                                    {%- for i in (1..5) -%}
+                                       {%- assign product_id = 'product_id_' | append:i -%}
+                                       {%- assign block_product_id = block.settings[product_id] -%}
+                                       {%- if block_product_id != blank -%}
+                                          {% assign product = all_products[block_product_id] %}
+                                          {%- unless check_product_id contains product.id -%}
+                                             {%- include 'jas_product_loop' -%}
+                                          {%- endunless -%}
+                                          {%- assign check_product_id = check_product_id | append: product.id -%}
+                                       {%- endif -%}
+                                    {%- endfor-%}
+                                 {%- endcapture -%}
+                                 {%- if check_product_id != blank -%}
+                                    <li class="menu-item menu-item-pr sub-column-item {{pr_style}}">
+                                       <a href="#" class="hide_menu_banner">Product menu gecko</a>
+                                       <div class="products jas-row jas-products-holder jas-carousel {{block.settings.image_size}}{%- if settings_pr_img_size %} jas_section_eqh{%- endif -%}" data-slick='{"slidesToShow": 1,"slidesToScroll": 1,"arrows":false}'>
+                                          {{html_pr}}
+                                       </div>
+                                    </li>
+                                 {%- endif -%}
+                           {%- endif -%}
+                        </ul>
+                     {%- endif -%}
+                     {%- if label != blank and block.settings.color != blank -%}<style type="text/css">.menu-item-{{block.id}} >a>.jas-menu-label-{{label | handleize}}{ background-color: {{block.settings.color}} }</style>{%- endif -%} 
+                  </li>
+               {%- when 'mega_sub' -%}
+                  {%- assign label = block.settings.label -%}
+                  {%- assign icon = block.settings.icon -%}
+                  {%- assign position = block.settings.position -%}
+                  {%- assign label_dow = label | downcase -%}
+                  {%- assign link_list = block.settings.menu -%}
+                  <li id="menu-item-{{block.id}}" class="menu-item menu-item-has-children menu_has_offsets menu-{{position}} menu-item-{{block.id}}{%- if label_dow == 'sale' or label_dow == 'sale!' %} sale{%- endif -%}">
+                     <a href="{{block.settings.button_link}}">{%- if icon != blank -%}<i class="fa fa-{{icon}}"></i>{%- endif -%}{{block.settings.title}}{%- if label != blank and block.settings.color != blank -%}<span class="jas-menu-label jas-menu-label-{{ label | handleize}}">{{label}}</span>{%- endif -%}</a>
+                     {%- if link_list != blank -%}
+                        <ul class="sub-menu mega-menu">
+                           {%- assign position = 'left' -%}
+                           {%- for link in linklists[link_list].links -%}
+                              {%- if forloop.index == 6 -%}{%- assign position = 'right' -%}{%- endif -%}
+                              {%- assign child_list_handle = link.title | handleize -%}
+                              {%- if linklists[child_list_handle].links != blank -%}
+                                  <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}">
+                                       <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                       <ul class="sub-column">
+                                           {%- for thirdlink in linklists[child_list_handle].links -%}
+                                             {%- assign icon_third  = thirdlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                             {%- assign label_third  = thirdlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                             {%- assign third_list_handle = thirdlink.title | handleize -%}
+                                             {%- if linklists[third_list_handle].links != blank -%}
+                                                <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                   <ul class="sub-column">
+                                                      {%- for fourlink in linklists[third_list_handle].links -%}
+                                                         {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                         {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                         <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                      {%- endfor -%}
+                                                   </ul>
+                                                </li>
+                                             {%- elsif thirdlink.links != blank -%}
+                                                  <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                      <ul class="sub-column">
+                                                         {%- for fourlink in thirdlink.links -%}
+                                                            {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                            {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                            <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                         {%- endfor -%}
+                                                      </ul>
+                                                   </li>
+                                             {%- else -%}
+                                                <li class="menu-item"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a></li>
+                                             {%- endif -%}
+                                          {%- endfor -%}
+                                       </ul>
+                                    </li>
+                              {%- elsif link.links != blank -%}
+                                 <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}">
+                                       <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                       <ul class="sub-column">
+                                          {%- for thirdlink in link.links -%}
+                                          {%- assign icon_third  = thirdlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                          {%- assign label_third  = thirdlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                          {%- if thirdlink.links != blank -%}
+                                               <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                   <ul class="sub-column">
+                                                      {%- for fourlink in thirdlink.links -%}
+                                                         {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                         {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                         <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                      {%- endfor -%}
+                                                   </ul>
+                                                </li>
+                                          {%- else -%}
+                                             <li class="menu-item"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a></li>
+                                          {%- endif -%}
+                                       {%- endfor -%}
+                                       </ul>
+                                    </li>
+                              {%- else -%}
+                                    <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}"><a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a></li>
+                                 {%- endif -%}
+                              {%- if forloop.index == 6 -%}{%- break -%}{%- endif -%}
+                           {%- endfor -%}
+                        </ul>
+                     {%- endif -%}
+                     {%- if label != blank and block.settings.color != blank -%}<style type="text/css">.menu-item-{{block.id}} >a>.jas-menu-label-{{label | handleize}}{ background-color: {{block.settings.color}} }</style>{%- endif -%} 
+                  </li>
+               {%- when 'collection_banner' -%}
+                  {%- assign label = block.settings.label -%}
+                  {%- assign icon = block.settings.icon -%}
+                  {%- assign position = block.settings.position -%}
+                  {%- assign label_dow = label | downcase -%}
+                  {%- assign link_list = block.settings.menu -%}
+                  <li id="menu-item-{{block.id}}" class="menu-item menu-item-has-children menu_has_offsets menu-{{position}} menu-item-{{block.id}}{%- if label_dow == 'sale' or label_dow == 'sale!' %} sale{%- endif -%}">
+                     <a href="{{block.settings.button_link}}">{%- if icon != blank -%}<i class="fa fa-{{icon}}"></i>{%- endif -%}{{block.settings.title}}{%- if label != blank and block.settings.color != blank -%}<span class="jas-menu-label jas-menu-label-{{ label | handleize}}">{{label}}</span>{%- endif -%}</a>
+                     {%- if link_list != blank -%}
+                        <ul class="sub-menu mega-menu">
+                           {%- assign position = 'left' -%}
+                           {%- for link in linklists[link_list].links -%}
+                              {%- if forloop.index == 6 -%}{%- assign position = 'right' -%}{%- endif -%}
+                              {%- assign child_list_handle = link.title | handleize -%}
+                              {%- if linklists[child_list_handle].links != blank -%}
+                                  <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}">
+                                    {%- assign image_i = 'banner_' | append:forloop.index -%}
+                                    {%- assign image = block.settings[image_i] -%}
+                                    {%- if image == blank -%}
+                                       <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                    {%- else -%}
+                                       <div class="menu-banner tc hover-1 cursor-pointer{%- if block.settings.use_eq_height %} jas_bg lazyload{%- endif -%}" onclick="window.location.href='{{ link.url }}'"{%- if block.settings.use_eq_height %} data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ image | img_url: '50x50' }});"{%- endif -%}>
+                                          <div class="main-wrapp-img"{%- if block.settings.use_eq_height %} style="height: {{ block.settings.height_int | escape | default: '200' | remove: 'px' | append: 'px' }}"{%- endif -%}>
+                                             {%- if block.settings.use_eq_height == false -%}
+                                             <div class="banner-image">
+                                                {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                                <img src="{{ image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ image.aspect_ratio }}"  data-sizes="auto" class="lazyload attachment-shop_catalog size-shop_catalog" alt="{{image.alt}}">       
+                                                <div class="jas-wrap-lazy"></div>
+                                             </div>
+                                             {%- endif -%}
+                                          </div>
+                                          <div class="wrapper-content-baner">
+                                             <div class="banner-inner arrow-text-learn"><h3 class="mg__0">{{ link.title | split: '[' | first }}</h3>
+                                                    <span><i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i> </span>
+
+                                             </div>
+                                          </div>
+                                          {%- if block.settings.use_eq_height -%}<div class="jas-wrap-lazy"></div>{%- endif -%}
+                                       </div>
+                                     {%- endif -%}
+                                    <ul class="sub-column">
+                                           {%- for thirdlink in linklists[child_list_handle].links -%}
+                                             {%- assign icon_third  = thirdlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                             {%- assign label_third  = thirdlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                             {%- assign third_list_handle = thirdlink.title | handleize -%}
+                                             {%- if linklists[third_list_handle].links != blank -%}
+                                                <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                   <ul class="sub-column">
+                                                      {%- for fourlink in linklists[third_list_handle].links -%}
+                                                         {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                         {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                         <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                      {%- endfor -%}
+                                                   </ul>
+                                                </li>
+                                             {%- elsif thirdlink.links != blank -%}
+                                                  <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                      <ul class="sub-column">
+                                                         {%- for fourlink in thirdlink.links -%}
+                                                            {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                            {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                            <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                         {%- endfor -%}
+                                                      </ul>
+                                                   </li>
+                                             {%- else -%}
+                                                <li class="menu-item"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a></li>
+                                             {%- endif -%}
+                                          {%- endfor -%}
+                                       </ul>
+                                 </li>
+                              {%- elsif link.links != blank -%}
+                                 <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}">
+                                    {%- assign image_i = 'banner_' | append:forloop.index -%}
+                                    {%- assign image = block.settings[image_i] -%}
+                                    {%- if image == blank -%}
+                                       <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                    {%- else -%}
+                                       <div class="menu-banner tc hover-1 cursor-pointer{%- if block.settings.use_eq_height %} jas_bg lazyload{%- endif -%}" onclick="window.location.href='{{ link.url }}'"{%- if block.settings.use_eq_height %} data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ image | img_url: '50x50' }});"{%- endif -%}>
+                                          <div class="main-wrapp-img"{%- if block.settings.use_eq_height %} style="height: {{ block.settings.height_int | escape | default: '200' | remove: 'px' | append: 'px' }}"{%- endif -%}>
+                                             {%- if block.settings.use_eq_height == false -%}
+                                             <div class="banner-image">
+                                                {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                                <img src="{{ image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ image.aspect_ratio }}"  data-sizes="auto" class="lazyload attachment-shop_catalog size-shop_catalog" alt="{{image.alt}}">       
+                                                <div class="jas-wrap-lazy"></div>
+                                             </div>
+                                             {%- endif -%}
+                                          </div>
+                                          <div class="wrapper-content-baner">
+                                             <div class="banner-inner arrow-text-learn"><h3 class="mg__0">{{ link.title | split: '[' | first }}</h3>
+                                           <span><i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i> </span>
+                                                                                   </div>
+                                          </div>
+                                          {%- if block.settings.use_eq_height -%}<div class="jas-wrap-lazy"></div>{%- endif -%}
+                                       </div>
+                                     {%- endif -%}
+                                    <ul class="sub-column">
+                                          {%- for thirdlink in link.links -%}
+                                          {%- assign icon_third  = thirdlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                          {%- assign label_third  = thirdlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                          {%- if thirdlink.links != blank -%}
+                                               <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                   <ul class="sub-column">
+                                                      {%- for fourlink in thirdlink.links -%}
+                                                         {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                         {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                         <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                      {%- endfor -%}
+                                                   </ul>
+                                                </li>
+                                          {%- else -%}
+                                             <li class="menu-item"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a></li>
+                                          {%- endif -%}
+                                       {%- endfor -%}
+                                       </ul>
+                                 </li>
+                              {%- else -%}
+                                 <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}  {%- if linklists[link_list].links.size == 4 %} mega_app_menu-item-4{%- endif -%}">
+                                    {%- assign image_i = 'banner_' | append:forloop.index -%}
+                                    {%- assign image = block.settings[image_i] -%}
+                                    {%- if image == blank -%}
+                                       <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                    {%- else -%}
+                                       <div class="menu-banner learn-menu tc hover-1 cursor-pointer{%- if block.settings.use_eq_height %} jas_bg lazyload{%- endif -%}" onclick="window.location.href='{{ link.url }}'"{%- if block.settings.use_eq_height %} data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ image | img_url: '50x50' }});"{%- endif -%}>
+                                          <div class="main-wrapp-img"{%- if block.settings.use_eq_height %} style="height: {{ block.settings.height_int | escape | default: '200' | remove: 'px' | append: 'px' }}"{%- endif -%}>
+                                             {%- if block.settings.use_eq_height == false -%}
+                                             <div class="banner-image">
+                                                {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                                <img src="{{ image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ image.aspect_ratio }}"  data-sizes="auto" class="lazyload attachment-shop_catalog size-shop_catalog" alt="{{image.alt}}">       
+                                                <div class="jas-wrap-lazy"></div>
+                                             </div>
+                                             {%- endif -%}
+                                          </div>
+                                          <div class="wrapper-content-baner">
+                                             <div class="banner-inner arrow-text-learn"><h3 class="mg__0">{{ link.title | split: '[' | first }}</h3>
+                                            <span><i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i> </span>
+                                            </div>
+                                          </div>
+                                       </div>
+                                    {%- endif -%}
+                                 </li>
+                              {%- endif -%}
+                              {%- if forloop.index == 6 -%}{%- break -%}{%- endif -%}
+                           {%- endfor -%}
+                        </ul>
+                     {%- endif -%}
+                     {%- if label != blank and block.settings.color != blank -%}<style type="text/css">.menu-item-{{block.id}} >a>.jas-menu-label-{{label | handleize}}{ background-color: {{block.settings.color}} }</style>{%- endif -%} 
+                  </li>
+               
+        
+             
+        
+          
+        
+            {%- when 'dropdown' -%}
+                  {%- assign label = block.settings.label -%}
+                  {%- assign icon = block.settings.icon -%}
+                  {%- assign position = block.settings.position -%}
+                  {%- assign label_dow = label | downcase -%}
+                  {%- assign link_list = block.settings.menu -%}
+                  <li id="menu-item-{{block.id}}" class="jtpl_custom_dropdown menu-item menu-item-has-children menu_has_offsets menu-{{position}} menu-item-{{block.id}}{%- if label_dow == 'sale' or label_dow == 'sale!' %} sale{%- endif -%}">
+                     <a href="{{block.settings.button_link}}">{%- if icon != blank -%}<i class="fa fa-{{icon}}"></i>{%- endif -%}{{block.settings.title}}{%- if label != blank and block.settings.color != blank -%}<span class="jas-menu-label jas-menu-label-{{ label | handleize}}">{{label}}</span>{%- endif -%}</a>
+                     {%- if link_list != blank -%}
+                        <ul class="sub-menu">
+                           {%- for link in linklists[link_list].links -%}
+                              {%- assign child_list_handle = link.title | handleize -%}
+                              {%- if linklists[child_list_handle].links != blank -%}
+                                  <li class="menu-item has_drop {{position}}">
+                                    <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                    <ul class="sub-column">
+                                       {%- for thirdlink in linklists[child_list_handle].links -%}
+                                          {%- assign icon_third  = thirdlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                          {%- assign label_third  = thirdlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                          {%- assign third_list_handle = thirdlink.title | handleize -%}
+                                          {%- if linklists[third_list_handle].links != blank -%}
+                                             <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                <ul class="sub-column">
+                                                   {%- for fourlink in linklists[third_list_handle].links -%}
+                                                      {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                      {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                      <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                   {%- endfor -%}
+                                                </ul>
+                                             </li>
+                                          {%- elsif thirdlink.links != blank -%}
+                                               <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                   <ul class="sub-column">
+                                                      {%- for fourlink in thirdlink.links -%}
+                                                         {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                         {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                         <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                      {%- endfor -%}
+                                                   </ul>
+                                                </li>
+                                          {%- else -%}
+                                             <li class="menu-item"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a></li>
+                                          {%- endif -%}
+                                       {%- endfor -%}
+                                    </ul>
+                                 </li>
+                              {%- elsif link.links != blank -%}
+                                 <li class="menu-item has_drop">
+                                    <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                    <ul class="sub-column">
+                                       {%- for thirdlink in link.links -%}
+                                          {%- assign icon_third  = thirdlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                          {%- assign label_third  = thirdlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                          {%- if thirdlink.links != blank -%}
+                                               <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                   <ul class="sub-column">
+                                                      {%- for fourlink in thirdlink.links -%}
+                                                         {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                         {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                         <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                      {%- endfor -%}
+                                                   </ul>
+                                                </li>
+                                          {%- else -%}
+                                             <li class="menu-item"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a></li>
+                                          {%- endif -%}
+                                       {%- endfor -%}
+                                    </ul>
+                                 </li>
+                              {%- else -%}
+                                 {%- assign icon_two  = link.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                 {%- assign label_two  = link.title |  split: '[label_' | last  | split: ']' | first -%}
+                                 <li class="menu-item"><a href="{{ link.url }}">{%- if link.title contains '[icon_' -%}<i class="fa fa-{{icon_two}}"></i>{%- endif -%}{{ link.title | split: '[' | first }}{%- if link.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_two | handleize}}">{{label_two}}</span>{%- endif -%}</a></li>
+                              {%- endif -%}
+                              {% comment %}{%- if forloop.index == 6 -%}{%- break -%}{%- endif -%}{% endcomment %}
+                           {%- endfor -%}
+                        </ul>
+                     {%- endif -%}
+                     {%- if label != blank and block.settings.color != blank -%}<style type="text/css">.menu-item-{{block.id}} >a>.jas-menu-label-{{label | handleize}}{ background-color: {{block.settings.color}} }</style>{%- endif -%} 
+                  </li>
+               {%- when 'shipping' -%}
+                  {%- assign label = block.settings.label -%}
+                  {%- assign icon = block.settings.icon -%}
+                  {%- assign position = block.settings.position -%}
+                  {%- assign label_dow = label | downcase -%}
+                  {%- assign link_list = block.settings.menu -%}
+                  <li id="menu-item-{{block.id}}" class="menu-item menu-item-has-children menu_has_offsets menu-item-shipping menu-{{position}} menu-item-{{block.id}}{%- if label_dow == 'sale' or label_dow == 'sale!' %} sale{%- endif -%}">
+                     <a href="{{block.settings.button_link}}">{%- if icon != blank -%}<i class="fa fa-{{icon}}"></i>{%- endif -%}{{block.settings.title}}{%- if label != blank and block.settings.color != blank -%}<span class="jas-menu-label jas-menu-label-{{ label | handleize}}">{{label}}</span>{%- endif -%}</a>
+                     {%- if link_list != blank -%}
+                        <div class="mega-menu">
+                           <ul class="sub-menu">
+                              {%- assign position = 'left' -%}
+                              {%- for link in linklists[link_list].links -%}
+                                 {%- if forloop.index == 6 -%}{%- assign position = 'right' -%}{%- endif -%}
+                                 {%- assign child_list_handle = link.title | handleize -%}
+                                 {%- if linklists[child_list_handle].links != blank -%}
+                                     <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}">
+                                       <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                       <ul class="sub-column">
+                                           {%- for thirdlink in linklists[child_list_handle].links -%}
+                                          {%- assign icon_third  = thirdlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                          {%- assign label_third  = thirdlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                          {%- assign third_list_handle = thirdlink.title | handleize -%}
+                                          {%- if linklists[third_list_handle].links != blank -%}
+                                             <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                <ul class="sub-column">
+                                                   {%- for fourlink in linklists[third_list_handle].links -%}
+                                                      {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                      {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                      <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                   {%- endfor -%}
+                                                </ul>
+                                             </li>
+                                          {%- elsif thirdlink.links != blank -%}
+                                               <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                   <ul class="sub-column">
+                                                      {%- for fourlink in thirdlink.links -%}
+                                                         {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                         {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                         <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                      {%- endfor -%}
+                                                   </ul>
+                                                </li>
+                                          {%- else -%}
+                                             <li class="menu-item"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a></li>
+                                          {%- endif -%}
+                                       {%- endfor -%}
+                                       </ul>
+                                    </li>
+                                 {%- elsif link.links != blank -%}
+                                    <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}">
+                                       <a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a>
+                                       <ul class="sub-column">
+                                          {%- for thirdlink in link.links -%}
+                                          {%- assign icon_third  = thirdlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                          {%- assign label_third  = thirdlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                          {%- if thirdlink.links != blank -%}
+                                               <li class="menu-item has_drop {{position}}"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a>
+                                                   <ul class="sub-column">
+                                                      {%- for fourlink in thirdlink.links -%}
+                                                         {%- assign icon_four = fourlink.title |  split: '[icon_' | last  | split: ']' | first -%}
+                                                         {%- assign label_four  = fourlink.title |  split: '[label_' | last  | split: ']' | first -%}
+                                                         <li class="menu-item"><a href="{{ fourlink.url }}">{%- if fourlink.title contains '[icon_' -%}<i class="fa fa-{{icon_four}}"></i>{%- endif -%}{{ fourlink.title | split: '[' | first }}{%- if fourlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_four | handleize}}">{{label_four}}</span>{%- endif -%}</a></li>
+                                                      {%- endfor -%}
+                                                   </ul>
+                                                </li>
+                                          {%- else -%}
+                                             <li class="menu-item"><a href="{{ thirdlink.url }}">{%- if thirdlink.title contains '[icon_' -%}<i class="fa fa-{{icon_third}}"></i>{%- endif -%}{{ thirdlink.title | split: '[' | first }}{%- if thirdlink.title contains '[label_' -%}<span class="jas-menu-label jas-menu-label-{{label_third | handleize}}">{{label_third}}</span>{%- endif -%}</a></li>
+                                          {%- endif -%}
+                                       {%- endfor -%}
+                                       </ul>
+                                    </li>
+                                 {%- else -%}
+                                    <li class="menu-item menu-item-has-children sub-column-item{%- if linklists[link_list].links.size > 5 %} menu-item-6{%- endif -%}"><a href="{{ link.url }}">{{ link.title | split: '[' | first }}</a></li>
+                                 {%- endif -%}
+                                  
+                                 {%- if forloop.index == 6 -%}{%- break -%}{%- endif -%}
+                              {%- endfor -%}
+                              {%- assign image = block.settings.image -%}
+                              {%- if image != blank -%}
+                                 <li class="menu-item menu-item-has-children sub-column-item">
+                                    <a href="#" class="hide_menu_banner">Banner menu gecko</a>
+                                    <div class="menu-banner tc hover-1 cursor-pointer" onclick="window.location.href='{{ block.settings.url }}'">
+                                       <div class="main-wrapp-img">
+                                          <div class="banner-image">
+                                             {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                             <img src="{{ image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ image.aspect_ratio }}"  data-sizes="auto" class="lazyload attachment-shop_catalog size-shop_catalog" alt="{{image.alt}}">       
+                                             <div class="jas-wrap-lazy"></div>
+                                          </div>
+                                       </div>
+                                       <div class="wrapper-content-baner">
+                                          <div class="banner-inner arrow-text-learn"><h3 class="mg__0">{{ block.settings.tile }}</h3>
+                                         <span><i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i> </span>
+                                         </div>
+                                       </div>
+                                    </div>
+                                 </li>
+                              {%- endif -%}
+                           </ul>
+                           {%- assign index = 0 -%}
+                           {%- capture shipping_html -%}
+                              {%- for i in (1..3) -%}
+                                 {%- assign shipping_heading = 'shipping_heading_' | append:i -%}
+                                 {%- assign shipping_subtex = 'shipping_subtext_' | append:i -%}
+                                 {%- assign shipping_icon = 'shipping_icon_' | append:i -%}
+                                 {%- assign shipping_heading_id = block.settings[shipping_heading] -%}
+                                 {%- assign shipping_subtex_id = block.settings[shipping_subtex] -%}
+                                 {%- assign shipping_icon_id = block.settings[shipping_icon] -%}
+                                 {%- if shipping_heading_id != blank and shipping_subtex_id != blank -%}
+                                    {%- assign index = forloop.index -%}
+                                    <div class="jas-col-sm-4 jas-col-xs-12">
+                                       <div class="jas-service tl mt__20 mb__20">
+                                          {%- if shipping_icon_id != blank -%}<div class="icon medium cp" style="color: #9e9e9e"><i class="{{shipping_icon_id}}"></i></div>{%- endif -%}
+                                          <div class="content tl">
+                                             <h3 class="title cp tu fs__14 mg__0 mb__5" style="color: #222222">{{shipping_heading_id}}</h3>
+                                             <p class="mg__0" style="color: #878787">{{shipping_subtex_id}}</p>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 {%- endif -%}
+                              {%- endfor -%}
+                           {%- endcapture -%}
+                           {%- if index > 0 -%}
+                              <div class="jas-row row_menu_shipping">
+                                 {%- case index-%}
+                                    {%- when 1 -%}
+                                       {{shipping_html | replace: 'jas-col-sm-4', 'jas-col-sm-12' }}
+                                    {%- when 2  -%}
+                                       {{shipping_html | replace: 'jas-col-sm-4', 'jas-col-sm-6' }}
+                                    {%- else -%}
+                                       {{shipping_html}}
+                                 {%- endcase -%}
+                              </div>
+                           {%- endif -%}
+                        </div>
+                     {%- endif -%}
+                     {%- if label != blank and block.settings.color != blank -%}<style type="text/css">.menu-item-{{block.id}} >a>.jas-menu-label-{{label | handleize}}{ background-color: {{block.settings.color}} }</style>{%- endif -%} 
+                  </li>
+               {%- else -%}
+                  
+            {%- endcase -%}
+         {%- endfor -%}
+      </ul>
+   </nav>
+   {%- if section.settings.label_1 != blank or section.settings.label_2 != blank or section.settings.label_3 != blank or section.settings.label_4 != blank or section.settings.label_5 != blank -%}
+   <style type="text/css">
+   {%- capture min_css -%}
+      {%- for i in (1..5) -%}
+      {%- assign label = 'label_' | append:i -%}
+      {%- assign color = 'color_' | append:i -%}
+      {%- assign label_id = section.settings[label] -%}
+      {%- assign color_id = section.settings[color] -%}
+         {%- if label_id != blank and color_id != blank -%}
+         .jas-menu-label-{{label_id | handleize }} {background-color: {{color_id}}}
+         {%- endif -%}
+      {%- endfor -%}
+   {%- endcapture -%}
+   {{min_css | strip_newline | remove: " " }}
+   </style>
+   {%- endif -%}
+{%- endif -%}
+{%- if section.blocks.size == 0 -%}<h5>Create your first navigation menu sidebar using the sidebar.</h5>{%- endif -%}
+{%- schema -%}
+  {
+    "name": "Main navigation",
+      "class": "menu-section menu-main-navigation-container",
+      "settings": [
+         {
+         "type": "header",
+         "content": "== Label menu Settings"
+         },
+         {
+            "type":"text",
+            "id":"label_1",
+            "label":"Menu label 1"
+         },
+         {
+            "type":"color",
+            "id":"color_1",
+            "label":"Label color 1"
+         },
+         {
+            "type":"text",
+            "id":"label_2",
+            "label":"Menu label 2"
+         },
+         {
+            "type":"color",
+            "id":"color_2",
+            "label":"Label color 2"
+         },
+         {
+            "type":"text",
+            "id":"label_3",
+            "label":"Menu label 3"
+         },
+         {
+            "type":"color",
+            "id":"color_3",
+            "label":"Label color 3"
+         },
+         {
+            "type":"text",
+            "id":"label_4",
+            "label":"Menu label 4"
+         },
+         {
+            "type":"color",
+            "id":"color_4",
+            "label":"Label color 4"
+         },
+         {
+            "type":"text",
+            "id":"label_5",
+            "label":"Menu label 5"
+         },
+         {
+            "type":"color",
+            "id":"color_5",
+            "label":"Label color 5"
+         }
+      ],
+    "blocks": [
+      {
+        "type":"sub_mega_product",
+         "name":"Sub Mega Menu Product",
+          "settings": [
+         {
+         "type": "text",
+         "id": "title",
+         "label": "Navigation Title",
+         "default": "Home",
+         "info": "Ex: Home"
+         },
+         
+         {
+         "type": "url",
+         "id": "button_link",
+         "label": "Navigation link"
+         },
+         {
+         "type":"text",
+         "id":"label",
+         "label":"Navigation label"
+         },
+         {
+         "type":"color",
+         "id":"color",
+         "label":"Navigation label color",
+         "default":"#ffffff"
+         },
+         {
+           "type": "link_list",
+           "id": "menu",
+           "label": "Add sub menu"
+         },
+         
+         {
+         "type": "header",
+         "content": "== Product Settings"
+         },
+         {
+           "type": "radio",
+           "id": "conditions_setting",
+           "options": [
+            {
+               "value": "1",
+               "label": "Automatically select products based on conditions"
+             },
+             {
+               "value": "2",
+               "label": "Manually select products"
+             }
+             
+           ],
+           "label": "___ Conditions"
+         },
+         
+      {
+        "type": "header",
+        "content": "== Design Image"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_eq_height",
+        "label": "Use equal height images?",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "image_size",
+        "label": "Image size",
+        "default": "jas_cover",
+        "options": [
+          {
+            "value": "jas_cover",
+            "label": "Full"
+          },
+          {
+            "value": "jas_contain",
+            "label": "Auto"
+          }
+        ]
+      },
+ {
+         "type": "checkbox",
+           "id": "enable_disable_section",
+           "label": "Enable Collection",
+			 "default": true
+         },
+         {
+         "type": "header",
+         "content": "___ Automatically select products"
+         },
+         {
+           "type": "collection",
+           "id": "id_collection",
+           "label": "Collection to use"
+         }
+         
+         
+       ]
+      },
+      {
+        "type":"mega_sub",
+         "name":"Sub Mega Simple",
+          "settings": [
+         {
+         "type": "text",
+         "id": "title",
+         "label": "Navigation Title",
+         "default": "Home",
+         "info": "Ex: Home"
+         },
+         {
+           "id": "icon",
+           "type": "text",
+           "label": "Icon",
+           "info":"Ex:user [fontawesome icons](https://fontawesome.com/v4.7.0/icons/)"
+         },
+         {
+         "type": "url",
+         "id": "button_link",
+         "label": "Navigation link"
+         },
+         {
+         "type":"text",
+         "id":"label",
+         "label":"Navigation label"
+         },
+         {
+         "type":"color",
+         "id":"color",
+         "label":"Navigation label color",
+         "default":"#ffffff"
+         },
+         {
+           "type": "link_list",
+           "id": "menu",
+           "label": "Add sub menu"
+         },
+         {
+           "type": "select",
+           "id": "position",
+           "label": "Sub menu position",
+           "default": "auto",
+           "options": [
+             {
+               "value": "auto",
+               "label": "Auto (Default)"
+             },
+             {
+               "value": "center",
+               "label": "Center"
+             }
+           ]
+         }
+       ]
+      },
+      {
+        "type":"collection_banner",
+         "name":"Mega Collection Banner",
+          "settings": [
+         {
+         "type": "text",
+         "id": "title",
+         "label": "Navigation Title",
+         "default": "Home",
+         "info": "Ex: Home"
+         },
+         {
+           "id": "icon",
+           "type": "text",
+           "label": "Icon",
+           "info":"Ex:user [fontawesome icons](https://fontawesome.com/v4.7.0/icons/)"
+         },
+         {
+         "type": "url",
+         "id": "button_link",
+         "label": "Navigation link"
+         },
+         {
+         "type":"text",
+         "id":"label",
+         "label":"Navigation label"
+         },
+         {
+         "type":"color",
+         "id":"color",
+         "label":"Navigation label color",
+         "default":"#ffffff"
+         },
+         {
+           "type": "link_list",
+           "id": "menu",
+           "label": "Add sub menu"
+         },
+         {
+           "type": "select",
+           "id": "position",
+           "label": "Sub menu position",
+           "default": "auto",
+           "options": [
+             {
+               "value": "auto",
+               "label": "Auto (Default)"
+             },
+             {
+               "value": "center",
+               "label": "Center"
+             }
+           ]
+         },
+         {
+           "type": "header",
+           "content": "== Banner settings"
+         },
+         {
+         "type": "image_picker",
+         "id": "banner_1",
+         "label": "Banner image 1"
+         },
+         {
+         "type": "image_picker",
+         "id": "banner_2",
+         "label": "Banner image 2"
+         },
+         {
+         "type": "image_picker",
+         "id": "banner_3",
+         "label": "Banner image 3"
+         },
+         {
+         "type": "image_picker",
+         "id": "banner_4",
+         "label": "Banner image 4"
+         },
+         {
+         "type": "image_picker",
+         "id": "banner_5",
+         "label": "Banner image 5"
+         },
+         {
+         "type": "image_picker",
+         "id": "banner_6",
+         "label": "Banner image 6"
+         },
+         {
+           "type": "checkbox",
+           "id": "use_eq_height",
+           "label": "Use equal height images?",
+           "default": false
+         },
+         {
+           "type": "text",
+           "id": "height_int",
+           "label": "Enter height (integer)",
+           "default":"200",
+           "info": "200"
+         }
+       ]
+      },
+      {
+
+        "type":"collection_banner_6",
+         "name":"Mega Collection blocks 6",
+          "settings": [
+         {
+         "type": "text",
+         "id": "title",
+         "label": "Navigation Title",
+         "default": "Home",
+         "info": "Ex: Home"
+         },
+         {
+         "type": "url",
+         "id": "button_link",
+         "label": "Navigation link"
+         },
+         {
+         "type":"text",
+         "id":"label",
+         "label":"Navigation label"
+         },
+         {
+         "type":"color",
+         "id":"color",
+         "label":"Navigation label color",
+         "default":"#ffffff"
+         },
+         {
+           "type": "link_list",
+           "id": "menu",
+           "label": "Add sub menu"
+         },
+         {
+           "type": "header",
+           "content": "== Banner settings" 
+         },
+         {
+         "type": "image_picker",
+         "id": "banner_1",
+         "label": "Banner image 1"
+         },
+         {
+         "type": "image_picker",
+         "id": "banner_2",
+         "label": "Banner image 2"
+         },
+         {
+         "type": "image_picker",
+         "id": "banner_3",
+         "label": "Banner image 3"
+         },
+         {
+         "type": "image_picker",
+         "id": "banner_4",
+         "label": "Banner image 4"
+         },
+         {
+         "type": "image_picker",
+         "id": "banner_5",
+         "label": "Banner image 5"
+         },
+         {
+         "type": "image_picker",
+         "id": "banner_6",
+         "label": "Banner image 6"
+         },
+         {
+           "type": "checkbox",
+           "id": "use_eq_height",
+           "label": "Use equal height images?",
+           "default": false
+         },
+         {
+           "type": "text",
+           "id": "height_int",
+           "label": "Enter height (integer)",
+           "default":"200",
+           "info": "200"
+         }
+       ]
+      
+      },
+
+      {
+
+        "type":"collection_with_text",
+        "name":"Mega collection with text",
+        "settings": [
+         {
+         "type": "text",
+         "id": "title",
+         "label": "Navigation Title",
+         "default": "Home",
+         "info": "Ex: Home"
+         },
+         {
+           "id": "icon",
+           "type": "text",
+           "label": "Icon",
+           "info":"Ex:user [fontawesome icons](https://fontawesome.com/v4.7.0/icons/)"
+         },
+         {
+         "type": "url",
+         "id": "button_link",
+         "label": "Navigation link"
+         },
+         {
+         "type":"text",
+         "id":"label",
+         "label":"Navigation label"
+         },
+         {
+         "type":"color",
+         "id":"color",
+         "label":"Navigation label color",
+         "default":"#ffffff"
+         },
+         {
+           "type": "link_list",
+           "id": "menu",
+           "label": "Add sub menu"
+         },
+         {
+           "type": "select",
+           "id": "position",
+           "label": "Sub menu position",
+           "default": "auto",
+           "options": [
+             {
+               "value": "auto",
+               "label": "Auto (Default)"
+             },
+             {
+               "value": "center",
+               "label": "Center"
+             }
+           ]
+         },
+         {
+           "type": "header",
+           "content": "== Banner settings"
+         },
+         {
+         "type": "image_picker",
+         "id": "banner_1",
+         "label": "Banner image 1"
+         },
+         {
+         "type": "image_picker",
+         "id": "banner_2",
+         "label": "Banner image 2"
+         },
+        {
+           "type": "checkbox",
+           "id": "use_eq_height",
+           "label": "Use equal height images?",
+           "default": false
+         },
+         {
+           "type": "text",
+           "id": "height_int",
+           "label": "Enter height (integer)",
+           "default":"200",
+           "info": "200"
+         },
+         {
+           "type": "text",
+           "id": "titlebox",
+           "label": "Right side title"
+          },
+    {
+           "type": "html",
+           "id": "contentbox",
+           "label": "Right side Content"
+          }
+         
+       ]
+      
+      },
+      {
+
+        "type":"coll_product",
+        "name":"Mega Product As Text",
+        "settings": [
+         {
+         "type": "text",
+         "id": "title",
+         "label": "Navigation Title",
+         "default": "Home",
+         "info": "Ex: Home"
+         },
+         {
+           "id": "icon",
+           "type": "text",
+           "label": "Icon",
+           "info":"Ex:user [fontawesome icons](https://fontawesome.com/v4.7.0/icons/)"
+         },
+         {
+         "type": "url",
+         "id": "button_link",
+         "label": "Navigation link"
+         },
+         {
+         "type":"text",
+         "id":"label",
+         "label":"Navigation label"
+         },
+         {
+         "type":"color",
+         "id":"color",
+         "label":"Navigation label color",
+         "default":"#ffffff"
+         },
+         {
+           "type": "link_list",
+           "id": "menu",
+           "label": "Add sub menu"
+         },
+         {
+           "type": "select",
+           "id": "position",
+           "label": "Sub menu position",
+           "default": "auto",
+           "options": [
+             {
+               "value": "auto",
+               "label": "Auto (Default)"
+             },
+             {
+               "value": "center",
+               "label": "Center"
+             }
+           ]
+         },
+         {
+           "type": "header",
+           "content": "== Banner settings"
+         },
+         {
+         "type": "image_picker",
+         "id": "banner_1",
+         "label": "Banner image 1"
+         },
+         {
+         "type": "image_picker",
+         "id": "banner_2",
+         "label": "Banner image 2"
+         },
+        {
+           "type": "checkbox",
+           "id": "use_eq_height",
+           "label": "Use equal height images?",
+           "default": false
+         },
+         {
+           "type": "text",
+           "id": "height_int",
+           "label": "Enter height (integer)",
+           "default":"200",
+           "info": "200"
+         },
+         {
+           "type": "text",
+           "id": "titlebox",
+           "label": "Right side title"
+          },
+    {
+           "type": "html",
+           "id": "contentbox",
+           "label": "Right side Content"
+          },
+          {
+            "type": "header",
+            "content": "___ Manually select products"
+          },
+          {
+             "type":"product",
+             "id":"product_id_1",
+             "label":"Choose product 1"  
+          }
+         
+       ]
+      
+      },
+    
+
+      {
+        "type":"dropdown",
+         "name":"Sub Menu Dropdown",
+          "settings": [
+         {
+         "type": "text",
+         "id": "title",
+         "label": "Navigation Title",
+         "default": "Home",
+         "info": "Ex: Home"
+         },
+         {
+           "id": "icon",
+           "type": "text",
+           "label": "Icon",
+           "info":"Ex:user [fontawesome icons](https://fontawesome.com/v4.7.0/icons/)"
+         },
+         {
+         "type": "url",
+         "id": "button_link",
+         "label": "Navigation link"
+         },
+         {
+         "type":"text",
+         "id":"label",
+         "label":"Navigation label"
+         },
+          {
+           "type": "link_list",
+           "id": "menu",
+           "label": "Add sub menu"
+         },
+         {
+           "type": "select",
+           "id": "position",
+           "label": "Sub menu position",
+           "default": "left",
+           "options": [
+             {
+               "value": "left",
+               "label": "Left (Default)"
+             },
+             {
+               "value": "right",
+               "label": "Right"
+             }
+           ]
+         },
+         {
+         "type":"color",
+         "id":"color",
+         "label":"Navigation label color",
+         "default":"#ffffff"
+         }
+       ]
+      },
+      {
+        "type":"shipping",
+         "name":"Mega Shipping Banner",
+          "settings": [
+         {
+         "type": "text",
+         "id": "title",
+         "label": "Navigation Title",
+         "default": "Home",
+         "info": "Ex: Home"
+         },
+         {
+           "id": "icon",
+           "type": "text",
+           "label": "Icon",
+           "info":"Ex:user [fontawesome icons](https://fontawesome.com/v4.7.0/icons/)"
+         },
+         {
+         "type": "url",
+         "id": "button_link",
+         "label": "Navigation link"
+         },
+         {
+         "type":"text",
+         "id":"label",
+         "label":"Navigation label"
+         },
+         {
+         "type":"color",
+         "id":"color",
+         "label":"Navigation label color",
+         "default":"#ffffff"
+         },
+         {
+           "type": "link_list",
+           "id": "menu",
+           "label": "Add sub menu"
+         },
+         {
+           "type": "select",
+           "id": "position",
+           "label": "Sub menu position",
+           "default": "auto",
+           "options": [
+             {
+               "value": "auto",
+               "label": "Auto (Default)"
+             },
+             {
+               "value": "center",
+               "label": "Center"
+             }
+           ]
+         },
+         {
+           "type": "header",
+           "content": "== Banner Options"
+         },
+         {
+         "type": "image_picker",
+         "id": "image",
+         "label": "Banner image "
+         },
+         {
+         "type": "text",
+         "id": "tile",
+         "default": "Banner Title",
+         "label": "Banner Title"
+         },
+         {
+         "type": "url",
+         "id": "url",
+         "label": "Banner link"
+         },
+         {
+           "type": "header",
+           "content": "== Shipping Options"
+         },
+         {
+         "type": "header",
+         "content": "__ Shipping Settings 1"
+         },
+         {
+            "type": "text",
+            "id": "shipping_icon_1",
+            "label": "Icon",
+            "info": "ex:pe-7s-car [Get icons pe your](http:\/\/themes-pixeden.com\/font-demos\/7-stroke/)",
+            "default": "pe-7s-car"
+         },
+         {
+         "type": "text",
+         "id": "shipping_heading_1",
+         "label": "Heading",
+         "default": "Free Shipping"
+         },
+         {
+         "type": "text",
+         "id": "shipping_subtext_1",
+         "label": "Subtext",
+         "default": "Free for $50+ orders"
+         },
+         {
+         "type": "header",
+         "content": "__ Shipping Settings 2"
+         },
+         {
+            "type": "text",
+            "id": "shipping_icon_2",
+            "label": "Icon",
+            "info": "ex:pe-7s-car [Get icons pe your](http:\/\/themes-pixeden.com\/font-demos\/7-stroke/)",
+            "default": "pe-7s-car"
+         },
+         {
+         "type": "text",
+         "id": "shipping_heading_2",
+         "label": "Heading",
+         "default": "Free Shipping"
+         },
+         {
+         "type": "text",
+         "id": "shipping_subtext_2",
+         "label": "Subtext",
+         "default": "Free for $50+ orders"
+         },
+         {
+         "type": "header",
+         "content": "__ Shipping Settings 3"
+         },
+         {
+            "type": "text",
+            "id": "shipping_icon_3",
+            "label": "Icon",
+            "info": "ex:pe-7s-car [Get icons pe your](http:\/\/themes-pixeden.com\/font-demos\/7-stroke/)",
+            "default": "pe-7s-car"
+         },
+         {
+         "type": "text",
+         "id": "shipping_heading_3",
+         "label": "Heading",
+         "default": "Free Shipping"
+         },
+         {
+         "type": "text",
+         "id": "shipping_subtext_3",
+         "label": "Subtext",
+         "default": "Free for $50+ orders"
+         }
+       ]
+      },
+      {
+        "type":"html_block",
+         "name":"HTML block",
+          "settings": [
+         {
+         "type": "text",
+         "id": "title",
+         "label": "Navigation Title",
+         "default": "Home",
+         "info": "Ex: Home"
+         },
+         {
+           "id": "icon",
+           "type": "text",
+           "label": "Icon",
+           "info":"Ex:user [fontawesome icons](https://fontawesome.com/v4.7.0/icons/)"
+         },
+         {
+         "type": "url",
+         "id": "button_link",
+         "label": "Navigation link"
+         },
+         {
+         "type":"text",
+         "id":"label",
+         "label":"Navigation label"
+         },
+         {
+         "type":"color",
+         "id":"color",
+         "label":"Navigation label color",
+         "default":"#ffffff"
+         },
+         {
+            "type": "html",
+            "id": "html",
+            "label": "Custom HTMl",
+            "info": "Create a drop-down menu"
+         },
+         {
+           "type": "select",
+           "id": "position",
+           "label": "Sub menu position",
+           "default": "auto",
+           "options": [
+             {
+               "value": "auto",
+               "label": "Auto (Default)"
+             },
+             {
+               "value": "center",
+               "label": "Center"
+             }
+           ]
+         }
+       ]
+      },
+      {
+        "type":"menu_item_no_children",
+         "name":"Menu item no children",
+         "settings": [
+            {
+            "type": "text",
+            "id": "title",
+            "label": "Navigation Title",
+            "default": "Home",
+            "info": "Ex: Home"
+            },
+            {
+              "id": "icon",
+              "type": "text",
+              "label": "Icon",
+              "info":"Ex:user [fontawesome icons](https://fontawesome.com/v4.7.0/icons/)"
+            },
+            {
+            "type": "url",
+            "id": "button_link",
+            "label": "Navigation link"
+            },
+            {
+            "type":"text",
+            "id":"label",
+            "label":"Navigation label"
+            },
+            {
+            "type":"color",
+            "id":"color",
+            "label":"Navigation label color",
+            "default":"#ffffff"
+            }
+         ]
+      }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+.jas-menu > li.menu-item-pr ul .sub-column-item.menu-item-6 > a {
+    font-size: 9px;
+  }
+  .jas-menu ul li.menu-item-6 a {
+    font-size: 12px;
+  }
+  .jas-menu > li.menu-item-pr > ul > li.menu-item-6 {
+    min-width: 180px;
+  }
+  .jas-menu .menu-item-shipping .mega-menu>ul > .sub-column-item.menu-item-6 {
+    min-width: 225px;
+  }
+  .jas-menu .mega-menu ul li.has_drop {
+    padding: 6px 0;
+  }
+  .jas-menu .mega-menu ul li.has_drop a {
+    padding: 0 15px;
+  }
+  .jas-menu .mega-menu ul li.has_drop>a {
+    padding: 0;
+  }
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

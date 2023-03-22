@@ -1,0 +1,114 @@
+<div class="container">
+<div class="home-imagebox-main {% if section.settings.text_alighment != blank %} {{section.settings.text_alighment}} {% endif %}" style="background-color : {{section.settings.background_color}} !important; ">
+<div id="home-imagebox" class="index-section home-section">
+  <div class="text-center">
+  
+    
+    
+    
+    <h2 class="h2_title" style="color: {{section.settings.title_color}} !important;">
+      {% if section.settings.title != blank %}
+      {{section.settings.title}}
+      {% endif %}
+    </h2>
+    
+    <h2 class="h2_sub" style="color: {{section.settings.heading_color}} !important; font-size: 35px;line-height: 40px;">
+      {% if section.settings.Heading != blank %}
+      {{section.settings.Heading}}
+      {% endif %}
+    </h2>
+    
+    <h4 style="color: {{section.settings.content_color}} !important;">
+      {% if section.settings.content_one != blank %}
+      {{section.settings.content_one}}
+      {% endif %}
+    </h4>
+    
+    <div id="here" class="img-brand"><img src="{{section.settings.img1 | img_url:'master'}}"><img src="{{section.settings.img2 | img_url:'master'}}"><img src="{{section.settings.img3 | img_url:'master'}}"></div>
+  
+  </div>
+
+</div>
+</div>
+</div>
+{% schema %}
+	{
+		"name": "Home Module Three",
+        "settings": [
+                {
+				"type": "color",
+                    "id": "background_color",
+                    "label": "Background Color",
+                     "default": "#fff"
+               }, 
+             
+          		{
+                  "type": "text",
+                  "id": "Heading",
+                  "label": "Heading"
+                  
+            	},
+                {
+                    "type": "color",
+                    "id": "heading_color",
+                    "label": "Heading Color",
+                    "default": "#000"
+                 },
+            	{
+                  "type": "text",
+                  "id": "title",
+                  "label": "Title"
+                 
+            	},
+                {
+                    "type": "color",
+                    "id": "title_color",
+                    "label": "title Color",
+                     "default": "#000"
+                 },
+                {
+                  "type": "html",
+                   "id": "content_one",
+                   "label": "content"
+                },
+ 				{
+                    "type": "color",
+                    "id": "content_color",
+                    "label": "content Color",
+                    "default": "#000"
+                 },
+				{
+                    "type": "image_picker",
+                    "id": "img1",
+                    "label": "Logo Image 1"
+                 },
+ 				{
+                    "type": "image_picker",
+                    "id": "img2",
+                    "label": "Logo Image 2"
+                 },
+				{
+                    "type": "image_picker",
+                    "id": "img3",
+                    "label": "Logo Image 3"
+                 },
+                  {
+            "type": "select",
+            "id": "text_alighment",
+            "label": "Text alignment",
+            "default": "class-left-right",
+            "options": [
+              {
+                "value": "class-left-right",
+                "label": "Text to left"
+              },
+              {
+                "value": "class-right-left",
+                "label": "Text to Right"
+              }
+             
+            ]
+          }
+        ]
+	}
+{% endschema %}

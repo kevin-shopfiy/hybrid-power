@@ -1,0 +1,17 @@
+{%- if settings.header_color_scheme == 'dark' -%}
+{%- assign svg_name = 'jas-hamburger-black.svg' -%}
+{%- else -%}
+{%- assign svg_name = 'hamburger-white.svg' -%}
+{%- endif -%}
+<a href="javascript:void(0);" class="jas-push-menu-btn pr">
+   <!--img src="{{ svg_name | asset_url | split:'?' | first }}" width="30" height="16" alt="Menu">	
+   <img src="{{ 'jas-hamburger-black.svg' | asset_url | split:'?' | first }}" width="30" height="16" alt="Menu"-->
+  <i class="fas fa-bars"></i>
+</a>
+{%- if shop.customer_accounts_enabled and settings.account_header_enable -%}
+<div class="jas-action">
+	<div class="jas-my-account dn visible-xs ts__05 pr">
+		<a class="cb chp db{%- if customer == blank and settings.login_side %} jas-sp-login login_side_open_none{%- endif -%}"  href="{%- if customer == blank and settings.login_side %}#login_side{%- else -%}/account{%- endif -%}"><i class="pe-7s-user"></i></a>
+	</div>
+</div>
+{%- endif -%}

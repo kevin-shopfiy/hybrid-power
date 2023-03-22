@@ -1,0 +1,62 @@
+{%- layout none -%}
+{%- if canonical_url contains 'q=' -%}
+{%- assign paginate = canonical_url | split: 'q=' -%}
+{%- assign last = paginate | last -%}
+{%- assign last = last | split: '+' -%}
+  {%- assign convert_index = last[0] | remove: "paginate_" -%}
+  {%- assign paginate_index = convert_index | plus: 0 -%}
+  {%- assign columns = last[1] | remove: "columns_" -%}
+  {%- assign columns_mb = last[2] | remove: "columns_mb_" -%}
+  {%- assign show_vendor = last[3] | remove: "vendor_" -%}
+  {%- assign img_size = last[4] | remove: "img_size_" -%}
+  {%- assign use_pagination = last[5] | remove: "use_pagination_" -%}
+  {%- assign countdown = last[6] | remove: "countdown_" -%}
+  {%- assign countdown_timer_style = last[7] | remove: "countdown_style_" -%}
+  {%- assign image_size = last[8] | remove: "image_size_" -%}
+  {%- assign ratio = last[9] | remove: "ntratio_" -%}
+  {%- assign position = last[10] | remove: "position_" -%}
+  {%- assign id = last[11] | remove: "id_" -%}
+{%- endif -%}
+{%- assign grid_columns = columns -%}
+{%- assign grid_columns_mb = columns_mb -%}
+{%- assign settings_pr_img_size = false -%}
+{%- assign section_settings_countdown = false -%}
+{%- if img_size == 'true' -%}{%- assign settings_pr_img_size = true -%}{%- endif -%}
+{%- if countdown == 'true' -%}{%- assign section_settings_countdown = true -%}{%- endif -%}
+{%- if settings.use_wishlist -%}{%- include 'nitro-wishlist' -%}{%- endif -%}
+{%- capture min_html -%}
+      {%- assign current_page = '1' -%}
+      {%- paginate collection.products by paginate_index -%}
+      <div class="products jas-row jas-products-holder {{image_size}} {{ratio}} position_{{position}}{%- if settings_pr_img_size %} equal-nt{%- endif -%}">
+        {%- for product in collection.products -%}
+        {%- include 'jas_product_loop' -%}
+        {%- else -%}
+        {%- for i in (1..8) -%}
+        <div class="jas-grid-item jas-col-md-{{grid_columns}} jas-col-sm-4 jas-col-xs-{{grid_columns_mb}} mt__30 product has-post-thumbnail">
+          <div class="jas-product-image jas-product-image-equal pr oh">
+            <a href="/admin/products" class="jas-product-img-element jas-pr-image-link">
+              {%- capture current -%}{%- cycle 1, 2, 3, 4, 5, 6 -%}{%- endcapture -%}
+              {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+            </a>
+          </div>
+          <div class="product-info mt__15">
+            <h3 class="product-title pr fs__14 mg__0 fwm"><a class="cd chp" href="/admin/products">{{ 'homepage.onboarding.product_title' | t }}</a></h3>
+            <span class="price"><ins>$30.00</ins> <del>$35.00</del></span>
+          </div>
+        </div>
+        {%- endfor -%}
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 and use_pagination != 'none' -%}
+      <div class="products-footer tc mt__40">
+        {%- if use_pagination == 'more-btn-infinite' or use_pagination == 'more-btn' -%}
+        {%- assign next_url =  paginate.next.url | split: '?' | last -%}
+        <a data-id="{{id}}"href="{{paginate.next.url | replace: 'ajax_tab', 'ajax' }}" class="pr button-o btn-products-load-more{%- if use_pagination == 'more-btn-infinite' %} load-on-scroll{%- endif -%}"><span class="load-label">{{ 'products.grid_items.load_more' | t }}</span><span class="loading-label flex pa">{{ 'products.grid_items.loading' | t }}</span></a>
+        {%- else -%}
+        <a href="{{ collection.url }}" class="button-o">{{ 'products.grid_items.view_more' | t }}</a>
+        {%- endif -%}
+      </div>
+      {%- endif -%}
+      {%- endpaginate -%}
+{%- endcapture -%}
+{{min_html | strip_newlines | remove: "  "}} 

@@ -1,0 +1,34 @@
+{%- if settings.show_related_articles and blogs[blog.handle].articles_count > 1 -%}
+{%- assign image_size_slider = '370x210' -%}
+<div class="post-related mt__50">
+	<h4 class="mg__0 mb__30 tu">{{ settings.title_related_articles }}</h4>
+	<div class="jas-carousel {{settings.image_size_blog_related}} {%- if settings.use_eq_height_blog_related %} jas_section_eqh{%- endif -%}" data-slick='{"slidesToShow": {{settings.sidetoshow_blog_related}},"slidesToScroll": 1,"rtl": {{ settings.use_rtl }}, "autoplay": {{ settings.use_autoplay_blog_related }}, "autoplaySpeed": {{ settings.slider_speed_blog_related }}000,"arrows": {{settings.use_arrows_blog_related}}, "responsive":[{"breakpoint": 960,"settings":{"slidesToShow": 2}},{"breakpoint": 480,"settings":{"slidesToShow": 1}}]}'>
+	{% assign f_article = blogs[blog.handle].f_article | sort: 'title' %}
+	{% assign number_limit = settings.how_many_related_articles | plus:0 %}
+	{% for f_article in blogs[blog.handle].articles limit:number_limit %}
+		{%- if article.id != f_article.id -%}
+		<div class="item">
+			{%- if settings.use_eq_height_blog_related and f_article.image -%}
+               <div class="f_article__grid-image-wrapper jas-product-image-equal pr mb__20 user_custom">
+                  <a class="db pr lazyload jas-pr-image-link" href="{{ f_article.url }}" data-bgset="{%- include 'bgset', image: f_article.image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ f_article.image | img_url: '50x50' }});">
+                    <img class="op_0 f_article__grid-image w__100 lazyload" src="{{ f_article.image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ f_article.image.aspect_ratio }}" data-sizes="auto" alt="{{ f_article.image.alt | escape }}">
+                  </a>
+                   <div class="jas-wrap-lazy"></div>
+               </div>
+            {%- elsif f_article.image -%}
+               {%- assign img_url = f_article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+               <div class="f_article__grid-image-wrapper mb__20">
+                  <a class="db pr" href="{{ f_article.url }}">
+                    <img class="f_article__grid-image w__100 lazyload" src="{{ f_article.image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ f_article.image.aspect_ratio }}" data-sizes="auto" alt="{{ f_article.image.alt | escape }}">
+                    <div class="jas-wrap-lazy"></div>
+                  </a>
+               </div>
+            {%- endif -%}
+		   <h5 class="mg__0 fs__14"><a class="cd chp" href="{{ f_article.url }}" tabindex="0">{{ f_article.title }}</a></h5>
+		   <span class="f__libre">{{ f_article.published_at | date: '%B %e' }}</span>
+		</div>
+        {%- endif -%}
+	{% endfor %}
+	</div>
+</div>
+{%- endif -%}

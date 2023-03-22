@@ -1,0 +1,138 @@
+{%- assign current_variant = product -%}
+{%- include 'jas_check_label' -%}
+{%- include 'jas_check_color' -%}
+{%- unless collection -%}
+{%- assign collection = product.collections.last -%}
+{%- endunless -%}
+{%- unless show_vendor -%}
+{%- assign show_vendor = false -%}
+{%- endunless -%}
+{%- unless class_sm -%}
+{%- assign class_sm = '4' -%}
+{%- endunless -%}
+{%- unless grid_columns_mb -%}
+{%- assign grid_columns_mb = '6' -%}
+{%- endunless -%}
+{%- unless settings_pr_img_size -%}
+{%- assign settings_pr_img_size = false -%}
+{%- endunless -%}
+{%- unless settings_metro_img_size -%}
+{%- assign settings_metro_img_size = false -%}
+{%- endunless -%}
+{%- assign user_countdown = '' -%}
+{%- assign url_nt_bl = false -%}
+   {%- assign url_nt = product.url -%}
+{%- if product.metafields.external -%}
+  {%- assign check = product.metafields.external | first | last -%}
+  {%- if check contains 'https:' or check  contains 'http:' -%}{%- assign check_external = true -%}{%-else-%}{%- assign check_external = false -%}{%-endif-%}
+{%-endif-%}
+{%- assign url_js = '/products/' | append:product.handle -%}
+
+<div class="jas-grid-item jas-col-md-{{grid_columns}} jas-col-sm-{{class_sm}} jas-col-xs-{{grid_columns_mb}} mt__30 product has-post-thumbnail{%- if settings_pr_img_size %} user_custom{%- endif -%}">
+   <div class="product-inner pr">
+     
+     <div class="menu-product-image">
+      <div class="jas-product-image pr oh{%- if settings_pr_img_size and settings_metro_img_size %} jas-pr_metro-image-equal{%- elsif settings_pr_img_size %} jas-product-image-equal{%- endif -%}">
+         {%- include 'product_labels' -%}
+         {%- include 'product_img' -%}	
+         {%- if section_settings_countdown and product.metafields.meta.countdown != blank -%}
+            {%- assign user_countdown = product.metafields.meta.countdown -%}
+            {%- include 'gecko_count_down' -%}
+         {%- endif -%} 	
+         <div class="jas-product-button pa flex">
+            {%- if settings.use_wishlist and pages['wishlist'].empty? != true -%}{%- include 'jas-wishlist-product' -%}{%- endif -%}
+            {%- if settings.use_quickview -%}
+            <div class="quick-view">
+               <a href="javascript void(0);" data-ntid="{{product.id}}" data-ajax="{{ url_js }}/?view=quick_view" class="open-quick-view gecko-tooltip" rel="nofollow"><span class="gecko-tooltip-label">{{ 'products.grid_items.quick_view' | t }}</span>{{ 'products.grid_items.quick_view' | t }}</a>
+            </div>
+            {%- endif -%}
+         </div>
+         {%- capture btn_jas -%}
+            {%- if linklists[product.handle].links.size == 0 -%}
+               {%- if product.variants.size > 1 -%}
+               <div class="jas-add-btn pa btn-jas-3d">
+                  {%- if sold_out -%}
+                      <a href="{{ url_nt | within: collection }}" class="button read-more" rel="nofollow">{{ 'products.product.read_more' | t }}</a>
+                  {%- elsif check_external -%}
+                      <a href="{{ check }}" class="button external">{{ product.metafields.external | first | first }}</a>
+                  {%- elsif settings.use_quickshop -%}
+                    <a rel="nofollow" href="javascript void(0);" data-id="{{product.id}}" data-ajax="{{ url_js }}/?view=json" class="button btn-quick-shop"><span>{{ 'products.grid_items.quick_shop' | t }}</span></a>
+                  {%- else -%}
+                    <a rel="nofollow" href="{{ url_nt | within: collection }}" class="button"><span>{{ 'products.product.select_option' | t }}</span></a>
+                  {%- endif -%}
+               </div>
+               {%- else -%}
+                  <div class="jas-add-btn pa btn-jas-3d">
+                     {%- if sold_out -%}
+                      <a href="{{ url_nt | within: collection }}" class="button read-more" rel="nofollow">{{ 'products.product.read_more' | t }}</a>
+                      {%- elsif check_external -%}
+                      <a href="{{ check }}" class="button external">{{ product.metafields.external | first | first }}</a>
+                      {%- else -%}
+                      <a href="{{ url_nt | within: collection }}" data-ntid="{{product.id}}" class="button ajax_add_to_cart" data-pid="{{ product.variants.first.id }}" rel="nofollow">{%- if current_variant.inventory_quantity <= 0 and current_variant.available and current_variant.inventory_management == 'shopify' -%}{{ 'products.product.pre_orders' | t }}{%- else -%}{{ 'products.product.add_to_cart' | t }}{%- endif -%}</a>
+                      {%- endif -%} 
+                  </div>
+               {%- endif -%}
+            {%- else -%}
+               <div class="jas-add-btn pa btn-jas-3d"><a rel="nofollow" href="{{ url_nt | within: collection }}" class="button"><span>{{'products.product.view'|t}}</span></a></div>
+            {%- endif -%}
+         {%- endcapture -%}
+         {{btn_jas}}
+         {%- if product.has_only_default_variant == false -%}
+            <div class="jas-qs-wrapper pa"><div class="jas-qs-close pa"></div><div class="jas-qs-form flex" id="product-{{product.id}}"></div></div>
+         {%- endif -%}
+      </div>
+      <!-- .product-image -->
+      {{btn_jas | replace: ' pa ', ' '}}
+    
+       
+{%- assign product_in_collects = '[' -%}
+  {%- for collection in product.collections -%} 
+  {%- assign product_in_collects = product_in_collects | append: '{"collection_id":"' | append: collection.id | append: '","product_id":"' | append: product.id | append: '"' | append: ',"product_handle":"' | append: product.handle | append: '"}' -%}
+  {% if forloop.last == false %}
+  {%- assign product_in_collects =  product_in_collects | append: ',' -%}
+  {% endif %}
+  {%- endfor -%}
+  {%- assign product_in_collects =  product_in_collects | append: ']' -%}
+<span class="col_clct" clct='{{product_in_collects}}'></span>
+       
+       <div class="product-info">
+         <h3 class="product-title pr fs__14 mg__0 fwm"><a class="cd chp" href="{{ url_nt | within: collection }}">{{ product.title }}</a></h3>
+         {%- if product.vendor.size > 0 -%}{%- if show_vendor == true or show_vendor == 'true' -%}<div class="product-brand"><a href="{{ product.vendor | url_for_vendor }}">{{ product.vendor }}</a></div>{%- endif -%}{%- endif -%}
+         {%- if settings.show_product_rating -%}
+            {%- if settings.app_review == '1' -%}
+               <div class="shopify-product-reviews-badge" data-id="{{ product.id }}"></div>
+            {%- elsif settings.app_review == '2' -%}
+               <div class="review-widget"><ryviu-widget-total reviews_data="{{product.metafields.ryviu.product_reviews_info  | escape  }}" product_id="{{product.id}}" handle="{{product.handle}}"></ryviu-widget-total></div>
+            {%- elsif settings.app_review == '4' -%}
+               <div class="loox-rating" data-id="{{ product.id }}" data-rating="{{ product.metafields.loox.avg_rating }}" data-raters="{{ product.metafields.loox.num_reviews }}"></div>
+            {%- elsif settings.app_review == '5' -%}
+                <div data-oke-reviews-product-listing-rating>{{ product.metafields.okendo.ProductListingSnippet }}</div>
+            {%- elsif settings.app_review == '6' -%}
+                <div class="wc_product_review_badge" data-handle="{{ product.handle }}"></div>
+            {%- else -%}
+               <div product-id="{{ product.id }}" class="arv-collection arv-collection--{{ product.id }}"></div>
+            {%- endif -%}
+         {%- endif -%}
+         {%- include 'product_price' -%}   
+        
+        
+        
+         {%- if settings.show_product_color and colour_count > 0 -%}{%- include 'swatches_on_grid' -%}{%- endif -%}
+         {%- if section_settings_countdown and product.metafields.meta.countdown != blank -%}
+            {%- assign user_countdown = product.metafields.meta.countdown -%}
+            {%- include 'gecko_count_down' -%}
+         {%- endif -%} 
+      </div>
+       
+     </div>
+     
+     {% if template == 'index' %}
+     <div class="arrow-text-learn">   <a href="{{product.url}}">Learn More</a> 
+       
+       <span><i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i> </span>
+     </div> 
+       {% endif %}
+     
+     
+   </div>
+</div>

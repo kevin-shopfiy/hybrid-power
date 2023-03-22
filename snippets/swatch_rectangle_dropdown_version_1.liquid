@@ -1,0 +1,199 @@
+{%- if settings.color_name_check != blank -%}{%- assign _gl_color_name = settings.color_name_check | replace: ' ,', ',' | replace: ', ', ',' | split: ',' -%}{%- assign gl_color_name = _gl_color_name | downcase -%}{%-else-%}{%- assign gl_color_name = '\nathan_dt\' -%}{%-endif-%}
+{%- if settings.size_name_check != blank -%}{%- assign _gl_size_name = settings.size_name_check | replace: ' ,', ',' | replace: ', ', ',' | split: ',' -%}{%- assign gl_size_name = _gl_size_name | downcase -%}{%-else-%}{%- assign gl_size_name = '\nathan_dt\' -%}{%-endif-%}
+{%- assign lang_option = 'Größe'| downcase -%}
+{%- if select_id == 'nt_select_quick'-%}
+   {%- assign select_id = 'nt_select_quick' -%} 
+{%- else -%}
+   {%- assign select_id = 'nt_select_pr' -%}
+   {%- assign select_class = 'nt_select_pr_' -%}    
+{%- endif -%}
+{%- assign bclass = 'is-selected-no' -%}
+
+{%- if product.available -%}{%- assign remove_soldout = settings.remove_sold_out -%}{%- else -%}{%- assign remove_soldout = false -%}{%- endif -%}
+{%- assign size = product.options_with_values.size -%}{%- assign pr_variants = product.variants -%}{%- assign selected_variant = product.selected_variant -%}{%- assign v_size = pr_variants.size -%}
+{%- case settings.pr_curent -%}
+  {%- when '1' -%}{%- assign current_variant = product.selected_or_first_available_variant -%}{%- if selected_variant != blank -%}{%- assign bclass = 'is-selected-none' -%}{%- else -%}{%- assign bclass = 'is-selected-no' -%}{%- endif -%}
+  {%- when '2' -%}{%- assign current_variant = selected_variant |default: pr_variants.first -%}{%- assign bclass = 'is-selected-none' -%}{%- if current_variant.available == false and remove_soldout and product.available -%}{%- assign current_variant = product.first_available_variant -%}{%- endif -%}
+  {%- else -%}{%- assign current_variant = product.selected_or_first_available_variant -%}{%- assign bclass = 'is-selected-none' -%}
+{%- endcase -%}
+
+{%- if v_size == 1 -%}{%- assign current_variant = pr_variants.first -%}{%- assign bclass = 'is-selected' -%}{%- endif -%}
+<div class="variations var_avai_{{product.available}} variant_simple">
+  {%assign new_option = '' %}
+  {%assign pt_check = false %}
+   {%- for option in product.options_with_values -%}
+      {%- assign option_index = forloop.index0 -%}
+      {%- case option_index -%}{%- when 0 -%}{%- assign selected_value = current_variant.option1 -%}{%- when 1 -%}{%- assign selected_value = current_variant.option2 -%}{%- else -%}{%- assign selected_value = current_variant.option3 -%}{%- endcase -%} 
+  
+      {%- assign downcased_option = option.name | downcase -%}
+      {%- assign downcased_option_check = downcased_option | prepend: '"' | append: '"' | strip -%}   
+  {%- if downcased_option == 'color' or downcased_option == 'couleur' or downcased_option == 'colour' or gl_color_name contains downcased_option_check -%}
+		   <div class="{{select_class}}{{ option_index }} swatch is-ntcolor" data-option-index="{{ option_index }}" id="{{select_id}}_{{ option_index }}">
+		   	<h4 class="swatch__title">{{option.name}}</h4>
+		   	<div class="input-dropdown-inner dib input-dropdown-inner_{{class_input}}" data-option-index="{{ option_index }}">
+               <a href="#" data-val="{{ selected_value | handleize }}">{%- if settings.pr_curent == '1' and selected_variant == blank and v_size > 1 -%}{{ 'products.product.pick_a' | t:option:option.name }}{%- else -%}{{selected_value}}{%- endif -%}</a>
+			   	<ul class="swatches-select dropdown-list working" data-attribute="pa_color" data-id="{{ option_index }}"  data-size="{{size}}">
+			   		{%- for value in option.values -%}
+			   		   <li data-index="{{ forloop.index0 }}" aria-label='{{ value }}' class="gecko-swatch bg_css_{{ value | handleize }}{%- if selected_value == value %} {{bclass}}{%- endif -%}" data-value='{{ value | handleize }}' data-bcvalue='bc_{{ value | handleize }}'>
+			   		   	<a href="javascript:void(0);" data-val='{{ value | handleize  }}'>{{ value }}</a>
+			   		   </li>
+			   	   {%- endfor -%}
+			   	</ul>
+			   </div>
+		   </div>
+		{%- else -%}
+<!-- option change to swatches on product handle basis   -->
+  
+          {%if option.name contains "PT Batteries Energy Capacity"%}
+          {%assign new_option = option.name | split: "Batteries" | first %}
+          {%endif%}
+
+		   	<div class="{{select_class}}{{ option_index }} swatch is-label{%if product.handle == 'power-tower' and option_index == 1 %} list-to-swatch-layout-set{%endif%}{%if product.handle == 'solark-inverter' and option_index == 1 %} list-to-swatch-layout-set{%endif%}" data-option-index="{{ option_index }}" id="{{select_id}}_{{ option_index }}">
+		   	{%- if downcased_option == 'size' or downcased_option == 'sizes' or downcased_option == 'taille' or downcased_option == lang_option or gl_size_name contains downcased_option_check -%}
+		   	   {%- if select_id != 'nt_select_quick' and settings.size_chart -%}
+		   	       <h4 class="swatch__title{%- if product.metafields.meta.image_size_chart != blank or collection.metafields.meta.image_size_chart != blank or settings.image_size_chart != blank %} extra-link{%- endif -%}">{{option.name}}{%- if product.metafields.meta.image_size_chart != blank or collection.metafields.meta.image_size_chart != blank or settings.image_size_chart != blank %}<a class="cd chp jas-magnific-image f__libre" href="{%- if product.metafields.meta.image_size_chart != blank -%}{{product.metafields.meta.image_size_chart}}{%- elsif collection.metafields.meta.image_size_chart != blank-%}{{collection.metafields.meta.image_size_chart}}{%- else -%}{{ settings.image_size_chart | img_url: '1x1' | replace: '_1x1', ''  }}{%- endif -%}">{{ 'products.product.product_size_guide' | t }}</a>{%- endif -%}</h4>
+		   	   {%- else -%}
+		   	       <h4 class="swatch__title">{{option.name}}</h4>
+		   	   {%- endif -%}
+		   	{%- else -%}
+		   	<h4 class="swatch__title">{{option.name}}</h4>
+		   	{%- endif -%}
+		   	<div class="input-dropdown-inner dib input-dropdown-inner_{{class_input}}" data-id="{{ option_index }}">
+			   	<a href="#" data-val="{{ selected_value | handleize }}">{%- if settings.pr_curent == '1' and selected_variant == blank and v_size > 1 -%}{{ 'products.product.pick_a' | t:option:option.name }}{%- else -%}{{selected_value}}{%- endif -%}</a>
+			   	<ul class="swatches-select dropdown-list notworking" data-attribute="pa_{{option.name | handleize}}" data-id="{{ option_index }}"  data-size="{{size}}">
+			   		{%- for value in option.values -%}
+			   		   <li data-index="{{ forloop.index0 }}" aria-label='{{ value }}' class="gecko-swatch bg_css_{{ value | handleize }}{%- if selected_value == value %} {{bclass}}{%- endif -%}" data-value='{{ value | handleize }}' data-bcvalue='bc_{{ value | handleize }}'>
+			   		   	<a href="javascript:void(0);" data-val='{{ value | handleize  }}'>{{ value }}</a>
+			   		   </li>
+			   	   {%- endfor -%}
+			   	</ul>
+			   </div>
+		   </div>
+          {%if option_index == 1%}
+          <div class="additional_box_wrapper" style="color:white;">
+            <span class="additional_box">Number of PT Batteries</span>
+            <span class="additional_box">1</span>
+          </div>
+          <div class="optional_box">
+            <input type="checkbox" id="additional" name="additional" value="additional">
+            <span class="checkmark"></span>
+            <label>DO YOU WANT ADDITIONAL BATTERIES</label><br>
+          </div>
+          {%- endif -%}
+          
+           {%if option_index == 1%}
+          <div class="additional_warpper" data-id="{{ option_index }}">
+            
+            {%- for value in option.values -%}
+            
+            {%if value contains 'PT' %}
+            
+            {%assign Split_option = value | split: ' ' | first | split:"PT" | last  %}
+            {%assign custom_product_handle = 'pt' | append:"-" | append:"battery" |append:"-"| append:Split_option %}
+            
+            <input type="hidden" id="{{value | replace: " ", "-" | downcase}}" value="{{all_products[custom_product_handle].metafields.section-1['spec_sheet_url'] }}">
+            <select id="{{value | replace: " ", "-" | downcase}}" style="display:none;">
+              {% unless all_products[custom_product_handle].has_only_default_variant %}
+              {%- for variant in all_products[custom_product_handle].variants -%}
+                <option data_type="multiple_variants" v_price="{{variant.price}}"  {%if forloop.index0 == 0%}selected {%endif%}data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title | handle}}</option>
+              {%- endfor -%}
+              {%endunless%}
+              {% if all_products[custom_product_handle].has_only_default_variant %}
+              {% assign variant_id = all_products[custom_product_handle].first_available_variant.id %}
+              {%comment%}
+              <option v_price="{{all_products[custom_product_handle].first_available_variant.price}}"  selected data-sku="{{ all_products[custom_product_handle].first_available_variant.sku }}" value="{{  all_products[custom_product_handle].first_available_variant.id }}">{{ all_products[custom_product_handle].title }}</option>
+              {%endcomment%}
+             <option data_type="default_variants" v_price="{{all_products[custom_product_handle].first_available_variant.price }}"  selected data-sku="{{ all_products[custom_product_handle].first_available_variant.sku }}" value="{{  all_products[custom_product_handle].first_available_variant.id }}">1</option>
+		     <option data_type="default_variants" v_price="{{all_products[custom_product_handle].first_available_variant.price | times: 2}}"   data-sku="{{ all_products[custom_product_handle].first_available_variant.sku }}" value="{{  all_products[custom_product_handle].first_available_variant.id }}">2</option>
+			 <option data_type="default_variants" v_price="{{all_products[custom_product_handle].first_available_variant.price | times: 3}}"   data-sku="{{ all_products[custom_product_handle].first_available_variant.sku }}" value="{{  all_products[custom_product_handle].first_available_variant.id }}">3</option>
+		     <option data_type="default_variants" v_price="{{all_products[custom_product_handle].first_available_variant.price | times: 4}}"   data-sku="{{ all_products[custom_product_handle].first_available_variant.sku }}" value="{{  all_products[custom_product_handle].first_available_variant.id }}">4</option>
+		     <option data_type="default_variants" v_price="{{all_products[custom_product_handle].first_available_variant.price | times: 5}}"   data-sku="{{ all_products[custom_product_handle].first_available_variant.sku }}" value="{{  all_products[custom_product_handle].first_available_variant.id }}">5</option>
+
+              
+              
+              {%endif%}
+            </select>
+            {%- endif -%}
+
+            {%- endfor -%}	
+          </div>
+         {%- endif -%}
+		
+		{%- endif -%}
+   {%- endfor -%}
+</div>
+
+
+<button type="button" class="chat-with-us">Need installation? Chat with us</button>
+<script>
+   function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+  jQuery(document).ready(function(){
+        
+    
+    
+    
+    
+     var C_price = jQuery(".product-form .shopify-variation .shopify-variation-price").attr("data-c_price");
+     var C_final_pricee = C_price/100;
+     var final_pricee = numberWithCommas(C_final_pricee);
+     var final_priceee =  "$"+final_pricee+" CAD";
+ 
+     jQuery(".template-product .shopify-variation-price #productPrice span").text(final_priceee);
+
+     var valuee = jQuery("#cart-form .product-select_pr").val();
+
+  });
+
+    //USD currency is selected, can we update the measurement, weight & temperature 
+  $(document).on("click",".currencies li:not(.black_menu) a",function(ev) {
+   ev.preventDefault();  
+  var valuee = jQuery("#cart-form .product-select_pr").val();  
+  var current_cntry_value = $(this).text();
+  var current_cntry_cntry = current_cntry_value.trim();
+
+  if(current_cntry_cntry == "USD"){
+  jQuery("span.value.non_extended_8").hide();
+  jQuery("span.value.extended_8").show();
+  jQuery("span.value.non_extended_11").hide();
+  jQuery("span.value.extended_11").show();  
+
+   var range_package_class_status = $('.extended_title').hasClass('active');
+if(range_package_class_status == true){
+
+ jQuery("span.value.non_extended_6").hide();
+ jQuery("span.value.extended_6").hide();
+ jQuery("span.value.currency_extended_6").show();
+
+}
+else{
+
+   
+   jQuery("span.value.currency_extended_6").hide();
+}
+
+}else{
+
+  jQuery("span.value.non_extended_8").show();
+  jQuery("span.value.extended_8").hide();
+  jQuery("span.value.non_extended_11").show();
+  jQuery("span.value.extended_11").hide();
+  jQuery("span.value.currency_extended_6").hide();
+  var range_package_class_status = $('.extended_title').hasClass('active');
+  if(range_package_class_status == true){
+  jQuery("span.value.extended_6").show();
+  }
+  else{
+  
+  jQuery("span.value.non_extended_6").show();
+}
+}
+});
+ $('.chat-with-us').click(function() {
+  window.tidioChatApi.open();
+});
+ 
+//  ==========//
+
+</script>

@@ -1,0 +1,85 @@
+{%- if section.settings.hidden_section -%}<style> #shopify-section-{{ section.id }} { display: none !important}</style>{%- endif -%}
+{%- assign grid_item_width = 'jas-col-sm-12' -%}
+{%- case section.blocks.size -%}
+{% when 2 %}
+{%- assign grid_item_width = 'jas-col-sm-6' -%}
+{% when 3 %}
+{%- assign grid_item_width = 'jas-col-sm-4' -%}
+{%- endcase -%}
+{% for block in section.blocks %}
+<div class="{{ grid_item_width }} jas-col-xs-12">
+{% if block.settings.quote != blank %}
+	<blockquote>{{ block.settings.quote }}</blockquote>
+{% endif %}
+</div>
+{% endfor %}
+{%- if section.settings.padding != blank or section.settings.margin != blank -%}
+{% assign margin = section.settings.margin | remove: ' ' | split: '-' | join: ' ' %}
+{% assign padding = section.settings.padding | remove: ' ' | split: '-' | join: ' ' %}
+<style>
+  #shopify-section-{{ section.id }} { 
+    {%- if section.settings.margin != blank -%} margin: {{margin}};{%- endif -%}
+    {%- if section.settings.padding != blank -%}padding: {{padding}}{%- endif -%}
+   }
+</style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "class": "jas-row t_testimonials_2",
+"presets": [
+      {
+        "name": "Testimonial store 2",
+        "category": "Section Gecko Extras",
+        "blocks": [
+                  {
+                    "type": "quote"
+                  },
+                  {
+                    "type": "quote"
+                  },
+                  {
+                    "type": "quote"
+                  }
+                ]
+      }
+    ],
+  "settings": [
+    {
+        "type": "header",
+        "content": "== Design settings"
+      },
+      {
+        "type": "paragraph",
+        "content": "To horizontally center a block element (like <div>), use margin: auto;"
+      },
+      {
+        "type": "text",
+        "id": "margin",
+        "label": "Margins ( top-right-bottom-left )",
+        "info": "60px-auto-60px-auto"
+      },
+      {
+        "type": "text",
+        "id": "padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      }
+    ],
+  "blocks": [
+    {
+      "type": "quote",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "Text",
+          "default": "<p>I am text block. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? Quis nostrum exercitationem ullam.</p>"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

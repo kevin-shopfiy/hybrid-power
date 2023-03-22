@@ -1,0 +1,10 @@
+<div class="{%- if settings.cart_position == 'side' -%}jas-mini-cart jas-push-menu{%-else-%}dropdown-cart{%-endif-%}">
+   {%- if settings.cart_position == 'side' -%}
+      <h3 class="mg__0 tc cw bgb tu ls__2">{{ 'cart.widget.title' | t }}<i class="close-cart pe-7s-close pa"></i></h3>
+   {%- endif -%}
+      <div class="widget_shopping_cart pr">
+         <div class="widget_shopping_cart_content">
+            {%- include 'cart_body' -%}
+         </div>
+      </div>
+</div>

@@ -1,0 +1,94 @@
+{% comment %}
+Please Don't edit this file.
+This snippet is auto generated and will be overwritten.
+{% endcomment %}
+{% comment %}
+  Copy this shortcode to below add to cart button
+  <!-- Button for Stockify -->
+    {%- assign  inline_stockify = true -%}
+    <!-- inline_stockify = false => Show in popup; inline_stockify = true => Show below Button  -->
+    <div class="stockify-block-actions {% if inline_stockify %}inline-stockify{% endif%}"  data-format='{{ shop.money_format }}' data-script="{{ 'option_selection.js' | shopify_asset_url }}">
+    {%- if shop.metafields.stockify.enable_messenger != blank  and  shop.metafields.stockify.enable_messenger != 'false'   -%}
+    <a  class="stockify-messenger" href="javascript:;"data-type="messenger" data-target="#stockify-comfirmation">{{ 'stockify.notify_via_messenger' | t }}</a>
+    {%- endif -%}
+    {%- if shop.metafields.stockify.enable_email == 'true' -%}
+    <a class="stockify-email" href="javascript:;" data-type="email" data-target="#stockify-comfirmation">{{ 'stockify.notify_via_email' | t }}</a>
+    {%- endif -%}
+  </div>
+ <!-- /Button for Stockify -->
+
+{% endcomment %}
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+{%- assign check_template = template | split: '.' | first -%}
+{%- if check_template == 'product' -%}
+  <script type="application/json" id="stockify-json-data">{{ product | json }}</script>
+  <script type="text/template" id="stockify-template-actions">
+      <!-- Button for Stockify -->
+        {%- assign  inline_stockify = true -%}
+        <!-- inline_stockify = false => Show in popup; inline_stockify = true => Show below Button  -->
+        <div class="stockify-block-actions {% if inline_stockify %}inline-stockify{% endif%}"  data-format='{{ shop.money_format }}' data-script="{{ 'option_selection.js' | shopify_asset_url }}">
+        {%- if shop.metafields.stockify.enable_messenger != blank  and  shop.metafields.stockify.enable_messenger != 'false'   -%}
+        <a  class="stockify-messenger" href="javascript:;"data-type="messenger" data-target="#stockify-comfirmation">{{ 'stockify.notify_via_messenger' | t }}</a>
+        {%- endif -%}
+        {%- if shop.metafields.stockify.enable_email == 'true' -%}
+        <a class="stockify-email" href="javascript:;" data-type="email" data-target="#stockify-comfirmation">{{ 'stockify.notify_via_email' | t }}</a>
+        {%- endif -%}
+      </div>
+     <!-- /Button for Stockify -->
+  </script>
+  <script type="application/json" id="stockify-json-translation">{{ 'stockify.javascript' | t   }}</script>
+    <div class="stockify-lightbox" data-page_id="{{shop.metafields.stockify.enable_messenger}}" id="stockify-comfirmation" style="display: none">
+	{%- if shop.metafields.stockify.web_push == 'true' or   shop.metafields.stockify.enable_messenger != blank or shop.metafields.stockify.enable_email == "true" -%}
+      <div class="stockify-lightbox__body">
+        <a href="javascript:;" class="stockify-lightbox__close-btn"></a>
+        <div class="stockify-lightbox__content">
+          <div class="stockify-header">
+            <h3>{{ 'stockify.title' | t }}</h3>
+          </div>
+          <div class="stockify-content"> 
+            {%- if shop.metafields.stockify.web_push == 'true' -%}
+            <div id="stockify-block-webpush">
+              <label class="switch">
+                    <input type="checkbox" class="js-push-button" name="enable-push" id="enable-push" disabled>
+                    <div class="slider round"></div>
+                </label>
+                <label class="switch-label" for="enable-push">{{ 'stockify.javascript.enable_webpush' | t }}</label>
+            </div>
+            {% endif %}
+            {%- if shop.metafields.stockify.enable_messenger != blank  and shop.metafields.stockify.enable_messenger != 'false' -%}
+            <div id="stockify-block-messenger">
+              <div id="stockify-fb-messenger-checkbox" prechecked="true" class="fb-messenger-checkbox" origin="{{canonical_url}}" page_id="{{shop.metafields.stockify.enable_messenger}}" messenger_app_id="1707801545944192" user_ref="khiconit" prechecked="false" allow_login="true" size="standard"></div>
+            </div>
+            {%- endif -%}
+            {%- if shop.metafields.stockify.enable_email == 'true' -%}
+            <div id="stockify-email-messenger">
+              <input type="email" value="" name="email" class="stockify-input" placeholder="{{ 'stockify.email_placeholder' | t }}"/>
+            </div>
+            {%- endif -%}
+            <div class="stockify-input-extra">
+              <input type="number" name="quantity" class="stockify-input" placeholder="{{ 'stockify.quantity_placeholder' | t }}" value="1"/>
+              <input type="date" name="out_of_date" class="stockify-input" min="{{'now' | date: '%m/%d/%Y' }}"  placeholder="{{ 'stockify.out_date' | t }}" />
+            </div>
+            <div class="stockify-title">
+              <h4>{{ 'stockify.select_product' | t }}</h4>
+            </div>
+            <div class="stockify-block-product-options product-options-{{product.options.size}}">
+              <select name="variant_id" id="stockify-variants">
+                {%- for variant in product.variants-%}
+                <option value="{{variant.id}}">{{variant.title}}</option>
+                {%- endfor -%}
+              </select>
+            </div>
+            <div class="stockify-submit-group">
+              <p>{{ 'stockify.description' | t }}</p>
+              <button class="stockify-btn stockify-submit" type="button">{{ 'stockify.subscribe_button' | t }}</button>
+            </div>
+          </div>
+          <div class="stockify-footer">
+            <p>Stockify application @{{'now' | date: '%Y' }} by <a href="https://apps.shopify.com/partners/rdcma" target="_blank"  title="Nitro app">Nitro App</a></p>
+          </div>
+        </div>
+      </div>
+	  {%- endif -%}
+    </div>
+{%- endif -%}

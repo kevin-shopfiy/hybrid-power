@@ -1,0 +1,253 @@
+{%- assign error_html = '' -%}
+{%- assign gl_shopify_error = false -%}
+<div class="page-head pr tc{%- if settings.login_bg_image != blank %} lazyload{%- endif -%}"{%- if settings.login_bg_image != blank %} data-bgset="{%- include 'bgset', image: settings.login_bg_image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url({{ settings.login_bg_image | img_url: '50x50' }})"{%- endif -%}>   <div class="jas-container pr">
+      <h1 class="tu mb__10 cw" itemprop="headline">{{ 'customer.account.title' | t }}</h1>
+      <p></p>
+      <ul class="jas-breadcrumb dib oh">
+         <li class="fl home"><a href="/" title="{{ 'general.layout.breadcrumb.home' | t }}">{{ 'general.layout.breadcrumb.home' | t }}</a></li>
+         <li class="fl separator"> <i class="fa fa-angle-right"></i> </li>
+         <li class="fl current"> {{ 'customer.account.title' | t }}</li>
+      </ul>
+   </div>
+</div>
+<div class="jas-container">
+   <div class="jas-row jas-page">
+      <div class="{%- if settings.login_register_enable -%}jas-col-md-6 jas-col-xs-12 mt__60 mb__60 jas-col-lg-offset-3 jas-col-md-offset-3{%- else -%}jas-col-md-12 jas-col-xs-12 mt__60 mb__60{%- endif -%}" role="main" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+         <div class="shopify">
+            <div class="shopify-message resetSuccess" style="display:none;">{{ 'customer.recover_password.success' | t }}</div>
+            <p class="text_content_success resetSuccess" style="display:none;">{{ 'customer.recover_password.content_success' | t }}</p>
+            <ul id="gl_shopify_error" class="shopify-error" style="display:none;">
+               <li class="html_li" id="jas_html_frm"></li>
+            </ul>
+            <div class="jas-container login-form">
+               {%- if settings.login_register_enable %}
+                  <div class="form-login" id="jas_CustomerLoginForm">
+                     <h2>{{ 'customer.login.title' | t }}</h2>
+                     {%- form 'customer_login',class:'login' -%}
+                        <input type="hidden" name="checkout_url" value="{{settings.checkout_url}}" />
+                        {%- if form.errors -%}
+                           {%- assign gl_shopify_error = true -%}
+                           {%- for field in form.errors -%}
+                              {%- if field == 'form' -%}
+                                 {%- assign error_html = form.errors.messages[field] -%}
+                              {%- else -%}
+                                 {%- assign error_html = form.errors.translated_fields[field] | append:form.errors.messages[field] -%}
+                              {%- endif -%}
+                           {%- endfor -%}
+                        {%- endif -%}
+                        <p class="shopify-FormRow shopify-FormRow--wide form-row form-row-wide">
+                          <label for="username">{{ 'customer.login.email' | t }} <span class="required">*</span></label>
+                          <span class="pr db input--icon">
+                            <i class="pe-7s-user pa tc"></i>
+                            <input type="text" class="shopify-Input shopify-Input--text input-text{%- if form.errors contains 'email' %} input--error{%- endif -%}" name="customer[email]" id="username" required="required">
+                          </span>
+                        </p>
+                        {%- if form.password_needed -%}
+                        <p class="shopify-FormRow shopify-FormRow--wide form-row form-row-wide">
+                          <label for="password">{{ 'customer.login.password' | t }} <span class="required">*</span></label>
+                          <span class="pr db input--icon">
+                            <i class="pe-7s-door-lock pa tc"></i>
+                            <input class="shopify-Input shopify-Input--text input-text{%- if form.errors contains 'password' %} input--error{%- endif -%}" type="password" name="customer[password]" id="CustomerPassword" id="password" required="required">
+                          </span>
+                        </p>
+                        {%- endif -%}
+                        <p class="form-row-new">
+                           <input type="submit" class="shopify-Button button" name="login" value="{{ 'customer.login.sign_in' | t }}">
+                           <a href="/account/register"  class="shopify-Button button fr">{{ 'customer.register.submit' | t }}</a>
+                        </p>
+                        {%- if form.password_needed -%}
+                        <p class="shopify-LostPassword lost_password">
+                           <a href="javascript:void(0)" onclick="showRecoverPasswordForm();return false;">{{ 'customer.login.forgot_password' | t }}</a>
+                        </p>
+                        {%- endif -%}
+                     {%- endform -%}
+                  </div>
+                  <div id="recover_password" style="display: none;">
+                     {%- form 'recover_customer_password', class:'shopify-ResetPassword lost_reset_password' -%}
+                        <p>{{ 'customer.recover_password.subtext' | t }}</p>
+                        {%- if form.posted_successfully? -%}
+                           {%- assign reset_success = true -%}
+                        {%- endif -%}
+                        {%- if form.errors -%}
+                           {%- assign gl_shopify_error = true -%}
+                           {%- for field in form.errors -%}
+                              {%- if field == 'form' -%}
+                                 {%- assign error_html = form.errors.messages[field] -%}
+                              {%- else -%}
+                                 {%- assign error_html = form.errors.translated_fields[field] | append:form.errors.messages[field] -%}
+                              {%- endif -%}
+                           {%- endfor -%}
+                        {%- endif -%}
+                        <p class="shopify-form-row shopify-form-row--first form-row form-row-first jas__100">
+                           <label for="user_login">{{ 'customer.recover_password.email' | t }}</label>
+                           <input type="email" value="" name="email" id="RecoverEmail" class="shopify-Input shopify-Input--text input-text" autocorrect="off" autocapitalize="off">
+                        </p>
+                        <div class="clear"></div>
+                        <p class="shopify-form-row form-row">
+                           <input type="submit" class="shopify-Button button" value="{{ 'customer.recover_password.submit' | t }}">
+                           <button type="button" onclick="hideRecoverPasswordForm();return false;" class="shopify-Button button fr">{{ 'customer.recover_password.cancel' | t }}</button>
+                        </p>
+                     {%- endform -%}
+                  </div>
+               {%- else -%}
+                   <div class="col2-set jas-row" id="customer_login">
+                     <div class="col-1 jas-col-md-6 jas-col-sm-6 jas-col-xs-12">
+                        <div class="form-login" id="jas_CustomerLoginForm">
+                           <h2>{{ 'customer.login.title' | t }}</h2>
+                           {%- form 'customer_login',class:'login' -%}
+                              <input type="hidden" name="checkout_url" value="{{settings.checkout_url}}" />
+                              {%- if form.errors -%}
+                                 {%- assign gl_shopify_error = true -%}
+                                 {%- for field in form.errors -%}
+                                    {%- if field == 'form' -%}
+                                       {%- assign error_html = form.errors.messages[field] -%}
+                                    {%- else -%}
+                                       {%- assign error_html = form.errors.translated_fields[field] | append:form.errors.messages[field] -%}
+                                    {%- endif -%}
+                                 {%- endfor -%}
+                              {%- endif -%}
+                              <p class="shopify-FormRow shopify-FormRow--wide form-row form-row-wide">
+                                  <label for="username">{{ 'customer.login.email' | t }} <span class="required">*</span></label>
+                                  <span class="pr db input--icon">
+                                    <i class="pe-7s-user pa tc"></i>
+                                    <input type="text" class="shopify-Input shopify-Input--text input-text{%- if form.errors contains 'email' %} input--error{%- endif -%}" name="customer[email]" id="username" required="required">
+                                  </span>
+                              </p>
+                              {%- if form.password_needed -%}
+                              <p class="shopify-FormRow shopify-FormRow--wide form-row form-row-wide">
+                                 <label for="password">{{ 'customer.login.password' | t }} <span class="required">*</span></label>
+                                 <span class="pr db input--icon">
+                                    <i class="pe-7s-door-lock pa tc"></i>
+                                    <input class="shopify-Input shopify-Input--text input-text{%- if form.errors contains 'password' %} input--error{%- endif -%}" type="password" name="customer[password]" id="CustomerPassword" id="password" required="required">
+                                  </span>
+                              </p>
+                              {%- endif -%}
+                              <p class="form-row">
+                                 <input type="submit" class="shopify-Button button" name="login" value="{{ 'customer.login.sign_in' | t }}">
+                              </p>
+                              {%- if form.password_needed -%}
+                              <p class="shopify-LostPassword lost_password">
+                                 <a href="javascript:void(0)" onclick="showRecoverPasswordForm();return false;">{{ 'customer.login.forgot_password' | t }}</a>
+                              </p>
+                              {%- endif -%}
+                           {%- endform -%}
+                        </div>
+                        <div id="recover_password" style="display: none;">
+                           {%- form 'recover_customer_password', class:'shopify-ResetPassword lost_reset_password' -%}
+                              <p>{{ 'customer.recover_password.subtext' | t }}</p>
+                              {%- if form.posted_successfully? -%}
+                                 {%- assign reset_success = true -%}
+                              {%- endif -%}
+                              {%- if form.errors -%}
+                                 {%- assign gl_shopify_error = true -%}
+                                 {%- for field in form.errors -%}
+                                    {%- if field == 'form' -%}
+                                       {%- assign error_html = form.errors.messages[field] -%}
+                                    {%- else -%}
+                                       {%- assign error_html = form.errors.translated_fields[field] | append:form.errors.messages[field] -%}
+                                    {%- endif -%}
+                                 {%- endfor -%}
+                              {%- endif -%}
+                              <p class="shopify-form-row shopify-form-row--first form-row form-row-first jas__100">
+                                 <label for="user_login">{{ 'customer.recover_password.email' | t }}</label>
+                                 <input type="email" value="" name="email" id="RecoverEmail" class="shopify-Input shopify-Input--text input-text" autocorrect="off" autocapitalize="off">
+                              </p>
+                              <div class="clear"></div>
+                              <p class="shopify-form-row form-row">
+                                 <input type="submit" class="shopify-Button button" value="{{ 'customer.recover_password.submit' | t }}">
+                                 <button type="button" onclick="hideRecoverPasswordForm();return false;" class="shopify-Button button fr">{{ 'customer.recover_password.cancel' | t }}</button>
+                              </p>
+                           {%- endform -%}
+                        </div>
+                     </div>
+                     <div class="col-2 jas-col-md-6 jas-col-sm-6 jas-col-xs-12">
+                         <div class="form-login">
+                           <h2>{{ 'customer.register.title' | t }}</h2>
+                           {%- form 'create_customer',class:'register' -%}
+                              {%- if form.errors -%}
+                                 {%- assign gl_shopify_error = true -%}
+                                 {%- for field in form.errors -%}
+                                    {%- if field == 'form' -%}
+                                       {%- assign error_html = form.errors.messages[field] -%}
+                                    {%- else -%}
+                                       {%- assign error_html = form.errors.translated_fields[field] | append:form.errors.messages[field] -%}
+                                    {%- endif -%}
+                                 {%- endfor -%}
+                              {%- endif -%}
+                              <p class="shopify-FormRow shopify-FormRow--wide form-row form-row-wide">
+                                 <label for="FirstName">{{ 'customer.register.first_name' | t }}</label>
+                                 <input type="text" class="shopify-Input shopify-Input--text input-text" name="customer[first_name]" id="FirstName"{%- if form.first_name %} value="{{ form.first_name }}"{%- endif %} autofocus>
+                              </p>
+                              <p class="shopify-FormRow shopify-FormRow--wide form-row form-row-wide">
+                                 <label for="LastName">{{ 'customer.register.last_name' | t }}</label>
+                                 <input type="text" class="shopify-Input shopify-Input--text input-text" name="customer[last_name]" id="LastName"{%- if form.last_name %} value="{{ form.last_name }}"{%- endif -%}>
+                              </p>
+                              <p class="shopify-FormRow shopify-FormRow--wide form-row form-row-wide">
+                                 <label for="reg_email">{{ 'customer.register.email' | t }} <span class="required">*</span></label>
+                                 <input type="email" class="shopify-Input shopify-Input--text input-text{%- if form.errors contains 'email' %} input--error{%- endif -%}" name="customer[email]" required="required" id="reg_email"{%- if form.email %} value="{{ form.email }}"{%- endif -%}>
+                              </p>
+                              <p class="shopify-FormRow shopify-FormRow--wide form-row form-row-wide">
+                                 <label for="reg_password">{{ 'customer.register.password' | t }} <span class="required">*</span></label>
+                                 <input type="password" class="shopify-Input shopify-Input--text input-text{%- if form.errors contains 'password' %} input--error{%- endif -%}" name="customer[password]" id="reg_password" required="required">
+                              </p>
+                           {%- if settings.use_privacy_policy -%}
+                              <div class="shopify-privacy-policy-text"><p>{%- if settings.privacy_policy_link != blank -%}{%- assign page_url = pages[settings.privacy_policy_link].url -%}{{ 'customer.register.privacy_policy_html' | t:link: page_url }}{%- else -%}{{ 'customer.register.privacy_policy' | t }}{%- endif -%}</p></div>
+                              {%- endif -%}
+                              <p class="shopify-FormRow form-row">          
+                                 <input type="submit" class="shopify-Button button" name="register" value="{{ 'customer.register.submit' | t }}">
+                              </p>
+                           {%- endform -%}
+                        </div>
+                     </div>
+                   </div>
+               {%- endif -%}
+               {%- if shop.checkout.guest_login -%}
+                 <div class="form-login mt__20">
+                   <hr class="hr--invisible">
+                   <h2>{{ 'customer.login.guest_title' | t }}</h2>
+                   {%- form 'guest_login',class:'login' -%}
+                     <input type="submit" class="button" value="{{ 'customer.login.guest_continue' | t }}">
+                   {%- endform -%}
+                 </div>
+               {%- endif -%}
+            </div>
+         </div>
+      </div>
+      <!-- $classes -->
+   </div>
+   <!-- .jas-row -->
+</div>
+<script type="text/javascript">
+  /*
+    Show/hide the recover password form when requested.
+  */
+  function showRecoverPasswordForm() {
+    document.getElementById('recover_password').style.display = 'block';
+    document.getElementById('jas_CustomerLoginForm').style.display='none';
+    document.getElementById('gl_shopify_error').style.display='none';
+  }
+
+  function hideRecoverPasswordForm() {
+    document.getElementById('recover_password').style.display = 'none';
+    document.getElementById('jas_CustomerLoginForm').style.display = 'block';
+  }
+
+  // Allow deep linking to the recover password form
+  if (window.location.hash == '#recover') { showRecoverPasswordForm() }
+
+  // reset_success is only true when the reset form is
+  {% if reset_success -%}
+    var x = document.getElementsByClassName('resetSuccess');
+    x[0].style.display = 'block';  x[1].style.display = 'block';
+  {% endif -%}
+  {% if gl_shopify_error -%}
+      {%- if error_html != blank -%}
+      var html = {{error_html | json }};
+      var element = document.getElementById("jas_html_frm");
+         element.innerHTML = '';
+         element.innerHTML = '{{ 'customer.login.error' | t }} '+html;
+      
+      {%- endif -%}
+      document.getElementById('gl_shopify_error').style.display = 'block';
+  {% endif -%}
+</script>

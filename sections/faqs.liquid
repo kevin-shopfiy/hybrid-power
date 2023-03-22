@@ -1,0 +1,38 @@
+{%- if section.blocks.size > 0 -%}
+   {%- for block in section.blocks -%}
+      <div class="tab_text sp-accordion{%- if forloop.first %} active{%- endif -%}">
+         <div class="heading bgbl">
+            <a class="tab-heading db pr cd chp fwm" href="#{{block.id}}">{{ block.settings.title }}</a>
+         </div>
+         <div class="panel entry-content sp-accordion-content" id="{{block.id}}"{%- if forloop.first == false %} style="display: none"{%- endif -%}>{{block.settings.text | trip_html }}</div>
+      </div>
+   {%- endfor -%}
+{%- else -%}
+   <div class="text-center">{%- include 'no-blocks'-%}</div>   
+{%- endif -%}
+{%- schema -%}
+  {
+    "name": "Faqs",
+    "class": "shopify-tabs sp-accordions db w__100",
+    "blocks": [
+      {
+        "type": "faq",
+        "name": "Faq",
+        "settings": [
+            {
+            "type": "text",
+            "id": "title",
+            "label": "Question",
+            "default": "Lorem ipsum dolor sit amet"
+            },
+            {
+            "type": "textarea",
+            "id": "text",
+            "label": "Answer",
+            "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed eros congue, eleifend ipsum vitae, cursus massa. Vivamus imperdiet luctus lorem. Duis diam ligula,"
+            }
+         ]
+      }
+    ]
+  }
+{% endschema %}

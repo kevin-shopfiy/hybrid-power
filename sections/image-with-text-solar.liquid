@@ -1,0 +1,173 @@
+  <div class="fourth-module-section">
+    <div class="industry-landing-imagebox" style="background-color : {{section.settings.background_color}}">
+      <div class="container">
+        <div class="home-imagebox-main {% if section.settings.text_alighment != blank %} {{section.settings.text_alighment}} {% endif %}" >
+          <div id="home-imagebox" class="index-section">
+            <div class="one-half one-half-column-left">
+              <div class="package_image"><img src="{{ section.settings.image | img_url: '1024x1024' }}"></div>
+
+            </div>
+            <div class="one-half one-half-column-right">
+
+              <h2 class="h2_title" style="color: {{section.settings.title_color}}">
+                {% if section.settings.title != blank %}
+                {{section.settings.title}}
+                {% endif %}
+              </h2> 
+              <h2 class="h2_sub" style="font-size: 35px !important;
+    line-height: 40px;color: {{section.settings.heading_color}} ">
+                {% if section.settings.text-box != blank %}
+                {{section.settings.text-box}}
+                {% endif %}
+              </h2>
+
+              <div class="industry-landing-imagebox-block-main">
+                {% if section.settings.text_11 != blank %}
+                <h4 style="color: {{section.settings.content_color}} ">{{section.settings.text_11}}</h4>
+                {% endif %} 
+            
+              </div>
+       
+              {% if section.settings.button-text != blank %}
+              <button type="button" style="background-color: #ffc90f; color:;">
+                <a href="{{section.settings.button_link}}" class="not-button-0-w" style="color: {{section.settings.Button_color}}" tabindex="0">
+                 {{section.settings.button-text}}</a></button>
+                {% endif %}
+              
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+    .industry-landing-imagebox .industry-landing-imagebox-block-main .group-anchor.hover_group {display:inline-flex;}
+    .industry-landing-imagebox .industry-landing-imagebox-block-main .group-anchor.hover_group:hover .h2_title{
+      color: {{section.settings.heading2background_color}} !important;
+
+    }
+    .industry-landing-imagebox .industry-landing-imagebox-block-main .group-anchor.hover_group:hover .industry-landing-imagebox-block-left{
+      color:#fff;
+      background:{{section.settings.heading2background_color}} !important;
+    }
+    .industry-landing-imagebox .industry-landing-imagebox-block-main .industry-landing-imagebox-block .industry-landing-imagebox-block-right h2.h2_title:hover a ,
+    .industry-landing-imagebox-block-right:hover p{
+
+      color: {{section.settings.heading2background_color}} !important;
+    }
+    .industry-landing-imagebox .industry-landing-imagebox-block-main .industry-landing-imagebox-block .industry-landing-imagebox-block-right .block-link:hover,
+    div#shopify-section-industry_fourth_module .one-half.one-half-column-right h2.h2_title:hover{
+      color:{{section.settings.heading3background_color}} !important;
+    }
+    @media screen and (min-width: 992px) {
+      .promotion_section_class div#home-imagebox .one-half h2.h2_sub{
+        font-size: 49px !important;
+      }
+    }
+    .promotion_section_class .industry-landing-imagebox .industry-landing-imagebox-block-main{
+         margin-top: 0px ;
+    }
+    .promotion_section_class .industry-landing-imagebox div#home-imagebox h4{
+          margin-bottom:16px !important;
+    }
+  </style>
+  {% schema %}
+  {
+  "name": "Rv Promotion Section",
+  "class":"promotion_section_class",
+  "settings": [
+  {
+    "id": "title",
+    "type": "text",
+    "label": "Title",
+    "default": "Promotion Title"
+  },
+  {
+    "type": "color",
+    "id": "background_color",
+    "label": "Background Color",
+    "default": "#fff"
+  }, 
+
+  {
+    "type": "color",
+    "id": "title_color",
+    "label": "Title Color",
+    "default": "#000"
+  },
+  {
+    "id": "text-box",
+    "type": "text",
+    "label": "Heading"
+
+  },
+
+  {
+    "type": "color",
+    "id": "heading_color",
+    "label": "Heading Color",
+    "default": "#000"
+  },
+ 
+  {
+  "id": "text_11",
+  "type": "html",
+  "label": "Promotion Description",
+  "default": "Promotion Description"
+  },
+  {
+    "type": "color",
+    "id": "content_color",
+    "label": "Content Color",
+    "default": "#000"
+  },
+  {
+    "id": "button-text",
+    "type": "text",
+    "label": "Button Text"
+
+  },
+  {
+    "type": "color",
+    "id": "Button_color",
+    "label": "Button Color",
+    "default": "#000"
+  },
+  {
+        "label": "Button Link",
+        "id": "button_link",
+        "type": "url"
+   },
+  {
+    "type": "select",
+    "id": "text_alighment",
+    "label": "Text alignment",
+    "default": "class-left-right",
+  "options": [
+  {
+    "value": "class-left-right",
+    "label": "Text to Right"
+  },
+  {
+    "value": "class-right-left",
+    "label": "Text to Left"
+  }
+
+  ]
+  },
+  {
+    "type": "image_picker",
+    "id": "image",
+    "label": "Image"
+  }
+  ]
+  }
+  {% endschema %}
+
+  {% stylesheet %}
+  {% endstylesheet %}
+
+  {% javascript %}
+  {% endjavascript %}

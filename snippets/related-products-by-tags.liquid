@@ -1,0 +1,46 @@
+{%- if product.tags.size > 0 -%}
+{%- assign counter = 1 -%}
+{%- assign product_tags = product.tags -%}
+{%- assign product_id = product.id -%}
+{%- assign break_at = settings.many_related_products | plus: 0 -%}
+{%- assign already_product = product.handle -%}
+{%- assign related_number = settings.related_silder_per_view -%}
+{%- assign grid_columns = '12' -%}
+{%- assign grid_columns_mb = '12' -%}
+{%- assign pr_style = settings.related_products_hover -%}
+{%- assign show_vendor = settings.show_vendor_related -%}
+{%- assign settings_pr_img_size = settings.use_related_eq_height -%}
+{%- assign section_settings_countdown = settings.related_sale_countdown -%}
+{%- assign countdown_timer_style = settings.related_countdown_style -%}
+{%- unless collection -%}
+ {%- assign collection = collections['all'] -%}
+{%- endunless -%}
+
+{%- capture related_items -%}  
+{%- for product in collection.products %}
+    {%- for tag in product_tags -%}
+        {%- if product.tags contains tag and product.id != product_id and counter <= break_at -%}
+          {%- assign check_Shown = already_product | split:',' -%}
+          {%- if check_Shown contains product.handle -%}
+          {%- else -%}
+            {% capture already_product %}{{ already_product | append:',' | append:product.handle }}{% endcapture %}
+                {%- include 'jas_product_loop' -%}
+                {%- assign counter = counter | plus: 1 -%}
+          {%- endif -%}
+        {%- endif -%}
+    {%- endfor -%}
+{%- endfor -%}
+{%- endcapture -%}
+{%- assign related_items = related_items | trim -%}
+{%- if counter > 1 -%}
+  <div class="related product-extra mt__60 {{pr_style}}">
+    {%- assign sett_title = settings.title_pr_related -%}
+    {%- assign sett_sub_title = settings.sub_title_pr_related -%}
+    {%- assign style_title = settings.style_title_pr_related -%}
+    {%- include 'jas_section_title' -%}
+    <div class="products jas-row jas-products-holder jas-carousel {{settings.related_image_size}} {{settings.related_img_ratio}} position_{{settings.related_img_position}}{%- if settings_pr_img_size %} equal-nt{%- endif -%}" data-slick='{"slidesToShow": {{ settings.related_sidetoshow }},"slidesToScroll": 1, "autoplay": {{ settings.related_use_autoplay }}, "autoplaySpeed": {{ settings.related_slider_speed }}000,"rtl": {{ settings.use_rtl }}, "infinite": {{settings.related_use_loop}}, "arrows": {{settings.related_use_arrows}},"dots": {{settings.related_use_dots}}, "responsive":[{"breakpoint": 1024,"settings":{"slidesToShow": {{ settings.related_sidetoshow_first}} }},{"breakpoint": 600,"settings":{"slidesToShow": {{ settings.related_sidetoshow_center}} }},{"breakpoint": 480,"settings":{"slidesToShow": {{ settings.related_sidetoshow_last}} }}]}'>
+      {{ related_items }}
+    </div>
+  </div>
+{%- endif -%}
+{%- endif -%}

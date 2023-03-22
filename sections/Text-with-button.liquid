@@ -1,0 +1,52 @@
+<div class="jas-container">
+<div class="main-container-sec">
+<div class="main-heading-section">
+{% if section.settings.heading != blank%}
+<h2>{{ section.settings.heading }}</h2>
+{% endif %}
+</div>
+<div class="main-container-text-bnt">
+{% if section.settings.description != blank%}
+<p class="description">{{ section.settings.description }}</p>
+  {% endif %}
+{% if section.settings.textbtn !=blank %}
+<a class="btn" href ="{{ section.settings.btnurl}}">{{ section.settings.textbtn }}</a>
+{% endif %}
+</div>
+</div>
+
+</div>
+{% schema %}
+  {
+    "name": "Text-with-button",
+    "settings": [  {
+    "id": "heading",
+    "type": "text",
+    "label": "Heading"
+   
+  },{
+    
+    "id": "description",
+    "type": "richtext",
+    "label": "Description"
+   
+  },
+   {
+    "id": "textbtn",
+    "type": "text",
+    "label": "button text"
+   
+  }, {
+    "id": "btnurl",
+    "type": "url",
+    "label": "Button link"
+   
+  }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

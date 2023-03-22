@@ -1,0 +1,306 @@
+{% section 'franchise-slideshow' %}
+{% section 'parallax-banner-franchise' %}
+{% section 'image-with-text-franchise' %}
+{% section '8-icons-franchise' %}
+{% section 'module-franchise' %}
+{% section 'contact-franchise' %}
+{% section 'module-seven' %}
+<style>
+  
+/*   Custom Page CSS */
+  
+  
+  
+  .metaslider .flexslider{
+    margin: 0 !important;
+  }
+  
+  .jas_custom_8-icons-franchise.jas-banner-parallax{
+    flex-direction:column;
+  }
+  
+  select{
+    cursor:pointer !important;
+  }
+  
+  select, input, textarea {
+    padding: 0 22px !important;
+  }
+  
+  option{
+    background:transparent;
+    color:#000;
+  }
+  
+   a.btn {
+    font-size: 12px;
+    padding: 12px 15px;
+    text-transform: uppercase;
+  }
+  
+  div#home-imagebox .one-half.one-half-column-right .logo-heading .right-logo-content p{
+    font-weight:600;
+  }
+  
+  #shopify-section-module-franchise div#home-imagebox h2.h2_title{
+    margin-bottom:0 !important;
+  }
+  
+  div#home-imagebox .one-half.one-half-column-left p{
+  color: #000000 !important;padding-right: 100px;margin-top: 20px;
+  }
+  
+  div#home-imagebox h2.h2_title{
+    font-size:17px !important;
+  }
+  
+  input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+  	-webkit-appearance: none;
+  	margin: 0;
+ }
+  
+  input::placeholder, textarea::placeholder {
+	
+  }
+  
+  input:not([type=submit]):not([type=checkbox]), select, textarea{
+    background-color: transparent;
+    border-bottom: 2px solid #fff !important;
+    color: #fff;
+    border: none;
+  }
+  
+  #ContactFormStreet, #ContactFormCity, #ContactFormProvince, #ContactFormPostal, #ContactFormCountry{
+    background-image: url(https://cdn.shopify.com/s/files/1/0253/4431/1386/files/location-pin-compact-solid.png?v=1652454786) !important;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 18px 18px;
+    background-position: 0% 50% !important;
+    cursor: auto;
+  }
+  
+  
+  #ContactFormPhone{
+    background-image: url(https://cdn.shopify.com/s/files/1/0253/4431/1386/files/phone-solid.png?v=1652454605) !important;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 18px 18px;
+    background-position: 0% 50% !important;
+    cursor: auto;
+  }
+  
+  #ContactFormEmail{
+    background-image: url(https://cdn.shopify.com/s/files/1/0253/4431/1386/files/mail-solid.png?v=1652454214) !important;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 18px 18px;
+    background-position: 0% 50% !important;
+    cursor: auto;
+  }
+  
+  #ContactFormFName{
+    background-image: url(https://cdn.shopify.com/s/files/1/0253/4431/1386/files/pngfind.com-play-icon-png-472336.png?v=1652451549) !important;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 18px 18px;
+    background-position: 0% 50% !important;
+    cursor: auto;
+  }
+  
+  #ContactFormLName{
+    background-image: url(https://cdn.shopify.com/s/files/1/0253/4431/1386/files/pngfind.com-play-icon-png-472336.png?v=1652451549) !important;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 18px 18px;
+    background-position: 0% 50% !important;
+    cursor: auto;
+  }
+  
+  #ContactFormBackground{
+    background-image: url(https://cdn.shopify.com/s/files/1/0253/4431/1386/files/PinClipart.com_wrecking-ball-clipart_635032.png?v=1652455680) !important;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 18px 18px;
+    background-position: 0% 50% !important;
+    cursor: auto;
+  }
+  
+  #ContactFormLaunch{
+    background-image: url(https://cdn.shopify.com/s/files/1/0253/4431/1386/files/383171_calendar_icon_5d0d0e18-fa4e-4f7a-8216-04b2c80f5031.png?v=1652455680) !important;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 18px 18px;
+    background-position: 0% 50% !important;
+    cursor: auto;
+    padding: 0 22px;
+  }
+  
+  #ContactFormiInterest{
+    background-image: url(https://cdn.shopify.com/s/files/1/0253/4431/1386/files/PngItem_1084481.png?v=1652455680) !important;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 18px 18px;
+    background-position: 0% 50% !important;
+    cursor: auto;
+  }
+  
+  .form-name{
+    color: #febb00;
+  }
+  
+  .field {
+    margin-bottom: 20px;
+}
+  
+  .form-box{
+    width:50%
+  }
+  
+ .question_section.custom_class-right-center{
+   width: 50%;
+ }
+  
+ #shopify-section-module-franchise div#home-imagebox .one-half.one-half-column-right .logo-heading .logo {
+    width: 4%;
+}
+  
+  #shopify-section-module-franchise div#home-imagebox .one-half.one-half-column-right .logo-heading h3{
+    font-size:14px;
+    font-weight:500;
+    text-transform:none;
+    line-height:20px;
+  }
+  
+  #shopify-section-module-franchise .container{
+    max-width:1300px;
+  }
+  
+  #shopify-section-module-franchise .one-half.one-half-column-right{
+    padding-left:0 !important;
+  }
+  
+  #home-imagebox .btn{
+    margin-top:20px;
+  }
+  
+  .header__mid{
+    background:#32383b;
+  }
+  
+  .template-page .header__mid.light .jas-navigation nav ul.customjtpl-mega-menu a{
+    color:#fff !important;
+  }
+  .jas_div_logo .jas-branding img{
+    filter: invert(1) brightness(1) grayscale(1) sepia(1) grayscale(1);
+    margin:7px 0;
+  }
+  .type_slideshow1 .handmade-slider .metaslider .flexslider .caption-wrap .caption{
+    left: auto;
+    right: 190px;
+  }
+  .header-sticky .header__mid .jas_div_logo .jas-branding img{
+    filter: inherit;
+    margin:0;
+  }
+  
+  footer i{
+    font-size: inherit;
+  }
+  
+  i{
+    color: #febb00;
+    font-size: 57px;
+  }
+  
+  
+  
+/*   Media Queries for Mobile Only */
+  
+  @media(max-width:768px){
+    .type_slideshow1 .handmade-slider .metaslider .flexslider .caption-wrap .caption p{
+      display:none;
+    }
+    .type_slideshow1 .handmade-slider .metaslider .flexslider .caption-wrap .caption {
+    left: 40px;
+    right: 10px;
+	}
+    .metaslider .flexslider{
+      margin:0 !important;
+    }
+    
+    .h2_sub{
+      max-width:100% !important;
+    }
+    div#home-imagebox .one-half.one-half-column-left p{
+      padding:0 !important;
+    }
+    .template-page .home-imagebox-main div#home-imagebox{
+      margin:0;
+    }
+    .question_section.custom_class-right-center{
+      width:100%;
+    }
+    .form-box{
+      width:100%;
+    }
+    .form-row{
+      gap:20px;
+    }
+    .field p{
+      margin:0;
+    }
+    h2.h2_sub {
+      font-size: 35px !important;
+    }
+    .metaslider .slides img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      height: 300px;
+    }
+    .handmade-slider .metaslider .flexslider .caption-wrap h2{
+      color:#fff !important;
+    }
+    .newslettor-main h2.h2_sub.tu.cw.fs__14.mg__0{
+      font-size:25px !important;
+    }
+    .metaslider .flexslider .caption-wrap .caption{
+      bottom:65%;
+    }
+    .revolution-inner h2.h2_sub.tc.tu.cw.fs__50.fwb{
+      margin-bottom:20px;
+    }
+    .package_image{
+      display:none;
+    }
+    .fourth-module-section .one-half.one-half-column-left{
+      margin:0 !important;
+    }
+    .icon-row1 {
+      border:none;
+    }
+    .icon-row2 {
+      border:none;
+    }
+    .hide-small{
+     display:none;
+    }
+    .div_overlay {
+    height: 355px;
+    background: #0000003d;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+}
+    .logo-heading {
+    gap: 15px;
+}
+  }
+  
+  @media(min-width:768px){
+    .hide-large{
+      display:none;
+    }
+  }
+</style>

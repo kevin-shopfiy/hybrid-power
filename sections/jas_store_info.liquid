@@ -1,0 +1,177 @@
+{%- include 'style_mp_section' -%}
+<style>
+   .our-store,.our-store h3, .our-store h4,.type_jas_store_info a.store_info_btn {
+      color: {{section.settings.section_color_text}};
+   }
+   .type_jas_store_info a.store_info_btn {
+      border-color: {{section.settings.section_color_text}};
+   }
+   .our-store .separate {
+       background: {{section.settings.section_color_text}};
+   }
+   .type_jas_store_info a.store_info_btn:hover {
+      color:{{section.settings.section_color_text | color_modify: 'alpha', 0.5 }};
+      border-color:{{section.settings.section_color_text | color_modify: 'alpha', 0.5 }}
+}
+</style>
+<div class="jas_custom_{{section.id}} jas-banner-parallax {%- if section.settings.use_parallax == false %} gecko-parallax{%- endif %}{%- if section.settings.use_background_overlay %} jas_background-overlay{%- endif %}{%- if section.settings.use_parallax == false and section.settings.image != blank %} lazyload{%- endif %}{%- if section.settings.full_height %} jas-full-height{%- endif -%}"{%- if section.settings.use_parallax and section.settings.image != blank %} data-jas-parallax='1.5' data-jas-parallax-image='{{ section.settings.image | img_url: '50x50' }}'{%- endif %}{%- if section.settings.image != blank or section.settings.section_bg_color != blank %} data-bgset="{%- include 'bgset', image: section.settings.image -%}" data-sizes="auto" data-parent-fit="cover" style="{%- if section.settings.section_bg_color != blank -%}background-color: {{section.settings.section_bg_color}};{%- endif -%}{%- if section.settings.image != blank and section.settings.use_parallax == false -%}background-image: url('{{ section.settings.image | img_url: '50x50' }}');{%- endif -%}"{%- endif -%}>
+   <div class="jas-container clearfix">
+      <div class="jas-row">
+        <div class="jas-col-xs-12">
+           <div class="our-store tc"{%- if section.settings.section_content_color != blank and section.settings.use_content_color %} style="background-color: {{section.settings.section_content_color | color_modify: 'alpha', 0.8 }}"{%- endif -%}>
+              {{section.settings.title}}
+              {%- if section.settings.link != blank and section.settings.button != blank -%}
+              <a href="{{section.settings.link}}" class="store_info_btn cw">{{section.settings.button}}</a>
+              {%- endif -%}
+           </div>
+        </div>
+      </div>
+   </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Store information",
+    "class": "jas-section type_jas_store_info clearfix",
+    "settings": [
+      {
+        "type": "header",
+        "content": "== General Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Background Image"
+      },
+      {
+        "type": "color",
+        "id": "section_bg_color",
+        "label": "Background color",
+        "default": "#000"
+      },
+       {
+        "type": "checkbox",
+        "id": "full_height",
+        "label": "Full height row?",
+        "info": "if checked row will be set to full height.",
+        "default": false
+      },
+      {
+         "type": "header",
+         "content": "== CUSTOMIZE YOUR TEXT"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_content_color",
+        "label": "Use Background content color?",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "section_content_color",
+        "label": "Background content color",
+        "default": "#b59677"
+      },
+      {
+        "type": "color",
+        "id": "section_color_text",
+        "label": "Background content color text",
+        "default": "#fff"
+      },
+      {
+        "type": "textarea",
+        "id": "title",
+        "label": "Content info: ",
+        "default": "<h3>Gecko Store<\/h3>\n            <p>184 Main Rd E, St Albans VIC 3021, Australia<\/p>\n            <div class=\"separate\"><\/div>\n            <h4>Opening Hours<\/h4>\n            <p>Monday to Friday: 9:00 AM – 9:00 PM<br>\n               Saturday to Sunday: 9:30 AM – 8:00 PM\n            <\/p>"
+      },
+      {
+        "type": "text",
+        "id": "button",
+        "label": "Button Title: ",
+        "default": "Button Title"
+      },
+      {
+        "type":"url",
+        "id":"link",
+        "label":"Link",
+        "info": "Optional"
+      },
+     {
+        "type": "header",
+        "content": "== Design Options"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_left",
+        "label": "Margin left",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_right",
+        "label": "Margin right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_top",
+        "label": "Padding top",
+        "default":"120px",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_right",
+        "label": "Padding right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_bottom",
+        "label": "Padding bottom",
+        "default":"120px",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_left",
+        "label": "Padding left",
+        "info": "60px"
+      },
+      {
+        "type": "header",
+        "content": "== Gecko Extras"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_parallax",
+        "label": "Use Gecko parallax?",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "use_background_overlay",
+        "label": "Use background overlay?",
+        "default": false
+      }
+    ],
+    "presets": [
+      {
+        "name": "Store information",
+        "category": "== Store information"
+      }
+    ]
+  }
+{% endschema %}

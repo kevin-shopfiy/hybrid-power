@@ -1,0 +1,239 @@
+
+{% comment %}{% layout none %} 
+<!DOCTYPE html>
+<html> 
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+      {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+    </title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="//cdn.shopify.com/s/files/1/1195/7350/t/1/assets/fontawesome-iconpicker.min.css?14776044435245576982" rel="stylesheet" type="text/css" media="all" />
+    <link href="//demo-rubbez.myshopify.com/services/assets/92857350/editor_asset/shortcode-helper.scss.css" rel="stylesheet" type="text/css" media="all" />
+  </head>
+  <body>
+    <div class="main-container page-wrapper page-shortcode">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12"> 
+          </div>
+          <div class="col-md-12">
+            <button type="button" class="btn btn-info ribbon header-button"><h4><strong> <i class="glyphicon glyphicon-star-empty"></i> Shortcode generate tool Support for Shopify theme <i class="glyphicon glyphicon-star-empty"></i></strong></h4></button>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bhoechie-tab-container">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 bhoechie-tab-menu">
+              <div class="list-group">
+
+                <a href="#" class="list-group-item  text-center active">
+                  <h4 class="glyphicon glyphicon-shopping-cart"></h4><br/>Product
+                </a>
+                <a href="#" class="list-group-item text-center">
+                  <h4 class="glyphicon glyphicon-picture"></h4><br/>Collections, Portfolio
+                </a>
+              </div>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 bhoechie-tab">
+              <!-- flight section -->
+              <div class="bhoechie-tab-content active">
+                <h3>Shortcode product Generate</h3> <hr>
+                <form class="form-horizontal" id="form-product">
+                  <div class="form-group">
+                    <label for="inputTitle" class="col-sm-4 control-label">Title:<span class="red required">*</span></label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="inputTitle" placeholder="Featured product" name="title" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputTitle" class="col-sm-4 control-label">Total Number of products to show: <span class="red required">*</span></label>
+                    <div class="col-sm-8">
+                     <input type="number" step="1" min="1" name="limit" value="8" class="form-control" size="1" pattern="[0-9]*" inputmode="numeric" max="999">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputTitle" class="col-sm-4 control-label" >Products per row: <span class="red required">*</span></label>
+                    <div class="col-sm-8">
+                      <select class="form-control" name="cols" >
+                        <option value="2"> 2</option>
+                         <option value="3">3</option>
+                         <option value="4" selected="selected">4</option>
+                          <option value="5">5</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="inputTitle" class="col-sm-4 control-label" >Layout:</label>
+                    <div class="col-sm-8">
+                      <select class="form-control select-layout" id="product-preview" name="layout">
+                        <option value="layout1" data-src="https://cdn.shopify.com/s/files/1/1674/8789/files/shortcode_1.jpg?2419354770617609442">Layout 1</option>
+                        <option  value="layout2" data-src="https://cdn.shopify.com/s/files/1/1674/8789/files/shortcode_2.jpg?2419354770617609442">Layout 2 ( use silder )</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputTitle" class="col-sm-4 control-label" required >Collection to use :<span class="red required">*</span></label>
+                    <div class="col-sm-8">
+                      <select class="form-control" name="handle_collection" required>
+                        <option value="">Select your collection</option>
+                        {% for collection  in  collections %}
+                        {% if collection.products.size > 2 and collection.handle != "wishlist"  %}
+                        <option  value="{{collection.handle}}">{{collection.title}}</option>
+                        {% endif %}
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="inputTitle" class="col-sm-4 control-label" >Product style:</label>
+                    <div class="col-sm-8">
+                      <select class="form-control select-layout" id="product-equal" name="style">
+                        <option value="jas_default">style 1 (Default)</option>
+                        <option  value="jas_pr_tc">style 2 (text center)</option>
+                      </select>
+                    </div>
+                  </div>
+                   <div class="form-group">
+                     <label for="inputTitle" class="col-sm-4 control-label" >Show product vendors:</label>
+                    <div class="col-sm-8">
+                      <select class="form-control select-layout" id="product-equal" name="vendors">
+                        <option value="vendors_1">Disable</option>
+                        <option  value="vendors_2">Enable</option>
+                      </select>
+                    </div>
+                  </div>
+                   <div class="form-group">
+                     <label for="inputTitle" class="col-sm-4 control-label" >Use countdowns:</label>
+                    <div class="col-sm-8">
+                      <select class="form-control select-layout" id="product-equal" name="countdown">
+                        <option value="countdown_1">Disable</option>
+                        <option  value="countdown_2">Enable</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="inputTitle" class="col-sm-4 control-label" >Countdown style:</label>
+                    <div class="col-sm-8">
+                      <select class="form-control select-layout" id="product-equal" name="countdown_style">
+                        <option value="light">Light</option>
+                        <option  value="dark">Dark</option>
+                      </select>
+                    </div>
+                  </div>
+                   <div class="form-group">
+                     <label for="inputTitle" class="col-sm-4 control-label" >Use equal height images:</label>
+                    <div class="col-sm-8">
+                      <select class="form-control select-layout" id="product-equal" name="equal">
+                        <option value="equal_1">Disable</option>
+                        <option  value="equal_2">Enable</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="inputTitle" class="col-sm-4 control-label" >Equal Image size:</label>
+                    <div class="col-sm-8">
+                      <select class="form-control select-layout" id="product-equal" name="size">
+                        <option value="full">Full</option>
+                        <option  value="auto">Auto</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">  
+                    <h3>Demo layout:</h3> <hr>
+                    <img class="preview-product" src="https://cdn.shopify.com/s/files/1/1674/8789/files/shortcode_1.jpg?2419354770617609442" class="img-thumbnail">
+                  </div>
+                  <div class="form-group">
+                    <label for="">Result:</label>
+                    <textarea class="form-control" rows="5" id="result-product"></textarea>
+                    <div class="alert alert-success alert-dismissible fade in hidden-alert" role="alert">Now Copied to clipboard. Please paste to box shortcode to Blog post or Page content.</div>
+                  </div>
+                  <button type="button" class="btn btn-success btn-lg btn3d" id="generate-product"><span class="glyphicon glyphicon-send"></span> Generate </button>
+                  <input type="reset" class="btn-lg btn3d btn btn-warning" value="Reset" style="width: 100%">
+                </form>
+
+              </div>
+              <div class="bhoechie-tab-content">
+                <h3>Shortcode Collections, Portfolio generate</h3>
+                <form class="form-horizontal" id="form-collections">
+                  <div class="form-group">
+                    <label for="inputTitle" class="col-sm-4 control-label">Title (optional):<span class="red required">*</span></label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="inputTitle" placeholder="collection product" name="title" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="inputTitle" class="col-sm-4 control-label" >Padding:</label>
+                    <div class="col-sm-8">
+                      <select class="form-control select-layout" name="padding">
+                        <option value="10" selected="selected">10px</option>
+                        <option value="15">15px</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="inputTitle" class="col-sm-4 control-label" >Style:</label>
+                    <div class="col-sm-8">
+                      <select class="form-control select-layout" id="collection-preview" name="style">
+                        <option value="style1" data-src="https://cdn.shopify.com/s/files/1/1674/8789/files/shortcode_3.jpg?9909620816668118006">Use Title</option>
+                        <option  value="style2" data-src="https://cdn.shopify.com/s/files/1/1674/8789/files/Screenshot_4.jpg?2780926619585735727">No Title</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-6">
+                      <label for="inputTitle" class="control-label">Link Image File Upload</label>
+                    </div>
+                    <div class="col-sm-2">
+                      <label for="inputTitle" class="control-label">Image Title:</label>
+                    </div>
+                    <div class="col-sm-2">
+                      <label for="inputTitle" class="control-label">Image Width:</label>
+                    </div>
+                    <div class="col-sm-2">
+                      <label for="inputTitle" class="control-label">Image Height:</label>
+                    </div>
+                  </div> <hr>
+                  {% for index  in (1..15) %}
+                  <div class="form-group">
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control"  placeholder="Link Image File Upload {{index}}" name="src{{index}}" >
+                    </div>
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control"  placeholder="Image Title {{index}}" name="alt{{index}}" >
+                    </div>
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control"  placeholder="870" name="width{{index}}" >
+                    </div>
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control"  placeholder="1110" name="height{{index}}" >
+                    </div>
+                  </div><hr>
+                  {% endfor %}
+
+                  <div class="form-group">  
+                    <h3>Demo layout:</h3> <hr>
+                    <img class="preview-collection" src="https://cdn.shopify.com/s/files/1/1674/8789/files/shortcode_3.jpg?9909620816668118006" class="img-thumbnail">
+                  </div>
+                  <div class="form-group">
+                    <label for="">Result:</label>
+                    <textarea class="form-control" rows="5" id="result-collections"></textarea>
+                     <div class="alert alert-success alert-dismissible fade in hidden-alert" role="alert">Now Copied to clipboard. Please paste to box shortcode to Blog post or Page content.</div>
+                  </div>
+                  <button type="button" class="btn btn-success btn-lg btn3d" id="generate-collections"><span class="glyphicon glyphicon-send"></span> Generate </button>
+                  <input type="reset" class="btn-lg btn3d btn btn-warning" value="Reset" style="width: 100%">
+                </form>
+              </div>
+            </div>
+          </div>
+        </div> 
+      </div>
+    </div>
+    <script src="//cdn.shopify.com/s/files/1/1195/7350/t/1/assets/jquery-1.11.3.min.js?14776044435245576982" type="text/javascript"></script>
+    <script src="//cdn.shopify.com/s/files/1/1195/7350/t/1/assets/bootstrap.min.js?14776044435245576982" type="text/javascript"></script>
+    <script src="//cdn.shopify.com/s/files/1/1195/7350/t/1/assets/fontawesome-iconpicker.min.js?14776044435245576982" type="text/javascript"></script>
+    <script src="//cdn.shopify.com/s/files/1/1195/7350/t/1/assets/jquery-ui.js?14776044435245576982" type="text/javascript"></script>
+
+    {{'shortcode-helper.js' | asset_url | script_tag }}
+  </body>
+</html>{% endcomment %}

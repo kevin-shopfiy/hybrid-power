@@ -1,0 +1,379 @@
+<link href="//cdn-images.mailchimp.com/embedcode/classic-10_7_dtp.css" rel="stylesheet" type="text/css">
+{%- assign wholesaler = false -%}
+{%- if customer and customer.tags contains 'wholesaler'-%}
+{%- assign wholesaler = true -%}
+{%- endif -%}
+{%- if wholesaler == true -%}
+<style>
+.wholesale_text {
+    display: flex;
+    width: 100%;
+}
+</style>
+{%- endif -%}
+
+{%- if sold_out == false and linklists[product.handle].links.size == 0 -%}
+{%- assign user_countdown = product.metafields.meta.countdown -%}
+{%- include 'gecko_count_down',jas_countdow_page:'jas_page',user_countdown:user_countdown,class:'jas_progress_bar_pr' -%}
+{%- endif -%} 
+{%- assign ck_inventory = settings.ck_inventory -%} 
+<div class="btn-atc atc-popup clearfix{%- if settings.btn_atc_full %} btn_atc_full{%- endif -%}">
+	{%- if product.has_only_default_variant == false and linklists[product.handle].links.size == 0 -%}
+	<div id="callBackVariant" class="jas_{{current_variant.option1 | handleize}} jas1_{{current_variant.option2 | handleize}} jas2_{{current_variant.option3 | handleize}}">
+	{%- endif-%}
+	   {%- if settings.product_quantity_message and product.variants.size == 1 and sold_out == false -%}
+	      {%- if current_variant.inventory_management -%}
+            {%- if current_variant.inventory_quantity < ck_inventory and current_variant.inventory_quantity > 0 -%}
+               <div id="variantQuantity" class="variant-quantity variantQuantity">{{ 'products.product.only_left' | t: count: current_variant.inventory_quantity }}</div>
+            {%- elsif current_variant.inventory_quantity <= 0 and current_variant.incoming -%}
+               {%- assign next_incoming_date = current_variant.next_incoming_date | date: format: 'month_day_year' -%}
+               <div id="variantQuantity" class="variant-quantity variantQuantity">{{ 'products.product.will_not_ship_until' | t: date:next_incoming_date }}</div>
+            {%- endif -%}
+         {%- endif -%}   
+	   {%- endif -%}
+	   {%- if product.has_only_default_variant and sold_out and linklists[product.handle].links.size == 0 -%}
+	      {%- if settings.product_quantity_message -%}
+               {%- if current_variant.inventory_management -%}
+                  {%- if current_variant.inventory_quantity < ck_inventory and current_variant.inventory_quantity > 0 -%}
+                     <div id="variantQuantity" class="variant-quantity variantQuantity">{{ 'products.product.only_left' | t: count: current_variant.inventory_quantity }}</div>
+                  {%- elsif current_variant.inventory_quantity <= 0 and current_variant.incoming -%}
+                     {%- assign next_incoming_date = current_variant.next_incoming_date | date: format: 'month_day_year' -%}
+                     <div id="variantQuantity" class="variant-quantity variantQuantity">{{ 'products.product.will_not_ship_until' | t: date:next_incoming_date }}</div>
+                  {%- endif -%}
+               {%- endif -%}
+         {%- endif -%}
+	      <p class="stock out-of-stock mb__20" id="out-of-stock-gl">{{ 'products.product.outofstock' | t }}</p>
+	      {%- if settings.use_wishlist and pages['wishlist'].empty? != true -%}{%- include 'jas-wishlist-product' -%}{%- endif -%}
+	   {%- elsif linklists[product.handle].links.size == 0 -%}
+	      {%- if check_external and product.has_only_default_variant -%}
+	         <div class="flex">
+	         <a href="{{ check }}" id="shopify_add_to_cart" rel="nofollow" class="single_add_to_cart_button button alt btn_external">{{ product.metafields.external | first | first }}</a>
+	         {%- if settings.use_wishlist and pages['wishlist'].empty? != true -%}{%- include 'jas-wishlist-product' -%}{%- endif -%}
+	         </div>
+	      {%- else -%}
+				{%- form 'product', product, id: "cart-form", class: "variations_form product-form nt_cart_form jas_cart clearfix" -%}
+      			  
+      
+     				 <div class="single_variation_wrap{%- if product.price_varies %} price_custom{%- endif %}{%- if settings.enable_payment_button %} product-form__item--payment-button{%- endif -%}">
+						
+						<div class="shopify-variation-add-to-cart variations_button shopify-variation-add-to-cart-enabled">
+						{%- if settings.product_quantity_message -%}
+	                        <div id="variantQuantity" class="variant-quantity variantQuantity" style="display: none"></div>
+	                    {%- endif -%}
+	                        <div class="flex">
+		                        {%- if product.variants.size == 1 and sold_out -%}
+		                            <p class="stock out-of-stock" id="out-of-stock-gl">{{ 'products.product.outofstock' | t }}</p>
+		                        {%- else -%}
+		                            <p class="stock out-of-stock" id="out-of-stock-gl" style="display: none">{{ 'products.product.outofstock' | t }}</p>
+		                           {%- if check_external -%}
+		                             <a href="{{ check }}" id="shopify_add_to_cart" rel="nofollow" class="shopify_add_to_cart single_add_to_cart_button button alt btn_external">{{ product.metafields.external | first | first }}</a>
+		                           {%- else -%}
+                              {% comment %}
+		                               <div class="quantity pr fl" id="shopify_quantity">
+		                                  <input type="number" step="1" min="1" max="{%- if current_variant.inventory_management != null -%}{{current_variant.inventory_quantity}}{%- else -%}999{%- endif -%}" name="quantity" value="1" title="Qty" class="qty input-text tc" size="4">
+		                                  <div class="tc pa">
+		                                     <a class="plus db cb" href="javascript:void(0);"><i class="fa fa-angle-up"></i></a>
+		                                     <a class="minus db cb" href="javascript:void(0);"><i class="fa fa-angle-down"></i></a>
+		                                  </div>
+		                               </div>
+                              {% endcomment %}
+                              {%- if wholesaler == true -%}
+                              <div class="wholesale__text">WHOLESALE PRICE</div>
+                              {%- endif -%}
+                            <div class="shopify-variation single_variation">
+							
+							<div class="shopify-variation-price" data-c_price="{{current_variant.price}}">
+								<span class="price productPrice n" id="productPrice">
+                         
+                        </span>
+							</div>
+						
+						</div>
+		                               {%- if settings.btn_atc_full == false -%}
+                            {%- assign add_to_cart_color = product.metafields.section-1['add_to_cart_color'] -%}  
+                             {%- assign add_to_cart_text_color = product.metafields.section-1['add_to_cart_text_color'] -%}  
+                 {% unless product.handle contains "batt-pack-energy" %}    
+<button style="background-color: {{add_to_cart_color}} !important; color: {{add_to_cart_text_color}} !important;" id="mainBundledActionBtn" class="mainBundledActionBtn bundle_add_to_cart btn dfsd" onclick=""> 
+                  {%- if current_variant.inventory_quantity <= 0 and current_variant.available and current_variant.inventory_management == 'shopify' -%}{{ 'products.product.pre_orders' | t }}{%- else -%}{{ 'products.product.add_to_cart' | t }}{%- endif -%}</span>
+                </button>
+{% endunless %}
+{% if product.handle contains "batt-pack-energy" %}
+                <button style="background-color: {{add_to_cart_color}} !important; color: {{add_to_cart_text_color}} !important;"  class="custom-whislist-btn" onclick=""> 
+    JOIN OUR WAITLIST</span>
+                </button>
+                            {% endif %}
+                            
+                            {%- assign spec_sheet_text = product.metafields.section-1['spec_sheet_text'] -%}    
+                              {%- assign spec_sheet_url = product.metafields.section-1['spec_sheet_url']  -%}
+                            
+                              {% if spec_sheet_text != blank %}
+                            
+                           {%- assign spec_sheet_button_text_color = product.metafields.section-1['spec_sheet_button_text_color'] -%}
+                           {%- assign spec_sheet_button_border_color = product.metafields.section-1['spec_sheet_button_border_color'] -%}  
+                        
+                            <a  target="_blank" style="color: {{spec_sheet_button_text_color}} !important; border-color:{{spec_sheet_button_border_color}} !important;" class="Naveen single_add_to_cart_button button alt" href="{{spec_sheet_url}}">{{spec_sheet_text}}</a>
+                            
+                              {% endif %}
+                                {% if product.handle contains "batt-pack-energy" %}
+                                <a   style="color: {{spec_sheet_button_text_color}} !important; border-color:#ac612d !important;" class="Naveen single_add_to_cart_button button alt collections-custom-button" href="https://hybridps.ca/collections/portable-power-packs">SEE OTHER OPTIONS</a>
+                                {% endif %}
+                               
+                              {%- endif -%}
+		                           {%- endif -%}
+		                        {%- endif -%}
+		                        {%- if settings.use_wishlist and pages['wishlist'].empty? != true -%}{%- include 'jas-wishlist-product' -%}{%- endif -%}
+							</div>
+							{%- if settings.btn_atc_full -%}
+							    <button type="submit"{% if settings.pr_curent == '1' and product.has_only_default_variant == false and product.selected_variant == blank %} disabled="disabled"{% endif %} id="shopify_add_to_cart" data-ntid="{{product.id}}" class="Naveen22 shopify_add_to_cart {{settings.button_art_to_cart_style}} ajax_form_cart single_add_to_cart_button button alt"><span class="bt__text">{%- if current_variant.inventory_quantity <= 0 and current_variant.available and current_variant.inventory_management == 'shopify' -%}{{ 'products.product.pre_orders' | t }}{%- else -%}{{ 'products.product.add_to_cart' | t }}{%- endif -%}</span></button>
+							{%- endif -%}
+						{%- if settings.enable_payment_button and check_external == false -%}
+		                    {{ form | payment_button }}
+		                {%- endif -%}
+						</div>
+					</div>
+  <select name="id" id="product-select" class="product-select_pr product-form__variants hide hidden">
+		            {%- for variant in product.variants -%}
+		                {%- if variant.available -%}
+		                  <option data-price={{variant.price}} {% if variant.id == current_variant.id %} selected="selected" {% endif %}  data-sku="{{ variant.sku }}" value="{{ variant.id }}" class="{{variant.option1 | handleize }} nt1_{{variant.option2 | handleize }} nt2_{{variant.option3 | handleize }}">{{ variant.title | handle}}</option>
+		                {%- else -%}
+		                  <option value="{{ variant.id }}"{%- if remove_soldout %} disabled="disabled"{%- endif %} class="nt_sold_out {{variant.option1 | handleize }} nt1_{{variant.option2 | handleize }} nt2_{{variant.option3 | handleize }}">{{ variant.title | handleize }}</option>
+		                {%- endif -%}
+		              {%- endfor -%}
+					</select>
+      {% comment %} <div id="paybright-widget-container"></div>{% endcomment %}
+      {%- assign shipping_notice = product.metafields.shipping_notice['shipping_notice'] -%}   
+      {% if shipping_notice != blank %}
+      <div class="shipping_notice">
+        <p><strong style="color:#ffc90f">SHIPPING NOTICE: </strong>{{shipping_notice}}</p>
+      </div>
+      {%endif%}
+  
+      {% comment %}{%- if settings.enable_delivery_order and product.available -%}
+<div class="product_delivery">
+    {{ 'products.jas_extra.estimateTimer_1' | t }}
+    <span id="jas_product_delivery"></span> {{ 'products.jas_extra.estimateTimer_2' | t }} <span class="date_end_delivery" data-deliveryend="{{ estimateEndDate }}"></span>
+</div>
+{%- endif -%}{% endcomment %}
+		         
+                   
+                  
+                   
+	 {%- if product.has_only_default_variant == false -%}
+                   
+    
+{%- include 'swatch_rectangle',class_input:'pr' -%}
+     
+                   {%- endif -%}
+					
+                   <script id="paybright" src="https://app.paybright.com/api/shopify_v2.js?public_key=p11nDDgjHEsN8BfvIZTckqmaMDmaU6XVPvqJvdjFmeJMc33XQX&financedamount=${{ product.price | divided_by: 100.00 | round: 2 }}"></script>
+				    <script>
+                    (function(x) {
+                    var o = x.prototype;
+                    o.after || (o.after = function() {
+                        var e, m = arguments,
+                            l = m.length,
+                            i = 0,
+                            t = this,
+                            p = t.parentNode,
+                            n = Node,
+                            s = String,
+                            d = document;
+                        if (p !== null) {
+                            while (i < l) {
+                                ((e = m[i]) instanceof n) ? (((t = t.nextSibling) !== null) ? p.insertBefore(e, t) : p.appendChild(e)) : p.appendChild(d.createTextNode(s(e)));
+                                ++i;
+                            }
+                        }
+                    });
+                }(Element));
+                var pb_callback = window.onload.bind({});
+                window.addEventListener('DOMContentLoaded', function() {
+                    pb_callback();
+                    var pb_widget = document.getElementById('paybright-widget-container');
+                    pb_widget.addEventListener('mouseenter', function() {
+                        var paybrightlearnmore = pb_widget.querySelector('#paybright-learnmore');
+                        var modal = pb_widget.querySelector('#pbModal');
+                        var mainContainer = document.querySelector('.main-container');
+                        if (mainContainer && modal) {
+                            mainContainer.after(modal)
+                        }
+                        if (paybrightlearnmore && paybrightlearnmore.onclick) {
+                            var cb = paybrightlearnmore.onclick;
+                            paybrightlearnmore.addEventListener('click', function(e) {
+                                e.stopPropagation();
+                                cb();
+                            })
+                        }
+                    });
+                });
+                </script>
+                  
+				{%- endform -%}
+			{%- endif -%}
+		{%- else -%}
+		   <form action="/cart" method="post" class="cart group_table" id="cart-form">
+		      <table cellspacing="0" class="group_table shop_table">
+		        <tbody>
+		          {%- include 'product_group' -%}
+		        </tbody>
+		      </table>
+		      <div class="flex">
+			      {%- if check_external == false -%}
+	               <button type="submit" id="multi-variant-add" data-ntid="{{product.id}}" class="Naveen {{settings.button_art_to_cart_style}} add_to_cart_button single_add_to_cart_button button alt">{{ 'products.product.add_to_cart' | t }}</button>
+	           
+                      <button id="mainBundledActionBtn" class="mainBundledActionBtn bundle_add_to_cart btn" onclick="addAllItems('36611627024537');"> 
+                    Add to cart
+                  </button>
+                
+                {%- else -%}
+	               <a href="{{ check }}" rel="nofollow" class="single_add_to_cart_button button alt btn_external">{{ product.metafields.external | first | first }}</a>
+	            {%- endif -%}
+	            {%- if settings.use_wishlist and pages['wishlist'].empty? != true -%}{%- include 'jas-wishlist-product' -%}{%- endif -%}
+		      </div>
+		   </form>
+		{%- endif -%}
+	{%- if product.has_only_default_variant == false and linklists[product.handle].links.size == 0 -%}</div>{%- endif-%} 
+</div>
+
+{%- if settings.use_promo_shpping -%}
+    <div class="promo_shipping_text jas_user_ship"><span class="text_ship_fea">{{ settings.product_motivator_text }}</span>{%- if settings.promotion_display_user_country %} <span class="country_user_name"></span>{%- endif -%}{%- if settings.promotion_display_user_Flag %} <span class="jas_flagImg jas_94"></span>{%- endif -%}</div>
+{%- endif -%}
+{%- if settings.show_real_time_visitor -%}<div class="counter_real_time" style="display:none">{{settings.text_real}} <span id="number_counter"><span>296</span><i class="fa fa-users" aria-hidden="true"></i></span> {{settings.text_visitor}}</div>{%- endif -%}
+{%- if settings.product_img_trust_seal and settings.img_trust_seal != blank -%}
+   {%- assign image = settings.img_trust_seal -%}
+   <div class="product_img_trust_seal clearfix"><img alt="{{image.alt}}" src="{{ image | img_url: '500x' }}"></div>
+{%- endif -%}
+  
+  <style>
+    span.price.money {
+    color: #ffffff;
+}
+</style>
+<!-- Begin Mailchimp Signup Form -->
+
+<style type="text/css">
+#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width:100%;}
+/* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.
+We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+.popup {
+	 width: 100%;
+	 height: 100%;
+	 background: rgba(0, 0, 0, 0.4);
+	 display: none;
+	 position: fixed;
+	 top: 40px;
+	 left: 0;
+	 right: 0;
+	 bottom: 0;
+	 text-align: center;
+    z-index: 999;
+}
+ .popup .popup__content {
+	   width: 450px;
+	 overflow: auto;
+	 
+    padding: 35px;
+	 background: white;
+	 color: black;
+	 position: relative;
+	 top: 50%;
+	 left: 50%;
+	 transform: translate(-50%, -50%);
+	 box-sizing: border-box;
+border-radius: 15px;
+}
+ .popup .popup__content .close {
+	 position: absolute;
+	 right: 20px;
+	 top: 20px;
+	 width: 20px;
+	 display: block;
+}
+ .popup .popup__content .close span {
+	 cursor: pointer;
+	 position: fixed;
+	 width: 20px;
+	 height: 3px;
+	 background: #099ccc;
+}
+ .popup .popup__content .close span:nth-child(1) {
+	 transform: rotate(45deg);
+}
+ .popup .popup__content .close span:nth-child(2) {
+	 transform: rotate(135deg);
+}
+#mc_embed_signup .button
+      {
+      background-color: transparent;
+      color: #000;
+      border: 1px solid #edaf00!important;
+      border-radius: 0px;
+      height: 40px;
+      
+      padding: 6px 10px;
+      }
+#mc_embed_signup .button:hover {
+    background-color: #edaf00;
+    color: #fff;
+}
+#mc_embed_signup h2 {
+    
+    text-align: center;
+    
+}
+#mc_embed_signup form {
+    
+    padding:0px
+}
+.popup .popup__content .close span {
+    background: #000;
+}
+div#mc_embed_signup_scroll,h2 {
+    font-family: Cooper Hewitt;
+}
+@media screen and (max-width: 480px) {
+.popup .popup__content {
+	   width: 320px;
+}
+}
+  @media screen and (max-width: 320px) {
+ .popup .popup__content {
+	   width: 300px;
+}
+}
+</style>
+<section class="popup">
+  <div class="popup__content">
+    <div class="close">
+      <span></span>
+      <span></span>
+    </div>
+<div id="mc_embed_signup">
+<form action="https://hybridps.us19.list-manage.com/subscribe/post?u=36ea4b852808c3333fd18481f&amp;id=f72b1a3c16" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+<div id="mc_embed_signup_scroll">
+<h2>JOIN OUR WAITLIST</h2>
+<!-- <div class="indicates-required"><span class="asterisk">*</span> indicates required</div> -->
+<div class="mc-field-group">
+<label for="mce-EMAIL">EMAIL ADDRESS <span class="asterisk">*</span>
+</label>
+<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+</div>
+<div id="mce-responses" class="clear foot">
+<div class="response" id="mce-error-response" style="display:none"></div>
+<div class="response" id="mce-success-response" style="display:none"></div>
+</div> <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+<div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_36ea4b852808c3333fd18481f_f72b1a3c16" tabindex="-1" value=""></div>
+<div class="optionalParent">
+<div class="clear foot">
+<input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+<p class="brandingLogo"><a href="http://eepurl.com/h7HbgX" title="Mailchimp - email marketing made easy and fun"><img src="https://eep.io/mc-cdn-images/template_images/branding_logo_text_dark_dtp.svg"></a></p>
+</div>
+</div>
+</div>
+</form>
+</div>
+  </div>
+</section>
+
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='MMERGE5';ftypes[5]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<!--End mc_embed_signup-->

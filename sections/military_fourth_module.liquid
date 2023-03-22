@@ -1,0 +1,529 @@
+<div class="fourth-module-section">
+<div class="industry-landing-imagebox" style="background-color : {{section.settings.background_color}}">
+<div class="container">
+<div class="home-imagebox-main {% if section.settings.text_alighment != blank %} {{section.settings.text_alighment}} {% endif %}" >
+<div id="home-imagebox" class="index-section">
+    <div class="one-half one-half-column-left">
+    <div class="package_image"><img src="{{ section.settings.image | img_url: '1024x1024' }}"></div>
+    
+</div>
+  <div class="one-half one-half-column-right">
+  
+      <h2 class="h2_title" style="color: {{section.settings.title_color}}">
+      {% if section.settings.title != blank %}
+      {{section.settings.title}}
+      {% endif %}
+    </h2> 
+    <h2 class="h2_sub" style="color: {{section.settings.heading_color}} ">
+      {% if section.settings.text-box != blank %}
+      {{section.settings.text-box}}
+      {% endif %}
+    </h2>
+    
+    <div class="industry-landing-imagebox-block-main">
+      
+      {% if section.settings.basic_user_group_link != blank %}
+      <div class="group-anchor hover_group">
+        
+        <a href="{{section.settings.basic_user_group_link}}" class="industry-landing-imagebox-block">
+   {% if section.settings.text_11 != blank %}
+       {{section.settings.text_11}}
+      {% endif %} 
+    <div class="industry-landing-imagebox-block-right">
+    <h2 class="h2_title" style="color: {{section.settings.heading3_color}} ">
+      {% if section.settings.text-box2 != blank %}
+    
+       {{section.settings.text-box2}}
+      {% endif %}
+    </h2>
+       {% if section.settings.product_title != blank %}
+      <p  style="color: {{section.settings.product1_text_color}}; color:{{section.settings.color_id}};">  {{section.settings.product_title}}</p>
+      {% endif %}
+       {% if section.settings.product2_title != blank %}
+      <p style="color: {{section.settings.product2_text_color}}; color:{{section.settings.color_id}}; "> {{section.settings.product2_title}}</p>
+      {% endif %}
+       {% if section.settings.product3_title != blank %}
+      <p style="color: {{section.settings.product3_text_color}}; color:{{section.settings.color_id}}; ">  {{section.settings.product3_title}}</p>
+      {% endif %}
+       {% if section.settings.product4_title != blank %}
+      <p style="color: {{section.settings.product4_text_color}}; color:{{section.settings.color_id}}; ">{{section.settings.product4_title}}</p>
+      {% endif %}
+        {% comment %}
+    <h4 style="color: {{section.settings.description_color}} ">
+      {% if section.settings.text != blank %}
+      {{section.settings.text}}
+      {% endif %}
+        {% endcomment %}
+    </h4>
+      </div>
+        </a>
+    </div>
+          
+      {% else %}
+      
+    <div class="industry-landing-imagebox-block">
+   {% if section.settings.text_11 != blank %}
+      <a href="{{ section.settings.basic1_user_click}}" class="not-button-0-w" tabindex="0">
+       {{section.settings.text_11}}</a> 
+      {% endif %} 
+    <div class="industry-landing-imagebox-block-right">
+    <h2 class="h2_title">
+      {% if section.settings.text-box2 != blank %}
+     <a href="{{ section.settings.basic_user_click}}" class="not-button-0-w" style="color: {{section.settings.heading2_color}} " tabindex="0">
+       {{section.settings.text-box2}}</a> 
+      {% endif %}
+    </h2>
+       {% if section.settings.product_title != blank %}
+     <a href="{{ section.settings.product1url}}" class="block-link not-button-0-w" style="color: {{section.settings.product1_text_color}}; color:{{section.settings.color_id}};" tabindex="0">
+       {{section.settings.product_title}}</a><br/>
+      {% endif %}
+       {% if section.settings.product2_title != blank %}
+     <a href="{{ section.settings.product1url2}}"class="block-link not-button-0-w" style="color: {{section.settings.product2_text_color}}; color:{{section.settings.color_id}};" tabindex="0">
+       {{section.settings.product2_title}}</a><br/>
+      {% endif %}
+       {% if section.settings.product3_title != blank %}
+     <a href="{{ section.settings.product1url3}}" class="block-link not-button-0-w" style="color: {{section.settings.product3_text_color}}; color:{{section.settings.color_id}};" tabindex="0">
+       {{section.settings.product3_title}}</a><br/>
+      {% endif %}
+       {% if section.settings.product4_title != blank %}
+     <a href="{{ section.settings.product1url4}}" class="block-link not-button-0-w" style="color: {{section.settings.product4_text_color}}; color:{{section.settings.color_id}};" tabindex="0">
+       {{section.settings.product4_title}}</a>
+      {% endif %}
+        {% comment %}
+    <h4 style="color: {{section.settings.description_color}} ">
+      {% if section.settings.text != blank %}
+      {{section.settings.text}}
+      {% endif %}
+        {% endcomment %}
+    </h4>
+      </div>
+    </div>
+      {% endif %}
+      {% if section.settings.advance_user_group_click != blank %}
+          <div class="group-anchor hover_group">
+        
+        <a href="{{ section.settings.advance_user_group_click }}" class="industry-landing-imagebox-block">
+   {% if section.settings.text_12 != blank %}
+       {{section.settings.text_12}}
+      {% endif %} 
+    <div class="industry-landing-imagebox-block-right">
+    <h2 class="h2_title" style="color: {{section.settings.heading3_color}} ">
+      {% if section.settings.text-box3 != blank %}
+    
+       {{section.settings.text-box3}}
+      {% endif %}
+    </h2>
+       {% if section.settings.product5_title != blank %}
+      <p style="color: {{section.settings.product1_text_color}}; color:{{section.settings.color_id}};"> {{section.settings.product5_title}}</p>
+      {% endif %}
+       {% if section.settings.product6_title != blank %}
+     <p style="color: {{section.settings.product1_text_color}}; color:{{section.settings.color_id}}; ">{{section.settings.product6_title}}</p>
+      {% endif %}
+       {% if section.settings.product7_title != blank %}
+      <p style="color: {{section.settings.product1_text_color}}; color:{{section.settings.color_id}}; "> {{section.settings.product7_title}}</p>
+      {% endif %}
+       {% if section.settings.product8_title != blank %}
+      <p style="color: {{section.settings.product1_text_color}}; color:{{section.settings.color_id}}; ">   {{section.settings.product8_title}} </p>
+      {% endif %}
+        {% comment %}
+    <h4 style="color: {{section.settings.description_color}} ">
+      {% if section.settings.text != blank %}
+      {{section.settings.text}}
+      {% endif %}
+        {% endcomment %}
+    </h4>
+      </div>
+        </a>
+    </div>
+   {% else %}
+     <div class="industry-landing-imagebox-block">
+          {% if section.settings.text_12 != blank %}
+      
+       <a href="{{ section.settings.advance1_user_click}}" class="not-button-0-w" style="color: {{section.settings.heading3_color}} " tabindex="0">
+      {{section.settings.text_12}}</a>
+      {% endif %} 
+      
+     <div class="industry-landing-imagebox-block-right">
+     <h2 class="h2_title">
+      {% if section.settings.text-box3 != blank %}
+        <a href="{{ section.settings.advance_user_click}}" class="not-button-0-w" style="color: {{section.settings.heading3_color}} " tabindex="0">
+      {{section.settings.text-box3}}</a>
+      
+      {% endif %}
+    </h2>
+    {% if section.settings.product5_title != blank %}
+     <a href="{{ section.settings.product1url5}}" class="block-link not-button-0-w" style="color: {{section.settings.product5_text_color}}; color:{{section.settings.color_id}};" tabindex="0">
+       {{section.settings.product5_title}}</a><br/>
+      {% endif %}
+       
+         {% if section.settings.product6_title != blank %}
+     <a href="{{ section.settings.product1url6}}" class="block-link not-button-0-w" style="color: {{section.settings.product6_text_color}}; color:{{section.settings.color_id}};" tabindex="0">
+       {{section.settings.product6_title}}</a><br/>
+      {% endif %}
+       
+         {% if section.settings.product7_title != blank %}
+     <a href="{{ section.settings.product1url7}}" class="block-link not-button-0-w" style="color: {{section.settings.product7_text_color}}; color:{{section.settings.color_id}};" tabindex="0">
+       {{section.settings.product7_title}}</a><br/>
+      {% endif %}
+       
+         {% if section.settings.product8_title != blank %}
+     <a href="{{ section.settings.product1url8}}" class="block-link not-button-0-w" style="color: {{section.settings.product8_text_color}}; color:{{section.settings.color_id}};" tabindex="0">
+       {{section.settings.product8_title}}</a>
+      {% endif %}
+       {% comment %}
+    <h4 style="color: {{section.settings.description3_color}} ">
+      {% if section.settings.text3 != blank %}
+      {{section.settings.text3}}
+      {% endif %}
+    </h4>
+       {% endcomment %}
+       </div>
+    </div>
+      {% endif %}
+    </div>
+  
+  </div>
+  
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<style>
+  .industry-landing-imagebox .industry-landing-imagebox-block-main .group-anchor.hover_group {
+    display: inline-flex;
+    width: 100%;
+}
+.industry-landing-imagebox .industry-landing-imagebox-block-main .group-anchor.hover_group {display:inline-flex;}
+   .industry-landing-imagebox .industry-landing-imagebox-block-main .group-anchor.hover_group:hover .h2_title{
+   color: {{section.settings.heading2background_color}} !important;
+ 
+}
+  .industry-landing-imagebox .industry-landing-imagebox-block-main .group-anchor.hover_group:hover .industry-landing-imagebox-block-left{
+    color:#fff;
+    background:{{section.settings.heading2background_color}} !important;
+  }
+.industry-landing-imagebox .industry-landing-imagebox-block-main .industry-landing-imagebox-block .industry-landing-imagebox-block-right h2.h2_title:hover a ,
+  .industry-landing-imagebox-block-right:hover p{
+  
+    color: {{section.settings.heading2background_color}} !important;
+}
+  .industry-landing-imagebox .industry-landing-imagebox-block-main .industry-landing-imagebox-block .industry-landing-imagebox-block-right .block-link:hover,
+  div#shopify-section-industry_fourth_module .one-half.one-half-column-right h2.h2_title:hover{
+    color:{{section.settings.heading3background_color}} !important;
+}
+
+
+</style>
+{% schema %}
+  {
+    "name": "Industry Fourth Section",
+    "settings": [
+	 {
+        "id": "title",
+        "type": "text",
+        "label": "Title"
+       
+      },
+  {
+				"type": "color",
+                    "id": "background_color",
+                    "label": "Background Color",
+                     "default": "#fff"
+               }, 
+
+ {
+                    "type": "color",
+                    "id": "title_color",
+                    "label": "Title Color",
+                    "default": "#000"
+                 },
+      {
+        "id": "text-box",
+        "type": "text",
+        "label": "Heading"
+        
+      },
+
+ {
+        "id": "text_11",
+        "type": "html",
+        "label": "Basic User 1"
+       
+      },
+
+		
+ {
+                    "type": "color",
+                    "id": "heading_color",
+                    "label": "Heading Color",
+                    "default": "#000"
+                 },
+{
+        "label": "Basic User 1 Link",
+        "id": "basic1_user_click",
+        "type": "url"
+      },
+{
+        "label": "Basic User Group Link",
+        "id": "basic_user_group_link",
+        "type": "url"
+      },
+
+
+		{
+        "id": "text-box2",
+        "type": "text",
+        "label": "Heading2"
+        
+      },
+ {
+                    "type": "color",
+                    "id": "heading2_color",
+                    "label": "Heading2 Color",
+                    "default": "#000"
+                 },
+ {
+                    "type": "color",
+                    "id": "heading2background_color",
+                    "label": "Heading2 Hover Color",
+                    "default": "#000"
+                 },
+{
+        "label": "Basic User Link",
+        "id": "basic_user_click",
+        "type": "url"
+      },
+    {
+        "type": "text",
+        "id": "product_title",
+        "label": "Product Title 1",
+        "default": "Product Title"
+      },
+{
+        "type": "color",
+        "id": "product1_text_color",
+        "label": "Product Text Color",
+        "default": "#ef3288"
+      },
+          
+ 
+ {
+        "label": "Product 1 Link",
+        "id": "product1url",
+        "type": "url"
+      },
+
+ {
+        "type": "text",
+        "id": "product2_title",
+        "label": "Product Title 2",
+        "default": "Product Title"
+      },
+{
+        "type": "color",
+        "id": "product2_text_color",
+        "label": "Product Text Color",
+        "default": "#ef3288"
+      },
+          
+ 
+ {
+        "label": "Product 2 Link",
+        "id": "product1url2",
+        "type": "url"
+      },
+ {
+        "type": "text",
+        "id": "product3_title",
+        "label": "Product Title 3",
+        "default": "Product Title"
+      },
+{
+        "type": "color",
+        "id": "product3_text_color",
+        "label": "Product Text Color",
+        "default": "#ef3288"
+      },
+          
+ 
+ {
+        "label": "Product 3 Link",
+        "id": "product1url3",
+        "type": "url"
+      },
+ {
+        "type": "text",
+        "id": "product4_title",
+        "label": "Product Title 4",
+        "default": "Product Title"
+      },
+{
+        "type": "color",
+        "id": "product4_text_color",
+        "label": "Product Text Color",
+        "default": "#ef3288"
+      },
+          
+ 
+ {
+        "label": "Product 4 Link",
+        "id": "product1url4",
+        "type": "url"
+      },
+
+ {
+        "id": "text_12",
+        "type": "html",
+        "label": "ADVANCED USER 2"
+       
+      },
+ {
+                    "type": "color",
+                    "id": "description_color",
+                    "label": "Description Color",
+                    "default": "#000"
+                 },
+{
+        "label": "Advance User 2 Link",
+        "id": "advance1_user_click",
+        "type": "url"
+      },
+{
+        "label": "Advance User Group Link",
+        "id": "advance_user_group_click",
+        "type": "url"
+      },
+	{
+        "id": "text-box3",
+        "type": "text",
+        "label": "Heading3"
+        
+      },
+ {
+                    "type": "color",
+                    "id": "heading3_color",
+                    "label": "Heading3 Color",
+                    "default": "#000"
+                 },
+ {
+                    "type": "color",
+                    "id": "heading3background_color",
+                    "label": "Heading3 Hover Color",
+                    "default": "#000"
+                 },
+{
+        "label": "Advance User Link",
+        "id": "advance_user_click",
+        "type": "url"
+      },
+{
+        "type": "text",
+        "id": "product5_title",
+        "label": "Product Title 1",
+        "default": "Product Title"
+      },
+{
+        "type": "color",
+        "id": "product5_text_color",
+        "label": "Product Text Color",
+        "default": "#ef3288"
+      },
+          
+ 
+ {
+        "label": "Product 1 Link",
+        "id": "product1url5",
+        "type": "url"
+      },
+
+
+{
+        "type": "text",
+        "id": "product6_title",
+        "label": "Product Title 2",
+        "default": "Product Title"
+      },
+{
+        "type": "color",
+        "id": "product6_text_color",
+        "label": "Product Text Color",
+        "default": "#ef3288"
+      },
+          
+ 
+ {
+        "label": "Product 2 Link",
+        "id": "product1url6",
+        "type": "url"
+      },
+{
+        "type": "text",
+        "id": "product7_title",
+        "label": "Product Title 3",
+        "default": "Product Title"
+      },
+{
+        "type": "color",
+        "id": "product7_text_color",
+        "label": "Product Text Color",
+        "default": "#ef3288"
+      },
+          
+ 
+ {
+        "label": "Product 3 Link",
+        "id": "product1url7",
+        "type": "url"
+      },
+{
+        "type": "text",
+        "id": "product8_title",
+        "label": "Product Title 4",
+        "default": "Product Title"
+      },
+{
+        "type": "color",
+        "id": "product8_text_color",
+        "label": "Product Text Color",
+        "default": "#ef3288"
+      },
+          
+ 
+ {
+        "label": "Product 8 Link",
+        "id": "product1url8",
+        "type": "url"
+      },
+      {
+            "type": "select",
+            "id": "text_alighment",
+            "label": "Text alignment",
+            "default": "class-left-right",
+            "options": [
+              {
+                "value": "class-left-right",
+                "label": "Text to Right"
+              },
+              {
+                "value": "class-right-left",
+                "label": "Text to Left"
+              }
+             
+            ]
+          },
+{
+						"type": "image_picker",
+						"id": "image",
+						"label": "Image"
+					}
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

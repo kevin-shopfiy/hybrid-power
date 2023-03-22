@@ -1,0 +1,68 @@
+{%- assign page_pr_img_size = settings.use_eq_nav_height -%}
+{%- if cv_color != 'jas-p-item' -%}
+	 {%- if page_pr_img_size -%}
+			{%- for image in product.images -%}
+				 {%- assign alt = image.alt -%}
+				 {%- if alt contains 'jas_360' -%}{%- break -%}{%- endif -%}
+				 {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+				 {%- assign img_alt = image.alt | split:'|' | first | handleize | strip -%}
+					 {%- if image.attached_to_variant? and settings.use_clicking_variant_image -%}
+								 <div class="bc_{{img_alt}}">
+										<span class="bc_{{img_alt}} jas-pr_nav-image-equal lazyload var_nt_img" data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover" data-variant_id="{{image.variants.first.id}}">
+										<img class="op_0 attachment-shop_single size-shop_single sp-post-image" src="{{ image | img_url: '80x' }}" data-image-id="{{ image.id }}" data-variant_id="{{image.variants.first.id}}" alt="{{ image.alt | split:'|' | last | escape }}">
+										</span>
+								 </div>
+					 {%- else -%}
+							<div class="bc_{{img_alt}}">
+								 <span class="jas-pr_nav-image-equal lazyload" data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover">
+								 <img class="op_0 attachment-shop_single size-shop_single sp-post-image" src="{{ image | img_url: '80x' }}" data-image-id="{{ image.id }}" alt="{{ image.alt | split:'|' | last | escape }}">
+								 </span>
+							</div>
+					 {%- endif -%}
+			{%- endfor -%}
+	 {%- else -%}
+			{%- for image in product.images -%}
+				 {%- assign alt = image.alt -%}
+				 {%- if alt contains 'jas_360' -%}{%- break -%}{%- endif -%}
+				 {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+				 {%- assign img_alt = image.alt | split:'|' | first | handleize | strip -%}
+					 {%- if image.attached_to_variant? and settings.use_clicking_variant_image -%}
+								 <div class="bc_{{img_alt}}"><img class="var_nt_img attachment-shop_single size-shop_single sp-post-image lazyload{%- unless featured_image == image %} lazypreload{%- endunless -%}" src="{{ image | img_url: '80x' }}" data-image-id="{{ image.id }}" data-variant_id="{{image.variants.first.id}}" data-src="{{ img_url }}"  data-widths="[80 ,90, 180]" data-aspectratio="{{ image.aspect_ratio }}" data-sizes="auto" alt="{{ image.alt | split:'|' | last | escape }}"></div>
+					 {%- else -%}
+							<div class="bc_{{img_alt}}"><img class="attachment-shop_single size-shop_single sp-post-image lazyload{%- unless featured_image == image %} lazypreload{%- endunless -%}" src="{{ image | img_url: '80x' }}" data-image-id="{{ image.id }}" data-src="{{ img_url }}"  data-widths="[80 ,90, 180]" data-aspectratio="{{ image.aspect_ratio }}" data-sizes="auto" alt="{{ image.alt | split:'|' | last | escape }}"></div>
+					 {%- endif -%}
+			{%- endfor -%}
+	 {%- endif -%}
+{%- else -%}
+	 {%- if page_pr_img_size -%}
+			{%- for image in product.images -%}
+				 {%- assign alt = image.alt -%}
+				 {%- if alt contains 'jas_360' -%}{%- break -%}{%- endif -%}
+				 {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+					 {%- if image.attached_to_variant? and settings.use_clicking_variant_image -%}
+						 <div>
+								<span class="var_nt_img bc_{{img_alt}} jas-pr_nav-image-equal lazyload" data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover" data-variant_id="{{image.variants.first.id}}">
+								<img class="op_0 attachment-shop_single size-shop_single sp-post-image" src="{{ image | img_url: '80x' }}" data-image-id="{{ image.id }}" data-variant_id="{{image.variants.first.id}}" alt="{{ image.alt | split:'|' | last | escape }}">
+								</span>
+						 </div>
+					 {%- else -%}
+							<div class="bc_{{img_alt}}">
+								 <span class="jas-pr_nav-image-equal lazyload" data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover">
+								 <img class="op_0 attachment-shop_single size-shop_single sp-post-image" src="{{ image | img_url: '80x' }}" data-image-id="{{ image.id }}" alt="{{ image.alt | split:'|' | last | escape }}">
+								 </span>
+							</div>
+					 {%- endif -%}
+			{%- endfor -%}
+	 {%- else -%}
+			{%- for image in product.images -%}
+				 {%- assign alt = image.alt -%}
+				 {%- if alt contains 'jas_360' -%}{%- break -%}{%- endif -%}
+				 {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+					 {%- if image.attached_to_variant? and settings.use_clicking_variant_image -%}
+							<div><img class="var_nt_img attachment-shop_single size-shop_single sp-post-image lazyload{%- unless featured_image == image %} lazypreload{%- endunless -%}" src="{{ image | img_url: '80x' }}" data-image-id="{{ image.id }}" data-variant_id="{{image.variants.first.id}}" data-src="{{ img_url }}"  data-widths="[80 ,90, 180]" data-aspectratio="{{ image.aspect_ratio }}" data-sizes="auto" alt="{{ image.alt | escape }}"></div>
+					 {%- else -%}
+							<div><img class="attachment-shop_single size-shop_single sp-post-image lazyload{%- unless featured_image == image %} lazypreload{%- endunless -%}" src="{{ image | img_url: '80x' }}" data-image-id="{{ image.id }}" data-src="{{ img_url }}"  data-widths="[80 ,90, 180]" data-aspectratio="{{ image.aspect_ratio }}" data-sizes="auto" alt="{{ image.alt | escape }}"></div>
+					 {%- endif -%}
+			{%- endfor -%}
+	 {%- endif -%}
+{%- endif -%}

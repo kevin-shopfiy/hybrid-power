@@ -1,0 +1,18 @@
+<div class="jas-wc dib w__100 mb__60" role="main">
+	<div class="page-head pr tc{%- if collection.image or settings.collection_bg_image != blank %} lazyload{%- endif -%}"{%- if settings.use_specify_image and collection.image %} data-bgset="{%- include 'bgset', image: collection.image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url({{ collection.image | img_url: '50x50' }})"{%- elsif settings.collection_bg_image != blank %} data-bgset="{%- include 'bgset', image: settings.collection_bg_image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url({{ settings.collection_bg_image | img_url: '50x50' }});"{%- endif -%}>
+	   {%- if collection.image or settings.collection_bg_image != blank %}<div class="jas-wrap-lazy"></div>{%- endif -%}
+	   <div class="jas-container pr">
+	       <h1 class="tu mb__10 cw">{{ page_title }}</h1>
+	       <p>{{ collection.description | strip_html}}</p>
+	       {%- if settings.use_top_breadcrumb -%}
+	       <ul class="jas-breadcrumb dib oh">
+			   <li class="fl home"><a href="/" title="Home">{{ 'general.breadcrumbs.home' | t }}</a></li>
+			   <li class="fl separator"> <i class="fa fa-angle-right"></i> </li>
+			   <li class="fl current"> {{ page_title }}</li>
+			</ul>
+			{%- endif -%}
+	   </div>
+	</div>
+	{%- section 'list-collections-template' -%}
+</div>
+

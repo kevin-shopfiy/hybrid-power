@@ -1,0 +1,55 @@
+ {% if settings.body_logo_svg != blank %}
+<div class="jas-branding ts__05">
+  <a class="site-header__logo-link" href="/" itemprop="url">
+    <img src="{{ settings.body_logo_svg | file_url }}" alt="{{ image.alt | default: shop.name }}">  
+  </a>
+</div>
+    {% elsif settings.body_logo_image %}
+    <div class="jas-branding ts__05" itemscope itemtype="http://schema.org/Organization">
+      {%- assign image = settings.body_logo_image -%}
+      {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+      <a href="/" itemprop="url" class="db pr">
+        <img class="regular-logo"
+             src="{{ image | img_url: 'master' }}"
+             data-src="{{ img_url }}"
+             data-widths="[200, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+             data-aspectratio="{{ image.aspect_ratio }}"
+             data-sizes="auto"
+             alt="{{ image.alt | default: shop.name }}"
+             style="opacity:1;max-width: {{ settings.logo_max_width }}px;max-height: {{ settings.logo_max_height }}px">
+        {%- assign image_retina = settings.body_logo_image_retina -%}
+        {%- if image_retina != blank or settings.body_logo_image != blank -%}
+        {%- assign image_retina = settings.body_logo_image_retina -%}
+        {%- elsif settings.body_logo_image  != blank -%}
+        {%- assign image_retina = settings.body_logo_image -%}
+        {%- endif -%}
+        {%- if image_retina != blank -%}
+        {%- assign img_url = image_retina | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+        <img class="retina-logo"
+             src="{{ image_retina | img_url: 'master' }}"
+             data-src="{{ img_url }}"
+             data-widths="[200, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+             data-aspectratio="{{ image_retina.aspect_ratio }}"
+             data-sizes="auto"
+             alt="{{ image_retina.alt | default: shop.name }}"
+             style="opacity:1;max-width: {{ settings.logo_max_width }}px;max-height: {{ settings.logo_max_height }}px">
+        {%- endif -%}
+        {%- assign image_sticky = settings.body_logo_image_sticky -%}
+        {%- if image_sticky != blank -%}
+        {%- assign img_url = image_sticky | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+        <img class="stick-logo"
+             src="{{ image_sticky | img_url: 'master' }}"
+             data-src="{{ img_url }}"
+             data-widths="[200, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+             data-aspectratio="{{ image_sticky.aspect_ratio }}"
+             data-sizes="auto"
+             alt="{{ image_sticky.alt | default: shop.name }}"
+             style="opacity:1;max-width: {{ settings.logo_max_width_sticky }}px;max-height: {{ settings.logo_max_height_sticky }}px">
+        {%- endif -%}
+      </a>
+    </div>
+    {% else %}
+    <h1 class="h2 fs__14 jas-branding ts__05 mr__0">
+      <a class="site-header__logo-link" href="/">{{ shop.name }}</a>
+    </h1>
+    {% endif %}

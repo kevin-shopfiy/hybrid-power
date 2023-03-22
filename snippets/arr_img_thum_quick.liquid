@@ -1,0 +1,115 @@
+{%- if cv_color != 'jas-p-item' -%}
+    {%- if page_pr_img_size and product.images.size > 1 -%}
+      {%- for image in product.images -%}
+	      {%- assign alt = image.alt -%}
+	      {%- if alt contains 'jas_360' -%}{%- break -%}{%- endif -%}
+		     {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+		     {%- assign img_alt = image.alt | split:'|' | first | handleize | strip -%}
+		     {%- if image.attached_to_variant? and settings.use_clicking_variant_image -%}
+					   <div class="bc_{{img_alt}} jas_img_ptw jas-pr_metro-image-equal lazyload" data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover">
+					   	<img class="op_0 w__100 attachment-shop_single size-shop_single sp-post-image"
+			             src="{{ image | img_url: '50x50' }}"
+			             data-variant_id="{{image.variants.first.id}}" data-image-id="{{ image.id }}"
+			             alt="{{ image.alt | split:'|' | last | escape }}">
+				         <div class="jas-wrap-lazy"></div>
+						</div>
+		     {%- else -%}
+		      <div class="bc_{{img_alt}} jas_img_ptw jas-pr_metro-image-equal lazyload" data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover">
+						<img class="op_0 w__100 attachment-shop_single size-shop_single sp-post-image"
+			             src="{{ image | img_url: '50x50' }}"
+			             data-image-id="{{ image.id }}"
+			             alt="{{ image.alt | split:'|' | last | escape }}">
+			             <div class="jas-wrap-lazy"></div>
+				</div>
+			{%- endif -%}
+		{%- endfor -%}
+    {%- else -%}
+	    {%- for image in product.images -%}
+	      {%- assign alt = image.alt -%}
+	      {%- if alt contains 'jas_360' -%}{%- break -%}{%- endif -%}
+		     {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+		     {%- assign img_alt = image.alt | split:'|' | first | handleize | strip -%}
+		     {%- if image.attached_to_variant? and settings.use_clicking_variant_image -%}
+			        <div class="bc_{{img_alt}} jas_img_ptw">
+							<img class="w__100 attachment-shop_single size-shop_single sp-post-image {{ img_class }} lazyload"
+				             src="{{ image | img_url: '50x50' }}"
+				             data-src="{{ img_url }}"
+				             data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+				             data-aspectratio="{{ image.aspect_ratio }}"
+				             data-sizes="auto"
+				             data-variant_id="{{image.variants.first.id}}" data-image-id="{{ image.id }}"
+				             alt="{{ image.alt | split:'|' | last | escape }}">
+				             <div class="jas-wrap-lazy"></div>
+					</div>
+		     {%- else -%}
+				<div class="bc_{{img_alt}}">
+						<img class="w__100 attachment-shop_single size-shop_single sp-post-image {{ img_class }} lazyload"
+			             src="{{ image | img_url: '50x50' }}"
+			             data-src="{{ img_url }}"
+			             data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+			             data-aspectratio="{{ image.aspect_ratio }}"
+			             data-sizes="auto"
+			             data-image-id="{{ image.id }}"
+			             alt="{{ image.alt | split:'|' | last | escape }}">
+			             <div class="jas-wrap-lazy"></div>
+				</div>
+			{%- endif -%}
+		{%- endfor -%}
+	{%- endif -%}
+{%- else -%}
+   {%- if page_pr_img_size and product.images.size > 1 -%}
+      {%- for image in product.images -%}
+		   {%- assign alt = image.alt -%}
+	      {%- if alt contains 'jas_360' -%}{%- break -%}{%- endif -%}
+		     {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+		     {%- if image.attached_to_variant? and settings.use_clicking_variant_image -%}
+			        <div class="p-item jas_img_ptw jas-pr_metro-image-equal lazyload" data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover">
+					   	<img class="op_0 w__100 attachment-shop_single size-shop_single sp-post-image"
+			             src="{{ image | img_url: '50x50' }}"
+			             data-variant_id="{{image.variants.first.id}}" data-image-id="{{ image.id }}"
+			             alt="{{ image.alt | split:'|' | last | escape }}">
+				         <div class="jas-wrap-lazy"></div>
+						</div>
+		     {%- else -%}
+				<div class="p-item jas_img_ptw jas-pr_metro-image-equal lazyload" data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover">
+						<img class="op_0 w__100 attachment-shop_single size-shop_single sp-post-image"
+			             src="{{ image | img_url: '50x50' }}"
+			             data-image-id="{{ image.id }}"
+			             alt="{{ image.alt | split:'|' | last | escape }}">
+			             <div class="jas-wrap-lazy"></div>
+				</div>
+			{%- endif -%}
+		{%- endfor -%}
+   {%- else -%}
+		{%- for image in product.images -%}
+		   {%- assign alt = image.alt -%}
+	      {%- if alt contains 'jas_360' -%}{%- break -%}{%- endif -%}
+		     {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+		     {%- if image.attached_to_variant? and settings.use_clicking_variant_image -%}
+			        <div class="p-item jas_img_ptw">
+							<img class="w__100 attachment-shop_single size-shop_single sp-post-image {{ img_class }} lazyload"
+				             src="{{ image | img_url: '300x300' }}"
+				             data-src="{{ img_url }}"
+				             data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+				             data-aspectratio="{{ image.aspect_ratio }}"
+				             data-sizes="auto"
+				             data-variant_id="{{image.variants.first.id}}" data-image-id="{{ image.id }}"
+				             alt="{{ image.alt | split:'|' | last | escape }}">
+				             <div class="jas-wrap-lazy"></div>
+					</div>
+		     {%- else -%}
+				<div class="p-item jas_img_ptw">
+						<img class="w__100 attachment-shop_single size-shop_single sp-post-image {{ img_class }} lazyload"
+			             src="{{ image | img_url: '300x300' }}"
+			             data-src="{{ img_url }}"
+			             data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+			             data-aspectratio="{{ image.aspect_ratio }}"
+			             data-sizes="auto"
+			             data-image-id="{{ image.id }}"
+			             alt="{{ image.alt | escape }}">
+			             <div class="jas-wrap-lazy"></div>
+				</div>
+			{%- endif -%}
+		{%- endfor -%}
+	{%- endif -%}
+{%- endif -%}

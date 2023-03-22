@@ -1,0 +1,1478 @@
+{%if product.handle == 'copy-of-pt-battery-3-9-48v-version' or product.handle == 'pt-battery-3-9'%}
+<style>
+.custom_for_specific_product .left {
+    width: 100% !important;
+    float: left;
+}
+.custom_for_specific_product span.topic{
+    width: 14% !important;
+}
+.custom_for_specific_product span.value{
+    width: 86% !important;
+}
+</style>
+{%endif%}
+{%- assign enable_disable_specification = product.metafields.section-2-enable['specification-enable'] -%}
+{%- assign enable_disable_equipment = product.metafields.section-2-enable['equipment_run_times_enable'] -%}
+{%- assign enable_disable_description = product.metafields.section-2-enable['description-enable'] -%}
+{% if enable_disable_specification == 1 or enable_disable_equipment == 1 or enable_disable_description == 1 %}
+
+<div id="shopify-section-product-page-description" class="shopify-section shopify-tabs wc-tabs-wrapper mt__80"><div class="jas_custom_jas_product_section jas-banner-parallax gecko-parallax jas-full-height" data-bgset="" data-sizes="auto" data-parent-fit="cover">
+  <div class="container product_section_tabs_different">
+    <ul class="tabs sp-tabs wc-tabs oh mb__15 tc fs__14" id="myTab" role="tablist">
+
+      {% assign protocols_countt = '' %}
+      {% for key_value in product.metafields.section-4-tab %}
+
+      {% if protocols_countt.size == 0 %}
+
+      <!--  only for pt 3.6 and 6.4 prduct description tab on first on product handle basis  -->
+
+      {% if product.handle == 'power-tower' or product.handle == 'the-big-one' or product.handle == 'the-cottager' or product.handle == 'the-starter' or product.handle == 'the-mini' or product.handle == 'solark-inverter' %}
+
+      {%- assign tab_name_3 = product.metafields.section-4['tab-name-3'] -%} 
+      {% if tab_name_3 != blank %}
+      {%- assign enable_disable_description = product.metafields.section-2-enable['description-enable'] -%}
+      {% if enable_disable_description == 1 %}
+      <li class="nav-item battery_spec_order test">
+        <a class="cd f__16 tu f__mont chp ls__2 nav-link custom_description_slide" id="22-tab" data-toggle="tab" href="#22" role="tab" aria-controls="22"
+           aria-selected="true">{{tab_name_3}}</a>
+      </li>
+      {%endif%}
+      {%endif%}
+
+      {% endif  %}
+
+      <!-- only for pt 3.6 and 6.4 prduct description tab on first on product handle basis -->
+
+      <!-- battery_spec_order  tab -->  
+      {%- assign tab_name_1 = product.metafields.section-4-tab['tab-name-1'] -%} 
+      {%- assign enable_disable_specification = product.metafields.section-2-enable['specification-enable'] -%}
+      {% if enable_disable_specification == 1 %}
+      {% unless template.suffix == 'battery' %}  
+      <li class="nav-item battery_spec_order test22">
+        <a class="cd f__16 tu f__mont chp ls__2 nav-link" id="{{protocols_countt.size}}-tab" data-toggle="tab" href="#{{protocols_countt.size}}" role="tab" aria-controls="{{protocols_countt.size}}"
+           aria-selected="true">{{tab_name_1}}</a>
+      </li>
+      {% endunless %}
+      {%endif%}
+
+      {% endif %}
+      <!-- battery_spec_order  tab -->  
+
+
+
+      {% if protocols_countt.size == 1 %}
+
+      <!-- equipment  tab -->  
+
+      {%- assign tab_name_2 = product.metafields.section-4-tab['tab-name-2'] -%} 
+      {%- assign enable_disable_equipment = product.metafields.section-2-enable['equipment_run_times_enable'] -%}
+      {% if enable_disable_equipment == 1 %}
+      <li class="nav-item test">
+        <a class="nav-link" id="{{protocols_countt.size}}-tab" data-toggle="tab" href="#{{protocols_countt.size}}" role="tab" aria-controls="{{protocols_countt.size}}"
+           aria-selected="true">{{tab_name_2}}</a>
+      </li>
+      {%endif%}
+      {% endif %}
+
+      <!-- equipment  tab -->  
+
+      {% assign protocols_countt = protocols_countt | append: 'x' %}
+
+      {% endfor %}
+
+      <!-- battery   specification tab -->  
+
+      {%- assign enable_disable_battry_specification = product.metafields.section-2['enable.battery-specific-enable'] -%}
+      {% if enable_disable_battry_specification == 1 %}
+      {%- assign tab_name_battery_spec = product.metafields.section-4['battery-spec-title'] -%} 
+      {% if tab_name_battery_spec != blank %}
+      <li class="nav-item battery_spec_order">
+
+        <a class="cd f__16 tu f__mont chp ls__2 nav-link" id="2-tab" data-toggle="tab" href="#2" role="tab" aria-controls="2"
+           aria-selected="true">{{tab_name_battery_spec}}</a>
+      </li>
+
+      {%endif%}
+      {%endif%}
+      <!-- battery   specification tab -->  
+
+      <!-- tab  description -->  
+
+      {%- assign tab_name_3 = product.metafields.section-4['tab-name-3'] -%} 
+      {% if tab_name_3 != blank %}
+      {%- assign enable_disable_description = product.metafields.section-2-enable['description-enable'] -%}
+
+      {% if enable_disable_description == 1 and product.handle != 'power-tower' and product.handle != 'the-big-one' and  product.handle != 'the-cottager' and  product.handle != 'the-starter' and  product.handle != 'the-mini' and product.handle != 'solark-inverter' %}
+      <li class="nav-item">
+        <a class="cd f__16 tu f__mont chp ls__2 nav-link custom_description_slide" id="22-tab" data-toggle="tab" href="#22" role="tab" aria-controls="22"
+           aria-selected="true">{{tab_name_3}}</a>
+      </li>
+      {%endif%}
+      {%endif%}
+
+      <!-- tab  description -->  
+
+      <!-- tab  package content -->  
+
+      {%- assign package_components_heading = product.metafields.section-4['package_components_heading'] -%} 
+      {% if package_components_heading != blank %}
+      {%- assign enable_disable_package_tab = product.metafields.section-4['package_components_enable'] -%}
+
+      {% if enable_disable_package_tab == '1'  %}
+      <li class="nav-item">
+        <a class="cd f__16 tu f__mont chp ls__2 nav-link" id="30-tab" data-toggle="tab" href="#30" role="tab" aria-controls="22"
+           aria-selected="true">{{package_components_heading}}</a>
+      </li>
+      {%endif%}
+      {%endif%}
+
+      <!-- tab  package content -->  
+
+      <!-- tab  documentation-->
+      {%- assign tab_name_documen = product.metafields.section-4-tab['documentation_tab_name'] -%} 
+      {% if tab_name_documen != blank %}
+      {%- assign enable_disable_documen = product.metafields.section-4-tab['documentation_tab_name_enable'] -%}
+      {% if enable_disable_documen == '1' %}
+      <li class="nav-item">
+        <a class="cd f__16 tu f__mont chp ls__2 nav-link custom_description_slide2" id="23-tab" data-toggle="tab" href="#23" role="tab" aria-controls="22"
+           aria-selected="true">{{tab_name_documen}}</a>
+      </li>
+      {%endif%}
+      {%endif%}
+      <!-- end -->
+    </ul>
+
+
+
+    <!-- tab documenation-->
+    {%- assign enable_disable_documen = product.metafields.section-4-tab['documentation_tab_name_enable'] -%}
+    {%- assign content_document  = product.metafields.section-4-tab['documentation_tab_descript_ric'] -%}
+    {% if enable_disable_documen == '1' %}
+    <div class="tab-content 111" id="myTabContent">
+      <div class="tab-pane fade show active desctiption_1112" id="23" role="tabpanel" aria-labelledby="23-tab">
+        <div class="tab-pane-inner">
+          {{content_document}}
+        </div>
+      </div>
+    </div>
+    {%endif%}
+    <!-- end -->
+
+    {% assign protocols_countt = '' %}
+    {%- assign enable_disable_description = product.metafields.section-2-enable['description-enable'] -%}
+    {% if enable_disable_description == 1 %}
+    <div class="tab-content 22" id="myTabContent">
+      <div class="tab-pane fade show active desctiption_1112" id="22" role="tabpanel" aria-labelledby="22-tab">
+        <div class="tab-pane-inner">
+          {{ product.description }}
+        </div>
+      </div>
+    </div>
+    {%endif%}
+    {% assign protocols_countt = '' %}
+    {%- assign enable_disable_package_content = product.metafields.section-4['package_components_enable'] -%}
+    {% if enable_disable_package_content == '1' %}
+    <div class="tab-content package-content 22" id="myTabContent">
+      <div class="tab-pane fade show active desctiption_1112 package-content" id="30" role="tabpanel" aria-labelledby="30-tab">
+        <div class="tab-pane-inner package-content">
+
+
+          <table cellspacing="0" cellpadding="0">
+            {% if product.metafields.section-4['package_heading1'] != blank %}
+            <tr class="package_heading">
+              <td> <span class="topic heading">
+                {%- assign heading1 = product.metafields.section-4['package_heading1'] -%} 
+                {%- if heading1 != blank -%}{{heading1}}{%-endif-%}
+                </span></td>
+              <td class="special_border_class"><span class="value heading" >
+                {%- assign package_value_1 = product.metafields.section-4['package_value1'] -%} 
+                {%- if package_value_1 != blank -%}{{package_value_1}}{%-endif-%}
+                </span> </td>
+            </tr>
+            {% endif %}
+            {% if product.metafields.section-4['package_heading2'] != blank %}
+            <tr>
+              <td> <span class="topic">
+                {%- assign heading2 = product.metafields.section-4['package_heading2'] -%} 
+                {%- if heading2 != blank -%}{{heading2}}{%-endif-%}
+                </span></td>
+              <td class="special_border_class"><span class="value" >
+                {%- assign package_value_2 = product.metafields.section-4['package_value2'] -%} 
+                {%- if package_value_2 != blank -%}{{package_value_2}}{%-endif-%}
+                </span> </td>
+            </tr>
+            {% endif %}
+            {% if product.metafields.section-4['package_heading3'] != blank %}
+            <tr>
+              <td> <span class="topic">
+                {%- assign heading3 = product.metafields.section-4['package_heading3'] -%} 
+                {%- if heading3 != blank -%}{{heading3}}{%-endif-%}
+                </span></td>
+              <td class="special_border_class"><span class="value" >
+                {%- assign package_value_3 = product.metafields.section-4['package_value3'] -%} 
+                {%- if package_value_3 != blank -%}{{package_value_3}}{%-endif-%}
+                </span> </td>
+            </tr>
+            {% endif %}
+
+            {% if product.metafields.section-4['package_heading4'] != blank %}
+            <tr>
+              <td> <span class="topic">
+                {%- assign heading4 = product.metafields.section-4['package_heading4'] -%} 
+                {%- if heading4 != blank -%}{{heading4}}{%-endif-%}
+                </span></td>
+              <td class="special_border_class"><span class="value" >
+                {%- assign package_value_4 = product.metafields.section-4['package_value4'] -%} 
+                {%- if package_value_4 != blank -%}{{package_value_4}}{%-endif-%}
+                </span> </td>
+            </tr>
+            {% endif %}  
+
+            {% if product.metafields.section-4['package_heading5'] != blank %}
+
+            <tr>
+              <td> <span class="topic">
+                {%- assign heading5 = product.metafields.section-4['package_heading5'] -%} 
+                {%- if heading5 != blank -%}{{heading5}}{%-endif-%}
+                </span></td>
+              <td class="special_border_class"><span class="value" >
+                {%- assign package_value_5 = product.metafields.section-4['package_value5'] -%} 
+                {%- if package_value_5 != blank -%}{{package_value_5}}{%-endif-%}
+                </span> </td>
+            </tr>
+            {% endif %}
+
+            {% if product.metafields.section-4['package_heading6'] != blank %}
+            <tr>
+              <td> <span class="topic">
+                {%- assign heading6 = product.metafields.section-4['package_heading6'] -%} 
+                {%- if heading6 != blank -%}{{heading6}}{%-endif-%}
+                </span></td>
+              <td class="special_border_class"><span class="value" >
+                {%- assign package_value_6 = product.metafields.section-4['package_value6'] -%} 
+                {%- if package_value_6 != blank -%}{{package_value_6}}{%-endif-%}
+                </span> </td>
+            </tr>
+            {% endif %}
+
+            {% if product.metafields.section-4['package_heading7'] != blank %}
+
+            <tr>
+              <td> <span class="topic">
+                {%- assign heading7 = product.metafields.section-4['package_heading7'] -%} 
+                {%- if heading2 != blank -%}{{heading7}}{%-endif-%}
+                </span></td>
+              <td class="special_border_class"><span class="value" >
+                {%- assign package_value_7 = product.metafields.section-4['package_value7'] -%} 
+                {%- if package_value_7 != blank -%}{{package_value_7}}{%-endif-%}
+                </span> </td>
+            </tr>
+            {% endif %}
+
+            {% if product.metafields.section-4['package_heading8'] != blank %}
+
+            <tr>
+              <td> <span class="topic">
+                {%- assign heading8 = product.metafields.section-4['package_heading8'] -%} 
+                {%- if heading8 != blank -%}{{heading8}}{%-endif-%}
+                </span></td>
+              <td class="special_border_class"><span class="value" >
+                {%- assign package_value_8 = product.metafields.section-4['package_value8'] -%} 
+                {%- if package_value_8 != blank -%}{{package_value_8}}{%-endif-%}
+                </span> </td>
+            </tr>
+            {% endif %}
+
+            
+          </table>  
+
+          <div class="static_text">
+            {{ product.metafields.section-4['statictext'] }}
+          </div>
+        </div>
+      </div>
+    </div>
+    {%endif%}
+
+
+
+
+    {% for key_value in product.metafields.section-4-tab %}
+
+    {% if protocols_countt.size == 0 %}
+    {%- assign enable_disable_specification = product.metafields.section-2-enable['specification-enable'] -%}
+    {% if enable_disable_specification == 1 %}
+    <div class="tab-content 33" id="myTabContent">
+      {% unless template.suffix == 'battery' %}
+      <div class="tab-pane fade show active specification_2222" id="{{protocols_countt.size}}" role="tabpanel" aria-labelledby="{{protocols_countt.size}}-tab">
+
+        <div class="tab-pane-inner">
+
+          <div class="one tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">
+                {%- assign title_1 = product.metafields.section-4['title-1'] -%} 
+                {%- if title_1 != blank -%}{{title_1}}{%-endif-%}
+              </span> <span class="value" >
+              {%- assign value_1 = product.metafields.section-4['value-1'] -%} 
+              {%- if value_1 != blank -%}{{value_1}}{%-endif-%}
+              </span> 
+
+            </div>
+            <div class="right" style="float right;">
+              <span class="topic">
+                {%- assign title_2 = product.metafields.section-4['title-2'] -%} 
+                {%- if title_2 != blank -%}{{title_2}}{%-endif-%}</span> <span class="value">
+              {%- assign value_2 = product.metafields.section-4['value-2'] -%} 
+              {%- if value_2 != blank -%}{{value_2}}{%-endif-%}</span>
+
+            </div>
+
+          </div>
+          <div class="two tab-content-inner">
+
+            <div class="left" style="float left;">
+              <span class="topic">
+                {%- assign title_3 = product.metafields.section-4['titile-3'] -%} 
+                {%- if title_3 != blank -%}{{title_3}}{%-endif-%}</span><span class="value">
+              {%- assign value_3 = product.metafields.section-4['value-3'] -%} 
+              {%- if value_3 != blank -%}{{value_3}}{%-endif-%}
+              </span>
+            </div>
+            <div class="right" style="float right;">
+
+
+              <span class="topic">{%- assign title_4 = product.metafields.section-4['title-4'] -%} 
+                {%- if title_4 != blank -%}{{title_4}}{%-endif-%}</span> 
+              <span class="value non_extended_4">{%- assign value_4 = product.metafields.section-4['value-4'] -%} 
+                {%- if value_4 != blank -%}{{value_4}}{%-endif-%}</span>
+              <span class="value extended_4" style="display:none;">{%- assign extended_value_4 = product.metafields.section-4['value-4-extended'] -%} 
+                {%- if value_4 != blank -%}{{extended_value_4}}{%-endif-%}</span>
+
+
+            </div>
+
+          </div>
+          <div class="three tab-content-inner">
+
+            <div class="left" style="float left;">
+              <span class="topic">{%- assign title_5 = product.metafields.section-4['title-5'] -%} 
+                {%- if title_5 != blank -%}{{title_5}}{%-endif-%}</span> 
+              <span  class="value non_extended_5">{%- assign value_5 = product.metafields.section-4['value-5'] -%} 
+                {%- if value_5 != blank -%}{{value_5}}{%-endif-%}</span>
+              <span class="value extended_5" style="display:none;">{%- assign extended_value_5 = product.metafields.section-4['value-5-extended'] -%} 
+                {%- if value_5 != blank -%}{{extended_value_5}}{%-endif-%}</span>  
+
+
+            </div>
+            <div class="right" style="float right;">
+              <span class="topic">{%- assign title_6 = product.metafields.section-4['title-6'] -%} 
+                {%- if title_6 != blank -%}{{title_6}}{%-endif-%}</span>
+
+              <span  class="value non_extended_6">{%- assign value_6 = product.metafields.section-4['value-6'] -%} 
+                {%- if value_6 != blank -%}{{value_6}}{%-endif-%}</span>
+              <span class="value extended_6" style="display:none;">{%- assign extended_value_6 = product.metafields.section-4['value-6-extended'] -%} 
+                {%- if value_6 != blank -%}{{extended_value_6}}{%-endif-%}</span> 
+
+              <span class="value currency_extended_6" style="display:none;">{%- assign currency_extended_value_6 = product.metafields.section-4['value-6-currency-extended'] -%} 
+                {%- if value_6 != blank -%}{{currency_extended_value_6}}{%-endif-%}</span> 
+
+            </div>
+
+
+          </div>
+          <div class="four tab-content-inner">  
+            <div class="left" style="float left;">
+              <span class="topic">{%- assign title_7 = product.metafields.section-4['title-7'] -%} 
+                {%- if title_7 != blank -%}{{title_7}}{%-endif-%}</span>  
+
+              <span class="value">{%- assign value_7 = product.metafields.section-4['value-7'] -%} 
+                {%- if value_7 != blank -%}{{value_7}}{%-endif-%}</span> 
+            </div>
+            <div class="right" style="float right;">
+              <span class="topic">{%- assign title_8 = product.metafields.section-4['title-8'] -%} 
+                {%- if title_8 != blank -%}{{title_8}}{%-endif-%}</span> 
+
+              <span class="value non_extended_8">{%- assign value_8 = product.metafields.section-4['value-8'] -%} 
+                {%- if value_8 != blank -%}{{value_8}}{%-endif-%}</span>
+              <span class="value extended_8" style="display:none;">{%- assign extended_value_8 = product.metafields.section-4['value-8-extended'] -%} 
+                {%- if value_8 != blank -%}{{extended_value_8}}{%-endif-%}</span>
+
+            </div>
+
+          </div>
+          <div class="five tab-content-inner"> 
+
+            <div class="left" style="float left;">
+              <span class="topic">{%- assign title_9 = product.metafields.section-4['title-9'] -%} 
+                {%- if title_9 != blank -%}{{title_9}}{%-endif-%}</span> 
+              <span class="value non_extended_9">{%- assign value_9 = product.metafields.section-4['value-9'] -%} 
+                {%- if value_9 != blank -%}{{value_9}}{%-endif-%}</span>
+              <span class="value extended_9" style="display:none;">{%- assign extended_value_9 = product.metafields.section-4['value-9-extended'] -%} 
+                {%- if value_9 != blank -%}{{extended_value_9}}{%-endif-%}</span>  
+
+            </div>
+            <div class="right" style="float right;">
+
+              <span class="topic">{%- assign title_10 = product.metafields.section-4['title-10'] -%} 
+                {%- if title_10 != blank -%}{{title_10}}{%-endif-%}</span>
+
+
+              <span class="value">{%- assign value_10 = product.metafields.section-4['value-10'] -%} 
+                {%- if value_10 != blank -%}{{value_10}}{%-endif-%}</span>
+            </div>
+
+          </div>
+          <div class="six tab-content-inner"> 
+
+            <div class="left" style="float left;">
+              <span class="topic">{%- assign title_11 = product.metafields.section-4['title-11'] -%} 
+                {%- if title_11 != blank -%}{{title_11}}{%-endif-%}
+              </span> 
+              <span class="value non_extended_11">{%- assign value_11 = product.metafields.section-4['value-11'] -%} 
+                {%- if value_11 != blank -%}{{value_11}}{%-endif-%}
+              </span> 
+              <span class="value extended_11" style="display:none;">{%- assign extended_value_11 = product.metafields.section-4['value-11-extended'] -%} 
+                {%- if value_8 != blank -%}{{extended_value_11}}{%-endif-%}</span> 
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">
+                {%- assign title_12 = product.metafields.section-4['title-12'] -%} 
+                {%- if title_12 != blank -%}{{title_12}}{%-endif-%}
+              </span> 
+              <span class="value">
+                {%- assign value_12 = product.metafields.section-4['value-12'] -%} 
+                {%- if value_12 != blank -%}{{value_12}}{%-endif-%}
+              </span> 
+            </div>
+
+          </div>
+
+          {% if product.handle contains 'solark_12k-all_in_one' %}
+
+
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Continuous AC power to Grid (On-Grid)</span> 
+              <span class="value" >9000W 37.5A-L (240V) 4800W 40A L-N (120V) </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Continuous AC power to Load ( Off-Grid)</span> 
+              <span class="value">9000W 37.5A-L (240V) 4800W 40A L-N (120V)</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Surge AC power 10sec</span> 
+              <span class="value" >16,000VA L-L (240V) </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Surge AC power 100ms</span> 
+              <span class="value">25,000VA L-L (240V)</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Parallel Stacking</span> 
+              <span class="value" >2-8 (240V), 2,3,6,9 (208V) </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Frequency</span> 
+              <span class="value">60/50Hz</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Continuous AC power with Grid or Generator</span> 
+              <span class="value" >15120W 63A L-L (240V) 7560W 63A L-N (120V) </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">CEC Efficiency</span> 
+              <span class="value">96.5% (Peak 97.5%)</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Idle Consumption typical – no load</span> 
+              <span class="value" >60W </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Sell back power modes</span> 
+              <span class="value">Limited to Household or Full Grid-Tied</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Design (DC to AC)</span> 
+              <span class="value" >Transformerless DC </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Response Time (Grid-Tied to Off-Grid)</span> 
+              <span class="value">4ms</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Power Factor:</span> 
+              <span class="value" >+-0.9 - 1.0 </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Dimensions (H x W x D)</span> 
+              <span class="value">30.0” x 18.30” x 10.00”</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Weight</span> 
+              <span class="value" >78 lbs </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Enclosure</span> 
+              <span class="value">NEMA Type 3R</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Ambient Temperature (3 variable speed fans)</span> 
+              <span class="value" >-25 to 55C, >45C derating </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Display</span> 
+              <span class="value">Color touch screen</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Wi-Fi Communication (monitoring or SW updates)</span> 
+              <span class="value" >included </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Snap on sensors for limited selling to Ho usehold</span> 
+              <span class="value">included</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Standard Warranty (verified by HALT testing)</span> 
+              <span class="value" >10 Years </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Protection & Certifications</span> 
+              <span class="value">Electronics certified safety by SGS labs to NEC & UL specs – NEC 690.4B & NEC 705.4/6
+                UL1741-2010/2018, IEEE1547a-2003/2014, FCC 15 class B, UL1741SA, CA Rule 21, HECO Rule 14H
+              </span>
+            </div>
+
+          </div>
+
+
+
+          {% endif %}
+           {% if product.handle contains 'the-big-one' %}
+
+
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Continuous AC power to Grid (On-Grid)</span> 
+              <span class="value" >9000W 37.5A-L (240V) 4800W 40A L-N (120V) </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Continuous AC power to Load ( Off-Grid)</span> 
+              <span class="value">9000W 37.5A-L (240V) 4800W 40A L-N (120V)</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Surge AC power 10sec</span> 
+              <span class="value" >16,000VA L-L (240V) </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Surge AC power 100ms</span> 
+              <span class="value">25,000VA L-L (240V)</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Parallel Stacking</span> 
+              <span class="value" >2-8 (240V), 2,3,6,9 (208V) </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Frequency</span> 
+              <span class="value">60/50Hz</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Continuous AC power with Grid or Generator</span> 
+              <span class="value" >15120W 63A L-L (240V) 7560W 63A L-N (120V) </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">CEC Efficiency</span> 
+              <span class="value">96.5% (Peak 97.5%)</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Idle Consumption typical – no load</span> 
+              <span class="value" >60W </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Sell back power modes</span> 
+              <span class="value">Limited to Household or Full Grid-Tied</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Design (DC to AC)</span> 
+              <span class="value" >Transformerless DC </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Response Time (Grid-Tied to Off-Grid)</span> 
+              <span class="value">4ms</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Power Factor:</span> 
+              <span class="value" >+-0.9 - 1.0 </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Dimensions (H x W x D)</span> 
+              <span class="value">30.0” x 18.30” x 10.00”</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Weight</span> 
+              <span class="value" >78 lbs </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Enclosure</span> 
+              <span class="value">NEMA Type 3R</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Ambient Temperature (3 variable speed fans)</span> 
+              <span class="value" >-25 to 55C, >45C derating </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Display</span> 
+              <span class="value">Color touch screen</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Wi-Fi Communication (monitoring or SW updates)</span> 
+              <span class="value" >included </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Snap on sensors for limited selling to Ho usehold</span> 
+              <span class="value">included</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Standard Warranty (verified by HALT testing)</span> 
+              <span class="value" >10 Years </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Protection & Certifications</span> 
+              <span class="value">Electronics certified safety by SGS labs to NEC & UL specs – NEC 690.4B & NEC 705.4/6
+                UL1741-2010/2018, IEEE1547a-2003/2014, FCC 15 class B, UL1741SA, CA Rule 21, HECO Rule 14H
+              </span>
+            </div>
+
+          </div>
+
+
+
+          {% endif %}
+{% if product.handle contains 'solark-inverter-2' %}
+
+
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Continuous AC power to Grid (On-Grid)</span> 
+              <span class="value" >9000W 37.5A-L (240V) 4800W 40A L-N (120V) </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Continuous AC power to Load ( Off-Grid)</span> 
+              <span class="value">9000W 37.5A-L (240V) 4800W 40A L-N (120V)</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Surge AC power 10sec</span> 
+              <span class="value" >16,000VA L-L (240V) </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Surge AC power 100ms</span> 
+              <span class="value">25,000VA L-L (240V)</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Parallel Stacking</span> 
+              <span class="value" >2-8 (240V), 2,3,6,9 (208V) </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Frequency</span> 
+              <span class="value">60/50Hz</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Continuous AC power with Grid or Generator</span> 
+              <span class="value" >15120W 63A L-L (240V) 7560W 63A L-N (120V) </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">CEC Efficiency</span> 
+              <span class="value">96.5% (Peak 97.5%)</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Idle Consumption typical – no load</span> 
+              <span class="value" >60W </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Sell back power modes</span> 
+              <span class="value">Limited to Household or Full Grid-Tied</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Design (DC to AC)</span> 
+              <span class="value" >Transformerless DC </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Response Time (Grid-Tied to Off-Grid)</span> 
+              <span class="value">4ms</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Power Factor:</span> 
+              <span class="value" >+-0.9 - 1.0 </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Dimensions (H x W x D)</span> 
+              <span class="value">30.0” x 18.30” x 10.00”</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Weight</span> 
+              <span class="value" >78 lbs </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Enclosure</span> 
+              <span class="value">NEMA Type 3R</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Ambient Temperature (3 variable speed fans)</span> 
+              <span class="value" >-25 to 55C, >45C derating </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Display</span> 
+              <span class="value">Color touch screen</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Wi-Fi Communication (monitoring or SW updates)</span> 
+              <span class="value" >included </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Snap on sensors for limited selling to Ho usehold</span> 
+              <span class="value">included</span>
+            </div>
+
+          </div>
+          <div class="seventh tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">Standard Warranty (verified by HALT testing)</span> 
+              <span class="value" >10 Years </span>    
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">Protection & Certifications</span> 
+              <span class="value">Electronics certified safety by SGS labs to NEC & UL specs – NEC 690.4B & NEC 705.4/6
+                UL1741-2010/2018, IEEE1547a-2003/2014, FCC 15 class B, UL1741SA, CA Rule 21, HECO Rule 14H
+              </span>
+            </div>
+
+          </div>
+
+
+
+          {% endif %}
+
+
+        </div>
+        {% if product.metafields.specification.notes != blank %}
+        <p class="spec-notes"> NOTES: {{product.metafields.specification.notes}} </p>
+        {% endif %}
+
+      </div>
+      {% endunless %}
+      {%- assign enable_disable_battry_specification = product.metafields.section-2['enable.battery-specific-enable'] -%}
+
+      {%assign battery_spec = product.metafields.section-4['battery-spec-text']%}
+      {%if battery_spec != blank and enable_disable_battry_specification == 1%}
+      <div class="tab-pane fade show active battery_specification_2222" id="2" role="tabpanel" aria-labelledby="2-tab">
+
+        <div class="tab-pane-inner">
+
+          <div class="one tab-content-inner">
+            <div class="left" style="float left;">
+              <span class="topic">
+                {%- assign title_1 = product.metafields.section-4['battery-spec-text'] -%} 
+                {%- if title_1 != blank -%}{{title_1}}{%-endif-%}
+              </span> <span class="value" >
+              {%- assign value_1 = product.metafields.section-4['battery-spec-value'] -%} 
+              {%- if value_1 != blank -%}{{value_1}}{%-endif-%}
+              </span> 
+
+            </div>
+            <div class="right" style="float right;">
+              <span class="topic">
+                {%- assign title_2 = product.metafields.section-4['battery-spec-text2'] -%} 
+                {%- if title_2 != blank -%}{{title_2}}{%-endif-%}</span> <span class="value">
+              {%- assign value_2 = product.metafields.section-4['battery-spec-value2'] -%} 
+              {%- if value_2 != blank -%}{{value_2}}{%-endif-%}</span>
+
+            </div>
+
+          </div>
+          <div class="two tab-content-inner">
+
+            <div class="left" style="float left;">
+              <span class="topic">
+                {%- assign title_3 = product.metafields.section-4['battery-spec-text3'] -%} 
+                {%- if title_3 != blank -%}{{title_3}}{%-endif-%}</span><span class="value">
+              {%- assign value_3 = product.metafields.section-4['battery-spec-value3'] -%} 
+              {%- if value_3 != blank -%}{{value_3}}{%-endif-%}
+              </span>
+            </div>
+            <div class="right" style="float right;">
+
+
+              <span class="topic">{%- assign title_4 = product.metafields.section-4['battery-spec-text4'] -%} 
+                {%- if title_4 != blank -%}{{title_4}}{%-endif-%}</span> 
+              <span class="value non_extended_4">{%- assign value_4 = product.metafields.section-4['battery-spec-value4'] -%} 
+                {%- if value_4 != blank -%}{{value_4}}{%-endif-%}</span>
+              <span class="value extended_4" style="display:none;">{%- assign extended_value_4 = product.metafields.section-4['battery-spec-text'] -%} 
+                {%- if value_4 != blank -%}{{extended_value_4}}{%-endif-%}</span>
+
+
+            </div>
+
+          </div>
+          <div class="three tab-content-inner">
+
+            <div class="left" style="float left;">
+              <span class="topic">{%- assign title_5 = product.metafields.section-4['battery-spec-text5'] -%} 
+                {%- if title_5 != blank -%}{{title_5}}{%-endif-%}</span> 
+              <span  class="value non_extended_5">{%- assign value_5 = product.metafields.section-4['battery-spec-value5'] -%} 
+                {%- if value_5 != blank -%}{{value_5}}{%-endif-%}</span>
+              <span class="value extended_5" style="display:none;">{%- assign extended_value_5 = product.metafields.section-4['value-5-extended'] -%} 
+                {%- if value_5 != blank -%}{{extended_value_5}}{%-endif-%}</span>  
+
+
+            </div>
+            <div class="right" style="float right;">
+              <span class="topic">{%- assign title_6 = product.metafields.section-4['battery-spec-text6'] -%} 
+                {%- if title_6 != blank -%}{{title_6}}{%-endif-%}</span>
+
+              <span  class="value non_extended_6">{%- assign value_6 = product.metafields.section-4['battery-spec-value6'] -%} 
+                {%- if value_6 != blank -%}{{value_6}}{%-endif-%}</span>
+              <span class="value extended_6" style="display:none;">{%- assign extended_value_6 = product.metafields.section-4['vbattery-spec-text6'] -%} 
+                {%- if value_6 != blank -%}{{extended_value_6}}{%-endif-%}</span> 
+
+              <span class="value currency_extended_6" style="display:none;">{%- assign currency_extended_value_6 = product.metafields.section-4['battery-spec-text6'] -%} 
+                {%- if value_6 != blank -%}{{currency_extended_value_6}}{%-endif-%}</span> 
+
+            </div>
+
+
+          </div>
+          <div class="four tab-content-inner">  
+            <div class="left" style="float left;">
+              <span class="topic">{%- assign title_7 = product.metafields.section-4['battery-spec-text7'] -%} 
+                {%- if title_7 != blank -%}{{title_7}}{%-endif-%}</span>  
+
+              <span class="value">{%- assign value_7 = product.metafields.section-4['battery-spec-value7'] -%} 
+                {%- if value_7 != blank -%}{{value_7}}{%-endif-%}</span> 
+            </div>
+            <div class="right" style="float right;">
+              <span class="topic">{%- assign title_8 = product.metafields.section-4['battery-spec-text8'] -%} 
+                {%- if title_8 != blank -%}{{title_8}}{%-endif-%}</span> 
+
+              <span class="value">{%- assign value_8 = product.metafields.section-4['battery-spec-value8'] -%} 
+                {%- if value_8 != blank -%}{{value_8}}{%-endif-%}</span>
+
+
+            </div>
+
+          </div>
+          <div class="five tab-content-inner"> 
+
+            <div class="left" style="float left;">
+              <span class="topic">{%- assign title_9 = product.metafields.section-4['battery-spec-text9'] -%} 
+                {%- if title_9 != blank -%}{{title_9}}{%-endif-%}</span> 
+              <span class="value non_extended_9">{%- assign value_9 = product.metafields.section-4['battery-spec-value9'] -%} 
+                {%- if value_9 != blank -%}{{value_9}}{%-endif-%}</span>
+              <span class="value extended_9" style="display:none;">{%- assign extended_value_9 = product.metafields.section-4['battery-spec-value9'] -%} 
+                {%- if value_9 != blank -%}{{extended_value_9}}{%-endif-%}</span>  
+
+            </div>
+            <div class="right" style="float right;">
+
+              <span class="topic">{%- assign title_10 = product.metafields.section-4['battery-spec-text10'] -%} 
+                {%- if title_10 != blank -%}{{title_10}}{%-endif-%}</span>
+
+
+              <span class="value">{%- assign value_10 = product.metafields.section-4['battery-spec-value10'] -%} 
+                {%- if value_10 != blank -%}{{value_10}}{%-endif-%}</span>
+            </div>
+
+          </div>
+          <div class="six tab-content-inner"> 
+
+            <div class="left" style="float left;">
+              <span class="topic">{%- assign title_11 = product.metafields.section-4['battery-spec-text11'] -%} 
+                {%- if title_11 != blank -%}{{title_11}}{%-endif-%}
+              </span> 
+              <span class="value non_extended_11">{%- assign value_11 = product.metafields.section-4['battery-spec-value11'] -%} 
+                {%- if value_11 != blank -%}{{value_11}}{%-endif-%}
+              </span> 
+              <span class="value extended_11" style="display:none;">{%- assign extended_value_11 = product.metafields.section-4['power-tower-value-11-extended'] -%} 
+                {%- if value_8 != blank -%}{{extended_value_11}}{%-endif-%}</span> 
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">
+                {%- assign title_12 = product.metafields.section-4['battery-spec-text12'] -%} 
+                {%- if title_12 != blank -%}{{title_12}}{%-endif-%}
+              </span> 
+              <span class="value non_extended_11">{%- assign value_11 = product.metafields.section-4['battery-spec-value12'] -%} 
+                {%- if value_11 != blank -%}{{value_11}}{%-endif-%}
+              </span> 
+              <span class="value extended_11" style="display:none;">{%- assign extended_value_11 = product.metafields.section-4['power-tower-value-12-extended'] -%} 
+                {%- if value_8 != blank -%}{{extended_value_11}}{%-endif-%}</span> 
+            </div>
+
+          </div>
+          <div class="seven tab-content-inner"> 
+
+            <div class="left" style="float left;">
+              <span class="topic">{%- assign title_11 = product.metafields.section-4['battery-spec-text13'] -%} 
+                {%- if title_11 != blank -%}{{title_11}}{%-endif-%}
+              </span> 
+              <span class="value non_extended_11">{%- assign value_11 = product.metafields.section-4['battery-spec-value13'] -%} 
+                {%- if value_11 != blank -%}{{value_11}}{%-endif-%}
+              </span> 
+              <span class="value extended_11" style="display:none;">{%- assign extended_value_11 = product.metafields.section-4['power-tower-value-13-extended'] -%} 
+                {%- if value_8 != blank -%}{{extended_value_11}}{%-endif-%}</span> 
+            </div>
+
+            <div class="right" style="float right;">
+              <span class="topic">
+                {%- assign title_12 = product.metafields.section-4['battery-spec-text14'] -%} 
+                {%- if title_12 != blank -%}{{title_12}}{%-endif-%}
+              </span> 
+              <span class="value non_extended_11">{%- assign value_11 = product.metafields.section-4['battery-spec-value14'] -%} 
+                {%- if value_11 != blank -%}{{value_11}}{%-endif-%}
+              </span> 
+              <span class="value extended_11" style="display:none;">{%- assign extended_value_11 = product.metafields.section-4['power-tower-value-14-extended'] -%} 
+                {%- if value_8 != blank -%}{{extended_value_11}}{%-endif-%}</span>  
+            </div>
+
+          </div>
+          {%- assign title_15 = product.metafields.section-4['battery-spec-text15'] -%} 
+          {%if title_15 != blank %}
+          <div class="eight tab-content-inner custom_for_specific_product"> 
+
+            <div class="left" style="float left;">
+              <span class="topic">{%- assign title_15 = product.metafields.section-4['battery-spec-text15'] -%} 
+                {%- if title_15 != blank -%}{{title_15}}{%-endif-%}
+              </span> 
+              <span class="value non_extended_11">{%- assign value_15 = product.metafields.section-4['battery-spec-value15'] -%} 
+                {%- if value_15 != blank -%}{{value_15}}{%-endif-%}
+              </span> 
+              <span class="value extended_11" style="display:none;">{%- assign extended_value_11 = product.metafields.section-4['power-tower-value-15-extended'] -%} 
+                {%- if value_8 != blank -%}{{extended_value_11}}{%-endif-%}</span> 
+            </div>
+            {%- assign title_16 = product.metafields.section-4['battery-spec-text16'] -%} 
+             {%- if title_16 != blank or value_16 != blank-%}
+            <div class="right" style="float right;">
+              <span class="topic">
+                
+                {%- if title_16 != blank -%}{{title_16}}{%-endif-%}
+              </span> 
+              <span class="value non_extended_11">{%- assign value_16 = product.metafields.section-4['battery-spec-value16'] -%} 
+                {%- if value_16 != blank -%}{{value_16}}{%-endif-%}
+              </span> 
+
+            </div>
+             {%endif%}
+          </div>
+          {%endif%}
+
+          {%- assign title_17 = product.metafields.section-4['battery-spec-text17'] -%} 
+          {%if title_17 != blank %}
+          <div class="eight tab-content-inner"> 
+
+            <div class="left" style="float left;">
+              <span class="topic">{%- assign title_17 = product.metafields.section-4['battery-spec-text17'] -%} 
+                {%- if title_17 != blank -%}{{title_17}}{%-endif-%}
+              </span> 
+              <span class="value non_extended_11">{%- assign value_17 = product.metafields.section-4['battery-spec-value17'] -%} 
+                {%- if value_17 != blank -%}{{value_17}}{%-endif-%}
+              </span> 
+
+            </div>
+
+
+
+          </div>
+          {%endif%}
+        </div>
+      </div>
+
+
+      {%endif%}
+      {%- assign tab_name_2_enable = product.metafields.section-4-tab['tab-name-2'] -%} 
+      {%- assign enable_disable_equipment = product.metafields.section-2-enable['equipment_run_times_enable'] -%}
+      {%if tab_name_2_enable != blank and enable_disable_equipment == 1%}
+      {%- assign disable_enable_section = product.metafields.section-4['equipment_text1'] -%} 
+      {%- assign battery_specs2_data = product.metafields.section-4['battery-spec2-text1'] -%} 
+
+      {%if disable_enable_section != blank %}
+
+      <div class="tab-pane fade show active equipment_specification_2222" id="1" role="tabpanel" aria-labelledby="1-tab">
+
+        <div class="tab-pane-inner">
+          <div class="table--content">
+
+            {% if battery_specs2_data == blank %}
+
+            <!--   if  additional battery spec tab == blank then equipment specification  tab displays -->
+
+
+            <table cellspacing="0" cellpadding="0">
+              <tr>
+                <td> <span class="topic">
+                  {%- assign title_1 = product.metafields.section-4['equipment_text1'] -%} 
+                  {%- if title_1 != blank -%}{{title_1}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_1 = product.metafields.section-4['equipment_value1'] -%} 
+                  {%- if value_1 != blank -%}{{value_1}}{%-endif-%}
+                  </span> </td>
+                <td><span class="value" >
+                  {%- assign value_01 = product.metafields.section-4['equipment_value01'] -%} 
+                  {%- if value_01 != blank -%}{{value_01}}{%-endif-%}
+                  </span></td>
+              </tr>
+              <tr>
+                <td> <span class="topic">
+                  {%- assign title_2 = product.metafields.section-4['equipment_text2'] -%} 
+                  {%- if title_2 != blank -%}{{title_2}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_2 = product.metafields.section-4['equipment_value2'] -%} 
+                  {%- if value_2 != blank -%}{{value_2}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_02 = product.metafields.section-4['equipment_value02'] -%} 
+                  {%- if value_02 != blank -%}{{value_02}}{%-endif-%}
+                  </span></td>
+              </tr>
+              <tr>
+                <td> <span class="topic">
+                  {%- assign title_3 = product.metafields.section-4['equipment_text3'] -%} 
+                  {%- if title_3 != blank -%}{{title_3}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_3 = product.metafields.section-4['equipment_value3'] -%} 
+                  {%- if value_3 != blank -%}{{value_3}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_03 = product.metafields.section-4['equipment_value03'] -%} 
+                  {%- if value_03 != blank -%}{{value_03}}{%-endif-%}
+                  </span></td>
+              </tr>
+              <tr>
+                <td> <span class="topic">
+                  {%- assign title_4 = product.metafields.section-4['equipment_text4'] -%} 
+                  {%- if title_4 != blank -%}{{title_4}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_3 = product.metafields.section-4['equipment_value4'] -%} 
+                  {%- if value_3 != blank -%}{{value_4}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_04 = product.metafields.section-4['equipment_value04'] -%} 
+                  {%- if value_04 != blank -%}{{value_04}}{%-endif-%}
+                  </span></td>
+              </tr>
+              <tr>
+                <td><span class="topic">
+                  {%- assign title_5 = product.metafields.section-4['equipment_text5'] -%} 
+                  {%- if title_5 != blank -%}{{title_5}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_5 = product.metafields.section-4['equipment_value5'] -%} 
+                  {%- if value_5 != blank -%}{{value_5}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_05 = product.metafields.section-4['equipment_value05'] -%} 
+                  {%- if value_05 != blank -%}{{value_05}}{%-endif-%}
+                  </span></td>
+              </tr>
+              <tr>
+                <td><span class="topic">
+                  {%- assign title_6 = product.metafields.section-4['equipment_text6'] -%} 
+                  {%- if title_6 != blank -%}{{title_6}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_6 = product.metafields.section-4['equipment_value6'] -%} 
+                  {%- if value_6 != blank -%}{{value_6}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_06 = product.metafields.section-4['equipment_value06'] -%} 
+                  {%- if value_06 != blank -%}{{value_06}}{%-endif-%}
+                  </span></td>
+              </tr>
+              <tr>
+                <td><span class="topic">
+                  {%- assign title_7 = product.metafields.section-4['equipment_text7'] -%} 
+                  {%- if title_7 != blank -%}{{title_7}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_7 = product.metafields.section-4['equipment_value7'] -%} 
+                  {%- if value_7 != blank -%}{{value_7}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_07 = product.metafields.section-4['equipment_value07'] -%} 
+                  {%- if value_07 != blank -%}{{value_07}}{%-endif-%}
+                  </span></td>
+              </tr>
+              <tr>
+                <td><span class="topic">
+                  {%- assign title_8 = product.metafields.section-4['equipment_text8'] -%} 
+                  {%- if title_8 != blank -%}{{title_8}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_8 = product.metafields.section-4['equipment_value8'] -%} 
+                  {%- if value_8 != blank -%}{{value_8}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_08 = product.metafields.section-4['equipment_value08'] -%} 
+                  {%- if value_08 != blank -%}{{value_08}}{%-endif-%}
+                  </span></td>
+              </tr>
+              <tr>
+                <td><span class="topic">
+                  {%- assign title_9 = product.metafields.section-4['equipment_text9'] -%} 
+                  {%- if title_9 != blank -%}{{title_9}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_9 = product.metafields.section-4['equipment_value9'] -%} 
+                  {%- if value_9 != blank -%}{{value_9}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_09 = product.metafields.section-4['equipment_value09'] -%} 
+                  {%- if value_09 != blank -%}{{value_09}}{%-endif-%}
+                  </span></td>
+              </tr>
+              <tr>
+                <td><span class="topic">
+                  {%- assign title_10 = product.metafields.section-4['equipment_text10'] -%} 
+                  {%- if title_10 != blank -%}{{title_10}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_10 = product.metafields.section-4['equipment_value10'] -%} 
+                  {%- if value_10 != blank -%}{{value_10}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_010 = product.metafields.section-4['equipment_value010'] -%} 
+                  {%- if value_010 != blank -%}{{value_010}}{%-endif-%}
+                  </span></td>
+              </tr>
+              <tr>
+                <td><span class="topic">
+                  {%- assign title_11 = product.metafields.section-4['equipment_text11'] -%} 
+                  {%- if title_11 != blank -%}{{title_11}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_11 = product.metafields.section-4['equipment_value11'] -%} 
+                  {%- if value_11 != blank -%}{{value_11}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_011 = product.metafields.section-4['equipment_value011'] -%} 
+                  {%- if value_011 != blank -%}{{value_011}}{%-endif-%}
+                  </span></td>
+              </tr>
+              <tr>
+                <td><span class="topic">
+                  {%- assign title_12 = product.metafields.section-4['equipment_text12'] -%} 
+                  {%- if title_12 != blank -%}{{title_12}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_12 = product.metafields.section-4['equipment_value12'] -%} 
+                  {%- if value_12 != blank -%}{{value_12}}{%-endif-%}
+                  </span></td>
+                <td><span class="value" >
+                  {%- assign value_012 = product.metafields.section-4['equipment_value012'] -%} 
+                  {%- if value_012 != blank -%}{{value_012}}{%-endif-%}
+                  </span></td>
+              </tr>
+
+            </table>
+
+            {% else %}
+
+            <!--    battery specific additional tab table  start   -->
+
+            <div class="one tab-content-inner">
+              <div class="left" style="float left;"> <span class="topic">
+                {%- assign title_1 = product.metafields.section-4['battery-spec2-text1'] -%} 
+                {%- if title_1 != blank -%}{{title_1}}{%-endif-%}
+                </span> <span class="value">
+                {%- assign value_1 = product.metafields.section-4['battery-spec2-value1'] -%} 
+                {%- if value_1 != blank -%}{{value_1}}{%-endif-%}
+                </span> </div>
+              <div class="right" style="float right;"> <span class="topic">
+                {%- assign title_2 = product.metafields.section-4['battery-spec2-text2'] -%} 
+                {%- if title_2 != blank -%}{{title_2}}{%-endif-%}</span> <span class="value">
+                {%- assign value_2 = product.metafields.section-4['battery-spec2-value2'] -%} 
+                {%- if value_2 != blank -%}{{value_2}}{%-endif-%}</span> </div>
+            </div>
+            <div class="two tab-content-inner">
+              <div class="left" style="float left;"> <span class="topic">
+                {%- assign title_3 = product.metafields.section-4['battery-spec2-text3'] -%} 
+                {%- if title_3 != blank -%}{{title_3}}{%-endif-%}</span><span class="value">
+                {%- assign value_3 = product.metafields.section-4['battery-spec2-value3'] -%} 
+                {%- if value_3 != blank -%}{{value_3}}{%-endif-%}
+                </span> </div>
+              <div class="right" style="float right;"> <span class="topic">{%- assign title_4 = product.metafields.section-4['battery-spec2-text4'] -%} 
+                {%- if title_4 != blank -%}{{title_4}}{%-endif-%}</span> <span class="value non_extended_4">{%- assign value_4 = product.metafields.section-4['battery-spec2-value4'] -%} 
+                {%- if value_4 != blank -%}{{value_4}}{%-endif-%}</span> </div>
+            </div>
+            <div class="three tab-content-inner">
+              <div class="left" style="float left;"> <span class="topic">{%- assign title_5 = product.metafields.section-4['battery-spec2-text5'] -%} 
+                {%- if title_5 != blank -%}{{title_5}}{%-endif-%}</span> <span class="value non_extended_5">{%- assign value_5 = product.metafields.section-4['battery-spec2-value5'] -%} 
+                {%- if value_5 != blank -%}{{value_5}}{%-endif-%}</span> </div>
+              <div class="right" style="float right;"> <span class="topic">{%- assign title_6 = product.metafields.section-4['battery-spec2-text6'] -%} 
+                {%- if title_6 != blank -%}{{title_6}}{%-endif-%}</span> <span class="value non_extended_6">{%- assign value_6 = product.metafields.section-4['battery-spec2-value6'] -%} 
+                {%- if value_6 != blank -%}{{value_6}}{%-endif-%}</span> </div>
+            </div>
+            <div class="four tab-content-inner">
+              <div class="left" style="float left;"> <span class="topic">{%- assign title_7 = product.metafields.section-4['battery-spec2-text7'] -%} 
+                {%- if title_7 != blank -%}{{title_7}}{%-endif-%}</span> <span class="value">{%- assign value_7 = product.metafields.section-4['battery-spec2-value7'] -%} 
+                {%- if value_7 != blank -%}{{value_7}}{%-endif-%}</span> </div>
+              <div class="right" style="float right;"> <span class="topic">{%- assign title_8 = product.metafields.section-4['battery-spec2-text8'] -%} 
+                {%- if title_8 != blank -%}{{title_8}}{%-endif-%}</span> <span class="value">{%- assign value_8 = product.metafields.section-4['battery-spec2-value8'] -%} 
+                {%- if value_8 != blank -%}{{value_8}}{%-endif-%}</span> </div>
+            </div>
+            <div class="five tab-content-inner">
+              <div class="left" style="float left;"> <span class="topic">{%- assign title_9 = product.metafields.section-4['battery-spec2-text9'] -%} 
+                {%- if title_9 != blank -%}{{title_9}}{%-endif-%}</span> <span class="value non_extended_9">{%- assign value_9 = product.metafields.section-4['battery-spec2-value9'] -%} 
+                {%- if value_9 != blank -%}{{value_9}}{%-endif-%}</span> </div>
+              <div class="right" style="float right;"> <span class="topic">{%- assign title_10 = product.metafields.section-4['battery-spec2-text10'] -%} 
+                {%- if title_10 != blank -%}{{title_10}}{%-endif-%}</span> <span class="value">{%- assign value_10 = product.metafields.section-4['battery-spec2-value10'] -%} 
+                {%- if value_10 != blank -%}{{value_10}}{%-endif-%}</span> </div>
+            </div>
+            <div class="six tab-content-inner">
+              <div class="left" style="float left;"> <span class="topic">{%- assign title_11 = product.metafields.section-4['battery-spec2-text11'] -%} 
+                {%- if title_11 != blank -%}{{title_11}}{%-endif-%}
+                </span> <span class="value non_extended_11">{%- assign value_11 = product.metafields.section-4['battery-spec2-value11'] -%} 
+                {%- if value_11 != blank -%}{{value_11}}{%-endif-%}
+                </span> </div>
+              <div class="right" style="float right;"> <span class="topic">
+                {%- assign title_12 = product.metafields.section-4['battery-spec2-text12'] -%} 
+                {%- if title_12 != blank -%}{{title_12}}{%-endif-%}
+                </span> <span class="value non_extended_11">{%- assign value_11 = product.metafields.section-4['battery-spec2-value12'] -%} 
+                {%- if value_11 != blank -%}{{value_11}}{%-endif-%}
+                </span> </div>
+            </div>
+            <div class="seven tab-content-inner">
+              <div class="left" style="float left;"> <span class="topic">{%- assign title_11 = product.metafields.section-4['battery-spec2-text13'] -%} 
+                {%- if title_11 != blank -%}{{title_11}}{%-endif-%}
+                </span> <span class="value non_extended_11">{%- assign value_11 = product.metafields.section-4['battery-spec2-value13'] -%} 
+                {%- if value_11 != blank -%}{{value_11}}{%-endif-%}
+                </span> </div>
+              <div class="right" style="float right;"> <span class="topic">
+                {%- assign title_12 = product.metafields.section-4['battery-spec2-text14'] -%} 
+                {%- if title_12 != blank -%}{{title_12}}{%-endif-%}
+                </span> <span class="value non_extended_11">{%- assign value_11 = product.metafields.section-4['battery-spec2-value14'] -%} 
+                {%- if value_11 != blank -%}{{value_11}}{%-endif-%}
+                </span> </div>
+            </div> {%- assign title_15 = product.metafields.section-4['battery-spec2-text15'] -%} {%if title_15 != blank %}
+            <div class="eight tab-content-inner">
+              <div class="left" style="float left;"> <span class="topic">{%- assign title_15 = product.metafields.section-4['battery-spec2-text15'] -%} 
+                {%- if title_15 != blank -%}{{title_15}}{%-endif-%}
+                </span> <span class="value non_extended_11">{%- assign value_15 = product.metafields.section-4['battery-spec2-value15'] -%} 
+                {%- if value_15 != blank -%}{{value_15}}{%-endif-%}
+                </span> </div>
+            </div> {%endif%} </div>
+        </div>
+        <!--    battery specific additional tab table  end   -->
+
+
+        {% endif %}
+
+
+      </div>
+
+
+    </div>
+  </div>
+  {%endif%}
+  {%endif%}
+  {% endif %}
+
+  {%- assign tab_name_6_enable = product.metafields.section-4-tab['tab-name-3'] -%} 
+  {%- assign enable_disable_equipment2 = product.metafields.section-3-enable['battery-specs2-enable'] -%}
+  {%if tab_name_6_enable != blank and enable_disable_equipment2 == 1%}
+  {%- assign disable_enable_section2 = product.metafields.section-4['battery-spec2-text1'] -%} 
+  {%if disable_enable_section2 != blank %}
+
+  <div class="tab-pane fade show active equipment_specification_2222" id="1" role="tabpanel" aria-labelledby="1-tab">
+
+    <div class="tab-pane-inner">
+      <div class="table--content">
+        {{disable_enable_section2}}
+
+      </div>
+
+
+    </div>
+  </div>
+  {%endif%}
+  {%endif%}
+
+
+
+  {% assign protocols_countt = protocols_countt | append: 'x' %}
+  {%endif%}
+  {% endfor %}
+  </div>
+
+</div>
+{%endif%}
+
+<style>
+
+  .tab-pane-inner .table--content h4 {
+    text-align: center;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+
+  }
+
+  .table--content {
+    width: 100%;
+  }
+
+  table tr th td {
+    border: none;
+  }    
+  .table--content table tr td {
+    border: 1px solid #ac612d;
+  }
+</style>
+
+<!--  documentation click move to bottom js start  -->
+<script>
+  $(document).ready(function() {
+    $('.scroll_to_documen_tab').click(function(event) {
+      $(".custom_description_slide2").trigger("click");
+      event.preventDefault();
+      var target = $(this).attr("href"); // Set the target as variable
+      if($("header.white-logo.header-3.pe_icon.act_img_sticky").hasClass('header-sticky')){
+
+        $('html, body').animate({
+          scrollTop: $(target).offset().top - 300
+        });
+      }
+      else{
+        $('html, body').animate({
+          scrollTop: $(target).offset().top-450
+        });
+
+      }
+    });
+  });
+</script>
+<!--  documentation click move to bottom js end  -->

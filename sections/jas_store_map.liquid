@@ -1,0 +1,279 @@
+{%- include 'style_mp_section' -%}
+{%- assign api_google = settings.api_key -%}
+<div class="{%- if section.settings.use_container == false %}jas-col-xs-12{%- endif %} jas_custom_{{section.id}} jas-banner-parallax{%- if section.settings.use_parallax == false %} gecko-parallax{%- endif %}{%- if section.settings.use_background_overlay %} jas_background-overlay{%- endif %}{%- if section.settings.use_parallax == false and section.settings.image != blank %} lazyload{%- endif %}{%- if section.settings.full_height %} jas-full-height{%- endif -%}"{%- if section.settings.use_parallax and section.settings.image != blank  %} data-jas-parallax='1.5' data-jas-parallax-image='{{ section.settings.image | img_url: '50x50' }}'{%- endif %}{%- if section.settings.image != blank or section.settings.section_bg_color != blank %} data-bgset="{%- include 'bgset', image: section.settings.image -%}" data-sizes="auto" data-parent-fit="cover" style="{%- if section.settings.section_bg_color != blank -%}background-color: {{section.settings.section_bg_color}};{%- endif -%}{%- if section.settings.image != blank and section.settings.use_parallax == false -%}background-image: url('{{ section.settings.image | img_url: '50x50' }}');{%- endif -%}"{%- endif -%}>
+   <div class="clearfix{%- if section.settings.use_container %} jas-container{%- else %} jas-col-xs-12{%- endif -%}">
+      <div class="jas-row">
+          {%- assign check_width = true -%}
+         {%- for block in section.blocks -%}
+            {%- if block.settings.width == '12' -%}
+                {%- assign check_width = false -%}
+                {%- break-%}
+            {%- endif -%}
+         {%- endfor -%}
+      {%- for block in section.blocks -%}
+         {%- case block.type -%}
+            {%- when 'map' -%}
+               <div class="jas-col-xs-12 jas-col-sm-{{block.settings.width}} jas_custom_190419994{%- if check_width %} gecko-gmap_css{%- endif -%}">
+                  <div class="gecko-gmap jas-gmap jas-map-{{ section.id }}" data-lat='{{ block.settings.lat }}' data-lon='{{ block.settings.lon }}' {% if block.settings.icon != blank %}data-icon='{{ block.settings.icon | img_url: 'master' }}'{% endif %} data-style='{{ block.settings.style_json }}' style="height: {{ block.settings.height | strip }}px"></div>
+               </div>
+            {%- else -%}
+               <div class="jas-col-xs-12 jas-col-sm-{{block.settings.width}} jas_custom_190419994_2{%- if check_width %} gecko-gmap_css{%- endif -%}">
+                  <div role="form" class="wpcf7" lang="{{ shop.locale }}" dir="{%- if settings.use_rtl == true -%}rtl{%- else -%}ltr{%- endif -%}">
+                     {%- form 'contact' -%}
+                        {%- if block.settings.title != blank -%}<h3 class="section-title" style="margin-bottom: 15px; text-align: left">{{block.settings.title}}</h3>{%- endif -%}
+                        {%- if block.settings.richtext_form_html != blank -%}<p class="mb__30">{{block.settings.richtext_form_html | strip_html }}</p>{%- endif -%}
+                        {%- if form.posted_successfully? -%}
+                           <div class="wpcf7-response-output wpcf7-mail-sent-ok" role="alert">{{ 'contact.form.post_success' | t }}</div>
+                        {%- elsif form.errors -%}
+                           <div class="wpcf7-response-output wpcf7-validation-errors" role="alert">{{ form.errors | default_errors }}</div>
+                        {%- endif -%}
+                        <p>
+                           <span class="wpcf7-form-control-wrap your-name">
+                           <input type="text" name="contact[name]" value="{%- if form[name] -%}{{ form[name] }}{%- elsif customer -%}{{ customer.name }}{%- else -%}{{ 'contact.form.name' | t }}{%- endif -%}" size="40" class="w__100{%- if form.errors contains 'name' %} input__error{%- else %} input__ok{%- endif -%}" aria-required="true" aria-invalid="false">
+                           </span> 
+                        </p>
+                        <p>
+                           <span class="wpcf7-form-control-wrap your-email">
+                              <input type="email" name="contact[email]" value="{%- if form.email -%}{{ form.email }}{%- elsif customer -%}{{ customer.email }}{%- else -%}{{ 'contact.form.email' | t }}{%- endif -%}" size="40" class="w__100{%- if form.errors contains 'email' %} input__error{%- else %} input__ok{%- endif -%}" aria-required="true" aria-invalid="false">
+                           </span> 
+                        </p>
+                        <p>
+                           <span class="wpcf7-form-control-wrap your-message">
+                              <textarea name="contact[body]" cols="40" rows="10" class="w__100 {%- if form.errors contains 'body' %} input__error{%- else %} input__ok{%- endif -%}" aria-required="true" aria-invalid="false">{%- if form.body -%}{{ form.body }}{%- else -%}{{ 'contact.form.message' | t }}{%- endif -%}</textarea>
+                           </span> 
+                        </p>
+                        <p style="margin-bottom: 0"><input type="submit" value="{{ 'contact.form.submit' | t }}" class="wpcf7-form-control wpcf7-submit w__100 button-o"></p>
+                     {%- endform -%}
+                  </div>
+               </div>
+         {%- endcase -%}
+      {%- endfor -%}
+      </div>
+   </div>
+</div>
+{% schema %}
+  {
+    "name": "Map",
+    "class": "jas-section type_jas_store_map home-contact-us-form clearfix",
+    "settings": [
+      {
+        "type": "header",
+        "content": "== General Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Background Image"
+      },
+      {
+        "type": "color",
+        "id": "section_bg_color",
+        "label": "Background color",
+        "default": "#000"
+      },
+     {
+        "type": "header",
+        "content": "== Design Options"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_container",
+        "label": "Use container?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_left",
+        "label": "Margin left",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_right",
+        "label": "Margin right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_top",
+        "label": "Padding top",
+        "default":"120px",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_right",
+        "label": "Padding right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_bottom",
+        "label": "Padding bottom",
+        "default":"120px",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_left",
+        "label": "Padding left",
+        "info": "60px"
+      },
+      {
+        "type": "header",
+        "content": "== Gecko Extras"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_parallax",
+        "label": "Use Gecko parallax?",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "use_background_overlay",
+        "label": "Use background overlay?",
+        "default": false
+      }
+    ],
+    "blocks": [
+      {
+        "type": "form",
+        "name": "Contact Form",
+        "limit": 1,
+        "settings": [
+            {
+              "id": "title",
+              "type": "text",
+              "label": "Heading",
+              "default": "GET IN TOUCH"
+            },
+            {
+              "id": "richtext_form_html",
+              "type": "textarea",
+              "label": "Text",
+              "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis eros lobortis, vestibulum turpis ac, pulvinar odio."
+            },
+            {
+           "type": "select",
+           "id": "width",
+           "options": [
+             {
+               "value": "4",
+               "label": "33.33333333%"
+             },
+             {
+               "value": "6",
+               "label": "50%"
+             },
+             {
+               "value": "8",
+               "label": "66.66666667%"
+             },
+             {
+               "value": "12",
+               "label": "100%"
+             }
+           ],
+           "label": "== Select column width",
+           "default": "4"
+         }
+        ]
+      },
+      {
+        "type": "map",
+        "name": "Google Map",
+        "limit": 1,
+        "settings": [
+            {
+           "type": "select",
+           "id": "width",
+           "options": [
+             {
+               "value": "4",
+               "label": "33.33333333%"
+             },
+             {
+               "value": "6",
+               "label": "50%"
+             },
+             {
+               "value": "8",
+               "label": "66.66666667%"
+             },
+             {
+               "value": "12",
+               "label": "100%"
+             }
+           ],
+           "label": "== Select column width",
+           "default": "8"
+         },
+            {
+              "type": "text",
+              "id": "lat",
+              "label": "Latitude (required)",
+              "default": "39.950557"
+            },
+            {
+              "type": "text",
+              "id": "lon",
+              "label": "Longitude (required)",
+              "default": "-75.140658"
+            },
+            {
+              "type": "image_picker",
+              "id": "icon",
+              "label": "Icon"
+            },
+            {
+              "type": "paragraph",
+              "content": "You can use [this service](https:\/\/mycurrentlocation.net) to get coordinates of your location."
+            },
+            {
+              "type": "text",
+              "id": "height",
+              "label": "Height (Integer)",
+              "default": "526",
+              "info": "Default: 526"
+            },
+            {
+              "type": "textarea",
+              "id": "style_json",
+              "label": "Styles (JSON)"
+            },
+            {
+              "type": "paragraph",
+              "content": "Styled maps allow you to customize the presentation of the standard Google base maps, changing the visual display of such elements as roads, parks, and built-up areas.You can find more Google Maps styles on the website: [Snazzy Maps](https:\/\/snazzymaps.com\/explore) Just copy JSON code and paste it here"
+            }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Map",
+        "category": "== Store information",
+        "blocks": [
+          {
+            "type": "map"
+          },
+          {
+            "type": "form"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

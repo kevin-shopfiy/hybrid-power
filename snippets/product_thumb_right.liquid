@@ -1,0 +1,27 @@
+<div class="jas-col-md-6 jas-col-sm-7 jas-col-xs-12 pr jas_thumbs_img{%- if page_pr_img_size or nav_pr_img_size %} jas_section_eqh {{settings.image_size_thumb}} nav_{{settings.image_size_nav}}{%- endif -%}">
+	{%- include 'product_labels' -%}
+	<div class="single-product-thumbnail pr right bc_{{cv_color}}{%- if page_pr_img_size or nav_pr_img_size %} page_pr_img_size{%- endif -%}">
+		<div class="p-thumb images shopify-product-gallery {{jas_carousel}} image-action-{{settings.main_click}} tc" data-slick='{"slidesToShow": 1,"rtl": {{ settings.use_rtl }}, "slidesToScroll": 1, "asNavFor": ".p-nav", "fade":true,"adaptiveHeight": true}'>
+			{%- include 'arr_img_thum' -%}
+		</div>
+		<div class="p-nav oh {{jas_carousel}}" data-slick='{"slidesToShow": 5,"slidesToScroll": 1,"asNavFor": ".p-thumb","arrows": false, "focusOnSelect": true, "vertical": true, "responsive":[{"breakpoint": 1025,"settings":{"slidesToShow": 4}},{"breakpoint": 736,"settings":{"slidesToShow": 4,"rtl": {{ settings.use_rtl }}, "vertical":false}}]}'>
+			{%- include 'arr_img_nav' -%}
+		</div>
+		{%- include 'group_btn_pr' -%}
+	</div>
+</div>
+<div class="jas-col-md-6 jas-col-sm-5 jas-col-xs-12">
+	<div class="summary entry-summary">
+		{%- include 'pr_info_one' -%}
+		{%- include 'pr_form' -%}
+		{%- include 'product_meta' -%}
+		{%- if pages[settings.delivery_return].content != blank -%}
+		   {%- include 'delivery_return' -%}
+		{%- endif -%}
+		{%- if settings.show_share_btn -%}
+		<div class="social-share">
+		  {%- include 'social-sharing', follow_social:gl_follow_social -%}
+		</div>
+		{%- endif -%}
+	</div><!-- .summary -->
+</div>

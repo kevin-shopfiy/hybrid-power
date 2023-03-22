@@ -1,0 +1,30 @@
+<figure id="portfolio-{{ article.id }}" class="{{ width_block }} jas-col-sm-6 jas-col-xs-12 portfolio-item pr mb__30 {% if article.tags.size > 0 %}{% for tag in article.tags %}{{ tag | handle }} {% endfor %}{% endif %}">
+   <div class="jas-animated">
+	   {%- if settings.use_eq_height_portfolio and article.image -%}
+          <div class="article__grid-image-wrapper jas-product-image-equal pr user_custom mask db pr chp">
+             <a class="db lazyload jas-pr-image-link" href="{{ article.url }}" data-bgset="{%- include 'bgset', image: article.image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ article.image | img_url: '50x50' }});">
+               <img class="op_0 article__grid-image w__100 lazyload" src="{{ article.image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ article.image.aspect_ratio }}" data-sizes="auto" alt="{{ article.image.alt | escape }}">
+             </a>
+              <div class="jas-wrap-lazy"></div>
+          </div>
+      {%- elsif article.image -%}
+         {%- assign img_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+         <div class="article__grid-image-wrapper mask db pr chp">
+             <a class="db" href="{{ article.url }}">
+               <img class="article__grid-image w__100 lazyload" src="{{ article.image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ article.image.aspect_ratio }}" data-sizes="auto" alt="{{ article.image.alt | escape }}">
+               <div class="jas-wrap-lazy"></div>
+             </a>
+         </div>
+      {%- endif -%}
+	   <figcaption class="pa tc ts__03">
+	      <h4 class="fs__14 tu mg__0"><a class="cd chp" href="{{ article.url }}">{{ article.title }}</a></h4>
+	      {%- if article.tags.size > 0 -%}
+	      <span>
+	      {%- for tag in article.tags limit:5 -%}
+	      <a href="{{ blogs[blog.handle].url }}/tagged/{{ tag | handle }}" rel="category {{ tag | handle }}">{{ tag | capitalize }}</a>{% unless forloop.last %}, {% endunless %}
+	      {%- endfor -%}
+	      </span>
+	      {%- endif -%}
+	   </figcaption>
+	</div>
+</figure>

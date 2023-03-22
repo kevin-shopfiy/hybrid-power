@@ -1,0 +1,94 @@
+{% if template.name == 'index' %}
+    <h1 class="h2 fs__14 jas-branding ts__05 mr__0">
+  {% else %}
+    <div class="jas-branding ts__05">
+  {% endif %}
+    {% if settings.body_logo_svg != blank %}
+       <a class="site-header__logo-link" href="/">
+       	<img src="{{ settings.body_logo_svg | file_url }}" alt="{{ image.alt | default: shop.name }}">  
+       </a>
+    {% elsif settings.body_logo_image %}
+      {%- assign image = settings.body_logo_image -%}
+      {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+      {%- assign image2 = settings.body_logo_image_sticky -%}
+      {%- assign img_url2 = image2 | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+
+      {% if template.name == 'index' or template.name == 'product'%}
+      
+        <div class="white-logo">
+         <a href="/" itemprop="url" class="db pr   rahul1">
+         <img class="w__100 regular-logo lazypreload lazyload logo_class"
+             src="{{ image | img_url: '500x500' }}"
+             data-src="{{ img_url }}"
+             data-widths="[200, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+             data-aspectratio="{{ image.aspect_ratio }}"
+             data-sizes="auto"
+             alt="{{ image.alt | default: shop.name }}"
+              style="opacity:1;max-width: {{ settings.logo_max_width }}px;max-height: {{ settings.logo_max_height }}px"></a>
+      </div>
+      
+      {% else %}
+      
+      <div class="black-logo">
+      <a href="/" itemprop="url" class="db pr rahul2">
+      <img class="w__100 regular-logo lazypreload lazyload logo_class"
+       src="{{ image2 | img_url: '500x500' }}"
+       data-src="{{ img_url2 }}"
+       data-widths="[200, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+       data-aspectratio="{{ image.aspect_ratio }}"
+       data-sizes="auto"
+       alt="{{ image.alt | default: shop.name }}"
+        style="opacity:1;max-width: {{ settings.logo_max_width }}px;max-height: {{ settings.logo_max_height }}px"></a>
+      </div>
+      
+      {% endif %}
+      
+      
+      
+        {%- assign image_retina = settings.body_logo_image_retina -%}
+        {%- if image_retina != blank or settings.body_logo_image != blank -%}
+            {%- assign image_retina = settings.body_logo_image_retina -%}
+        {%- elsif settings.body_logo_image  != blank -%}
+            {%- assign image_retina = settings.body_logo_image -%}
+        {%- endif -%}
+        {%- if image_retina != blank -%}
+           {%- assign img_url = image_retina | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+      
+     
+      
+      
+       <a href="/" itemprop="url" class="db pr rahul3">
+      
+           <img class="w__100 retina-logo lazyload logo_class"
+                src="{{ image_retina | img_url: '500x500' }}"
+                data-src="{{ img_url }}"
+                data-widths="[200, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                data-aspectratio="{{ image_retina.aspect_ratio }}"
+                data-sizes="auto"
+                alt="{{ image_retina.alt | default: shop.name }}"
+                style="opacity:1;max-width: {{ settings.logo_max_width }}px;max-height: {{ settings.logo_max_height }}px">
+        
+         </a>
+         
+         {%- endif -%}
+         {%- assign image_sticky = settings.body_logo_image_sticky -%}
+         {%- if image_sticky != blank -%}
+            {%- assign img_url = image_sticky | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+            <a href="/" itemprop="url" class="db pr"><img class="w__100 stick-logo lazyload logo_class"
+                src="{{ image_sticky | img_url: '150x150' }}"
+                data-src="{{ img_url }}"
+                data-widths="[200, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                data-aspectratio="{{ image_sticky.aspect_ratio }}"
+                data-sizes="auto"
+                alt="{{ image_sticky.alt | default: shop.name }}"
+                style="opacity:1;max-width: {{ settings.logo_max_width_sticky }}px;max-height: {{ settings.logo_max_height_sticky }}px"></a>
+         {%- endif -%}
+      </a>
+    {% else %}
+      <a class="site-header__logo-link" href="/">{{ shop.name }}</a>
+    {% endif %}
+  {% if template.name == 'index' %}
+    </h1>
+  {% else %}
+    </div>
+  {% endif %}

@@ -1,0 +1,61 @@
+<!-- settings: {{collection.metafields.meta.countdown}} -->
+<!-- eg: 2018/04/09,2018/04/13,2018/04/17,2018/04/21 -->
+{%- assign section_settings_countdown = true -%}
+{%- assign meta_countdown = collection.metafields.meta.countdown -%}
+{%- assign meta_banner_countdown = collection.metafields.meta.banner_countdown -%}
+{%- if section_settings_countdown and meta_countdown != blank -%}
+	{%- assign check_countdown = true -%}
+    {%- assign loop_countdown = true -%}
+	{%- assign check_day = false -%}
+	{%- assign check_hople = false -%}
+	{%- assign _user_countdown = '' -%}
+	{%- assign user_countdown = meta_countdown -%}
+    {%- assign list_countdown = user_countdown | replace: ' ,', ',' | replace: ', ', ',' | replace: ' , ', ',' | split: ',' -%}
+    {%- if meta_countdown contains '/' -%}
+      {%- assign year_now = "now" | date: "%Y" | plus:0 -%}
+      {%- assign month_now_text = "now" | date: "%m" | downcase -%}
+      {%- assign month_now = "now" | date: "%m" | plus:0 -%}
+      {%- assign day_now = "now" | date: "%e" | plus:0 -%}
+      {%- assign day_now_text = "now" | date: "%e" | downcase -%}
+      {%- for list in list_countdown -%}
+  {%- comment -%}{%- assign countdown = list | replace: ' /', '/' | replace: '/ ', '/' | replace: ' / ', '/' | split: '/' -%} {%- endcomment -%}
+          {%- assign countdown = list | split: ' ' | first | replace: ' /', '/' | replace: '/ ', '/' | replace: ' / ', '/' | split: '/' -%}
+          {%- assign year = countdown[0] | plus:0 -%}
+          {%- assign month = countdown[1] | plus:0 -%}
+          {%- assign day = countdown[2] | plus:0 -%}
+
+          {%- if year >= year_now and month >= month_now and day >= day_now -%}
+              {%- assign _user_countdown = list -%}
+              {%- break -%}
+          {%- elsif year >= year_now and month > month_now -%}
+              {%- assign _user_countdown = list -%}
+              {%- break -%}
+          {%- elsif year > year_now -%}
+              {%- assign _user_countdown = list -%}
+              {%- break -%}
+          {%- endif -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- assign _user_countdown = meta_countdown -%}
+    {%- endif -%}
+		{%- if _user_countdown != blank -%}
+          {%- if meta_banner_countdown != blank -%}
+             {%- if meta_banner_countdown contains '.jpg' or meta_banner_countdown contains '.png' or meta_banner_countdown contains '.gif' or meta_banner_countdown contains '.svg' -%}
+               <img class="" src="{{meta_banner_countdown}}">
+             {%- else -%}
+               <h1 class="tu mb__10 cw">{{meta_banner_countdown}}</h1>
+             {%- endif -%}
+          {%- endif -%}
+          <div class="countdown-time mt__10"><div class="jas-countdown flex center-xs tc light" data-time="{{_user_countdown}} 23:59:59"></div></div>
+		 {%- else -%}
+              <h1 class="tu mb__10 cw">{{ collection.title }}</h1>
+		      <p>{{ collection.description | strip_html}}</p>
+		      {%- if settings.use_top_breadcrumb -%}
+                  <ul class="jas-breadcrumb dib oh">
+                         <li class="fl home"><a href="/" title="{{ 'general.breadcrumbs.home' | t }}">{{ 'general.breadcrumbs.home' | t }}</a></li>
+                         <li class="fl separator"> <i class="fa fa-angle-right"></i> </li>
+                         <li class="fl current"> {{collection.title }}</li>
+                      </ul>
+             {%- endif -%}
+         {%- endif -%}
+{%- endif -%}

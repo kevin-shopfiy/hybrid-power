@@ -1,0 +1,144 @@
+{%- assign gl_portfolio = settings.blog_portfolio -%}
+{%- if blog.handle != gl_portfolio -%}
+  {%- assign number_of_comments = article.comments_count -%}
+  {%- case settings.show_blog_sidebar -%}
+    {% when true %}
+      {%- assign block_width = 'jas-col-md-9' -%}
+    {% when false %}
+      {%- assign block_width = 'jas-col-md-12' -%}
+  {%- endcase -%}
+  {%- if settings.use_wishlist -%}{%- include 'nitro-wishlist' -%}{%- endif -%}
+  {% comment %}
+    If a comment was just submitted and it has no blank fields, we have an extra comment to count.
+  {% endcomment %}
+  <div class="custom-blog-mainhead page-head pr tc{%- if article.image %} lazyload{%- endif -%}"{%- if article.image %} data-bgset="{%- include 'bgset', image: article.image -%}" data-sizes="auto" data-parent-fit="cover" style="background: url({{ article.image | img_url: '50x50' }}) no-repeat center center / contain;background-image: url({{ article.image | img_url: '50x50' }})"{%- endif -%}>
+     <div class="custom-blog-banner-sec jas-container pr">
+      <time class="entry-date published updated f__libre" datetime="{{ article.published_at }}">{{ article.published_at | date: format: 'month_day_year' }}</time>
+        <h1 class="tu cw mb__10">{{ article.title }}</h1> 
+        <div class="pr mt__10">
+          <span>{{ 'blogs.article.in' | t }} <a href="{{ blog.url }}" rel="category tag">{{ blog.title }}</a></span>
+          {% if blog.comments_enabled? %}<span class="ml__15"><a href="{{ article.url }}#comments">{{ 'blogs.comments.with_count' | t: count: article.comments_count }}</a></span>{% endif %}
+        </div>
+     </div>
+  </div>
+  <div class="jas-container">
+    <div class="jas-row jas-single-blog">
+      <div class="{{ block_width }} jas-col-sm-12 jas-col-xs-12 mt__60 mb__60">
+        <article id="post-{{ article.id }}" class="post-{{ article.id }} post" itemscope itemtype="http://schema.org/Article">
+           {% include 'shortcode' load: article.content %}
+        </article><!-- #post-# -->
+        <div class="flex between-xs tag-comment mt__40">
+        {%- if article.tags.size > 0 -%}
+           <div class="post-tags"><i class="fa fa-tags"></i> 
+              {% for tag in article.tags  -%}
+               <a href="{{ blog.url }}/tagged/{{ tag | handle }}" rel="category {{ tag | capitalize }}">{{ tag | capitalize }}</a>{% unless forloop.last %}, {% endunless %}
+             {%- endfor -%}
+           </div>
+        {%- endif -%}
+           {% if blog.comments_enabled? %}<div class="comments-link"><a href="{{ article.url }}#comment_form">{% if number_of_comments > 0 %}{{ 'blogs.comments.with_count' | t: count: number_of_comments }}{% else %}{{ 'blogs.comments.title_leave' | t }}{% endif %}</a></div>{% endif %}
+        </div>
+        {%- if settings.show_share_btn_articles -%}
+        <div class="social-share">
+           {%- if settings.share_type_articles == '1' -%}
+               {%- assign gl_follow_social = false -%}
+            {%- else -%}
+               {%- assign gl_follow_social = true -%}
+            {%- endif -%}
+            {%- include 'social-sharing', follow_social:gl_follow_social -%}
+        </div>
+        {%- endif -%}
+        {%- include 'related_articles' -%}
+        {% if blog.comments_enabled? %}
+           <div id="comments" class="comments-area">
+                  {%- if number_of_comments > 0 -%}<h2 class="comments-title mt__50">{{ 'blogs.comments.with_count_comments' | t: count: article.comments_count}} {{ 'blogs.comments.comments_title_html' | t:article_title:article.title }}</h2>{%- endif -%}
+                  {%- if comment and comment.created_at -%}
+                     <p class="note form-success comment-awaiting-moderation">
+                        {% if blog.moderated? %}
+                           {{ 'blogs.comments.success_moderated' | t }}
+                        {% else %}
+                           {{ 'blogs.comments.success' | t }}
+                        {% endif %}
+                     </p>
+                  {%- endif -%}
+                  {%- if number_of_comments > 0 -%}
+                  {%- paginate article.comments by 5 -%}
+                  <ol class="comment-list">
+                     {%- for comment in article.comments -%}
+                        <li class="comment" id="{{ comment.id }}">
+                           <div class="comment-body">
+                              <div class="comment-author vcard">
+                                 <img alt="avatar" src="https://www.gravatar.com/avatar/{{ comment.email | remove: ' ' | strip_newlines | downcase | md5 }}?s=80&d=mm&r=g" srcset="https://www.gravatar.com/avatar/{{ comment.email | remove: ' ' | strip_newlines | downcase | md5 }}?s=160&d=mm&r=g 2x" class="avatar avatar-74 photo" height="74" width="74">        
+                                 <cite class="fn">{{ comment.author }}</cite> <span class="says">{{ 'blogs.comments.says' | t }}</span>     
+                              </div>
+                              <div class="comment-meta commentmetadata"><a href="{{ comment.url }}">{{ comment.created_at | date: '%B %e, %Y at %R%P' }}</a></div>
+                              <p>{{ comment.content }}</p>
+                           </div>
+                        </li><!-- #comment-## -->
+                     {%- endfor -%}
+                  </ol><!-- .comment-list -->
+                  {%- if paginate.pages > 1 -%}
+                     {% include 'pagination',blog_ajax:true %}
+                  {%- endif -%}
+                  {%- endpaginate -%}
+                  {%- endif -%}
+                  <div id="respond" class="comment-respond">
+                     <h3 id="reply-title" class="comment-reply-title">{{ 'blogs.comments.title_reply' | t }}</h3>
+                     {%- form 'new_comment', article -%}
+                        <p>{{ form.errors | default_errors }}</p>
+                        {%- if customer and customer.name != blank and customer.email != blank -%}
+                           {%- if customer.name != blank -%}
+                              {%- assign customer_name = customer.name -%}
+                           {%- elsif customer.email != blank -%}
+                              {%- assign customer_name = customer.email -%}
+                           {%- endif -%}
+                        <p class="logged-in-as">
+                           <a href="/account" aria-label="{{ 'blogs.comments.Logged' | t: gl_customer:customer_name }}. Edit your profile.">{{ 'blogs.comments.Logged' | t: gl_customer:customer_name }}</a>. <a href="/account/logout">{{ 'blogs.comments.logout' | t }}</a>
+                        </p>
+                        {%- else -%}
+                        <p class="comment-notes">{{ 'blogs.comments.comments_note' | t }} <span class="required">*</span></p>
+                        {%- endif -%}
+                        <p class="comment-form-comment">
+                           <label for="CommentBody">{{ 'blogs.comments.message' | t }} <span class="required">*</span></label>
+                           <textarea id="CommentBody" {% if form.errors contains 'body' -%}class="input--error" {% endif -%}name="comment[body]" cols="45" rows="8" maxlength="65525" aria-required="true" required="required">{{ form.body }}</textarea>
+                        </p>
+                        {%- if customer and customer.name != blank and customer.email != blank -%}
+                        <p class="comment-form-author hide hidden">
+                           <label for="CommentAuthor">{{ 'blogs.comments.name' | t }} <span class="required">*</span></label>
+                           <input {% if form.errors contains 'author' -%}class="input--error" {% endif -%}type="text" required="required" size="30" value="{{ customer.name }}" name="comment[author]" id="CommentAuthor" maxlength="245" aria-required="true" required="required">
+                        </p>
+                        <p class="comment-form-email hide hidden">
+                           <label for="email">{{ 'blogs.comments.email' | t }} <span class="required">*</span></label>
+                           <input {% if form.errors contains 'email' -%}class="input--error" {% endif -%}type="email" size="30" value="{{ customer.email }}" name="comment[email]" id="CommentEmail" maxlength="100" aria-describedby="email-notes" aria-required="true" required="required">
+                        </p>
+                        {%- else -%}
+                        <p class="comment-form-author">
+                           <label for="CommentAuthor">{{ 'blogs.comments.name' | t }} <span class="required">*</span></label>
+                           <input {% if form.errors contains 'author' -%}class="input--error" {% endif -%}type="text" required="required" size="30" value="{{ form.author }}" name="comment[author]" id="CommentAuthor" maxlength="245" aria-required="true" required="required">
+                        </p>
+                        <p class="comment-form-email">
+                           <label for="email">{{ 'blogs.comments.email' | t }} <span class="required">*</span></label>
+                           <input {% if form.errors contains 'email' -%}class="input--error" {% endif -%}type="email" size="30" value="{{ form.email }}" name="comment[email]" id="CommentEmail" maxlength="100" aria-describedby="email-notes" aria-required="true" required="required">
+                        </p>
+                        {%- endif -%}
+                        <p class="form-submit">
+                           <input name="submit" type="submit" id="submit" class="submit" value="{{ 'blogs.comments.post' | t }}">
+                        </p>
+                     {%- endform -%}
+                  </div>
+               </div>
+           {% endif %}
+      </div><!-- .{{ block_width }} -->
+      {% if settings.show_blog_sidebar %}
+      <div class="jas-col-md-3 jas-col-sm-12 jas-col-xs-12{% if  settings.blog_sidebar_layout == 'left' %} first-md{% endif %}">
+        {%- section 'section_sidebar_blog' -%}
+      </div><!-- .jas-col-md-3 -->
+      {% endif %}
+    </div>
+  </div><!-- .jas-container -->
+{%- else -%}
+{%- include 'article_portfolio' -%}
+{%- endif -%}
+{% section 'Text-with-button' %}
+
+
+

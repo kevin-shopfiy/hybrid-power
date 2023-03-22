@@ -1,0 +1,406 @@
+{%- include 'style_mp_section' -%}
+<div class="jas_custom_{{section.id}} color-scheme-{{ section.settings.text_color }} jas-banner-parallax gecko-parallax{%- if section.settings.use_background_overlay %} jas_background-overlay{%- endif %}{%- if section.settings.image != blank %} lazyload{%- endif %}"{%- if section.settings.image != blank or section.settings.section_bg_color != blank %} data-bgset="{%- include 'bgset', image: section.settings.image -%}" data-sizes="auto" data-parent-fit="cover" style="{%- if section.settings.section_bg_color != blank -%}background-color: {{section.settings.section_bg_color}};{%- endif -%}{%- if section.settings.image != blank -%}background-image: url('{{ section.settings.image | img_url: '50x50' }}');{%- endif -%}"{%- endif -%}>
+   <div class="clearfix{%- if section.settings.use_container %} jas-container{%- else %} jas-col-xs-12{%- endif -%}">
+         {%- assign sett_title = section.settings.title -%}
+         {%- assign sett_sub_title = section.settings.sub_title -%}
+         {%- assign style_title = section.settings.style_title -%}
+         {%- include 'jas_section_title',mg_class:"mb__40" -%}
+         {%- if section.blocks.size > 0 -%}
+            <div class="row jas-quotes jas-quotes-{{section.settings.layout}} quote-style-{{section.settings.style}} quote-columns-{{section.settings.columns}} quotes-align-{{section.settings.align}}{%- if section.settings.layout == 'slider' %} jas-carousel{%- endif -%}"{%- if section.settings.layout == 'slider' %} data-slick='{"slidesToShow": {{ section.settings.sidetoshow }},"slidesToScroll": 1, "autoplay": {{ section.settings.use_autoplay }}, "autoplaySpeed": {{ section.settings.slider_speed }}000,"rtl": {{ settings.use_rtl }}, "infinite": {{section.settings.use_loop}}, "arrows": {{section.settings.use_arrows}},"dots": {{section.settings.use_dots}}, "responsive":[{"breakpoint": 1024,"settings":{"slidesToShow": {{ section.settings.sidetoshow_first}} }},{"breakpoint": 600,"settings":{"slidesToShow": {{ section.settings.sidetoshow_center}} }},{"breakpoint": 480,"settings":{"slidesToShow": {{ section.settings.sidetoshow_last}} }} ]}'{%- endif -%}>
+               {% for block in section.blocks %}
+                  <div class="jas-quote" {{ block.shopify_attributes }}>
+                     <div class="jas-quote-inner">
+                        <div class="jas-quote-avatar">
+                           {%- assign image = block.settings.avatar -%}
+                           {%- if image != blank -%}
+                              <img class="jas-quote-avatar-image" src="{{ image | img_url: '100x100', crop: 'top' }}" width="100" height="100" alt="{{ image.alt }}" title="{{ image.alt }}">                 
+                           {%- else -%}
+                              <img class="jas-quote-avatar-image" src="//cdn.shopify.com/s/files/1/1933/6253/files/testimonials-placeholder.jpg?14557201033594249559" width="100" height="100" alt="client1" title="client1">
+                           {%- endif -%}
+                        </div>
+                        <div class="jas-quote-content">
+                           {%- if block.settings.quote != blank -%}{{ block.settings.quote | strip_html }}{%- endif -%}         
+                           {%- if block.settings.title != blank -%}
+                           <footer>
+                              {{ block.settings.title }}{%- if block.settings.user_title != blank -%}<span>{{block.settings.user_title}}</span>{%- endif -%}
+                           </footer>
+                           {%- endif -%}
+                        </div>
+                     </div>
+                  </div>
+               {%- endfor -%}
+            </div>
+         {%- endif -%}
+         {%- if section.blocks.size == 0 -%}
+          {%- include 'no-blocks' -%}
+         {%- endif -%}
+   </div>
+</div>
+{% schema %}
+  {
+    "name": "Testimonials",
+    "class": "jas-section type_jas_testimonials clearfix",
+    "settings": [
+    {
+        "type": "header",
+        "content": "== General Settings"
+      },
+    {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "WHAT THEY SAY ABOUT US"
+      },
+      {
+        "type": "text",
+        "id": "sub_title",
+        "label": "Sub Title",
+        "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      },
+      {
+        "type": "select",
+        "id": "style_title",
+        "options": [
+         {
+            "value": "1",
+            "label": "Style 1"
+         },
+         {
+            "value": "2",
+            "label": "Style 2"
+          }
+        ],
+        "label": "Style title"
+      },
+      {
+        "type": "select",
+        "id": "layout",
+        "label": "Layout",
+        "default": "slider",
+        "options": [
+          {
+            "label": "Slider",
+            "value": "slider"
+          },
+          {
+            "label": "Grid",
+            "value": "grid"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "style",
+        "label": "Style",
+        "default": "standard",
+        "options": [
+          {
+            "label": "Standard",
+            "value": "standard"
+          },
+          {
+            "label": "Boxed",
+            "value": "boxed"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "align",
+        "label": "Align",
+        "default": "center",
+        "options": [
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Left",
+            "value": "left"
+          },
+          {
+            "label": "Right",
+            "value": "right"
+          }
+        ]
+      },
+      {
+       "type": "select",
+       "id": "text_color",
+       "options": [
+        {
+           "value": "light",
+           "label": "Light"
+         },
+         {
+           "value": "dark",
+           "label": "Dark"
+         }
+       ],
+       "label": "== Color Scheme",
+       "info": "only for style Testimonials Standard",
+       "default": "dark"
+     },
+      {
+       "type": "header",
+       "content": "== settings Grid ( Only for Grid layout )"
+      },
+      {
+        "type": "select",
+        "id": "columns",
+        "label": "Columns",
+        "info": "only for layout grid",
+        "default": "4",
+        "options": [
+          {
+            "label": "1",
+            "value": "1"
+          },
+          {
+            "label": "2",
+            "value": "2"
+          },
+          {
+            "label": "3",
+            "value": "3"
+          },
+          {
+            "label": "4",
+            "value": "4"
+          },
+          {
+            "label": "5",
+            "value": "5"
+          },
+          {
+            "label": "6",
+            "value": "6"
+          }
+        ]
+      },
+      {
+       "type": "header",
+       "content": "== settings Slider ( Only for Carousel layout )"
+      },
+     {
+        "type": "range",
+        "id": "slider_speed",
+        "min": 1,
+        "max": 30,
+        "step": 1,
+        "label": "Autoplay Speed in milliseconds",
+        "unit": "sec",
+        "default": 6
+      },
+      {
+        "type": "checkbox",
+        "id": "use_autoplay",
+        "label": "Use autoplay?",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "use_arrows",
+        "label": "Use Arrows?",
+        "default": true
+      },
+{
+        "type": "checkbox",
+        "id": "use_dots",
+        "default": false,
+        "label": "Use pagination control?"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_loop",
+        "label": "Use Infinite loop sliding?",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "sidetoshow",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "slides To Show",
+        "default": 4
+      },
+      {
+       "type": "header",
+       "content": "=== breakpoint: 1024"
+      },
+      {
+        "type": "range",
+        "id": "sidetoshow_first",
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "label": "slides To Show",
+        "default": 3
+      },
+      {
+       "type": "header",
+       "content": "=== breakpoint: 600"
+      },
+      {
+        "type": "range",
+        "id": "sidetoshow_center",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "slides To Show",
+        "default": 1
+      },
+      {
+       "type": "header",
+       "content": "=== breakpoint: 480"
+      },
+      {
+        "type": "range",
+        "id": "sidetoshow_last",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "slides To Show",
+        "default": 1
+      },
+     {
+        "type": "header",
+        "content": "== Design Options"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_container",
+        "label": "Use container?",
+        "default": true
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Background Image"
+      },
+      {
+        "type": "color",
+        "id": "section_bg_color",
+        "label": "Background color"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_left",
+        "label": "Margin left",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_right",
+        "label": "Margin right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_top",
+        "label": "Padding top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_right",
+        "label": "Padding right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_bottom",
+        "label": "Padding bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_left",
+        "label": "Padding left",
+        "info": "60px"
+      },
+      {
+        "type": "header",
+        "content": "== Gecko Extras"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_parallax",
+        "label": "Use Gecko parallax?",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "use_background_overlay",
+        "label": "Use background overlay?",
+        "default": false
+      }
+    ],
+    "blocks": [
+      {
+        "type": "quote",
+        "name": "Testimonial",
+        "settings": [
+            {
+               "type": "text",
+               "id": "title",
+               "label": "Author",
+               "info": "User name",
+               "default": "Author's name"
+            },
+            {
+               "type": "text",
+               "id": "user_title",
+               "label": "Title",
+               "info": "User title",
+               "default": "User title"
+            },
+            {
+              "type": "image_picker",
+              "id": "avatar",
+              "label": "User Avatar, Will be scaled down to 100 x 100px"
+            },
+            {
+               "type": "textarea",
+               "id": "quote",
+               "label": "Text",
+               "default": "Add customer reviews and testimonials to showcase your store’s happy customers."
+            }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Testimonials",
+        "category": "== Testimonials",
+        "blocks": [
+          {
+            "type": "quote"
+          },
+          {
+            "type": "quote"
+          },
+          {
+            "type": "quote"
+          },
+          {
+            "type": "quote"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,57 @@
+{% capture block_title %}{% include 'shortcode-render' render:'title' %}{% endcapture %}
+{% capture limit %}{% include 'shortcode-render' render:'limit' default: 8 %}{% endcapture %}
+{% capture grid_columns %}{% include 'shortcode-render' render:'cols' %}{% endcapture %}
+{% capture grid_columns_mb %}{% include 'shortcode-render' render:'cols_mb' %}{% endcapture %}
+{% capture block_layout %}{% include 'shortcode-render' render:'layout' %}{% endcapture %}
+{% capture handle_collection %}{% include 'shortcode-render' render:'handle_collection' %}{% endcapture %}
+{% capture style %}{% include 'shortcode-render' render:'style' %}{% endcapture %}
+{% capture vendors %}{% include 'shortcode-render' render:'vendors' %}{% endcapture %}
+{% capture countdown %}{% include 'shortcode-render' render:'countdown' %}{% endcapture %}
+{% capture countdown_style %}{% include 'shortcode-render' render:'countdown_style' %}{% endcapture %}
+{% capture equal %}{% include 'shortcode-render' render:'equal' %}{% endcapture %}
+{%- capture size -%}{%- include 'shortcode-render' render:'size' -%}{%- endcapture -%}
+{%- capture ratio -%}{%- include 'shortcode-render' render:'ratio' -%}{%- endcapture -%}
+{%- capture position -%}{%- include 'shortcode-render' render:'position' -%}{%- endcapture -%}
+{% capture autoplay %}{% include 'shortcode-render' render:'autoplay' %}{% endcapture %}
+{% capture autoplaySpeed %}{% include 'shortcode-render' render:'autoplaySpeed' %}{% endcapture %}
+{% capture infinite %}{% include 'shortcode-render' render:'infinite' %}{% endcapture %}
+{% capture arrows %}{% include 'shortcode-render' render:'arrows' %}{% endcapture %}
+{% capture dots %}{% include 'shortcode-render' render:'dots' %}{% endcapture %}
+{% capture a1024 %}{% include 'shortcode-render' render:'1024' %}{% endcapture %}
+{% capture a600 %}{% include 'shortcode-render' render:'600' %}{% endcapture %}
+{% capture a480 %}{% include 'shortcode-render' render:'480' %}{% endcapture %}
+{% assign paginate_index = limit | plus: 0  %}
+{%- assign show_vendor = false -%}
+{%- assign settings_pr_img_size = false -%}
+{%- assign use_autoplay = false -%}
+{%- assign use_loop = false -%}
+{%- assign use_arrows = false -%}
+{%- assign use_dots = false -%}
+{%- assign pr_style = style -%}
+{%- assign countdown_timer_style = countdown_style -%}
+{%- if settings.use_wishlist -%}{%- include 'nitro-wishlist' -%}{%- endif -%}
+{%- if vendors == 'true' -%}{%- assign show_vendor = true -%}{%- endif -%}
+{%- if countdown == 'true' -%}{%- assign section_settings_countdown = true -%}{%- endif -%}
+{%- if equal == 'true' -%}{%- assign settings_pr_img_size = true -%}{%- endif -%}
+{%- if infinite == 'true' -%}{%- assign use_autoplay = true -%}{%- endif -%}
+{%- if arrows == 'true' -%}{%- assign use_arrows = true -%}{%- endif -%}
+{%- if dots == 'true' -%}{%- assign use_dots = true -%}{%- endif -%}
+{%- if infinite == 'true' -%}{%- assign use_loop = true -%}{%- endif -%}
+<div class="mt__30 jas_separator jas_separator_align_center jas_sep_width_100 jas_sep_double jas_sep_pos_align_center jas_sep_color_grey jas_custom_1479922305779 jas_separator-has-text">
+   <span class="jas_sep_holder jas_sep_holder_l"><span class="jas_sep_line"></span></span>
+   <h4>{{ block_title }}</h4>
+   <span class="jas_sep_holder jas_sep_holder_r"><span class="jas_sep_line"></span></span>
+</div>
+<div class="jas-sc-products mb__30">
+   {% if block_layout == 'layout1' %}
+   <div class="products jas-row {{size}} {{ratio}} position_{{position}}{%- if settings_pr_img_size %} equal-nt{%- endif -%}">
+   {% else %}
+   <div class="products jas-row jas-carousel {{size}} {{ratio}} position_{{position}}{%- if settings_pr_img_size %} equal-nt{%- endif -%}" data-slick='{"slidesToShow": {{ grid_columns }},"slidesToScroll": 1, "autoplay": {{use_autoplay}}, "autoplaySpeed": {{ autoplaySpeed | plus: 0 }},"rtl": {{ settings.use_rtl }}, "infinite": {{use_loop}}, "arrows": {{use_arrows}},"dots": {{use_dots}}, "responsive":[{"breakpoint": 1024,"settings":{"slidesToShow": {{ a1024 | plus: 0 }} }},{"breakpoint": 600,"settings":{"slidesToShow": {{ a600 | plus: 0 }} }},{"breakpoint": 480,"settings":{"slidesToShow": {{ a480 | plus: 0 }} }}]}'>
+   {%- assign grid_columns = '12' -%}
+   {% endif %}
+      {%- for product in collections[handle_collection].products limit:paginate_index -%}
+         {%- include 'jas_product_loop' -%}
+      {%- endfor -%}
+   </div>
+   <!-- .jas-row -->
+</div>

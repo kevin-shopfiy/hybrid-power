@@ -1,0 +1,18 @@
+{%- assign check_label = false -%}
+{%- if hot and settings.use_hot_label -%}
+{%- assign check_label = true -%}
+{%- elsif new_label -%}
+{%- assign check_label = true -%}
+{%- elsif on_sale -%}
+{%- assign check_label = true -%}
+{%- elsif sold_out and settings.use_sold_out_label -%}
+{%- assign check_label = true -%}
+{%- endif -%}
+{%- if check_label -%}
+<span class="tu tc fs__10 ls__2 jas_label_{{settings.label_settings}} flex pa">
+  {%- if on_sale and settings.use_sale_label -%}{%- assign save = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}{%- if settings.label_sale_style == '1' -%}<span class="jas-label onsale"><span>{{ 'products.product.on_sale' | t }}</span></span>{%- elsif save >= 1 -%}<span class="onsale jas-label"><span>-{{save}}%</span></span>{%- endif -%}{%- endif -%}
+  {%- if hot and settings.use_hot_label -%}<span class="jas-label hot"><span>{{ 'products.product.hot' | t }}</span></span>{%- endif -%}
+  {%- if new_label and settings.use_new_label -%}<span class="jas-label new"><span>{{ 'products.product.new' | t }}</span></span>{%- endif -%}
+  {%- if sold_out and settings.use_sold_out_label -%}<span class="jas-label out-of-stock"><span>{{ 'products.product.sold_out' | t }}</span></span>{%- endif -%}
+</span>
+{%- endif -%}

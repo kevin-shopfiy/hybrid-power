@@ -1,0 +1,234 @@
+{%- if section.blocks.size > 0 -%}{%- assign active_product = product -%}
+   {%- for block in section.blocks -%}
+      {%- case block.type -%}
+         {%- when 'description' -%}
+            <div class="description_tab wc-accordion">
+               <div class="heading bgbl">
+                  <a class="tab-heading db pr cd chp fwm" href="#tab-description">{{ block.settings.title }}</a>
+               </div>
+               <div class="panel entry-content wc-accordion-content" id="tab-description">{%- include 'shortcode' load: product.description -%}</div>
+            </div>
+         {%- when 'additional' -%}
+            {%- if active_product.has_only_default_variant == false -%}
+               <div class="description_tab wc-accordion">
+                  <div class="heading bgbl">
+                     <a class="tab-heading db pr cd chp fwm" href="#{{block.id}}">{{ block.settings.title }}</a>
+                  </div>
+                  <div class="panel entry-content wc-accordion-content" id="{{block.id}}">
+                     <table class="shop_attributes">
+                        <tbody>
+                           {% for option in active_product.options_with_values %}
+                           <tr class=">{{ option.name }}">
+                              <th>{{ option.name }}</th>
+                              <td><p>
+                                {%- assign option_index = forloop.index -%}
+                                {%- for value in option.values -%}
+                                {%- assign variant_label_state = true -%}
+                                {%- if active_product.options.size == 1 -%}
+                                {%- unless active_product.variants[forloop.index0].available  -%}
+                                {%- assign variant_label_state = false -%}
+                                {%- endunless -%}
+                                {%- endif -%} 
+                                  {{ value | capitalize }}{% unless forloop.last == true %}, {% endunless %}
+                                {%- endfor -%}
+                              </p></td>
+                           </tr>
+                           {% endfor %}
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            {%- endif -%}
+         {%- when 'bundle' -%}
+            {%- if active_product.metafields.nitro_bundle.bundle -%}{%- assign acct_tab = true -%}
+               <div class="bundle_tab wc-accordion">
+                  <div class="heading bgbl">
+                     <a class="tab-heading db pr cd chp fwm" href="#{{block.id}}">{{ block.settings.title }}</a>
+                  </div>
+                  <div class="panel entry-content wc-accordion-content" id="{{block.id}}">
+                     {%- include 'nitro-product-bundle' -%}
+                  </div>
+               </div>
+            {%- endif -%}
+         {%- when 'review' -%}
+            {%- if settings.show_product_page_rating -%}
+               <div class="reviews_tab wc-accordion">
+                  <div class="heading bgbl"><a class="tab-heading db pr cd chp fwm" href="#{{block.id}}">{{ block.settings.title }}
+                     {%- if block.settings.use_count_reviews -%} 
+                       {%- assign product__reviews-count=0 -%}
+                       {%- if active_product.metafields.spr.reviews -%}
+                                   {%- capture review_data -%}{{ active_product.metafields.spr.reviews }}{%- endcapture -%}
+                                   {%- assign rd_a1 = review_data | split: '<meta itemprop="reviewCount" content="' -%}
+                                   {%- assign rd_a2 = rd_a1[1] | split: '\">\n' | first -%} 
+                                   {%- assign product__reviews-count = rd_a2 | plus:0 -%}
+                        {%- endif -%}
+                         {%- if product__reviews-count <= 0 -%}
+                            {%- assign reviews-tab__header="(0)" -%}
+                         {%- else -%}
+                           {%- capture reviews-tab__header -%}({{product__reviews-count}}){%- endcapture -%}   
+                         {%- endif -%} 
+                         {{reviews-tab__header}}
+                     {%-endif-%}
+                  </a></div>
+                  <div class="panel entry-content wc-accordion-content" id="{{block.id}}">
+                     <div id="shopify-product-reviews" data-id="{{active_product.id}}">{{ active_product.metafields.spr.reviews }}</div>
+                  </div>
+               </div>
+            {%- endif -%}
+         {%- when 'html' -%}
+            <div class="tab_html wc-accordion">
+               <div class="heading bgbl">
+                  <a class="tab-heading db pr cd chp fwm" href="#{{block.id}}">{{ block.settings.title }}</a>
+               </div>
+               <div class="panel entry-content wc-accordion-content" id="{{block.id}}">
+                  {%- include 'nitro-product-bundle' -%}
+               </div>
+            </div>
+         {%- when 'text' -%}
+            <div class="tab_text wc-accordion">
+               <div class="heading bgbl">
+                  <a class="tab-heading db pr cd chp fwm" href="#{{block.id}}">{{ block.settings.title }}</a>
+               </div>
+               <div class="panel entry-content wc-accordion-content" id="{{block.id}}">
+                  {%- include 'nitro-product-bundle' -%}
+               </div>
+            </div>
+         {%- else -%}
+            {%- assign block_title = block.settings.title -%}
+            {%- for meta in active_product.metafields.additions -%}
+               {%- if meta[0] == block_title -%}
+                  <div class="tab_{{block_title | handleize}} wc-accordion">
+                     <div class="heading bgbl">
+                        <a class="tab-heading db pr cd chp fwm" href="#{{block.id}}">{{ block_title }}</a>
+                     </div>
+                     <div class="panel entry-content wc-accordion-content" id="{{block.id}}">
+                        {{ meta[1] }}
+                     </div>
+                  </div>
+                  {%- break -%}
+               {%- endif -%}
+            {%- endfor -%}
+      {%- endcase -%}
+   {%- endfor -%}
+{%- else -%}
+   <div class="text-center">{%- include 'no-blocks'-%}</div>   
+{%- endif -%}
+{%- schema -%}
+  {
+    "name": "Tab Descriptions",
+    "class": "shopify-tabs wc-accordions mt__80",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Custom Metafields (namespace: additions)"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "description",
+        "name": "Description",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Description"
+          }
+        ]
+      },
+      {
+        "type": "review",
+        "name": "Review",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Reviews"
+          },  
+          {
+          "type": "checkbox",
+          "id": "use_count_reviews",
+          "label": "Show number count Reviews",
+          "default": false
+          }
+        ]
+      },
+      {
+        "type": "bundle",
+        "name": "Product Bundle",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Buy With Bundle"
+          }
+        ]
+      },
+      {
+        "type": "additional",
+        "name": "Additional Information",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Additional Information"
+          }
+        ]
+      },
+      {
+        "type": "html",
+        "name": "Custom HTML",
+        "settings": [
+         {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Shipping & Delivery"
+          },
+          {
+            "type": "html",
+            "id": "code",
+            "label": "HTML"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "name": "Text",
+        "settings": [
+            {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Talk about your brand"
+            },
+            {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+            }
+         ]
+      },
+      {
+        "type": "meta",
+        "name": "metafields",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Meta Custom"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,243 @@
+
+{%- if sold_out == false and linklists[product.handle].links.size == 0 -%}
+{%- assign user_countdown = product.metafields.meta.countdown -%}
+{%- include 'gecko_count_down',jas_countdow_page:'jas_page',user_countdown:user_countdown,class:'jas_progress_bar_pr' -%}
+{%- endif -%} 
+{%- assign ck_inventory = settings.ck_inventory -%} 
+<div class="btn-atc atc-popup clearfix{%- if settings.btn_atc_full %} btn_atc_full{%- endif -%}">
+	{%- if product.has_only_default_variant == false and linklists[product.handle].links.size == 0 -%}
+	<div id="callBackVariant" class="jas_{{current_variant.option1 | handleize}} jas1_{{current_variant.option2 | handleize}} jas2_{{current_variant.option3 | handleize}}">
+	{%- endif-%}
+	   {%- if settings.product_quantity_message and product.variants.size == 1 and sold_out == false -%}
+	      {%- if current_variant.inventory_management -%}
+            {%- if current_variant.inventory_quantity < ck_inventory and current_variant.inventory_quantity > 0 -%}
+               <div id="variantQuantity" class="variant-quantity variantQuantity">{{ 'products.product.only_left' | t: count: current_variant.inventory_quantity }}</div>
+            {%- elsif current_variant.inventory_quantity <= 0 and current_variant.incoming -%}
+               {%- assign next_incoming_date = current_variant.next_incoming_date | date: format: 'month_day_year' -%}
+               <div id="variantQuantity" class="variant-quantity variantQuantity">{{ 'products.product.will_not_ship_until' | t: date:next_incoming_date }}</div>
+            {%- endif -%}
+         {%- endif -%}   
+	   {%- endif -%}
+	   {%- if product.has_only_default_variant and sold_out and linklists[product.handle].links.size == 0 -%}
+	      {%- if settings.product_quantity_message -%}
+               {%- if current_variant.inventory_management -%}
+                  {%- if current_variant.inventory_quantity < ck_inventory and current_variant.inventory_quantity > 0 -%}
+                     <div id="variantQuantity" class="variant-quantity variantQuantity">{{ 'products.product.only_left' | t: count: current_variant.inventory_quantity }}</div>
+                  {%- elsif current_variant.inventory_quantity <= 0 and current_variant.incoming -%}
+                     {%- assign next_incoming_date = current_variant.next_incoming_date | date: format: 'month_day_year' -%}
+                     <div id="variantQuantity" class="variant-quantity variantQuantity">{{ 'products.product.will_not_ship_until' | t: date:next_incoming_date }}</div>
+                  {%- endif -%}
+               {%- endif -%}
+         {%- endif -%}
+	    <div class="out_of_stock_main">  
+          <p class="stock out-of-stock mb__20" id="out-of-stock-gl">{{ 'products.product.outofstock' | t }}</p>
+      </div>
+      
+      
+	      {%- if settings.use_wishlist and pages['wishlist'].empty? != true -%}{%- include 'jas-wishlist-product' -%}{%- endif -%}
+	   {%- elsif linklists[product.handle].links.size == 0 -%}
+	      {%- if check_external and product.has_only_default_variant -%}
+	         <div class="flex">
+	         <a href="{{ check }}" id="shopify_add_to_cart" rel="nofollow" class="single_add_to_cart_button button alt btn_external">{{ product.metafields.external | first | first }}</a>
+	         {%- if settings.use_wishlist and pages['wishlist'].empty? != true -%}{%- include 'jas-wishlist-product' -%}{%- endif -%}
+	         </div>
+	      {%- else -%}
+				{%- form 'product', product, id: "cart-form", class: "variations_form product-form nt_cart_form jas_cart clearfix" -%}
+      			  	<div class="single_variation_wrap{%- if product.price_varies %} price_custom{%- endif %}{%- if settings.enable_payment_button %} product-form__item--payment-button{%- endif -%}">
+					
+						<div class="shopify-variation-add-to-cart variations_button shopify-variation-add-to-cart-enabled">
+						{%- if settings.product_quantity_message -%}
+	                        <div id="variantQuantity" class="variant-quantity variantQuantity" style="display: none"></div>
+	                    {%- endif -%}
+	                        <div class="flex">
+		                        {%- if product.variants.size == 1 and sold_out -%}
+                              <div class="out_of_stock_main"> <p class="stock out-of-stock" id="out-of-stock-gl">{{ 'products.product.outofstock' | t }}</p></div>
+		                        {%- else -%}
+                              <div class="out_of_stock_main">   <p class="stock out-of-stock ddddddd" id="out-of-stock-gl" style="display: none">{{ 'products.product.outofstock' | t }}</p></div>
+		                           {%- if check_external -%}
+		                             <a href="{{ check }}" id="shopify_add_to_cart" rel="nofollow" class="shopify_add_to_cart single_add_to_cart_button button alt btn_external">{{ product.metafields.external | first | first }}</a>
+		                           {%- else -%}
+                               {% comment %}
+		                               <div class="quantity pr fl" id="shopify_quantity">
+		                                  <input type="number" step="1" min="1" max="{%- if current_variant.inventory_management != null -%}{{current_variant.inventory_quantity}}{%- else -%}999{%- endif -%}" name="quantity" value="1" title="Qty" class="qty input-text tc" size="4">
+		                                  <div class="tc pa">
+		                                     <a class="plus db cb" href="javascript:void(0);"><i class="fa fa-angle-up"></i></a>
+		                                     <a class="minus db cb" href="javascript:void(0);"><i class="fa fa-angle-down"></i></a>
+		                                  </div>
+		                               </div>
+                               {% endcomment %}
+                              
+                              
+                              <div class="flex_price_button">
+                              
+   							<div class="shopify-variation single_variation">
+							
+							<div class="shopify-variation-price" data-c_price="{{current_variant.price}}">
+								<span class="price productPrice n" id="productPrice">
+                                 
+                          {%- if on_sale -%}<ins id="product-price" style="color:#fff !important;">{{ current_variant.price | money }}</ins><del id="old-product-price">{{ current_variant.compare_at_price | money }}</del>
+                          {%- else -%}
+                          <span id="product-price" style="color:#fff !important;">{{ current_variant.price | money }}</span> 
+                          {%- endif -%}
+                        </span>
+							</div>
+							
+						</div>
+                              
+		                               {%- if settings.btn_atc_full == false -%}
+                                                    {%- assign add_to_cart_color = product.metafields.section-1['add_to_cart_color'] -%}  
+                               {%- assign add_to_cart_text_color = product.metafields.section-1['add_to_cart_text_color'] -%}  
+                                  
+		                               <button type="submit"{% if settings.pr_curent == '1' and product.has_only_default_variant == false and product.selected_variant == blank %} disabled="disabled" {% endif %} id="shopify_add_to_cart" data-ntid="{{product.id}}" class="shopify_add_to_cart {{settings.button_art_to_cart_style}} ajax_form_cart single_add_to_cart_button button alt" style="background-color: {{add_to_cart_color}} !important; color: {{add_to_cart_text_color}} !important;"><span class="bt__text">{%- if current_variant.inventory_quantity <= 0 and current_variant.available and current_variant.inventory_management == 'shopify' -%}{{ 'products.product.pre_orders' | t }}{%- else -%}{{ 'products.product.add_to_cart' | t }}{%- endif -%}</span></button>
+		                               {%- endif -%}
+                                {%if template contains "product.dropdown_variants_version_1" %}
+                                <button type="submit" class="additional_add_to_cart block_class"><span>Add to cart</span> </button>
+                                {%- endif -%}
+		                           {%- endif -%}
+		                        {%- endif -%}
+                               {%- assign spec_sheet_text = product.metafields.section-1['spec_sheet_text'] -%}    
+                                {%- assign spec_sheet_url = product.metafields.section-1['spec_sheet_url']  -%}
+                              
+                                {% if spec_sheet_text != blank %}
+                              
+                             {%- assign spec_sheet_button_text_color = product.metafields.section-1['spec_sheet_button_text_color'] -%}
+                             {%- assign spec_sheet_button_border_color = product.metafields.section-1['spec_sheet_button_border_color'] -%}  
+                           
+                                {% if product.handle == 'power-tower' or product.handle == 'solark-inverter'%} 
+                        <a style="color: {{spec_sheet_button_text_color}} !important; border-color:{{spec_sheet_button_border_color}} !important;" class="Naveen single_add_to_cart_button button alt scroll_to_documen_tab" href="{{spec_sheet_url}}" >{{spec_sheet_text}}</a>
+                                {% else %}
+                                
+                                
+     <!--                   need               -->
+                              <a target="_blank" style="color: {{spec_sheet_button_text_color}} !important; border-color:{{spec_sheet_button_border_color}} !important;" class="Naveen single_add_to_cart_button button alt" href="{{spec_sheet_url}}" >{{spec_sheet_text}}</a>
+                                     {% endif %}
+                                {% endif %}
+		                        {%- if settings.use_wishlist and pages['wishlist'].empty? != true -%}{%- include 'jas-wishlist-product' -%}{%- endif -%}
+                              </div>
+                              
+                              </div>
+							{%- if settings.btn_atc_full -%}
+							    <button type="submit"{% if settings.pr_curent == '1' and product.has_only_default_variant == false and product.selected_variant == blank %} disabled="disabled"{% endif %} id="shopify_add_to_cart" data-ntid="{{product.id}}" class="shopify_add_to_cart {{settings.button_art_to_cart_style}} ajax_form_cart single_add_to_cart_button button alt"><span class="bt__text">{%- if current_variant.inventory_quantity <= 0 and current_variant.available and current_variant.inventory_management == 'shopify' -%}{{ 'products.product.pre_orders' | t }}{%- else -%}{{ 'products.product.add_to_cart' | t }}{%- endif -%}</span></button>
+							{%- endif -%}
+						{%- if settings.enable_payment_button and check_external == false -%}
+		                    {{ form | payment_button }}
+		                {%- endif -%}
+						</div>
+					</div>
+      
+   {% comment %}    <div id="paybright-widget-container"></div> {% endcomment %}
+      
+      {%- assign shipping_notice = product.metafields.shipping_notice['shipping_notice'] -%}   
+      {% if shipping_notice != blank %}
+      <div class="shipping_notice">
+        <p><strong style="color:#ffc90f">SHIPPING NOTICE: </strong>{{shipping_notice}}</p>
+      </div>
+      {%endif%}
+               {%if template contains "product.dropdown_variants_version_1" %}
+      			 <select name="id" id="product-select" class="product-select_pr product-form__variants hide hidden">
+		            {%- for variant in product.variants -%}
+		                {%- if variant.available -%}
+		                  <option v_price="{{variant.price}}" {% if variant.id == current_variant.id %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}" class="{{variant.option1 | handleize }} nt1_{{variant.option2 | handleize }} nt2_{{variant.option3 | handleize }}">{{ variant.title | handle}}</option>
+		                {%- else -%}
+		                  <option v_price="{{variant.price}}" value="{{ variant.id }}"{%- if remove_soldout %} disabled="disabled"{%- endif %} class="nt_sold_out {{variant.option1 | handleize }} nt1_{{variant.option2 | handleize }} nt2_{{variant.option3 | handleize }}">{{ variant.title | handleize }}</option>
+		                {%- endif -%}
+		              {%- endfor -%}
+					</select>
+		         {%else%}
+                  <select name="id" id="product-select" class="product-select_pr product-form__variants hide hidden">
+		            {%- for variant in product.variants -%}
+		                {%- if variant.available -%}
+		                  <option {% if variant.id == current_variant.id %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}" class="{{variant.option1 | handleize }} nt1_{{variant.option2 | handleize }} nt2_{{variant.option3 | handleize }}">{{ variant.title | handle}}</option>
+		                {%- else -%}
+		                  <option value="{{ variant.id }}"{%- if remove_soldout %} disabled="disabled"{%- endif %} class="nt_sold_out {{variant.option1 | handleize }} nt1_{{variant.option2 | handleize }} nt2_{{variant.option3 | handleize }}">{{ variant.title | handleize }}</option>
+		                {%- endif -%}
+		              {%- endfor -%}
+					</select>
+                   
+                {%endif%}
+                 
+                   {%- if product.has_only_default_variant == false -%}
+                   {%if template contains "product.dropdown_variants_version_1" %}
+                  
+                   {%- include 'swatch_rectangle_dropdown_version_1',class_input:'pr' -%}
+                   {%else%}
+                
+                    {%- include 'swatch_rectangle_dropdown',class_input:'pr' -%}
+                   {%- endif -%} 
+                   
+                   {%- endif -%}
+                   
+                   
+                   <script id="paybright" src="https://app.paybright.com/api/shopify_v2.js?public_key=p11nDDgjHEsN8BfvIZTckqmaMDmaU6XVPvqJvdjFmeJMc33XQX&financedamount=${{ product.price | divided_by: 100.00 | round: 2 }}"></script>
+				    <script>
+                (function(x) {
+                    var o = x.prototype;
+                    o.after || (o.after = function() {
+                        var e, m = arguments,
+                            l = m.length,
+                            i = 0,
+                            t = this,
+                            p = t.parentNode,
+                            n = Node,
+                            s = String,
+                            d = document;
+                        if (p !== null) {
+                            while (i < l) {
+                                ((e = m[i]) instanceof n) ? (((t = t.nextSibling) !== null) ? p.insertBefore(e, t) : p.appendChild(e)) : p.appendChild(d.createTextNode(s(e)));
+                                ++i;
+                            }
+                        }
+                    });
+                }(Element));
+                var pb_callback = window.onload.bind({});
+                window.addEventListener('DOMContentLoaded', function() {
+                    pb_callback();
+                    var pb_widget = document.getElementById('paybright-widget-container');
+                    pb_widget.addEventListener('mouseenter', function() {
+                        var paybrightlearnmore = pb_widget.querySelector('#paybright-learnmore');
+                        var modal = pb_widget.querySelector('#pbModal');
+                        var mainContainer = document.querySelector('.main-container');
+                        if (mainContainer && modal) {
+                            mainContainer.after(modal)
+                        }
+                        if (paybrightlearnmore && paybrightlearnmore.onclick) {
+                            var cb = paybrightlearnmore.onclick;
+                            paybrightlearnmore.addEventListener('click', function(e) {
+                                e.stopPropagation();
+                                cb();
+                            })
+                        }
+                    });
+                });
+                </script>
+                  
+				{%- endform -%}
+			{%- endif -%}
+		{%- else -%}
+		   <form action="/cart" method="post" class="cart group_table" id="cart-form">
+		      <table cellspacing="0" class="group_table shop_table">
+		        <tbody>
+		          {%- include 'product_group' -%}
+		        </tbody>
+		      </table>
+		      <div class="flex 3">
+			      {%- if check_external == false -%}
+	               <button type="submit" id="multi-variant-add" data-ntid="{{product.id}}" class="{{settings.button_art_to_cart_style}} add_to_cart_button single_add_to_cart_button button alt">{{ 'products.product.add_to_cart' | t }}</button>
+	            {%- else -%}
+	               <a href="{{ check }}" rel="nofollow" class="single_add_to_cart_button button alt btn_external">{{ product.metafields.external | first | first }}</a>
+	            {%- endif -%}
+	            {%- if settings.use_wishlist and pages['wishlist'].empty? != true -%}{%- include 'jas-wishlist-product' -%}{%- endif -%}
+		      </div>
+		   </form>
+		{%- endif -%}
+	{%- if product.has_only_default_variant == false and linklists[product.handle].links.size == 0 -%}</div>{%- endif-%} 
+</div>
+
+{%- if settings.use_promo_shpping -%}
+    <div class="promo_shipping_text jas_user_ship"><span class="text_ship_fea">{{ settings.product_motivator_text }}</span>{%- if settings.promotion_display_user_country %} <span class="country_user_name"></span>{%- endif -%}{%- if settings.promotion_display_user_Flag %} <span class="jas_flagImg jas_94"></span>{%- endif -%}</div>
+{%- endif -%}
+{%- if settings.show_real_time_visitor -%}<div class="counter_real_time" style="display:none">{{settings.text_real}} <span id="number_counter"><span>296</span><i class="fa fa-users" aria-hidden="true"></i></span> {{settings.text_visitor}}</div>{%- endif -%}
+{%- if settings.product_img_trust_seal and settings.img_trust_seal != blank -%}
+   {%- assign image = settings.img_trust_seal -%}
+   <div class="product_img_trust_seal clearfix"><img alt="{{image.alt}}" src="{{ image | img_url: '500x' }}"></div>
+{%- endif -%}

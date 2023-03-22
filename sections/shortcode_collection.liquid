@@ -1,0 +1,91 @@
+{%- assign padding = section.settings.padding -%}
+{%- assign sett_title = section.settings.title -%}
+<h3 class="jas_title_1 pr">Code:<span class="sub-title db"></span></h3>
+{%- capture src_html -%}
+  {%- assign index = 0 -%}
+  {%- for block in section.blocks -%}
+    {%- assign image = block.settings.image -%}
+    {%- if image != blank -%}
+    {%- assign index = index | plus:1 -%}
+     {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+    src{{index}}="{{image | img_url: 'master', scale: 2 }}" src50_{{index}}="{{image | img_url: '50x50'}}" img_url{{index}}="{{img_url}}" aspectratio{{index}}="{{image.aspect_ratio}}" alt{{index}}="{{ image.alt | default:shop.name }}" wh{{index}}="{{image.width}}x{{image.height}}" 
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+<code>
+<!-- Shortcode collections portfolio  --> 
+[collections padding="{{padding}}" total="{{section.blocks.size}}" style="{%- if sett_title != blank -%}style1{%- else -%}style2{%- endif -%}" title="{{sett_title}}" {{src_html | strip_newlines | remove: "  "}} ] 
+ <!-- / Shortcode collections portfolio -->
+</code>
+ <h3 class="jas_title_1 pr">Demo:<span class="sub-title db"></span></h3>
+<div class="mt__30 jas_separator jas_separator_align_center jas_sep_width_100 jas_sep_double jas_sep_pos_align_center jas_sep_color_grey jas_custom_1479922305779 jas_separator-has-text">
+   <span class="jas_sep_holder jas_sep_holder_l"><span class="jas_sep_line"></span></span>
+   <h4>{{ sett_title }}</h4>
+   <span class="jas_sep_holder jas_sep_holder_r"><span class="jas_sep_line"></span></span>
+</div>
+<!-- jas_grid start -->
+<div class="jas_grid-container clearfix wpb_content_element jas_masonry_media_grid mt__30 mb__30">
+  <div class="jas_grid jas_pageable-wrapper jas_hook_hover SlickPhotoswipGallery">
+    <div class="jas-row clearfix jas-masonry jas_row{%- if padding == '10' %} jas_grid-gutter-10px{%- else %} jas_grid-gutter-15px{%- endif %}" data-masonry='{"selector":".jas_visible-item", "layoutMode":"masonry" }'>
+      {%- for block in section.blocks -%}
+      {%- assign image = block.settings.image -%}
+      {%- if image != blank -%}
+      <a href="{{ image.src }}" title="{{ image.alt |default:shop.name }}" data-size="{{image.width}}x{{image.height}}" class="jas_grid-item jas_clearfix jas-col-xs-12 jas-col-sm-4 jas_visible-item">
+         <div class="jas_grid-item-mini jas_clearfix jas_is-hover">
+            <div class="jas_gitem-animated-block pr">
+              <div class="jas_gitem-zone jas_gitem-zone-a jas_gitem-is-link lazyload" data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover" style="background-repeat: no-repeat;background-position: 50% 50%;background-size: cover;background-image: url('{{ image.src | img_url: '50x50' }}') !important;">
+                 <img src="{{ image.src | img_url: '50x50' }}" class="op_0 w__100 em-zone-img" alt="{{ image.alt | default:shop.name }}">
+              </div>
+              <div class="jas-wrap-lazy"></div>
+            </div>
+         </div>
+         <div class="jas_clearfix"></div>
+      </a>
+      {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+<!-- jas_grid end -->
+{%- schema -%}
+  {
+    "name": "Gallery Images",
+    "class": "jas-section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "MY COLLECTIONS"
+      },
+      {
+        "type": "select",
+        "id": "padding",
+        "options": [
+          {
+            "value": "10",
+            "label": "10px"
+          },
+          {
+            "value": "15",
+            "label": "15px"
+          }
+        ],
+        "label": "Padding:",
+        "default": "10"
+      }
+    ],
+  "blocks": [{
+    "type": "collection",
+    "name": "Collection",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "___ Upload image",
+        "info": "Upload image: png, jpg file"
+      }
+    ]
+  }]
+  }
+{% endschema %}

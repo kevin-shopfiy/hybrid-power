@@ -1,0 +1,56 @@
+{%- layout none -%}
+{%- if canonical_url contains 'q=' -%}
+{%- assign paginate = canonical_url | split: 'q=' -%}
+{%- assign last = paginate | last -%}
+{%- assign last = last | split: '+' -%}
+  {%- assign convert_index = last[0] | remove: "paginate_" -%}
+  {%- assign paginate_index = convert_index | plus: 0 -%}
+  {%- assign show_vendor = last[1] | remove: "vendor_" -%}
+  {%- assign img_size = last[2] | remove: "img_size_" -%}
+  {%- assign countdown = last[3] | remove: "countdown_" -%}
+  {%- assign sidetoshow = last[4] | remove: "sidetoshow_" -%}
+  {%- assign autoplay = last[5] | remove: "autoplay_" -%}
+  {%- assign autoplaySpeed = last[6] | remove: "autoplayspeed_" -%}
+  {%- assign infinite = last[7] | remove: "infinite_" -%}
+  {%- assign arrows = last[8] | remove: "arrows_" -%}
+  {%- assign dots = last[9] | remove: "dots_" -%}
+  {%- assign slidestoshow_1024 = last[10] | remove: "slidestoshow_1024_" -%}
+  {%- assign slidestoshow_600 = last[11] | remove: "slidestoshow_600_" -%}
+  {%- assign slidestoshow_480 = last[12] | remove: "slidestoshow_480_" -%}
+  {%- assign image_size = last[13] | remove: "image_size_" -%}
+  {%- assign ratio = last[14] | remove: "ntratio_" -%}
+  {%- assign position = last[15] | remove: "position_" -%}
+{%- endif -%}
+{%- assign grid_columns = '12' -%}
+{%- assign grid_columns_mb = '12' -%}
+{%- assign settings_pr_img_size = false -%}
+{%- assign section_settings_countdown = false -%}
+{%- if img_size == 'true' -%}{%- assign settings_pr_img_size = true -%}{%- endif -%}
+{%- if countdown == 'true' -%}{%- assign section_settings_countdown = true -%}{%- endif -%}
+{%- if settings.use_wishlist -%}{%- include 'nitro-wishlist' -%}{%- endif -%}
+{%- capture min_html -%}
+      {%- assign current_page = '1' -%}
+      {%- paginate collection.products by paginate_index -%}
+      <div class="products jas-row jas-products-holder jas-carousel {{image_size}} {{ratio}} position_{{position}}{%- if settings_pr_img_size %} equal-nt{%- endif -%}" data-slick='{"slidesToShow": {{ sidetoshow }},"slidesToScroll": 1, "autoplay": {%- if autoplay == 'true' -%}true{%- else -%}false{%- endif -%}, "autoplaySpeed": {{ autoplaySpeed |plus:0 }}000,"rtl": {{ settings.use_rtl }}, "infinite": {%- if infinite == 'true' -%}true{%- else -%}false{%- endif -%}, "arrows": {%- if arrows == 'true' -%}true{%- else -%}false{%- endif -%},"dots": {%- if dots == 'true' -%}true{%- else -%}false{%- endif -%}, "responsive":[{"breakpoint": 1024,"settings":{"slidesToShow": {{ slidestoshow_1024}} }},{"breakpoint": 600,"settings":{"slidesToShow": {{ slidestoshow_600 }} }},{"breakpoint": 480,"settings":{"slidesToShow": {{ slidestoshow_480}} }}]}'>
+        {%- for product in collection.products -%}
+        {%- include 'jas_product_loop' -%}
+        {%- else -%}
+        {%- for i in (1..8) -%}
+        <div class="jas-grid-item jas-col-md-{{grid_columns}} jas-col-sm-4 jas-col-xs-{{grid_columns_mb}} mt__30 product has-post-thumbnail">
+          <div class="jas-product-image jas-product-image-equal pr oh">
+            <a href="/admin/products" class="jas-product-img-element jas-pr-image-link">
+              {%- capture current -%}{%- cycle 1, 2, 3, 4, 5, 6 -%}{%- endcapture -%}
+              {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+            </a>
+          </div>
+          <div class="product-info mt__15">
+            <h3 class="product-title pr fs__14 mg__0 fwm"><a class="cd chp" href="/admin/products">{{ 'homepage.onboarding.product_title' | t }}</a></h3>
+            <span class="price"><ins>$30.00</ins> <del>$35.00</del></span>
+          </div>
+        </div>
+        {%- endfor -%}
+        {%- endfor -%}
+      </div>
+      {%- endpaginate -%}
+{%- endcapture -%}
+{{min_html | strip_newlines | remove: "  "}} 

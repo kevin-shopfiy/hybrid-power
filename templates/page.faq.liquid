@@ -1,0 +1,25 @@
+<div class="page-head pr tc page_faq_bg_image{%- if settings.faq_bg_image != blank %} page_jas_bg_image lazyload{%- endif -%}"{%- if settings.faq_bg_image != blank %} data-bgset="{%- include 'bgset', image: settings.faq_bg_image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url({{ settings.faq_bg_image | img_url: '50x50' }});"{%- endif -%}>
+   <div class="jas-container pr">
+      <h1 class="tu mb__10 cw">{{ page.title }}</h1>
+      <ul class="jas-breadcrumb dib oh">
+         <li class="fl home"><a href="/" title="{{ 'general.breadcrumbs.home' | t }}">{{ 'general.breadcrumbs.home' | t }}</a></li>
+         <li class="fl separator"> <i class="fa fa-angle-right"></i> </li>
+         <li class="fl current"> {{page.title }}</li>
+      </ul>
+   </div>
+</div>
+<div class="jas-row jas-page">
+  <div class="jas-col-md-12 jas-col-xs-12 mt__60 mb__60" role="main" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+      <div class="jas-container">
+         <div class="jas-row mt_60 mb__60">
+            <div class="jas-col-xs-12">
+               <div class="page_contact_content template-product">
+                  <div class="jas-wc-single">
+                  {%- section 'faqs' -%}
+                  </div>    
+               </div>
+            </div>
+         </div>
+      </div>
+  </div>
+</div>

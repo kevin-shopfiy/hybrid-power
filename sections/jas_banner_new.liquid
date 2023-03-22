@@ -1,0 +1,185 @@
+{%- include 'style_mp_section' -%}
+<div class="sliderss jas_custom_{{section.id}} jas_banner_new {%- if section.settings.use_container %} jas-container{%- else %} jas-full{%- endif -%}">
+  <div class="jas-row">
+    {%- for block in section.blocks -%}{%- assign image = block.settings.image -%}{%- assign url = block.settings.url -%}
+    <div class="jas-col-sm-{{block.settings.width}} jas-col-xs-12">
+      <div class="jas_banner_wrap pr oh">
+        <div>
+          {%- if image != blank -%}
+          <div class="banner_img lazyload" style="padding-bottom:{{ 1 | divided_by: image.aspect_ratio | times: 100}}%" data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover"></div>
+          {%- else -%}
+          <div class="banner_img" style="padding-bottom:100%;background-image: url(https://placehold.it/600x600.png?text=Banner+Image)"></div>
+          {%- endif -%}
+         {%- if url != blank -%} <a href="{{url}}" class="link_over_nt pa"></a>{%- endif -%}
+          <div class="pa flex column center-xs middle-xs pe_none">
+            <h3 class="cw mt__0 mb__30 lh__1 fs__{{section.settings.fs}} f__libre">{{block.settings.title}}</h3>
+            {%- if url != blank and block.settings.btn_title != blank -%}<a href="{{url}}" class="pe_auto fs__14" style="background-color: {{block.settings.color}}">{{block.settings.btn_title}}</a>{%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Promotion Banner 2",
+    "class": "jas-section type_jas_banner_new clearfix",
+    "max_blocks": 30,
+    "settings": [
+     {
+        "type": "header",
+        "content": "== Design Options"
+      },
+      {
+       "type": "select",
+       "id": "fs",
+       "options": [
+        {
+           "value": "26",
+           "label": "Medium"
+         },
+         {
+           "value": "45",
+           "label": "Large"
+         }
+       ],
+       "label": "Font size",
+       "default": "26"
+     },
+      {
+        "type": "checkbox",
+        "id": "use_container",
+        "label": "Use container?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_left",
+        "label": "Margin left",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_right",
+        "label": "Margin right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_top",
+        "label": "Padding top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_right",
+        "label": "Padding right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_bottom",
+        "label": "Padding bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_left",
+        "label": "Padding left",
+        "info": "60px"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "banner",
+        "name": "Promotion Banner",
+        "settings": [
+          {
+             "type": "image_picker",
+             "id": "image",
+             "label": "Image"
+           },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Text",
+            "default": "Banner title"
+          },
+          {
+            "type": "text",
+            "id": "btn_title",
+            "label": "Button title",
+            "default": "Button title"
+          },
+          {
+            "type": "color",
+            "id": "color",
+            "label": "Button Color",
+            "default": "#ef3288"
+          },
+           {
+            "label": "Link to",
+            "id": "url",
+            "type": "url"
+          },
+          {
+           "type": "select",
+           "id": "width",
+           "options": [
+            {
+               "value": "3",
+               "label": "25%"
+             },
+             {
+               "value": "4",
+               "label": "33.33333333%"
+             },
+             {
+               "value": "6",
+               "label": "50%"
+             },
+             {
+               "value": "8",
+               "label": "66.66666667%"
+             },
+             {
+               "value": "12",
+               "label": "100%"
+             }
+           ],
+           "label": "== Select column width",
+           "default": "6"
+         }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Promotion Banner 2",
+        "category": "== Banner",
+        "blocks": [
+          {
+            "type": "banner"
+          },
+          {
+            "type": "banner"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

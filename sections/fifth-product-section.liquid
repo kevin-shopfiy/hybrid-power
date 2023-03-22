@@ -1,0 +1,503 @@
+{%- include 'style_mp_section' -%}
+ {%- assign sett_enable_disbale = section.settings.enable -%}
+{% if sett_enable_disbale == true %}
+<div class="custom-brand-module jas_custom_{{section.id}} jas-banner-parallax gecko-parallax{%- if section.settings.use_background_overlay %} jas_background-overlay{%- endif %}{%- if section.settings.image != blank %} lazyload{%- endif %}"{%- if section.settings.image != blank or section.settings.section_bg_color != blank %} data-bgset="{%- include 'bgset', image: section.settings.image -%}" data-sizes="auto" data-parent-fit="cover" style="{%- if section.settings.section_bg_color != blank -%}background-color: {{section.settings.section_bg_color}};{%- endif -%}{%- if section.settings.image != blank -%}background-image: url('{{ section.settings.image | img_url: '50x50' }}');{%- endif -%}"{%- endif -%}>
+  
+   <div class="clearfix">
+         {%- assign sett_title = section.settings.title -%}
+         {%- assign sett_sub_title = section.settings.sub_title -%}
+         {%- assign style_title = section.settings.style_title -%}
+         {%- include 'jas_section_title',mg_class:"mb__40" -%}
+         {%- if section.blocks.size > 0 -%}
+            <div class="jas-row jas-carousel" data-slick='{"slidesToShow": {{ section.settings.sidetoshow }},"slidesToScroll": 1, "autoplay": {{ section.settings.use_autoplay }}, "autoplaySpeed": {{ section.settings.slider_speed }}000,"rtl": {{ settings.use_rtl }}, "infinite": {{section.settings.use_loop}}, "arrows": {{section.settings.use_arrows}},"dots": {{section.settings.use_dots}}, "responsive":[{"breakpoint": 1024,"settings":{"slidesToShow": {{ section.settings.sidetoshow_first}} }},{"breakpoint": 600,"settings":{"slidesToShow": {{ section.settings.sidetoshow_center}} }},{"breakpoint": 480,"settings":{"slidesToShow": {{ section.settings.sidetoshow_last}} }} ]}'>
+              
+              {% assign protocols_countt = '' %}
+              
+              {% for block in section.blocks %}
+              
+             
+              
+              <div class="logo-bar__item pr jas-col-xs-12" {{ block.shopify_attributes }}>
+                    {%- if block.settings.link != blank -%}
+                     <a href="{{ block.settings.link }}" class="logo-bar__link">
+                     {%- endif -%}
+                       
+                       
+                     {%- assign back_color = product.metafields.section-5 -%} 
+                     {%- assign back_image = product.metafields.section-5 -%}   
+                       
+                     {% if protocols_countt.size == 0 %}
+                       
+                      {% if back_image['background-image-1'] != blank %}
+                       
+                       <div class="custom-no-image" data-src="{{back_image['background-image-1']}}" style="background-image: url('{{back_image['background-image-1']}}')!important; "></div>
+                       <div class="jas-wrap-lazy"></div>
+                       
+                       {% else %}
+                      
+                        <div class="custom-no-image" style="background-color: {{back_color['background-color-1']}}; !important"></div>
+                        <div class="jas-wrap-lazy"></div>
+                       
+                       
+                      {% endif %} 
+                       
+                       
+                     {% endif %}  
+                       
+                       
+                     {% if protocols_countt.size == 1 %}
+                       
+                      {% if back_image['background-image-2'] != blank %}
+                       
+                       <div class="custom-no-image" data-src="{{back_image['background-image-2']}}" style="background-image: url('{{back_image['background-image-2']}}')!important; "></div>
+                       <div class="jas-wrap-lazy"></div>
+                       
+                       {% else %}
+                      
+                        <div class="custom-no-image" style="background-color: {{back_color['background-color-2']}}; !important"></div>
+                        <div class="jas-wrap-lazy"></div>
+                       
+                       
+                      {% endif %} 
+                       
+                       
+                     {% endif %}  
+                         
+                     
+                         {% if protocols_countt.size == 2 %}
+                       
+                      {% if back_image['background-image-3'] != blank %}
+                       
+                       <div class="custom-no-image" data-src="{{back_image['background-image-3']}}" style="background-image: url('{{back_image['background-image-3']}}')!important; "></div>
+                       <div class="jas-wrap-lazy"></div>
+                       
+                       {% else %}
+                      
+                        <div class="custom-no-image" style="background-color: {{back_color['background-color-3']}}; !important"></div>
+                        <div class="jas-wrap-lazy"></div>
+                       
+                       
+                      {% endif %} 
+                       
+                       
+                     {% endif %}  
+                         
+                       
+                    
+                     
+                     </a>
+                    
+                    
+                    <div class="custom-content">
+                      
+                      
+                      <h4 style="color:{{block.settings.subheading_color}}">
+                        
+                      {% assign subheading = product.metafields.section-5 %}  
+                        
+                      
+                        
+                        
+                        {% if protocols_countt.size == 0 %}
+              
+                       {{subheading['subheading-1']}}
+              
+                      {% endif %} 
+                        
+                  {% if protocols_countt.size == 1 %}
+              
+                       {{subheading['subheading-2']}}
+              
+                      {% endif %} 
+                      
+                        {% if protocols_countt.size == 2 %}
+              
+                       {{subheading['subheading-3']}}
+              
+                      {% endif %} 
+                        
+                        
+                      </h4>
+                      
+                     
+                      
+                      <h2 style="color:{{block.settings.heading_color}}">
+                      {% assign heading = product.metafields.section-5 %}
+                       
+                      {% if protocols_countt.size == 0 %}
+              
+                       {{heading['heading-1']}}
+              
+                      {% endif %}  
+                        
+                      {% if protocols_countt.size == 1 %}
+              
+                       {{heading['heading-2']}}
+              
+                      {% endif %}  
+                        
+                      {% if protocols_countt.size == 2 %}
+              
+                       {{heading['heading-3']}}
+              
+                      {% endif %}    
+                        
+                      </h2>
+                      
+                      
+                    </div>
+                    
+                    <div class="custom-hover">
+                      
+                    
+                      
+                      <h4 style="color:{{block.settings.changed_hover_color}}"> 
+                        
+                        {% assign hover_content = product.metafields.section-5 %}  
+                        
+                        {% if protocols_countt.size == 0 %}
+                        
+                        {{hover_content['hover-content-1']}}
+                        
+                        {% endif %}
+                        {% if protocols_countt.size == 1 %}
+                        
+                        {{hover_content['hover-content-2']}}
+                        
+                        {% endif %}
+                        {% if protocols_countt.size == 2 %}
+                        
+                        {{hover_content['hover-content-3']}}
+                        
+                        {% endif %}
+                        
+                        
+                      </h4>
+                      
+                      
+                      
+                      {%- if block.settings.button != blank -%}
+                      
+                      {% assign button_text = product.metafields.section-5 %} 
+                      
+                      {% assign button_link = product.metafields.section-5 %}
+                      
+                      
+                      {% if protocols_countt.size == 0 %}
+                      
+                      <a style="color : {{block.settings.button_text_color}}!important; border-color : {{block.settings.button_border_color}}!important; background-color: {{block.settings.button_color}};" href="{{button_link['button-link-1']}}"> {{button_text['button-text-1']}} </a>
+                      
+                      
+                      {% endif %}
+                      
+                       
+                      {% if protocols_countt.size == 1 %}
+                      
+                      <a style="color : {{block.settings.button_text_color}}!important; border-color : {{block.settings.button_border_color}}!important; background-color: {{block.settings.button_color}};" href="{{button_link['button-link-2']}}"> {{button_text['button-text-2']}} </a>
+                      
+                      
+                      {% endif %}
+                      
+                      {% if protocols_countt.size == 2 %}
+                      
+                      <a style="color : {{block.settings.button_text_color}}!important; border-color : {{block.settings.button_border_color}}!important; background-color: {{block.settings.button_color}};" href="{{button_link['button-link-3']}}"> {{button_text['button-text-3']}} </a>
+                      
+                      
+                      {% endif %}
+                      
+                      
+                      {%- endif -%}
+                      
+                    </div>
+                    
+                  </div>
+               
+              {% assign protocols_countt = protocols_countt | append: 'x' %}  
+              
+              {%- endfor -%}
+            </div>
+         {%- endif -%}
+         {%- if section.blocks.size == 0 -%}
+          {%- include 'no-blocks' -%}
+         {%- endif -%}
+   </div>
+</div>
+{%endif%}
+{% schema %}
+  {
+    "name": "Brand Module 4",
+    "class": "jas-section type_jas_brand clearfix",
+    "settings": [
+ {
+        "type": "checkbox",
+        "id": "enable",
+        "label": "Enable Section"
+       
+      },
+    {
+        "type": "header",
+        "content": "== General Settings"
+      },
+    {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "OUR BRANDS"
+      },
+
+      {
+        "type": "text",
+        "id": "sub_title",
+        "label": "Sub Title",
+        "default": "The freshest and most exciting news"
+      },
+      
+      {
+       "type": "header",
+       "content": "== settings Slider ( Only for Carousel layout )"
+      },
+     {
+        "type": "range",
+        "id": "slider_speed",
+        "min": 1,
+        "max": 30,
+        "step": 1,
+        "label": "Autoplay Speed in milliseconds",
+        "unit": "sec",
+        "default": 6
+      },
+      {
+        "type": "checkbox",
+        "id": "use_autoplay",
+        "label": "Use autoplay?",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "use_arrows",
+        "label": "Use Arrows?",
+        "default": true
+      },
+{
+        "type": "checkbox",
+        "id": "use_dots",
+        "default": false,
+        "label": "Use pagination control?"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_loop",
+        "label": "Use Infinite loop sliding?",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "sidetoshow",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "slides To Show",
+        "default": 6
+      },
+      {
+       "type": "header",
+       "content": "=== breakpoint: 1024"
+      },
+      {
+        "type": "range",
+        "id": "sidetoshow_first",
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "label": "slides To Show",
+        "default": 3
+      },
+      {
+       "type": "header",
+       "content": "=== breakpoint: 600"
+      },
+      {
+        "type": "range",
+        "id": "sidetoshow_center",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "slides To Show",
+        "default": 2
+      },
+      {
+       "type": "header",
+       "content": "=== breakpoint: 480"
+      },
+      {
+        "type": "range",
+        "id": "sidetoshow_last",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "slides To Show",
+        "default": 1
+      },
+     {
+        "type": "header",
+        "content": "== Design Options"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_container",
+        "label": "Use container?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_left",
+        "label": "Margin left",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_right",
+        "label": "Margin right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_top",
+        "label": "Padding top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_right",
+        "label": "Padding right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_bottom",
+        "label": "Padding bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_left",
+        "label": "Padding left",
+        "info": "60px"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "logo_image",
+        "name": "Logo",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "color",
+            "id": "background_color",
+            "label": "Background Color",
+            "default": "#fff"
+          },
+          {
+            "type": "text",
+            "id": "logo_text",
+            "label": "Enter Sub-Heading"
+            
+          },
+          {
+            "type": "color",
+            "id": "subheading_color",
+            "label": "Subheading Color",
+            "default": "#000"
+          },
+          {
+            "type": "text",
+            "id": "logo_heading",
+            "label": "Enter Heading"
+           },
+           {
+            "type": "color",
+            "id": "heading_color",
+            "label": "Heading Color",
+            "default": "#000"
+          },
+           {
+            "type": "text",
+            "id": "button",
+            "label": "Button"
+           },
+           {
+            "type": "url",
+            "id": "link",
+            "label": "Link",
+            "info": "Optional"
+          },
+            {
+            "type": "color",
+            "id": "button_color",
+            "label": "Button Color",
+            "info": "#000"
+          },
+           {
+            "type": "color",
+            "id": "button_text_color",
+            "label": "Button Text Color",
+            "info": "#000"
+          },
+           {
+            "type": "color",
+            "id": "button_border_color",
+            "label": "Button Border Color",
+            "info": "#000"
+          },
+         
+          {
+            "type": "html",
+            "id": "changed_text",
+            "label": "Hover Text"
+           
+          },
+          {
+            "type": "color",
+            "id": "changed_hover_color",
+            "label": "Hover Text Color",
+            "default" : "#000"
+           
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Brand Module 4",
+        "category": "== Brands",
+        "blocks": [
+          {
+            "type": "logo_image"
+          },
+          {
+            "type": "logo_image"
+          },
+          {
+            "type": "logo_image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

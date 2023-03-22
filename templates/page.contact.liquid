@@ -1,0 +1,67 @@
+<div class="page-head pr tc page_contact_bg_image{%- if settings.contact_bg_image != blank %} page_jas_bg_image lazyload{%- endif -%}"{%- if settings.contact_bg_image != blank %} data-bgset="{%- include 'bgset', image: settings.contact_bg_image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url({{ settings.contact_bg_image | img_url: '50x50' }});"{%- endif -%}>
+   <div class="jas-container pr">
+      <h1 class="tu mb__10 cw">{{ page.title }}</h1>
+      <ul class="jas-breadcrumb dib oh">
+         <li class="fl home"><a href="/" title="{{ 'general.breadcrumbs.home' | t }}">{{ 'general.breadcrumbs.home' | t }}</a></li>
+         <li class="fl separator"> <i class="fa fa-angle-right"></i> </li>
+         <li class="fl current"> {{page.title }}</li>
+      </ul>
+   </div>
+</div>
+<div class="jas-row jas-page">
+   {%- if settings.use_map -%}
+   <div class="jas-col-xs-12 jas-col-sm-12">
+     <div class="gecko-gmap jas-gmap" data-lat='{{ settings.lat }}' data-lon='{{ settings.lon }}' {% if settings.icon_map != blank %}data-icon='{{ settings.icon_map | img_url: 'master' }}'{% endif %} data-style='{{ settings.style_json }}' style="height: {{ settings.height | strip }}px"></div>
+   </div>
+   {%- endif -%}
+  <div class="jas-col-md-12 jas-col-xs-12 mt__60 mb__60" role="main" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+      <div class="jas-container">
+         <div class="jas-row mt_60 mb__60">
+            <div class="jas-col-xs-12">
+               <div class="jas-row page_contact_content">
+                  <div class="{%- if page.content.size > 0 -%}jas-col-sm-6 {% endif -%}jas-col-xs-12">
+                     <h3>{{ 'contact.form.title' | t }}</h3>
+                     {% form 'contact' %}
+                       {%- if form.posted_successfully? -%}
+                           <div class="shopify-message resetSuccess">{{ 'contact.form.post_success' | t }}</div>
+                        {%- elsif form.errors -%}
+                              {%- assign gl_shopify_error = true -%}
+                              {%- for field in form.errors -%}
+                                 {%- if field == 'form' -%}
+                                    {%- assign error_html = form.errors.messages[field] -%}
+                                 {%- else -%}
+                                    {%- assign error_html = form.errors.translated_fields[field] | append:' ' | append:form.errors.messages[field] -%}
+                                 {%- endif -%}
+                              {%- endfor -%}
+                              <ul id="gl_shopify_error" class="shopify-error">
+                                 <li class="html_li" id="jas_html_frm">{{error_html}}</li>
+                              </ul>
+                        {%- endif -%}
+                       <p>
+                         {{ 'contact.form.name' | t }}
+                         <input type="text" class="w__100{% if form.errors contains 'name' %} input--error{% endif %}" id="ContactFormName" name="contact[name]" value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+                       </p>
+                       <p>
+                         {{ 'contact.form.email' | t }}
+                         <input type="email" class="w__100{% if form.errors contains 'email' %} input--error{% endif %}" id="ContactFormEmail" name="contact[email]" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+                       </p>
+                       <p>
+                         {{ 'contact.form.phone' | t }}
+                         <input type="telephone" class="w__100{% if form.errors contains 'phone' %} input--error{% endif %}" id="ContactFormPhone" name="contact[phone]" pattern="[0-9\-]*" value="{% if form[phone] %}{{ form[phone] }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+                       </p>
+                       <p>
+                         {{ 'contact.form.message' | t }}
+                         <textarea rows="10" class="w__100{% if form.errors contains 'body' %} input--error{% endif %}" id="ContactFormMessage" name="contact[body]">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+                       </p>
+                       <p><input type="submit" class="btn w__100" value="{{ 'contact.form.submit' | t }}"></p>
+                     {% endform %}
+                  </div>
+                  {%- if page.content.size > 0 -%}
+                  <div class="jas-col-sm-6 jas-col-xs-12">{{ page.content }}</div>
+                  {%- endif -%}
+              </div>
+            </div>
+         </div>
+      </div>
+  </div>
+</div>

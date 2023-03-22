@@ -1,0 +1,39 @@
+{%- layout none -%}
+{%- if canonical_url contains 'q=' -%}
+{%- assign paginate = canonical_url | split: 'q=' -%}
+{%- assign last = paginate | last -%}
+{%- assign last = last | split: '+' -%}
+  {%- assign convert_index = last[0] | remove: "paginate_" -%}
+  {%- assign paginate_index = convert_index | plus: 0 -%}
+  {%- assign columns = last[1] | remove: "columns_" -%}
+  {%- assign columns_mb = last[2] | remove: "columns_mb_" -%}
+  {%- assign show_vendor = last[3] | remove: "vendor_" -%}
+  {%- assign img_size = last[4] | remove: "img_size_" -%}
+  {%- assign countdown = last[5] | remove: "countdown_" -%}
+  {%- assign countdown_timer_style = last[6] | remove: "countdown_style_" -%}
+{%- endif -%}
+{%- assign grid_columns = columns -%}
+{%- assign grid_columns_mb = columns_mb -%}
+{%- assign settings_pr_img_size = false -%}
+{%- assign section_settings_countdown = false -%}
+{%- if img_size == 'true' -%}{%- assign settings_pr_img_size = true -%}{%- endif -%}
+{%- if countdown == 'true' -%}{%- assign section_settings_countdown = true -%}{%- endif -%}
+{%- if settings.use_wishlist -%}{%- include 'nitro-wishlist' -%}{%- endif -%}
+{%- capture min_html -%}
+{%- paginate collection.products by paginate_index -%}
+<div class="jas-products-element">
+   <div class="products elements-grid row jas-products-holder pagination-arrows" id="jas_data_products">
+      {%- for product in collection.products -%}
+      {%- include 'jas_product_loop' -%}
+    {%- endfor -%}
+   </div>
+   {%- if paginate.pages > 1 -%}
+   <div class="products-footer" id="jas_data_arrow" data-status="{%- if paginate.next.is_link -%}have-posts{%- else -%}no-more-posts{%- endif -%}">
+      <a id="jas_section_previous" href="{%- if paginate.previous.is_link -%}{{ paginate.previous.url }}{%- else -%}javascript:void(0);{%- endif -%}" class="btn jas-products-load-prev{% unless paginate.previous.is_link %} disabled{% endunless %}">Load previous products</a>
+      <a id="jas_section_next" href="{%- if paginate.next.is_link -%}{{ paginate.next.url }}{%- else -%}javascript:void(0);{%- endif -%}" class="btn jas-products-load-next{% unless paginate.next.is_link %} disabled{% endunless %}">Load next products</a>
+   </div>
+   {%- endif -%}
+</div>
+{%- endpaginate -%}
+{%- endcapture -%}
+{{min_html | strip_newlines | remove: "  "}} 

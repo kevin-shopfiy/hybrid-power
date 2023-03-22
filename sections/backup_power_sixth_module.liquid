@@ -1,0 +1,131 @@
+<div class="sixth-module-section">
+<div class="sixth-module" style="background-color : {{section.settings.background_color}} !important; ">
+<div class="container">
+<div class="home-imagebox-main {% if section.settings.text_alighment != blank %} {{section.settings.text_alighment}} {% endif %}" >
+<div id="home-imagebox" class="index-section">
+
+  <div class="question_section  custom_{{section.settings.text_alighment}}">
+  
+      
+    <h2 class="h2_sub" style="color: {{section.settings.heading_color}} !important;">
+      {% if section.settings.text-box != blank %}
+      {{section.settings.text-box}}
+      {% endif %}
+    </h2>
+
+    <h4 style="color: {{section.settings.description_color}} !important;">
+      {% if section.settings.text != blank %}
+      {{section.settings.text}}
+      {% endif %}
+    </h4>
+    
+   <button type="button" style="background-color: {{section.settings.btn_color}}; color:{{section.settings.color_id}};"><a href="{{section.settings.url}}" target="_blank" class="not-button-0-w" style="color: {{section.settings.btn_text_color}}; color:{{section.settings.color_id}};" tabindex="0"><span class="icon-new">
+     </span>{{section.settings.btn_title}}</a></button>
+    
+  
+  </div>
+  
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<style>
+.custom_class-right-center {
+    text-align: center;
+}
+</style>
+{% schema %}
+  {
+    "name": "Industry Sixth Section",
+    "settings": [
+	 
+  {
+				"type": "color",
+                    "id": "background_color",
+                    "label": "Background Color",
+                     "default": "#fff"
+               }, 
+
+      {
+        "id": "text-box",
+        "type": "text",
+        "label": "Heading"
+        
+      },
+ {
+                    "type": "color",
+                    "id": "heading_color",
+                    "label": "Heading Color",
+                    "default": "#000"
+                 },
+
+      {
+        "id": "text",
+        "type": "richtext",
+        "label": "Description"
+       
+      },
+ {
+                    "type": "color",
+                    "id": "description_color",
+                    "label": "Description Color",
+                    "default": "#000"
+                 },
+{
+        "type": "text",
+        "id": "btn_title",
+        "label": "Button title",
+        "default": "Button title"
+      },
+{
+        "type": "color",
+        "id": "btn_text_color",
+        "label": "Button Text Color",
+        "default": "#ef3288"
+      },
+      {
+        "type": "color",
+        "id": "btn_color",
+        "label": "Button Color",
+        "default": "#ef3288"
+      },
+       {
+        "label": "Link to",
+        "id": "url",
+        "type": "url"
+      },
+{
+            "type": "select",
+            "id": "text_alighment",
+            "label": "Text alignment",
+            "default": "class-left-right",
+            "options": [
+              {
+                "value": "class-left-right",
+                "label": "Text to Left"
+              },
+              {
+                "value": "class-right-center",
+                "label": "Text to Center"
+              },
+{
+                "value": "class-right-left",
+                "label": "Text to Right"
+              }
+             
+
+             
+            ]
+          }
+
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

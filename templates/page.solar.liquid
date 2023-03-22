@@ -1,0 +1,323 @@
+{% section 'solar-slideshow' %}
+{% section 'parallax-banner-solar' %}
+{% section 'image-with-text-solar' %}
+{% section 'product-grid-four-solar' %}
+{% section 'module-solar' %}
+{% section 'contact-solar' %}
+{% section 'module-seven' %}
+<style>
+  
+/*   Custom Page CSS */
+  
+  .jas_custom_parallax-banner-solar.jas-banner-parallax {
+    flex-direction: column;
+}
+  
+  select{
+    cursor:pointer !important;
+  }
+  
+  select, input, textarea {
+    padding: 0 22px !important;
+  }
+  
+  option{
+    background:transparent;
+    color:#000;
+  }
+  
+  input.btn.w__60{
+    font-size: 12px;
+    padding: 12px 15px;
+    text-transform: uppercase;
+  }
+  
+  h2.h2_title{
+    font-size:17px !important;
+  }
+  
+  .industry-landing-imagebox div#home-imagebox h2.h2_title {
+    font-size: 17px!important;
+    margin-bottom: 10px!important;
+  }
+  
+  .revolution-inner {
+    max-width: 720px;
+  }
+  
+  h2.h2_sub{
+    font-size:35px !important;
+  }
+  
+  a.btn {
+    font-size: 12px;
+    padding: 12px 15px;
+    text-transform: uppercase;
+  }
+  
+  div#home-imagebox h2.h2_title{
+    margin-top:0 !important
+  }
+  
+  .img-brand{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+  }
+  
+  .img-brand img{
+    width:35%;
+    height:100%;
+  }
+  
+  .img-brand img:nth-child(2){
+    width: 7%;
+    margin: 0 30px;
+    height:100%;
+  }
+  
+  #shopify-section-module-solar div#home-imagebox {
+    display: block;
+    width: 60%;
+    margin: 0 auto;
+}
+  
+  input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+  	-webkit-appearance: none;
+  	margin: 0;
+ }
+  
+  
+  
+  input:not([type=submit]):not([type=checkbox]), select, textarea{
+    background-color: transparent;
+    border-bottom: 2px solid #fff !important;
+    color: #fff;
+    border: none;
+  }
+  
+  #ContactFormStreet, #ContactFormCity, #ContactFormProvince, #ContactFormPostal, #ContactFormCountry{
+    background-image: url(https://cdn.shopify.com/s/files/1/0253/4431/1386/files/location-pin-compact-solid.png?v=1652454786) !important;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 18px 18px;
+    background-position: 0% 50% !important;
+    cursor: pointer;
+  }
+  
+  #ContactFormPhone{
+    background-image: url(https://cdn.shopify.com/s/files/1/0253/4431/1386/files/phone-solid.png?v=1652454605) !important;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 18px 18px;
+    background-position: 0% 50% !important;
+    cursor: pointer;
+  }
+  
+  #ContactFormBill{
+    background-image: url(https://cdn.shopify.com/s/files/1/0253/4431/1386/files/kindpng_4146573.png?v=1652468016) !important;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 18px 18px;
+    background-position: 0% 50% !important;
+    cursor: pointer;
+  }
+  
+  #ContactFormEmail{
+    background-image: url(https://cdn.shopify.com/s/files/1/0253/4431/1386/files/mail-solid.png?v=1652454214) !important;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 18px 18px;
+    background-position: 0% 50% !important;
+    cursor: pointer;
+  }
+  
+  #ContactFormFName{
+    background-image: url(https://cdn.shopify.com/s/files/1/0253/4431/1386/files/pngfind.com-play-icon-png-472336.png?v=1652451549) !important;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 18px 18px;
+    background-position: 0% 50% !important;
+    cursor: pointer;
+  }
+  
+  #ContactFormLName{
+    background-image: url(https://cdn.shopify.com/s/files/1/0253/4431/1386/files/pngfind.com-play-icon-png-472336.png?v=1652451549) !important;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 18px 18px;
+    background-position: 0% 50% !important;
+    cursor: pointer;
+  }
+  
+  #ContactFormBackground{
+    background-image: url(https://cdn.shopify.com/s/files/1/0253/4431/1386/files/PinClipart.com_wrecking-ball-clipart_635032.png?v=1652455680) !important;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 18px 18px;
+    background-position: 0% 50% !important;
+    cursor: pointer;
+  }
+  
+  #ContactFormLaunch{
+    background-image: url(https://cdn.shopify.com/s/files/1/0253/4431/1386/files/383171_calendar_icon_5d0d0e18-fa4e-4f7a-8216-04b2c80f5031.png?v=1652455680) !important;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 18px 18px;
+    background-position: 0% 50% !important;
+    cursor: pointer;
+  }
+  
+  #ContactFormiInterest{
+    background-image: url(https://cdn.shopify.com/s/files/1/0253/4431/1386/files/PngItem_1084481.png?v=1652455680) !important;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 18px 18px;
+    background-position: 0% 50% !important;
+    cursor: pointer;
+  }
+  
+  .form-name{
+    color: #febb00;
+  }
+  
+  .field {
+    margin-bottom: 20px;
+}
+  
+  .form-box{
+    width:100%
+  }
+  
+ .question_section.custom_class-right-center{
+   width: 100%;
+ }
+  
+ #shopify-section-module-franchise div#home-imagebox .one-half.one-half-column-right .logo-heading .logo {
+    width: 4%;
+}
+  
+  #shopify-section-module-franchise div#home-imagebox .one-half.one-half-column-right .logo-heading h3{
+    font-size:14px;
+    font-weight:500;
+    text-transform:none;
+    line-height:20px;
+  }
+  
+  #shopify-section-module-franchise .container{
+    max-width:1300px;
+  }
+  
+  #shopify-section-module-franchise .one-half.one-half-column-right{
+    padding-left:0 !important;
+  }
+  
+  #home-imagebox .btn{
+    margin-top:20px;
+  }
+  
+  .header__mid{
+    background:#32383b;
+  }
+  
+  .template-page .header__mid.light .jas-navigation nav ul.customjtpl-mega-menu a{
+    color:#fff !important;
+  }
+  .jas_div_logo .jas-branding img{
+    filter: invert(1) brightness(1) grayscale(1) sepia(1) grayscale(1);
+    margin:7px 0;
+  }
+
+  #shopify-section-solar-slideshow .metaslider .flexslider{
+    margin:0;
+  }
+  .header-sticky .header__mid .jas_div_logo .jas-branding img{
+    filter: inherit;
+    margin:0;
+  }
+  
+  footer i{
+    font-size: inherit;
+  }
+  
+  i{
+    color: #febb00;
+    font-size: 57px;
+  }
+  .type_slideshow1 .caption .tl h4 {
+    max-width: 540px;
+    line-height: 17px!important;
+}
+  .newslettor-main h2.h2_sub.tu.cw.fs__14.mg__0{
+      font-size:60px !important;
+    }
+  
+/*   Media Queries for Mobile Only */
+  
+  @media(max-width:768px){
+	#shopify-section-module-solar div#home-imagebox {
+      display: block;
+      width: 100%;
+      margin: 0 auto;
+    }
+    
+    .metaslider .flexslider .caption-wrap .caption{
+      bottom:60%
+    }
+    .type_slideshow1 .handmade-slider .metaslider .flexslider .caption-wrap .caption p{
+      display:none;
+    }
+    .metaslider .flexslider{
+      margin:0 !important;
+    }
+    .logo-bar__item.pr.jas-col-xs-12.col-md-4 {
+      margin-bottom: 20px;
+	}
+    .h2_sub{
+      max-width:100% !important;
+    }
+    div#home-imagebox .one-half.one-half-column-left p{
+      padding:0 !important;
+    }
+    .template-page .home-imagebox-main div#home-imagebox{
+      margin:0;
+    }
+    .question_section.custom_class-right-center{
+      width:100%;
+    }
+    .form-box{
+      width:100%;
+    }
+    .form-row{
+      gap:20px;
+    }
+    .field p{
+      margin:0;
+    }
+    .metaslider .slides img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      height: 300px;
+    }
+    .newslettor-main h2.h2_sub.tu.cw.fs__14.mg__0{
+      font-size:25px !important;
+    }
+    .w__80 {
+      width: 80%;
+   	  margin: 0 auto;
+	}
+    .package_image{
+      display:none;
+    }
+    .fourth-module-section .one-half.one-half-column-left{
+      margin:0 !important;
+    }
+  }
+  
+  @media(min-width:768px){
+    .hide-large{
+      display:none;
+    }
+  }
+</style>

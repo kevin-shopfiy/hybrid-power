@@ -1,0 +1,23 @@
+{%- assign images_alt = product.images | map: 'alt' -%}
+{%- if images_alt contains 'jas_360' or product.metafields.meta.video contains 'youtube' or settings.show_zoom_img -%}
+	<div class="group_btn_pr pa flex">
+		{%- if images_alt contains 'jas_360' -%}
+		<div class="360_wrap">
+			<div class="gecko-show-product-gallery-wrap p-video-360"><a href="#product-360-view" class="gecko-tooltip"><span class="gecko-tooltip-label">{{ 'products.product.view_360'| t }}</span></a></div>
+			<div id="product-360-view" class="product-360-view-wrapper mfp-hide">
+		      <div class="gecko-threed-view threed-id-{{product.id}}">
+		         <ul class="threed-view-images"></ul>
+		         <div class="spinner"><span>0%</span></div>
+		      </div>
+		   </div>
+		</div>
+		{%- endif -%}
+		{%- if product.metafields.meta.video contains 'youtube' -%}
+		<div class="gecko-show-product-gallery-wrap p-video-youtube"><a href="{{ product.metafields.meta.video }}" class="jas-popup-url gecko-tooltip"><span class="gecko-tooltip-label">{{ 'products.product.video'| t }}</span></a></div>
+	  {%- endif -%}
+	  	<div class="spar-quicklook-overlay" style="display: none">
+		   <a class="drawer_ar gecko-tooltip" href="" rel="ar" ><img src="{{ 'ARKit_Badge_Icon.svg.svg' | asset_url }}"><span class="gecko-tooltip-label">{{ 'products.product.shopify_ar'| t }}</span></a>
+		</div>
+	  {%- if settings.main_click == 'zoom' and settings.show_zoom_img -%}<div class="gecko-show-product-gallery-wrap"><a href="#" class="gecko-show-product-gallery gecko-tooltip"><span class="gecko-tooltip-label">{{ 'products.product.click_zoom'| t }}</span></a></div>{%- endif -%}
+  </div>
+{%- endif -%}

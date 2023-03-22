@@ -1,0 +1,157 @@
+{%- assign text_above_color = product.metafields.section-1['text-color'] -%}
+{%- assign text_above_1 = product.metafields.section-1['text-above-heading-1'] -%}
+{%- assign text_above_2 = product.metafields.section-1['text-above-heading-2'] -%}
+{%- assign text_above_3 = product.metafields.section-1['text-above-heading-extended'] -%}
+{%if text_above_color != blank or text_above_1 != blank or text_above_2 != blank or text_above_3 != blank %}
+<p style="color:{{text_above_color}};">
+
+  {{text_above_1}}  | <span class="non_extended" style="display:none;">{{text_above_2}}</span> <span class="extended" >{{text_above_3}}</span> 
+
+</p>
+
+{% endif %}
+
+<h1 class="product_title entry-title" style="color:#fff;">{{ product.title }}</h1>
+{%- assign inventory_count = current_variant.inventory_quantity -%}
+{% comment %}
+{% if inventory_count >= 1 %}
+<div class="inventory-stock-custom" style="color: #838086 !important;">IN STOCK {%comment%}{{inventory_count}}{%endcomment%}- Ships in 2-3 weeks</div>
+{% endif %}
+{% endcomment %}
+
+
+{%- assign link_size = linklists[product.handle].links.size -%}
+{%- if settings.show_available == false -%} 
+
+{% comment %}
+<div class="flex">
+  {%- if link_size == 0 and current_variant.unit_price_measurement -%}
+  <div>
+
+    <p class="price{%- unless product.price_varies %} productPrice{%- endunless -%}">{%- if current_variant.compare_at_price > current_variant.price -%}<del>{{ current_variant.compare_at_price  | money }}</del> <ins>{{ current_variant.price | money }}</ins>{%- else -%}{{ current_variant.price | money }}{%- endif -%}</p>
+    {%- capture unit_price_base_unit -%}
+    <span class="unit_base">
+      {%- if current_variant.unit_price_measurement.reference_value != 1 -%}
+      {{- current_variant.unit_price_measurement.reference_value -}}
+      {%- endif -%}
+      {{ current_variant.unit_price_measurement.reference_unit -}}
+    </span>
+    {%- endcapture -%}
+    <span class="pr_unit_price db"><span class="unit_price">{{ current_variant.unit_price | money }}</span><span>/</span>{{- unit_price_base_unit -}}</span>
+
+  </div>
+  {%- elsif link_size == 0 -%}
+  <p class="price{%- unless product.price_varies %} productPrice{%- endunless -%}">
+    {%- if product.price_varies -%}
+    {{ product.price_min | money }}–{{ product.price_max | money }}
+    {%- elsif on_sale -%}<ins id="product-price">{{ current_variant.price | money }}</ins><del id="old-product-price">{{ product.selected_or_first_available_variant.compare_at_price | money }}</del>
+    {%- else -%}
+    <span id="product-price">{{ current_variant.price | money }}</span> 
+    {%- endif -%}
+  </p>
+  {%- else -%}
+  <p class="price{%- unless product.price_varies %} productPrice{%- endunless -%}">
+    {%- if on_sale -%}
+    {{ product.price | money }}–{{ product.compare_at_price | money }}
+    {%- else -%}
+    {{ product.price | money }}
+    {%- endif -%}
+  </p>
+  {%- endif -%}
+</div>
+{% endcomment %}
+{%- else -%}
+<div class="price-stock flex between-xs middle-xs mt__15 pb__15 mb__20" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+  <div>
+    {%- if link_size == 0 and current_variant.unit_price_measurement -%}
+    <p class="price{%- unless product.price_varies %} productPrice{%- endunless -%}">{%- if current_variant.compare_at_price > current_variant.price -%}<del>{{ current_variant.compare_at_price  | money }}</del> <ins>{{ current_variant.price | money }}</ins>{%- else -%}{{ current_variant.price | money }}{%- endif -%}</p>
+    {%- capture unit_price_base_unit -%}
+    <span class="unit_base">
+      {%- if current_variant.unit_price_measurement.reference_value != 1 -%}
+      {{- current_variant.unit_price_measurement.reference_value -}}
+      {%- endif -%}
+      {{ current_variant.unit_price_measurement.reference_unit -}}
+    </span>
+    {%- endcapture -%}
+    <span class="pr_unit_price db"><span class="unit_price">{{ current_variant.unit_price | money }}</span><span>/</span>{{- unit_price_base_unit -}}</span>
+    {%- elsif link_size == 0 -%}
+    <p class="price{%- unless product.price_varies %} productPrice{%- endunless -%}">
+      {%- if product.price_varies -%}
+      {{ product.price_min | money }}–{{ product.price_max | money }}
+      {%- elsif on_sale -%}<ins id="product-price">{{ current_variant.price | money }}</ins><del id="old-product-price">{{ product.selected_or_first_available_variant.compare_at_price | money }}</del>
+      {%- else -%}
+      <span id="product-price">{{ current_variant.price | money }}</span> 
+      {%- endif -%}
+    </p>
+    {%- else -%}
+    <p class="price{%- unless product.price_varies %} productPrice{%- endunless -%}">
+      {%- if on_sale -%}
+      {{ product.price | money }}–{{ product.compare_at_price | money }}
+      {%- else -%}
+      {{ product.price | money }}
+      {%- endif -%}
+    </p>
+    {%- endif -%}
+  </div>
+  <div class="availability{%- if sold_out %} value_out{%- else %} value_in{%- endif -%}" id="product-available{%- if quick_review == 'quick_review' -%}_quick{%- endif -%}">{%- if sold_out -%}{{ 'products.product.outofstock' | t }}{%- else -%}{{ 'products.product.in_stock' | t }}{%- endif -%}</div>
+</div>
+{%- endif -%}
+{%- if settings.use_flash_sold and product.available -%}
+<div class="jas_flash_sold">
+  {%- if settings.flash_sold_img != blank -%}
+  <span class="jas_flash_icon"><img src="{{ settings.flash_sold_img | img_url: '15x' }}" alt="{{settings.flash_sold_img.alt | default:'fire sale' }}"></span>
+  {%- endif %}
+        <span class="jas_flash_total_day nt_flash_total_day{%- if quick_review == 'quick_review' -%}_quick{%- endif -%}"></span> {{ 'products.jas_extra.flash_sold' | t }} <span class="jas_flash_in_hour nt_flash_in_hour{%- if quick_review == 'quick_review' -%}_quick{%- endif -%}"></span> {{ 'products.jas_extra.flash_hours' | t }}
+</div>
+{%- endif -%}
+{%- if settings.show_product_page_rating -%}
+<a href="#shopify-section-product-page-description" class="shopify-product-rating dib">
+  {%- if settings.app_review == '1' -%}
+  <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+  {%- elsif settings.app_review == '2' -%}
+  <div class="review-widget"><ryviu-widget-total reviews_data="{{product.metafields.ryviu.product_reviews_info  | escape  }}" product_id="{{product.id}}" handle="{{product.handle}}"></ryviu-widget-total></div>
+  {%- elsif settings.app_review == '4' -%}
+  <div class="loox-rating" data-id="{{ product.id }}" data-rating="{{ product.metafields.loox.avg_rating }}" data-raters="{{ product.metafields.loox.num_reviews }}"></div>
+  {%- elsif settings.app_review == '5' -%}
+  <div data-oke-reviews-product-listing-rating>{{ product.metafields.okendo.ProductListingSnippet }}</div>
+  {%- elsif settings.app_review == '6' -%}
+  <div class="wc_product_review_badge" data-handle="{{ product.handle }}"></div>
+  {%- else -%}
+  {%- if quick_review == 'quick_review' -%}<div product-id="{{ product.id }}" class="arv-collection arv-collection--{{ product.id }}"></div>{%- else -%}<div product-id="{{ product.id }}" class="alr-display-review-badge"></div>{%- endif -%}
+  {%- endif -%}
+</a>
+{%- endif -%}
+{%- if settings.use_description_excerpt -%}
+{%- assign _prodcut_excerpt_length = settings.prodcut_excerpt_length | plus:0 -%}
+{%- assign prodcut_excerpt_length = _prodcut_excerpt_length | default: 31 -%}
+<div class="Shopify-product-details__short-description" style="color:#fff;">
+  <p class="p_des_ex">
+    {%- if product.metafields.meta.description_excerpt -%}
+    {{  product.metafields.meta.description_excerpt }}
+    {%- elsif product.metafields.global.description -%}
+    {{ product.metafields.global.description }}
+    {% elsif product.description contains  '[' %}
+    {% assign pr_des = product.description | split: '[' %}
+    {% assign pr_des = pr_des[1] | split: ']' | first | append:']' | prepend:'[' %}
+    {{ product.description | remove: pr_des | strip_html | truncatewords: prodcut_excerpt_length }}
+    {%-else-%}
+    {{ product.description | strip_html | truncatewords: prodcut_excerpt_length }}
+    {%-endif-%}
+    {%- assign tab_name_5 = product.metafields.section-4['tab-name-5'] -%} 
+    {%- if tab_name_5 != blank -%}
+    <a href="#" class="read-more-desc" style="color:#fff">{{tab_name_5}} </a>
+    {%endif%}
+  </p>
+  {%- assign description = product.metafields.package_component['description'] -%} 
+  {%- if description != blank -%}
+  {{description}} 
+  {%endif%}
+  {%- endif -%}
+  <script>
+    $("a.read-more-desc").click(function() {
+      $('html, body').animate({
+        scrollTop: $("ul#myTab").offset().top - 400
+      }, 1000);
+      $(".custom_description_slide").trigger("click");
+    });
+  </script>

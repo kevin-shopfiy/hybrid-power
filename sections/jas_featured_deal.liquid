@@ -1,0 +1,406 @@
+{%- if settings.use_wishlist -%}{%- include 'nitro-wishlist' -%}{%- endif -%}
+{%- include 'style_mp_section' -%}
+{%- assign settings_pr_img_size = false -%}
+<div class="jas_custom_{{section.id}} {{pr_style}}{%- if section.settings.use_container %} jas-container{%- else %} jas-full{%- endif -%}">
+   <div class="jas-row {{section.settings.image_size}}{%- if settings_pr_img_size %} jas_section_eqh{%- endif -%}">
+     {%- for block in section.blocks -%}
+            {%- case block.type -%}
+               {%- when 'banner' -%}
+               {%- assign block_image = block.settings.image -%}
+               {%- assign block_url = block.settings.url -%}
+               <div class="jas-col-md-4 jas-col-sm-4 jas-col-xs-12">
+                  <div class="jas-product-image-equal jas-promotion oh pr {{block.settings.hover_effect}} {{block.settings.vertical_align}} {{block.settings.horizontal_align}}{%- if block_url != blank %} cursor-pointer{%- endif -%}">
+                     <div class="jas_banner_img"{%- if block_url != blank %} onclick="window.location.href='{{block_url}}'"{%- endif -%}>
+                        {%- if block_image != blank -%}
+                        {%- assign img_url = block_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                        <img src="{{ block_image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[157, 270, 303, 370, 377, 670, 570, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ block_image.aspect_ratio }}"  data-sizes="auto" class="lazyload ts__05 w__100 attachment-shop_catalog size-shop_catalog" alt="{{block_image.alt}}" >
+                        <div class="jas-wrap-lazy"></div>
+                        {%- else -%}
+                        <img src="https://placehold.it/370x472" alt="placehold" class="ts__05 w__100">
+                       {%- endif -%}
+                     </div>
+                     <div class="pa">
+                        {%- if block.settings.title != blank -%}
+                          {%- assign text_1 = block.settings.title -%}
+                          {%- assign font_1 = block.settings.font_1 -%}
+                          {%- assign line_1 = block.settings.line_1 -%}
+                          {%- assign color_1 = block.settings.color_1 -%}
+                          {%- assign mb_1 = block.settings.mb_1 -%}
+                          <h3 class="fwm fs__24 mg__0 mb__10 ls__1 lh__1"{%- if font_1 != blank or line_1 != blank or color_1 != blank or mb_1 != blank %} style="{%- if font_1 != blank -%}font-size:{{font_1}};{%- endif -%}{%- if color_1 != blank -%}color:{{color_1}};{%- endif -%}{%- if line_1 != blank -%}line-height: {{line_1}};{%- endif -%}{%- if mb_1 != blank -%}margin-bottom: {{mb_1}}{%- endif -%}"{%- endif -%}>{{text_1}}</h3>
+                        {%- endif -%}
+                        {%- if block.settings.text_2 != blank -%}
+                          {%- assign text_2 = block.settings.text_2 -%}
+                          {%- assign font_2 = block.settings.font_2 -%}
+                          {%- assign line_2 = block.settings.line_2 -%}
+                          {%- assign color_2 = block.settings.color_2 -%}
+                          {%- assign mb_2 = block.settings.mb_2 -%}
+                          <h4 class="mg__0 mb__10"{%- if font_2 != blank or line_2 != blank or color_2 != blank or mb_2 != blank %} style="{%- if font_2 != blank -%}font-size:{{font_2}};{%- endif -%}{%- if color_2 != blank -%}color:{{color_2}};{%- endif -%}{%- if line_2 != blank -%}line-height: {{line_2}};{%- endif -%}{%- if mb_2 != blank -%}margin-bottom: {{mb_2}}{%- endif -%}"{%- endif -%}>{{text_2}}</h4>
+                        {%- endif -%}
+                        {%- if block.settings.text_3 != blank -%}
+                          {%- assign text_3 = block.settings.text_3 -%}
+                          {%- assign font_3 = block.settings.font_3 -%}
+                          {%- assign line_3 = block.settings.line_3 -%}
+                          {%- assign color_3 = block.settings.color_3 -%}
+                          {%- if block_url != blank and block.settings.make_button -%}
+                            <h5 class="mg__0"><a href="{{block_url}}" class="button"{%- if font_3 != blank or line_3 != blank or color_3 != blank or mb_3 != blank %} style="{%- if font_3 != blank -%}font-size:{{font_3}};{%- endif -%}{%- if color_3 != blank -%}background-color:{{color_3}};{%- endif -%}{%- if line_3 != blank -%}line-height: {{line_3}}{%- endif -%}"{%- endif -%}>{{text_3}}</a></h5>
+                          {%- else -%}
+                            <h5 class="mg__0"{%- if font_3 != blank or line_3 != blank or color_3 != blank or mb_3 != blank %} style="{%- if font_3 != blank -%}font-size:{{font_3}};{%- endif -%}{%- if color_3 != blank -%}color:{{color_3}};{%- endif -%}{%- if line_3 != blank -%}line-height: {{line_3}}{%- endif -%}"{%- endif -%}>{{text_3}}</h5>                      
+                          {%- endif -%}
+                        {%- endif -%}
+                     </div>
+                  </div>
+               </div>
+               {%- when 'product' -%}
+               {%- assign show_vendor = block.settings.show_vendor -%}
+               {%- assign pr_style = block.settings.style -%}
+               {%- assign section_settings_countdown = block.settings.sale_countdown -%}
+               {%- assign countdown_timer_style = block.settings.countdown_style -%}
+               {%- assign grid_columns_mb = '12' -%}
+               {%- assign grid_columns = '4' -%}
+               {%- assign product = all_products[block.settings.product] -%}
+               {%- if product != blank -%}
+                  {%- include 'jas_product_countdown' -%}
+               {%- else -%}
+                  <div class="jas-grid-item jas-col-md-4 jas-col-sm-4 jas-col-xs-{{grid_columns_mb}} mt__30 product has-post-thumbnail" {{ block.shopify_attributes }}>
+                     <div class="jas-product-image jas-product-image-equal pr oh">
+                        <a href="/admin/products" class="jas-product-img-element jas-pr-image-link">
+                           {{ 'product-' | append: 1 | placeholder_svg_tag: 'placeholder-svg' }}
+                        </a>
+                     </div>
+                     <div class="product-info mt__15">
+                        <h3 class="product-title pr fs__14 mg__0 fwm"><a class="cd chp" href="/admin/products">{{ 'homepage.onboarding.product_title' | t }}</a></h3>
+                        <span class="price"><ins>$30.00</ins> <del>$35.00</del></span>
+                     </div>
+                  </div>
+               {%- endif -%}
+            {%- endcase -%}
+     {%- endfor -%}
+   </div>
+</div>
+{%- schema -%}
+  {
+    "name": "Product Countdown",
+    "class": "jas-section type_jas_featured_deal",
+    "settings": [
+      {
+        "type": "header",
+        "content": "== Design Options"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_container",
+        "label": "Use container?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_left",
+        "label": "Margin left",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_right",
+        "label": "Margin right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_top",
+        "label": "Padding top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_right",
+        "label": "Padding right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_bottom",
+        "label": "Padding bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_left",
+        "label": "Padding left",
+        "info": "60px"
+      }
+    ],
+    "blocks": [{
+    "type": "banner",
+    "name": "Banner Style 1",
+    "settings": [
+
+          {
+             "type": "image_picker",
+             "id": "image",
+             "label": "Image"
+           },
+           {
+            "label": "Link to",
+            "id": "url",
+            "type": "url"
+          },
+          {
+           "type": "select",
+           "id": "hover_effect",
+           "options": [
+             {
+               "value": "jas_zoom_img_banner",
+               "label": "Zoom image"
+             },
+             {
+               "value": "jas_border_img_banner",
+               "label": "Bordered"
+             },
+             {
+               "value": "jas_zoom_dark_img_banner",
+               "label": "Zoom image dark"
+             }
+           ],
+           "label": "Hover effect",
+           "default": "jas_zoom_img_banner"
+         },
+          {
+           "type": "select",
+           "id": "vertical_align",
+           "options": [
+            {
+               "value": "top",
+               "label": "Top"
+             },
+             {
+               "value": "middle",
+               "label": "Middle"
+             },
+             {
+               "value": "bottom",
+               "label": "Bottom"
+             }
+           ],
+           "label": "Text vertical align",
+           "default": "middle"
+          },
+          {
+           "type": "select",
+           "id": "horizontal_align",
+           "options": [
+            {
+               "value": "left",
+               "label": "Left"
+             },
+             {
+               "value": "center",
+               "label": "Center"
+             },
+             {
+               "value": "right",
+               "label": "Right"
+             }
+           ],
+           "label": "Text horizontal align",
+           "default": "center"
+          },
+          {
+           "type": "header",
+           "content": "== Text 1:"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Text",
+            "default": "SHOP FLOWERS"
+          },
+          {
+            "type": "text",
+            "id": "font_1",
+            "label": "Font size (Defined in pixels.)",
+           "placeholder": "24px"
+          },
+          {
+            "type": "text",
+            "id": "line_1",
+            "label": "Line heigh (Defined in pixels.)",
+            "placeholder": "14px"
+          },
+          {
+            "type": "color",
+            "id": "color_1",
+            "label": "Select Color"
+          },
+          {
+            "type": "text",
+            "id": "mb_1",
+            "label": "Margin bottom (Defined in pixels.)",
+            "placeholder": "40px"
+          },
+          {
+           "type": "header",
+           "content": "== Text 2:"
+          },
+          {
+            "type": "text",
+            "id": "text_2",
+            "label": "Text",
+            "default": "VIEW COLLECTION"
+          },
+          {
+            "type": "text",
+            "id": "font_2",
+            "label": "Font size (Defined in pixels.)",
+           "placeholder": "24px"
+          },
+          {
+            "type": "text",
+            "id": "line_2",
+            "label": "Line heigh (Defined in pixels.)",
+            "placeholder": "14px"
+          },
+          {
+            "type": "color",
+            "id": "color_2",
+            "label": "Select Color"
+          },
+          {
+            "type": "text",
+            "id": "mb_2",
+            "label": "Margin bottom (Defined in pixels.)",
+            "placeholder": "40px"
+          },
+          {
+           "type": "header",
+           "content": "== Text 3:"
+          },
+          {
+            "type": "text",
+            "id": "text_3",
+            "label": "Text",
+            "default": "BUTTON"
+          },
+          {
+            "type": "text",
+            "id": "font_3",
+            "label": "Font size (Defined in pixels.)",
+           "placeholder": "24px"
+          },
+          {
+            "type": "text",
+            "id": "line_3",
+            "label": "Line heigh (Defined in pixels.)",
+            "placeholder": "14px"
+          },
+          {
+            "type": "color",
+            "id": "color_3",
+            "label": "Select Color"
+          },
+          {
+            "type": "checkbox",
+            "id": "make_button",
+            "label": "Make it as button",
+            "default": false
+          }
+      ]
+    },
+    {
+    "type": "product",
+    "name": "Product Countdown",
+    "settings": [
+         {
+            "type": "product",
+            "id": "product",
+            "label": "Product"
+         },
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Show product vendors",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "sale_countdown",
+        "default": false,
+        "label": "Use Sale countdown",
+        "info": "Countdown to the end sale date will be shown. Be sure you have set final date of the product sale price. product.metafields.meta.countdown ( 2018/01/19 )"
+      },
+      {
+        "type": "select",
+        "id": "countdown_style",
+        "label": "Countdown style",
+        "default": "dark",
+        "options": [
+          {
+            "value": "light",
+            "label": "Countdown timer light"
+          },
+          {
+            "value": "dark",
+            "label": "Countdown timer dark"
+          }
+        ]
+      },
+      {
+          "type": "header",
+          "content": "=== Choose Your Style"
+          },
+         {
+            "type": "color",
+            "id": "color_title_product",
+            "label": "Product Title color",
+            "default": "#222"
+          },
+          {
+            "type": "color",
+            "id": "color_vendor",
+            "label": "Vendor color",
+            "default": "#878787"
+          },
+          {
+            "type": "color",
+            "id": "color_price",
+            "label": "Price color",
+            "default": "#878787"
+          },
+          {
+            "type": "color",
+            "id": "sale_color_price",
+            "label": "Sale Price color",
+            "default": "#ec0101"
+          }
+      ]
+    }],
+    "presets": [
+      {
+        "name": "Product Countdown",
+        "category": "== Collections",
+        "blocks": [
+        {
+          "type": "banner"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "banner"
+        }
+        ]
+      }
+    ]
+  }
+{% endschema %}

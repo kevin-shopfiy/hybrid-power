@@ -1,0 +1,141 @@
+{%- include 'style_mp_section' -%}
+{%- assign image_size = '100x' -%}
+{%- if section.blocks.size > 0 -%}
+  {%- case section.blocks.size -%}
+      {%- when 1 -%}
+        {%- assign class_col = 'jas-col-md-6 jas-col-sm-6' -%}
+      {%- when 2 -%}
+        {%- assign class_col = 'jas-col-md-6 jas-col-sm-6' -%}
+      {%- when 3 -%}
+        {%- assign class_col = 'jas-col-md-4 jas-col-sm-4' -%}
+      {%- when 6 -%}
+        {%- assign class_col = 'jas-col-md-2 jas-col-sm-2' -%}
+       {%- else -%}
+        {%- assign class_col = 'jas-col-md-3 jas-col-sm-3' -%}
+    {%- endcase -%}
+<div class="jas-row jas_custom_{{section.id}}">
+  {%- for block in section.blocks -%}
+  <div class="{{class_col}} jas-col-xs-12 mt__30 widget widget_products clearfix widget_products__{{ block.id }}" {{ block.shopify_attributes }}>
+    <h4 class="widget-title">{{ block.settings.title }}</h4>
+    {%- if block.settings.featured_product_list_collection == blank -%}
+    <p class="mg__0 mb__30">{{ 'homepage.onboarding.no_content' | t }}</p>
+    {%- else -%}
+    <ul class="product_list_widget">
+      {%- for product in collections[block.settings.featured_product_list_collection].products limit:block.settings.featured_product_limit_all -%}
+      {%- include 'product_group_loop' -%}
+      {%- endfor -%}
+    </ul>
+    {%- endif -%}
+  </div>
+  {%- endfor -%}
+</div>
+{%- endif -%}
+{%- if section.blocks.size == 0 -%}
+  {%- include 'no-blocks' -%} 
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Product Group",
+    "class": "jas-section type_jas_product_group jas-container",
+    "max_blocks": 10,
+    "settings": [
+     {
+        "type": "header",
+        "content": "== Design Options"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_left",
+        "label": "Margin left",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_right",
+        "label": "Margin right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_top",
+        "label": "Padding top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_right",
+        "label": "Padding right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_bottom",
+        "label": "Padding bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_left",
+        "label": "Padding left",
+        "info": "60px"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "collection",
+        "name": "Featured Products",
+        "settings": [
+          {
+          "type":"text",
+          "id":"title",
+          "label":"Title",
+          "default":"Sale Products"
+          },
+          {
+           "type": "collection",
+           "id": "featured_product_list_collection",
+           "label": "Collection to use"
+         },
+          {
+           "type": "text",
+           "id": "featured_product_limit_all",
+           "label": "Number of products to show",
+           "default": "3"
+         }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product Group",
+        "category": "== Collections",
+        "blocks": [
+          {
+            "type": "collection"
+          },
+          {
+            "type": "collection"
+          },
+          {
+            "type": "collection"
+          },
+          {
+            "type": "collection"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

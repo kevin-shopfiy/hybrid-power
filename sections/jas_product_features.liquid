@@ -1,0 +1,240 @@
+{%- include 'style_mp_section' -%}
+<div class="jas_custom_{{section.id}} jas-banner-parallax {%- if section.settings.use_parallax == false %} gecko-parallax{%- endif %}{%- if section.settings.use_background_overlay %} jas_background-overlay{%- endif %}{%- if section.settings.use_parallax == false and section.settings.image != blank %} lazyload{%- endif %}{%- if section.settings.full_height %} jas-full-height{%- endif -%}"{%- if section.settings.use_parallax and section.settings.image != blank %} data-jas-parallax='1.5' data-jas-parallax-image='{{ section.settings.image | img_url: '50x50' }}'{%- endif %}{%- if section.settings.image != blank or section.settings.section_bg_color != blank %} data-bgset="{%- include 'bgset', image: section.settings.image -%}" data-sizes="auto" data-parent-fit="cover" style="{%- if section.settings.section_bg_color != blank -%}background-color: {{section.settings.section_bg_color}};{%- endif -%}{%- if section.settings.image != blank and section.settings.use_parallax == false -%}background-image: url('{{ section.settings.image | img_url: '50x50' }}');{%- endif -%}"{%- endif -%}>
+   <div class="jas-container clearfix">
+      <div class="jas-row">
+         <div class="jas-col-xs-12 jas-col-sm-6"></div>
+         <div class="jas-col-xs-12 jas-col-sm-6">
+            <div class="jas_content_element tc">
+               {%- case section.settings.source -%}
+                  {%- when '1' -%}
+                     {%- assign product = all_products[section.settings.product_single] -%}
+                     {%- if product.selected_variant != blank -%}
+                     {%- assign current_variant = product.selected_variant -%}
+                    {%- else -%}
+                     {%- assign current_variant = product.variants.first -%}
+                    {%- endif -%}
+                     {%- if product != blank -%}
+                        {%- if product.collections.size > 0 -%}
+                            {%- assign collection = product.collections.first -%}
+                        {%- endif -%}
+                        {%- assign on_sale = false -%}
+                        {%- if product.compare_at_price > product.price -%}
+                           {%- unless product.tags contains 'notsale'-%}
+                           {%- assign on_sale = true -%}
+                           {%-endunless-%}
+                        {%- endif -%}
+                        <h3 class="mt__0">{{ product.title }}</h3>
+                        <p>{%- if product.metafields.meta.description_excerpt -%}{{ product.metafields.meta.description_excerpt }}{%-else-%}{{ product.description | strip_html | truncatewords: 60 }}{%-endif-%}<br>
+                           {%- if linklists[product.handle].links.size > 0 -%}
+                           <span style="font-size: 35px;">{{ product.price | money }}{%- if product.compare_at_price != blank -%}–{{ product.compare_at_price | money }}{%- endif -%}</span>
+                           {%- else -%}
+                             {%- if product.price_varies -%}
+                                 <span style="font-size: 35px;">{{ product.price_min | money }}–{{ product.price_max | money }}</span>
+                             {%- elsif on_sale -%}<span style="text-decoration: line-through; font-size: 35px;">{{current_variant.compare_at_price  | money}}</span> <span style="color: #ff0000; font-size: 35px;">{{current_variant.price | money}}</span>
+                             {%- else -%}
+                                <span style="font-size: 35px;">{{ current_variant.price | money }}</span>
+                             {%- endif -%}
+                           {%- endif -%}
+                        </p>
+                        <p><a class="button" style="line-height: 50px; height: 50px; font-size: 14px; padding: 0 50px;" href="{{product.url | within: collection}}">{{section.settings.title_btn}}</a></p>
+                     {%- else -%}
+                        <h3 class="mt__0">Aubrey Chair</h3>
+                        <p>Say hello to the Mid-century chair of your dreams. The geometric design of the Aubrey will surprise from all angles, including the sloping arms, splayed legs and the tailored grid of button tufting. Let it inspire a playful spirit in your room, without sacrificing on true handcrafted luxury.<br>
+                           <span style="text-decoration: line-through; font-size: 35px;">$949</span> <span style="color: #ff0000; font-size: 35px;">$759</span>
+                        </p>
+                        <p><a class="button" style="line-height: 50px; height: 50px; font-size: 14px; padding: 0 50px;" href="/admin/products">{{section.settings.title_btn}}</a></p>
+                     {%- endif -%}
+                  {%- else -%}
+                     {%- if section.settings.product_title != blank -%}<h3 class="mt__0">{{section.settings.product_title}}</h3>{%- endif -%}
+                     {%- if section.settings.product_price != blank or section.settings.product_sale_price != blank or section.settings.product_description != blank -%}
+                     <p>{%- if section.settings.product_description != blank -%}{{section.settings.product_description}}<br>{%- endif -%}
+                        {%- if section.settings.product_price != blank -%}<span style="text-decoration: line-through; font-size: 35px;">{{section.settings.product_price}}</span>{%- endif %}{%- if section.settings.product_sale_price != blank %} <span style="color: #ff0000; font-size: 35px;">{{section.settings.product_sale_price}}</span>{%- endif -%}
+                     </p>
+                     {%- endif -%}
+                     {%- if section.settings.link != blank and section.settings.title_btn != blank -%}
+                     <p><a class="button" style="line-height: 50px; height: 50px; font-size: 14px; padding: 0 50px;" href="{{section.settings.link}}">{{section.settings.title_btn}}</a></p>
+                     {%- endif -%}
+               {%- endcase -%}
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Product features",
+    "class": "jas-section type_jas_product_features clearfix",
+    "settings": [
+      {
+        "type": "header",
+        "content": "== General Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Background Image"
+      },
+      {
+        "type": "color",
+        "id": "section_bg_color",
+        "label": "Background color"
+      },
+       {
+        "type": "checkbox",
+        "id": "full_height",
+        "label": "Full height row?",
+        "info": "if checked row will be set to full height.",
+        "default": false
+      },
+      {
+         "type": "header",
+         "content": "== Product Settings"
+      },
+      {
+           "type": "radio",
+           "id": "source",
+           "options": [
+             {
+               "value": "1",
+               "label": "choose product"
+             },
+             {
+               "value": "2",
+               "label": "custom product"
+             }
+           ],
+           "label": "___ source",
+           "default": "1"
+         },
+         {
+            "type": "text",
+            "id": "title_btn",
+            "label": "Button Title",
+            "default": "Shop Now"
+          },
+         {
+           "type": "header",
+           "content": "___ Block Settings ( only for choose product)"
+         },
+      {
+         "id": "product_single",
+         "type": "product",
+         "label": "Product to use"
+       },
+       {
+           "type": "header",
+           "content": "___ Text Block Settings (only for custom product)"
+         },
+         {
+          "type": "text",
+          "id": "product_title",
+          "label": "Product Title",
+          "default": "Aubrey Chair",
+          "info":"The title of the product."
+        },
+      {
+          "type": "text",
+          "id": "product_price",
+          "label": "Product Price",
+          "default": "$949",
+          "info":"The price of the product."
+        },
+        {
+          "type": "text",
+          "id": "product_sale_price",
+          "label": "Product Sale Price",
+          "default": "$759",
+          "info":"The sale price of the product."
+        },
+        {
+          "type": "textarea",
+          "id": "product_description",
+          "label": "Product Description",
+          "default": "Say hello to the Mid-century chair of your dreams. The geometric design of the Aubrey will surprise from all angles, including the sloping arms, splayed legs and the tailored grid of button tufting. Let it inspire a playful spirit in your room, without sacrificing on true handcrafted luxury.",
+          "info":"The description of the product."
+        },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "link"
+          },
+     {
+        "type": "header",
+        "content": "== Design Options"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_left",
+        "label": "Margin left",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_right",
+        "label": "Margin right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_top",
+        "label": "Padding top",
+        "default": "200px",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_right",
+        "label": "Padding right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_bottom",
+        "label": "Padding bottom",
+        "default": "200px",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_left",
+        "label": "Padding left",
+        "info": "60px"
+      },
+      {
+        "type": "header",
+        "content": "== Gecko Extras"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_parallax",
+        "label": "Use Gecko parallax?",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "use_background_overlay",
+        "label": "Use background overlay?",
+        "default": false
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product features",
+        "category": "== Product"
+      }
+    ]
+  }
+{% endschema %}

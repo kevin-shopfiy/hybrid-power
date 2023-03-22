@@ -1,0 +1,315 @@
+<script type="text/javascript">
+  (function(e,t){typeof module!="undefined"&&module.exports?module.exports=t():typeof define=="function"&&define.amd?define(t):this[e]=t()})("$script",function(){function p(e,t){for(var n=0,i=e.length;n<i;++n)if(!t(e[n]))return r;return 1}function d(e,t){p(e,function(e){return t(e),1})}function v(e,t,n){function g(e){return e.call?e():u[e]}function y(){if(!--h){u[o]=1,s&&s();for(var e in f)p(e.split("|"),g)&&!d(f[e],g)&&(f[e]=[])}}e=e[i]?e:[e];var r=t&&t.call,s=r?t:n,o=r?e.join(""):t,h=e.length;return setTimeout(function(){d(e,function t(e,n){if(e===null)return y();!n&&!/^https?:\/\//.test(e)&&c&&(e=e.indexOf(".js")===-1?c+e+".js":c+e);if(l[e])return o&&(a[o]=1),l[e]==2?y():setTimeout(function(){t(e,!0)},0);l[e]=1,o&&(a[o]=1),m(e,y)})},0),v}function m(n,r){var i=e.createElement("script"),u;i.onload=i.onerror=i[o]=function(){if(i[s]&&!/^c|loade/.test(i[s])||u)return;i.onload=i[o]=null,u=1,l[n]=2,r()},i.async=1,i.src=h?n+(n.indexOf("?")===-1?"?":"&")+h:n,t.insertBefore(i,t.lastChild)}var e=document,t=e.getElementsByTagName("head")[0],n="string",r=!1,i="push",s="readyState",o="onreadystatechange",u={},a={},f={},l={},c,h;return v.get=m,v.order=function(e,t,n){(function r(i){i=e.shift(),e.length?v(i,r):v(i,t,n)})()},v.path=function(e){c=e},v.urlArgs=function(e){h=e},v.ready=function(e,t,n){e=e[i]?e:[e];var r=[];return!d(e,function(e){u[e]||r[i](e)})&&p(e,function(e){return u[e]})?t():!function(e){f[e]=f[e]||[],f[e][i](t),n&&n(r)}(e.join("|")),v},v.done=function(e){v([null],e)},v})
+    {% if template.name == 'product' %}
+    $script(['{{ 'jas_vendor.min.js' | asset_url }}', '{{ 'product_min.min.js' | asset_url }}'], 'ntready4');
+    {% else %}
+    $script('{{ 'jas_vendor.min.js' | asset_url }}', 'ntready4');
+    {% endif %}
+  $script.ready('ntready4', function() {
+   {%- if settings.show_multiple_currencies -%}
+      $script('//cdn.shopify.com/s/javascripts/currencies.js', function () {
+        $script('{{ 'jquery.currencies.min.js' | asset_url }}', function () {
+          {%- if template.name == 'product' -%}
+          $script(['{{ 'currencies.min.js' | asset_url }}','{{ 'jas_theme.min.js' | asset_url }}'], function () {
+          $script('{{ 'nt_pr_js.min.js' | asset_url }}', 'ntready5')
+          })
+          {%- else -%}
+          $script(['{{ 'currencies.min.js' | asset_url }}','{{ 'jas_theme.min.js' | asset_url }}'], 'ntready5')
+          {%- endif -%}
+        })
+      })
+   {%- else -%}
+     {%- if template.name == 'product' -%}
+        $script('{{ 'jas_theme.min.js' | asset_url }}', function () {
+          $script('{{ 'nt_pr_js.min.js' | asset_url }}', 'ntready5')
+        })
+     {%- else -%}
+      $script('{{ 'jas_theme.min.js' | asset_url }}', 'ntready5')
+     {%- endif -%}
+   {%- endif -%}
+   })
+   $script.ready('ntready5', function() {
+    {%- capture js -%}{%- assign checkjs = true -%}
+      {%- if settings.enable_suggest_products -%}'{{ 'suggest.min.js' | asset_url }}',{%- endif -%}
+      {%- if template.suffix == 'wishlist' or template.name == 'cart' -%}'{{ 'jquery.blockUI.js' | asset_url }}',{%- endif -%}
+      {%- if template.directory == 'customers' and template.name != 'cart' -%}{%- assign checkjs = false -%}'{{ 'shopify_common.js' | shopify_asset_url }}',{%- endif -%}
+      {%- if template.name == 'cart' and settings.shipping_calculator == 'Enabled' and cart.item_count > 0 -%}'https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js'{%- if checkjs -%},'{{ 'shopify_common.js' | shopify_asset_url }}'{%- endif -%}{%- endif -%}
+    {%- endcapture -%}
+    $script([{{ js | strip_newlines | remove:"  "}}], 'ntready6')
+   })
+{%- if settings.custom_js != blank %}
+    $script.ready('ntready6', function() {
+      $script('{{ 'custom_js.js' | asset_url }}')
+    })
+{%- endif %}
+{% if template.name == 'cart' and settings.shipping_calculator == 'Enabled' and cart.item_count > 0 %}
+    $script.ready('ntready6', function() {
+        $script('{{ 'jquery.cart.min.js' | asset_url }}', function () {
+          $script('{{ 'ShippingCalculator.min.js' | asset_url }}')
+        })
+    })
+{%- endif -%}
+{% if template.name == 'addresses' %}
+    $script.ready('ntready6', function() {
+      $script('{{ 'addresses.min.js' | asset_url }}')
+    })
+{%- endif -%}
+{% if template.name == 'cart' %}
+    $script.ready('ntready6', function() {
+      $script('{{ 'ntcart.min.js' | asset_url }}')
+    })
+{%- endif %}
+window.addEventListener('beforeunload', (event) => {document.body.className = document.body.className.replace("document-ready","") });
+</script>
+{%- if template.name == 'cart' -%}{%- assign product_gift = all_products['gift-wrapping'] -%}{%- endif -%}
+{%- if template.name == 'cart' and settings.use_gift_wrapp and product_gift != blank -%}
+      {% assign id = product_gift.variants.first.id %}
+      {% assign gift_wraps_in_cart = 0 %}
+      {% for item in cart.items %}
+        {% if item.id == id %}
+          {% assign gift_wraps_in_cart = item.quantity %}
+        {% endif %}
+      {% endfor %}
+      {% assign items_in_cart = cart.item_count | minus: gift_wraps_in_cart %}
+
+      <script>
+    {% if settings.gift_wrap_option == '2' %}
+      Shopify.Cart = Shopify.Cart || {};
+
+      Shopify.Cart.GiftWrap = {};
+
+      Shopify.Cart.GiftWrap.set = function() {
+        jQuery.ajax({
+          type: 'POST',
+          url: '/cart/update.js', 
+          data: { updates: { {{ id }}: {{ items_in_cart }} }, attributes: { 'gift-wrapping': true } }, 
+          dataType: 'json',
+          success: function() { location.href = '/cart'; }
+        });
+      }
+
+      Shopify.Cart.GiftWrap.remove = function() {
+        jQuery.ajax({
+          type: 'POST',
+          url: '/cart/update.js', 
+          data: { updates: { {{ id }}: 0 }, attributes: { 'gift-wrapping': '' } }, 
+          dataType: 'json',
+          success: function() { location.href = '/cart'; }
+        });
+      }
+
+      // If we have nothing but gift-wrap items in the cart.
+      {% if cart.items.size == 1 and gift_wraps_in_cart > 0 %}
+      jQuery(function() {
+        Shopify.Cart.GiftWrap.remove();
+      });
+      // If we don't have the right amount of gift-wrap items in the cart.
+      {% elsif gift_wraps_in_cart > 0 and gift_wraps_in_cart != items_in_cart %}
+      jQuery(function() {
+        Shopify.Cart.GiftWrap.set();
+      });
+      // If we have a gift-wrap item in the cart but our gift-wrapping cart attribute has not been set.
+      {% elsif gift_wraps_in_cart > 0 and cart.attributes.gift-wrapping == blank  %}
+      jQuery(function() {
+        Shopify.Cart.GiftWrap.set();
+      });
+      // If we have no gift-wrap item in the cart but our gift-wrapping cart attribute has been set.
+      {% elsif gift_wraps_in_cart == 0 and cart.attributes.gift-wrapping != blank  %}
+      jQuery(function() {
+        Shopify.Cart.GiftWrap.set();
+      });
+      {% endif %}
+
+      // When the gift-wrapping checkbox is checked or unchecked.
+      jQuery(function() {
+        jQuery('[name="attributes\[gift-wrapping\]"]').change(function() {
+          if (jQuery(this).is(':checked')) {
+            Shopify.Cart.GiftWrap.set();    
+          }
+          else {
+            Shopify.Cart.GiftWrap.remove();
+          }
+        });
+      });
+    {% else %}
+      Shopify.Cart = Shopify.Cart || {};
+
+      Shopify.Cart.GiftWrap = {};
+
+      Shopify.Cart.GiftWrap.set = function() {
+        jQuery.ajax({
+          type: 'POST',
+          url: '/cart/update.js', 
+          data: { updates: { {{ id }}: 1 }, attributes: { 'gift-wrapping': true } }, 
+          dataType: 'json',
+          success: function() { location.href = '/cart'; }
+        });
+      }
+
+      Shopify.Cart.GiftWrap.remove = function() {
+        jQuery.ajax({
+          type: 'POST',
+          url: '/cart/update.js', 
+          data: { updates: { {{ id }}: 0 }, attributes: { 'gift-wrapping': '' } }, 
+          dataType: 'json',
+          success: function() { location.href = '/cart'; }
+        });
+      }
+
+      // If we have nothing but gift-wrap items in the cart.
+      {% if cart.items.size == 1 and gift_wraps_in_cart > 0 %}
+      jQuery(function() {
+        Shopify.Cart.GiftWrap.remove();
+      });
+      // If we have more than one gift-wrap item in the cart.
+      {% elsif gift_wraps_in_cart > 1 %}
+      jQuery(function() {
+        Shopify.Cart.GiftWrap.set();
+      });
+      // If we have a gift-wrap item in the cart but our gift-wrapping cart attribute has not been set.
+      {% elsif gift_wraps_in_cart > 0 and cart.attributes.gift-wrapping == blank  %}
+      jQuery(function() {
+        Shopify.Cart.GiftWrap.set();
+      });
+      // If we have no gift-wrap item in the cart but our gift-wrapping cart attribute has been set.
+      {% elsif gift_wraps_in_cart == 0 and cart.attributes.gift-wrapping != blank  %}
+      jQuery(function() {
+        Shopify.Cart.GiftWrap.set();
+      });
+      {% endif %}
+
+      // When the gift-wrapping checkbox is checked or unchecked.
+      jQuery(function() {
+        jQuery('[name="attributes\[gift-wrapping\]"]').change(function() {
+          if (jQuery(this).is(':checked')) {
+            Shopify.Cart.GiftWrap.set();    
+          }
+          else {
+            Shopify.Cart.GiftWrap.remove();
+          }
+        });
+      });
+    {% endif %}
+  </script>
+{%- endif -%}
+<script>
+      // Opera 8.0+
+ var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+
+ // Firefox 1.0+
+ var isFirefox = typeof InstallTrigger !== 'undefined';
+
+ // Safari 3.0+ "[object HTMLElementConstructor]" 
+ var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
+
+ // Internet Explorer 6-11
+ var isIE = /*@cc_on!@*/false || !!document.documentMode;
+
+ // Edge 20+
+ var isEdge = !isIE && !!window.StyleMedia;
+
+ // Chrome 1+
+ var isChrome = !!window.chrome && !!window.chrome.webstore;
+
+ // Blink engine detection
+ var isBlink = (isChrome || isOpera) && !!window.CSS;
+   //Check if browser is IE
+ if (isIE) {
+   document.getElementsByTagName('body')[0].className+=' browser-IE';
+ }
+ //Check if browser is Chrome
+ else if (isChrome) {
+   document.getElementsByTagName('body')[0].className+=' browser-Chrome';
+ }
+ //Check if browser is Firefox 
+ else if (isFirefox) {
+   document.getElementsByTagName('body')[0].className+=' browser-Firefox';
+ }
+ //Check if browser is Safari
+ else if (isSafari) {
+   document.getElementsByTagName('body')[0].className+=' browser-Safari';
+ }
+ //Check if browser is Opera
+ else if (isOpera) {
+   document.getElementsByTagName('body')[0].className+=' browser-Opera';
+ }
+ //Check if browser is Edge
+ else if (isEdge) {
+   document.getElementsByTagName('body')[0].className+=' browser-Edge';
+ }
+ //Check if browser is Blink
+ else if (isBlink) {
+   document.getElementsByTagName('body')[0].className+=' browser-Blink';
+ }
+</script>
+{%- if settings.header_top_text != blank and settings.animation_header_enable and settings.header_top_enable -%}
+<script type="text/javascript">
+var TxtType = function(el, toRotate, period) {
+        this.toRotate = toRotate;
+        this.el = el;
+        this.loopNum = 0;
+        this.period = parseInt(period, 10) || 2000;
+        this.txt = '';
+        this.tick();
+        this.isDeleting = false;
+    };
+
+    TxtType.prototype.tick = function() {
+      {%- assign text_customer_enter = settings.header_top_text -%}
+      {%- assign arr_text_customer_enter =  text_customer_enter | split:',' -%}
+      var arr = {{arr_text_customer_enter | json }};
+        var i = this.loopNum % arr.length;
+        var fullTxt = arr[i];
+
+        if (this.isDeleting) {
+        this.txt = fullTxt.substring(0, this.txt.length - 1);
+        } else {
+        this.txt = fullTxt.substring(0, this.txt.length + 1);
+        }
+
+        this.el.innerHTML = '<span class="wrap">'+this.txt+'</span><span class="typed-cursor">|</span>';
+
+        var that = this;
+        var delta = 200 - Math.random() * 100;
+
+        if (this.isDeleting) { delta /= 2; }
+
+        if (!this.isDeleting && this.txt === fullTxt) {
+        delta = this.period;
+        this.isDeleting = true;
+        } else if (this.isDeleting && this.txt === '') {
+        this.isDeleting = false;
+        this.loopNum++;
+        delta = 500;
+        }
+
+        setTimeout(function() {
+        that.tick();
+        }, delta);
+    };
+    
+    // window.addEventListener('DOMContentLoaded', function() {
+    window.onload = function() {
+      var nt_typewrite = document.getElementById("nt_typewrite");
+      var toRotate = nt_typewrite.getAttribute('data-type');
+      var period = nt_typewrite.getAttribute('data-period');
+      console.log(toRotate)
+      if (toRotate) {
+        new TxtType(nt_typewrite, JSON.parse(toRotate), period);
+      }
+    };
+    // });
+</script>
+{%- endif -%}
+{%- if settings.prevent_copying -%}<script type="text/javascript">document.addEventListener('contextmenu', event => event.preventDefault());</script>{%- endif -%}
+{%- if template contains 'article' -%}{%- include 'photoswipe_blog' -%}{%- endif -%}
+
+<script>
+  // Industry Page Click second section slideshow
+      $("a.arrow-button.slide").click(function() {
+       
+    $('html, body').animate({
+        scrollTop: $(".second-module-section").offset().top - 250
+    }, 1000);
+});
+</script>

@@ -1,0 +1,244 @@
+<div class="filter-content">
+	{%- if section.blocks.size > 0 -%}
+		{%- for block in section.blocks -%}
+		   {%- case block.type -%}
+			   {%- when 'collection' -%}
+				  <aside class="widget widget_products clearfix">
+				      <h4 class="widget-title">{{ block.settings.title }}</h4>
+				      {%- if block.settings.featured_product_list_collection == blank -%}
+				         <p class="mg__0 mb__30">{{ 'homepage.onboarding.no_content' | t }}</p>
+				      {%- else -%}
+				      <ul class="product_list_widget">
+				      {%- for product in collections[block.settings.featured_product_list_collection].products limit:block.settings.featured_product_limit_all -%}
+				         {%- include 'product_group_loop' -%}
+				      {%- endfor -%}
+				      </ul>
+				      {%- endif -%}
+				  </aside>
+			   {%- when 'instagram' -%}
+			      <aside id="jas_gecko_instagram-3" class="widget widget_jas_gecko_instagram jas_instagram_section ratio1_1 equal-nt" data-username='{{block.settings.username | default:'no_user_name_xxx'}}' data-limit='{{block.settings.limit }}' data-target='{{block.settings.open_link}}'>
+					     <h4 class="widget-title">{{ block.settings.title }}</h4>
+					     <div class="jas-instagram jas-instagram-pics clearfix columns-{{block.settings.columns}}"></div>
+					</aside>
+			   {%- when 'shipping' -%}
+			      <aside id="jas_widget-{{block.id}}" class="widget widget_shipping">
+					     <h4 class="widget-title">{{ block.settings.title }}</h4>
+					     {%- for i in (1..6) -%}
+	                        {%- assign shipping = 'shipping_' | append:i -%}
+	                        {%- assign shipping_id = block.settings[shipping] -%}
+	                        {%- if shipping_id != blank -%}
+	                           {%- assign shipping = shipping_id | replace: ' ,', ',' | replace: ', ', ',' | split: ',' -%}
+	                              <div class="jas-service tl clearfix mt__30">
+	                              	{%- if shipping[0] != blank -%}<div class="icon medium cp"><i class="{%- if shipping[0] contains 'pe-' -%}{{shipping[0]}}{%- else -%}fa fa-{{shipping[0]}}{%- endif -%}">&nbsp;</i></div>{%- endif -%}
+	                                 <div class="content">
+		                              	<h3 class="title cp tu fs__14 mg__0 mb__5">{{shipping[1]}}</h3>
+		                                 <p class="mg__0">{{shipping[2]}}</p>
+	                                 </div>
+	                              </div>
+	                        {%- endif -%}
+	                     {%- endfor -%}
+					</aside>
+			   {%- when 'html' -%}
+			      <aside id="jas_widget-{{block.id}}" class="widget">
+					     <h4 class="widget-title">{{ block.settings.title }}</h4>
+					     {%- if block.settings.code != blank -%}{{block.settings.code}}{%- endif -%}
+					</aside>
+			   {%- when 'text' -%}
+			      <aside id="jas_widget-{{block.id}}" class="widget">
+					     <h4 class="widget-title">{{ block.settings.title }}</h4>
+					     {%- if block.settings.text != blank -%}{{block.settings.text}}{%- endif -%}
+					</aside>
+		   {%- endcase -%}
+		{%- endfor -%}
+	{%- endif -%}
+	{%- if section.blocks.size == 0 -%}<p class="mg__0 mb__30">{{ 'homepage.onboarding.no_content' | t }}</p>{%- endif -%}
+</div>
+{%- schema -%}
+  {
+    "name": "Product Sidebar",
+    "class": "jas_ajaxarea clearfix",
+    "max_blocks": 15,
+    "blocks": [
+      {
+        "type": "collection",
+        "name": "Featured Products",
+        "settings": [
+         {
+          "type":"text",
+          "id":"title",
+          "label":"Title",
+          "default":"Sale Products"
+          },
+          {
+           "type": "collection",
+           "id": "featured_product_list_collection",
+           "label": "Collection to use"
+         },
+          {
+           "type": "text",
+           "id": "featured_product_limit_all",
+           "label": "Number of products to show",
+           "default": "3"
+         }
+        ]
+      },
+      {
+        "type": "instagram",
+        "name": "Instagram feed",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Instagram"
+          },
+          {
+	        "type": "range",
+	        "id": "columns",
+	        "min": 2,
+	        "max": 10,
+	        "step": 1,
+	        "label": "columns",
+	        "default": 3
+	      },
+         {
+	        "type": "text",
+	        "id": "username",
+	        "label": "Username Instagram",
+	        "default": "jsfashionstock",
+	         "info":"Ex: https://www.instagram.com/asos/, please enter:asos"
+	      },
+	      {
+	        "type": "range",
+	        "id": "limit",
+	        "min": 1,
+	        "max": 12,
+	        "step": 1,
+	        "unit": "img",
+	        "label": "Number of photos",
+	        "default": 12
+	      },
+	      {
+	        "type": "select",
+	        "id": "open_link",
+	        "options": [
+	          {
+	            "value": "_self",
+	            "label": "Current window (_self)"
+	          },
+	         {
+	            "value": "_blank",
+	            "label": "New window (_blank)"
+	          }
+	        ],
+	        "label": "Open link in",
+	        "default": "_self"
+	      }
+        ]
+      },
+      {
+        "type": "shipping",
+        "name": "SHIPPING DELIVERY",
+        "limit": 1,
+        "settings": [
+         {
+          "type":"text",
+          "id":"title",
+          "label":"Title",
+          "default":"SHIPPING & DELIVERY"
+         },
+         {
+           "type": "select",
+           "id": "style",
+           "label": "Style",
+           "default": "2",
+           "options": [
+             {
+               "value": "1",
+               "label": "Style 1"
+             },
+             {
+               "value": "2",
+               "label": "Style 2"
+             }
+           ]
+         },
+         {
+           "type": "paragraph",
+           "content": "Example: clock-o,Save up to 20%,limited time [Get icons fa your](http:\/\/fontawesome.io\/icons\/)"
+         },
+         {
+           "type": "paragraph",
+           "content": "Example: pe-7s-car,Save up to 20%,limited time [Get icons pe your](http:\/\/themes-pixeden.com\/font-demos\/7-stroke/)"
+         },
+         {
+           "type": "textarea",
+           "id": "shipping_1",
+           "label":"Shipping Block 1"
+         },
+         {
+           "type": "textarea",
+           "id": "shipping_2",
+           "label":"Shipping Block 2"
+         },
+         {
+           "type": "textarea",
+           "id": "shipping_3",
+           "label":"Shipping Block 3"
+         },
+         {
+           "type": "textarea",
+           "id": "shipping_4",
+           "label":"Shipping Block 4"
+         },
+         {
+           "type": "textarea",
+           "id": "shipping_5",
+           "label":"Shipping Block 5"
+         },
+         {
+           "type": "textarea",
+           "id": "shipping_6",
+           "label":"Shipping Block 6"
+         }
+        ]
+      },
+      {
+        "type": "html",
+        "name": "Custom HTML",
+        "settings": [
+         {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Custom HTML"
+          },
+          {
+            "type": "html",
+            "id": "code",
+            "label": "HTML"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "name": "Text",
+        "settings": [
+            {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Talk about your brand"
+            },
+            {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+            }
+         ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,152 @@
+{%- unless gl_design -%}
+{%- assign gl_design = 'icons-design-default' -%}
+{%- endunless -%}
+{%- unless gl_size -%}
+{%- assign gl_size = 'icons-size-small' -%}
+{%- endunless -%}
+{%- unless gl_text_align -%}
+{%- assign gl_text_align = 'center' -%}
+{%- endunless -%}
+{%- unless basel_tooltip -%}
+{%- assign basel_tooltip = false -%}
+{%- endunless -%}
+{%- unless follow_social -%}
+{%- assign follow_social = false -%}
+{%- endunless -%}
+
+{%- if template.name == 'article' or template.name == 'blog' or template.name == 'index' -%}
+  {%- capture permalinkURL -%}{{ shop.url }}{{ article.url }}{%- endcapture -%}
+  {%- capture shareTitle -%}{{ article.title | url_param_escape }}{%- endcapture -%}
+
+{%- elsif template.name == 'product' -%}
+  {%- capture permalinkURL -%}{{ shop.url }}{{ product.url }}{%- endcapture -%}
+  {%- capture shareTitle -%}{{ product.title | url_param_escape }}{%- endcapture -%}
+
+{%- elsif template.name == 'password' -%}
+  {%- capture permalinkURL -%}{{ shop.url }}{%- endcapture -%}
+  {%- capture shareTitle -%}{%- unless shop.description == blank -%}{{ shop.description | url_param_escape }}{%- else -%}{{ shop.name | url_param_escape }}{%- endunless -%}{%- endcapture -%}
+{%- elsif template.name == 'index' -%}
+  {%- capture permalinkURL -%}{{ shop.url }}{%- endcapture -%}
+  {%- capture shareTitle -%}{%- unless shop.description == blank -%}{{ shop.description | url_param_escape }}{%- else -%}{{ shop.name | url_param_escape }}{%- endunless -%}{%- endcapture -%}
+{%- elsif template.name == 'page' -%}
+  {%- capture permalinkURL -%}{{ shop.url }}{{ page.url }}{%- endcapture -%}
+  {%- capture shareTitle -%}{{ page.title | url_param_escape }}{%- endcapture -%}
+{%- endif -%}
+{%- if style_social == 'header' -%}
+  <div class="jas-socials pr">
+    {%- if follow_social == false -%}  
+      {%- if settings.share_facebook -%}
+       <a href="https://www.facebook.com/sharer/sharer.php?u={{ permalinkURL }}" class="dib br__50 tc facebook"><i class="fa fa-facebook"></i></a>
+      {%- endif -%}
+      {% if settings.share_twitter %}
+       <a href="http://twitter.com/share?url={{ permalinkURL }}" class="dib br__50 tc twitter"><i class="fa fa-twitter"></i></a>
+       {%- endif -%}
+       {% if settings.share_google %}
+       <a href="http://plus.google.com/share?url={{ permalinkURL }}"class="dib br__50 tc google-plus"><i class="fa fa-google-plus"></i></a>
+       {%- endif -%}
+       {% if settings.share_email %}
+       <a href="mailto:?subject=Check this {{ permalinkURL }}" class="dib br__50 tc envelope"><i class="fa fa-envelope"></i></a>
+       {%- endif -%}
+       {%- if product.featured_image or article.image -%}
+          {%- if settings.share_pinterest -%}
+          <a href="http://pinterest.com/pin/create/button/?url={{ permalinkURL }}&amp;media=http:{%- if template contains 'product' -%}{{ product | img_url: '1024x1024' }}{%- else -%}{{ article | img_url: '1024x1024' }}{%- endif -%}" class="dib br__50 tc pinterest"><i class="fa fa-pinterest"></i></a>
+          {%- endif -%}
+    
+        {%- if settings.share_pinterest -%}
+          
+    
+        {%- endif -%}
+    
+    
+          {%- if settings.share_tumblr -%}
+          <a data-content="http:{%- if template contains 'product' -%}{{ product | img_url: '1024x1024' }}{%- else -%}{{ article | img_url: '1024x1024' }}{%- endif -%}" href="//tumblr.com/widgets/share/tool?canonicalUrl={{ permalinkURL }}"class="dib br__50 tc tumblr"><i class="fa fa-tumblr"></i></a>
+          {%- endif -%}
+        {%- endif -%}
+    {%-else-%}
+      {%- if settings.social_facebook_link != blank -%}<a href="{{ settings.social_facebook_link }}" class="dib br__50 tc facebook" ><i class="fa fa-facebook"></i></a>{%-endif-%}
+      {%- if settings.social_twitter_link != blank -%}<a href="{{ settings.social_twitter_link }}" class="dib br__50 tc twitter"><i class="fa fa-twitter"></i></a>{%-endif-%}
+      {%- if settings.social_google_plus_link != blank -%}<a href="{{ settings.social_google_plus_link }}" class="dib br__50 tc google-plus"><i class="fa fa-google-plus"></i></a>{%-endif-%}
+      {%- if settings.social_pinterest_link != blank -%}<a href="{{settings.social_pinterest_link}}" class="dib br__50 tc pinterest"><i class="fa fa-pinterest"></i></a>{%-endif-%}
+      {%- if settings.social_instagram_link != blank -%}<a href="{{ settings.social_instagram_link }}" class="dib br__50 tc instagram"><i class="fa fa-instagram"></i></a>{%-endif-%}
+      {%- if settings.social_linkedin_link != blank -%}<a href="{{ settings.social_linkedin_link }}" class="dib br__50 tc linkedin"><i class="fa fa-linkedin"></i></a>{%-endif-%}
+      {%- if settings.social_tumblr_link != blank -%}<a href="{{ settings.social_tumblr_link }}" class="dib br__50 tc tumblr"><i class="fa fa-tumblr"></i></a>{%-endif-%}
+      {%- if settings.social_youtube_link != blank -%}<a href="{{ settings.social_youtube_link }}" class="dib br__50 tc youtube"><i class="fa fa-youtube-play"></i></a>{%-endif-%}
+      {%- if settings.social_vimeo_link != blank -%}<a href="{{ settings.social_vimeo_link }}" class="dib br__50 tc vimeo"><i class="fa fa-vimeo"></i></a>{%-endif-%}
+      {%- if settings.social_snapchat_link != blank -%}<a href="{{ settings.social_snapchat_link }}" class="dib br__50 tc snapchat"><i class="fa fa-snapchat"></i></a>{%-endif-%}
+    {%-endif-%}
+  </div>
+{%- elsif style_social == 'footer' -%}
+  <ul class="jas-social mt__15">
+    {%- if follow_social == false -%}  
+      {%- if settings.share_facebook -%}
+       <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ permalinkURL }}" class="cb facebook"><i class="fa fa-facebook"></i></a></li>
+      {%- endif -%}
+      {% if settings.share_twitter %}
+       <li><a href="http://twitter.com/share?url={{ permalinkURL }}" class="cb twitter"><i class="fa fa-twitter"></i></a></li>
+       {%- endif -%}
+       {% if settings.share_google %}
+       <li><a href="http://plus.google.com/share?url={{ permalinkURL }}" class="cb google-plus"><i class="fa fa-google-plus"></i></a></li>
+       {%- endif -%}
+       {% if settings.share_email %}
+       <li><a href="mailto:?subject=Check this {{ permalinkURL }}" class="cb envelope"><i class="fa fa-envelope"></i></a></li>
+       {%- endif -%}
+       {%- if product.featured_image or article.image -%}
+          {%- if settings.share_pinterest -%}
+          <li><a href="http://pinterest.com/pin/create/button/?url={{ permalinkURL }}&amp;media=http:{%- if template contains 'product' -%}{{ product | img_url: '1024x1024' }}{%- else -%}{{ article | img_url: '1024x1024' }}{%- endif -%}" class="cb pinterest"><i class="fa fa-pinterest"></i></a></li>
+          {%- endif -%}
+          {%- if settings.share_tumblr -%}
+          <li><a data-content="http:{%- if template contains 'product' -%}{{ product | img_url: '1024x1024' }}{%- else -%}{{ article | img_url: '1024x1024' }}{%- endif -%}" href="//tumblr.com/widgets/share/tool?canonicalUrl={{ permalinkURL }}" class="cb tumblr"><i class="fa fa-tumblr"></i></a></li>
+          {%- endif -%}
+        {%- endif -%}
+    {%-else-%}
+      {%- if settings.social_facebook_link != blank -%}<li><a href="{{ settings.social_facebook_link }}"><i class="fa fa-facebook"></i></a></li>{%-endif-%}
+      {%- if settings.social_twitter_link != blank -%}<li><a href="{{ settings.social_twitter_link }}"><i class="fa fa-twitter"></i></a></li>{%-endif-%}
+      {%- if settings.social_google_plus_link != blank -%}<li><a href="{{ settings.social_google_plus_link }}"><i class="fa fa-google-plus"></i></a></li>{%-endif-%}
+      {%- if settings.social_pinterest_link != blank -%}<li><a href="{{settings.social_pinterest_link}}"><i class="fa fa-pinterest"></i></a></li>{%-endif-%}
+      {%- if settings.social_instagram_link != blank -%}<li><a href="{{ settings.social_instagram_link }}"><i class="fa fa-instagram"></i></a></li>{%-endif-%}
+      {%- if settings.social_tumblr_link != blank -%}<li><a href="{{ settings.social_tumblr_link }}"><i class="fa fa-tumblr"></i></a>{%-endif-%}
+      {%- if settings.social_youtube_link != blank -%}<li><a href="{{ settings.social_youtube_link }}"><i class="fa fa-youtube-play"></i></a></li>{%-endif-%}
+      {%- if settings.social_vimeo_link != blank -%}<li><a href="{{ settings.social_vimeo_link }}"><i class="fa fa-vimeo"></i></a></li>{%-endif-%}
+      {%- if settings.social_snapchat_link != blank -%}<li><a href="{{ settings.social_snapchat_link }}"><i class="fa fa-snapchat"></i></a></li>{%-endif-%}
+    {%-endif-%}
+  </ul>
+{%- else -%}
+  <div class="jas-social">
+    {%- if follow_social == false -%}  
+      {%- if settings.share_facebook -%}
+       <a href="https://www.facebook.com/sharer/sharer.php?u={{ permalinkURL }}" class="cb facebook"><i class="fa fa-facebook"></i></a>
+      {%- endif -%}
+      {% if settings.share_twitter %}
+       <a href="http://twitter.com/share?url={{ permalinkURL }}" class="cb twitter"><i class="fa fa-twitter"></i></a>
+       {%- endif -%}
+       {% if settings.share_google %}
+       <a href="http://plus.google.com/share?url={{ permalinkURL }}" class="cb google-plus"><i class="fa fa-google-plus"></i></a>
+       {%- endif -%}
+       {% if settings.share_email %}
+       <a href="mailto:?subject=Check this {{ permalinkURL }}" class="cb envelope"><i class="fa fa-envelope"></i></a>
+       {%- endif -%}
+       {%- if product.featured_image or article.image -%}
+          {%- if settings.share_pinterest -%}
+          <a href="http://pinterest.com/pin/create/button/?url={{ permalinkURL }}&amp;media=http:{%- if template contains 'product' -%}{{ product | img_url: '1024x1024' }}{%- else -%}{{ article | img_url: '1024x1024' }}{%- endif -%}"class="cb pinterest"><i class="fa fa-pinterest"></i></a>
+          {%- endif -%}
+          {%- if settings.share_tumblr -%}
+          <a data-content="http:{%- if template contains 'product' -%}{{ product | img_url: '1024x1024' }}{%- else -%}{{ article | img_url: '1024x1024' }}{%- endif -%}" href="//tumblr.com/widgets/share/tool?canonicalUrl={{ permalinkURL }}" class="cb tumblr"><i class="fa fa-tumblr"></i></a>
+          {%- endif -%}
+        {%- endif -%}
+    {%-else-%}
+      {%- if settings.social_facebook_link != blank -%}<a href="{{ settings.social_facebook_link }}"><i class="fa fa-facebook"></i></a>{%-endif-%}
+      {%- if settings.social_twitter_link != blank -%}<a href="{{ settings.social_twitter_link }}"><i class="fa fa-twitter"></i></a>{%-endif-%}
+      {%- if settings.social_google_plus_link != blank -%}<a href="{{ settings.social_google_plus_link }}"><i class="fa fa-google-plus"></i></a>{%-endif-%}
+      {%- if settings.social_pinterest_link != blank -%}<a href="{{settings.social_pinterest_link}}"><i class="fa fa-pinterest"></i></a>{%-endif-%}
+      {%- if settings.social_instagram_link != blank -%}<a href="{{ settings.social_instagram_link }}"><i class="fa fa-instagram"></i></a>{%-endif-%}
+      {%- if settings.social_tumblr_link != blank -%}<a href="{{ settings.social_tumblr_link }}"><i class="fa fa-tumblr"></i></a>{%-endif-%}
+      {%- if settings.social_youtube_link != blank -%}<a href="{{ settings.social_youtube_link }}"><i class="fa fa-youtube-play"></i></a>{%-endif-%}
+      {%- if settings.social_linkedin_link != blank -%}<a href="{{ settings.social_linkedin_link }}"><i class="fa fa-linkedin"></i></a>{%-endif-%}
+     
+      {%- if settings.social_vimeo_link != blank -%}<a href="{{ settings.social_vimeo_link }}"><i class="fa fa-vimeo"></i></a>{%-endif-%}
+      {%- if settings.social_snapchat_link != blank -%}<a href="{{ settings.social_snapchat_link }}"><i class="fa fa-snapchat"></i></a>{%-endif-%}
+      
+    {%-endif-%}
+  </div>
+{%- endif -%}
+

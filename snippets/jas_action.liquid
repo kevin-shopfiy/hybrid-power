@@ -1,0 +1,93 @@
+{% comment %}
+{%- if settings.gecko_search_widget != 'disable' -%}
+     <div class="sf-open cb chp pr gecko-search-{{settings.gecko_search_widget}} cursor-pointer" ><i class="pe-7s-search"></i>
+        {%- if settings.gecko_search_widget == 'dropdown' -%}
+            <div class="wrapper-search-dropdown tl">
+               <span class="gecko-close-search">close</span>
+               <form role="search" method="get" class="pr searchform{%- if settings.ajax_search %} gecko-ajax-search{%- endif -%}" action="/search">
+                  <div>
+                     <label class="screen-reader-text" for="q"></label>
+                     <input type="text" placeholder="{{ 'general.search.placeholder' | t }}" value="{{ search.terms | escape }}" name="q" id="q" autocomplete="off">
+                     {%- if settings.only_search_products -%}<input type="hidden" name="type" value="product" />{%- endif -%}
+                     <button type="submit" id="searchsubmit">{{ 'general.search.submit' | t }}</button>
+                  </div>
+               </form>
+               <div class="search-results-wrapper">
+                  <div class="gecko-search-results">
+                     <ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content autocomplete-suggestions" style="display: none"></ul>
+                  </div>
+               </div>
+            </div>
+         {%- endif -%}
+      </div>
+   {%- endif -%}
+{% endcomment %}
+   {%- if settings.header_top_enable == false and settings.show_multiple_currencies and settings.header_design != '6' %}
+   <div class="jas-settings hidden-xs ts__05 pr">
+      <a class="cb chp" href="javascript:void(0);"><i class="pe-7s-config"></i></a>
+      <div class="jas-settings-wrapper pa">
+         <div class="setting-content tl">
+            <div class="select-currency currencies clearfix">
+              <div class="currency-title">{{ 'general.homepage.currency' | t }}</div>
+              <div class="currency-topbar">                                                
+                  <div class="currency-list currency-lists">
+                     {%- include 'currency-picker',currency_header:true -%}
+                  </div>
+               </div>
+            </div>
+            {%- if settings.show_language_currencies -%}
+               <div class="select-currency jas_lang clearfix">
+                 <div class="currency-title">{{ 'general.homepage.language' | t }}</div>
+                 <div class="currency-topbar">                                                
+                     <div class="currency-list currency-lists">
+                        {%- include 'jas_lang',currency_header:true -%}
+                     </div>
+                  </div>
+               </div>
+            {%- endif -%}
+            {%- if shop.customer_accounts_enabled and settings.account_header_enable -%}
+               <ul class="clearfix">
+                  {%- if customer -%}
+                  <li><a class="db cg chp" href="/account">{{ 'general.layout.customer.dashboard' | t }}</a></li>
+                  <li><a class="db cg chp" href="/account/logout">{{ 'general.layout.customer.log_out' | t }}</a></li>
+                  {%- else -%}
+                  <li><a class="db cg chp{%- if customer == blank and settings.login_side %} jas-sp-login login_side_open_none{%- endif -%}" href="{%- if customer == blank and settings.login_side %}#login_side{%- else -%}/account/login{%- endif -%}">{{ 'general.layout.customer.log_in' | t }}</a></li>
+                   {%- endif -%}
+               </ul>
+            {%- endif -%}
+         </div>
+      </div>
+   </div>
+   {%- elsif shop.customer_accounts_enabled and settings.account_header_enable -%}
+      <div class="jas-my-account hidden-xs ts__05 pr">
+         <a class="cb chp db{%- if customer == blank and settings.login_side %} jas-sp-login login_side_open_none{%- endif -%}"  href="{%- if customer == blank and settings.login_side %}#login_side{%- else -%}/account{%- endif -%}"><i class="pe-7s-user"></i></a>
+         {%- if customer and settings.login_side -%}
+         <ul class="pa tc">
+            <li><a class="db cg chp" href="/account">{{ 'general.layout.customer.dashboard' | t }}</a></li>
+            <li><a class="db cg chp" href="/account/logout">{{ 'general.layout.customer.log_out' | t }}</a></li>
+         </ul>
+         {%- elsif settings.login_side == false -%}
+         <ul class="pa tc">
+            {%- if customer -%}
+            <li><a class="db cg chp" href="/account">{{ 'general.layout.customer.dashboard' | t }}</a></li>
+            <li><a class="db cg chp" href="/account/logout">{{ 'general.layout.customer.log_out' | t }}</a></li>
+            {%- else -%}
+            <li><a class="db cg chp" href="/account/login">{{ 'general.layout.customer.log_in' | t }}</a></li>
+             {%- endif -%}
+         </ul>
+         {%- endif -%}
+      </div>
+   {%- endif -%}
+   {%- if settings.use_wishlist and pages['wishlist'].url != blank -%}
+      {%- include 'nitro-wishlist' -%}
+      <a class="cb chp pr hidden-xs" href="{{pages['wishlist'].url}}"><i class="pe-7s-like"></i><span class="pa count jas_count_wishlist bgb br__50 cw tc">{{ NITRO_WISHLIST_COUNT }}</span></a>
+   {%- endif -%}
+   {%- if settings.cart_design != 'disable' -%}
+   <div class="jas-icon-cart pr{%- if settings.cart_position == 'side' %} jas-sidebar-cart{%- endif -%}">
+      <a class="cart-contents pr cb chp db" href="/cart" title="{{ 'cart.general.view' | t }}"><i class="pe-7s-shopbag"></i><span class="pa count cartCount bgb br__50 cw tc">{{ cart.item_count }}</span></a>
+      {%- if settings.cart_position != 'side' -%}
+        {%- include 'cart_widget_side'-%}
+      {%- endif -%}
+   </div>
+   {%- if settings.cart_design == '2' -%}<div class="gecko-cart-subtotal hidden-xs"><span class="shopify-Price-amount amount">{{ cart.total_price | money }}</span></div>{%- endif -%}
+   {%- endif -%}

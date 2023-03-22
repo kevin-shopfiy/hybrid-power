@@ -1,0 +1,24 @@
+<span class="price">
+{%- assign variant_unit = product.variants.first -%}{%- assign link_size = linklists[product.handle].links.size -%}
+{%- if link_size == 0 and variant_unit.unit_price_measurement -%}
+   {%- if variant_unit.compare_at_price > variant_unit.price -%}<del>{{ variant_unit.compare_at_price  | money }}</del> <ins>{{ variant_unit.price | money }}</ins>{%- else -%}{{ variant_unit.price | money }}{%- endif -%}
+   {%- capture unit_price_base_unit -%}
+    <span class="unit_base">
+      {%- if variant_unit.unit_price_measurement -%}
+        {%- if variant_unit.unit_price_measurement.reference_value != 1 -%}
+          {{- variant_unit.unit_price_measurement.reference_value -}}
+        {%- endif -%}
+        {{ variant_unit.unit_price_measurement.reference_unit -}}
+      {%- endif -%}
+    </span>
+   {%- endcapture -%}
+   <div class="grid_unit_price"><span class="unit_price">{{ variant_unit.unit_price | money }}</span><span>/</span><span 
+{%- elsif link_size == 0 -%}
+    {%- if product.price_varies -%}{{ product.price_min | money }} – {{ product.price_max | money }}
+    {%- elsif product.compare_at_price > product.price -%}<del>{{ product.compare_at_price  | money }}</del> <ins>{{ product.price | money }}</ins>
+    {%- else -%}{{ product.price | money }}
+    {%- endif -%}
+{%- else -%}
+  {{ product.price | money }}{%- if product.compare_at_price != blank -%} – {{ product.compare_at_price | money }}{%- endif -%}
+{%- endif -%}
+</span>

@@ -1,0 +1,291 @@
+<div class="sixth-module-section">
+<div class="sixth-module" style="background-color : {{section.settings.background_color}} !important; ">
+<div class="container">
+<div class="home-imagebox-main {% if section.settings.text_alighment != blank %} {{section.settings.text_alighment}} {% endif %}" >
+<div id="home-imagebox" class="index-section" >
+  <div class="one-half one-half-column-left">
+    
+    
+    <div class="icon-box-row">
+      <div class="icon-box">
+        <div class="w__80">
+          <div class="flex-box">
+            <img src="https://cdn.shopify.com/s/files/1/0253/4431/1386/files/modi-01_256x256_crop_center.png?v=1652470944">
+            <div style="color:#fff">
+              <h3 style="font-size:17px;color:#fff;">DIRECT FROM MANUFACTURER</h3>
+              <p>From design and development, to delivery and installation, we take care of it all in-house.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="icon-box">
+        <div class="w__80">
+          <div class="flex-box">
+            <img src="https://cdn.shopify.com/s/files/1/0253/4431/1386/files/modi-02_256x256_crop_center.png?v=1652470945">
+            <div style="color:#fff">
+              <h3 style="font-size:17px;color:#fff;">QUALITY YOU CAN TRUST</h3>
+              <p>Our best-in-class systems are designed in-house in Canada, while the majority of our products are assembled in North America.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="icon-box">
+        <div class="w__80">
+          <div class="flex-box">
+            <img src="https://cdn.shopify.com/s/files/1/0253/4431/1386/files/modi-04_256x256_crop_center.png?v=1652470945">
+            <div style="color:#fff">
+              <h3 style="font-size:17px;color:#fff;">SEAMLESS SERVICE & SUPPORT</h3>
+              <p>At HPS, our customers come first. Our proprietary training program and pre/post-purchase processes ensure you are supported from start to finish.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="icon-box">
+        <div class="w__80">
+          <div class="flex-box">
+            <img src="https://cdn.shopify.com/s/files/1/0253/4431/1386/files/modi-03_256x256_crop_center.png?v=1652470945">
+            <div style="color:#fff">
+              <h3 style="font-size:17px;color:#fff;">PEACE OF MIND WITH POWERCARE</h3>
+              <p>We offer extended product warranties on all our HPS products that include premium service and support as needed.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+<div class="one-half one-half-column-right">
+  <div class="question_section  custom_{{section.settings.text_alighment}}">     
+    <h2 class="h2_title" style=" color:{{section.settings.btn_text_color}};">{{section.settings.btn_title}}</h2>   
+    <h2 class="" style="font-weight: 900;color: {{section.settings.heading_color}} !important;">
+      {% if section.settings.text-box != blank %}
+      {{section.settings.text-box}}
+      {% endif %}
+    </h2>
+    <h4 style="color: {{section.settings.description_color}} !important;">
+      {% if section.settings.text != blank %}
+      {{section.settings.text}}
+      {% endif %}
+    </h4>
+  </div>
+  
+  <div class="form-box">
+    
+    <iframe
+      id="JotFormIFrame-221366447214049"
+      title="Form"
+      onload="window.parent.scrollTo(0,0)"
+      allowtransparency="true"
+      allowfullscreen="true"
+      allow="geolocation; microphone; camera"
+      src="https://form.jotform.com/221366447214049"
+      frameborder="0"
+      style="
+      min-width: 100%;
+      height:539px;
+      border:none;"
+      scrolling="no"
+    >
+    </iframe>
+    <script type="text/javascript">
+      var ifr = document.getElementById("JotFormIFrame-221366447214049");
+      if (ifr) {
+        var src = ifr.src;
+        var iframeParams = [];
+        if (window.location.href && window.location.href.indexOf("?") > -1) {
+          iframeParams = iframeParams.concat(window.location.href.substr(window.location.href.indexOf("?") + 1).split('&'));
+        }
+        if (src && src.indexOf("?") > -1) {
+          iframeParams = iframeParams.concat(src.substr(src.indexOf("?") + 1).split("&"));
+          src = src.substr(0, src.indexOf("?"))
+        }
+        iframeParams.push("isIframeEmbed=1");
+        ifr.src = src + "?" + iframeParams.join('&');
+      }
+      window.handleIFrameMessage = function(e) {
+        if (typeof e.data === 'object') { return; }
+        var args = e.data.split(":");
+        if (args.length > 2) { iframe = document.getElementById("JotFormIFrame-" + args[(args.length - 1)]); } else { iframe = document.getElementById("JotFormIFrame"); }
+        if (!iframe) { return; }
+        switch (args[0]) {
+          case "scrollIntoView":
+            iframe.scrollIntoView();
+            break;
+          case "setHeight":
+            iframe.style.height = args[1] + "px";
+            break;
+          case "collapseErrorPage":
+            if (iframe.clientHeight > window.innerHeight) {
+              iframe.style.height = window.innerHeight + "px";
+            }
+            break;
+          case "reloadPage":
+            window.location.reload();
+            break;
+          case "loadScript":
+            if( !window.isPermitted(e.origin, ['jotform.com', 'jotform.pro']) ) { break; }
+            var src = args[1];
+            if (args.length > 3) {
+                src = args[1] + ':' + args[2];
+            }
+            var script = document.createElement('script');
+            script.src = src;
+            script.type = 'text/javascript';
+            document.body.appendChild(script);
+            break;
+          case "exitFullscreen":
+            if      (window.document.exitFullscreen)        window.document.exitFullscreen();
+            else if (window.document.mozCancelFullScreen)   window.document.mozCancelFullScreen();
+            else if (window.document.mozCancelFullscreen)   window.document.mozCancelFullScreen();
+            else if (window.document.webkitExitFullscreen)  window.document.webkitExitFullscreen();
+            else if (window.document.msExitFullscreen)      window.document.msExitFullscreen();
+            break;
+        }
+        var isJotForm = (e.origin.indexOf("jotform") > -1) ? true : false;
+        if(isJotForm && "contentWindow" in iframe && "postMessage" in iframe.contentWindow) {
+          var urls = {"docurl":encodeURIComponent(document.URL),"referrer":encodeURIComponent(document.referrer)};
+          iframe.contentWindow.postMessage(JSON.stringify({"type":"urls","value":urls}), "*");
+        }
+      };
+      window.isPermitted = function(originUrl, whitelisted_domains) {
+        var url = document.createElement('a');
+        url.href = originUrl;
+        var hostname = url.hostname;
+        var result = false;
+        if( typeof hostname !== 'undefined' ) {
+          whitelisted_domains.forEach(function(element) {
+              if( hostname.slice((-1 * element.length - 1)) === '.'.concat(element) ||  hostname === element ) {
+                  result = true;
+              }
+          });
+          return result;
+        }
+      };
+      if (window.addEventListener) {
+        window.addEventListener("message", handleIFrameMessage, false);
+      } else if (window.attachEvent) {
+        window.attachEvent("onmessage", handleIFrameMessage);
+      }
+      </script>
+  </div>
+  
+  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<style>
+  .flex-box img{
+    width: 55px;height: 100%;display: block;
+  }
+  .icon-box {
+    padding: 0 0 50px;
+}
+  
+  .w__80{
+    width:80%;
+  }
+.custom_class-right-center {
+    text-align: center;
+}
+  .one-half.one-half-column-left {
+    margin-top: 30px;
+}
+  .sixth-module div#home-imagebox{
+    align-items: flex-start !important;
+  }
+</style>
+{% schema %}
+  {
+    "name": "Industry Sixth Section",
+    "settings": [
+	 
+  {
+				"type": "color",
+                    "id": "background_color",
+                    "label": "Background Color",
+                     "default": "#fff"
+               }, 
+
+      {
+        "id": "text-box",
+        "type": "text",
+        "label": "Heading"
+        
+      },
+ {
+                    "type": "color",
+                    "id": "heading_color",
+                    "label": "Heading Color",
+                    "default": "#000"
+                 },
+
+      {
+        "id": "text",
+        "type": "richtext",
+        "label": "Description"
+       
+      },
+ {
+                    "type": "color",
+                    "id": "description_color",
+                    "label": "Description Color",
+                    "default": "#000"
+                 },
+{
+        "type": "text",
+        "id": "btn_title",
+        "label": "Button title",
+        "default": "Button title"
+      },
+{
+        "type": "color",
+        "id": "btn_text_color",
+        "label": "Button Text Color",
+        "default": "#ef3288"
+      },
+      {
+        "type": "color",
+        "id": "btn_color",
+        "label": "Button Color",
+        "default": "#ef3288"
+      },
+       {
+        "label": "Link to",
+        "id": "url",
+        "type": "url"
+      },
+{
+            "type": "select",
+            "id": "text_alighment",
+            "label": "Text alignment",
+            "default": "class-left-right",
+            "options": [
+              {
+                "value": "class-left-right",
+                "label": "Text to Left"
+              },
+              {
+                "value": "class-right-center",
+                "label": "Text to Center"
+              },
+{
+                "value": "class-right-left",
+                "label": "Text to Right"
+              }
+             
+
+             
+            ]
+          }
+
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

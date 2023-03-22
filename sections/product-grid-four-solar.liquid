@@ -1,0 +1,357 @@
+{%- include 'style_mp_section' -%}
+<div class="jas_custom_{{section.id}} jas-banner-parallax {%- if section.settings.use_parallax == false %} gecko-parallax{%- endif %}{%- if section.settings.use_background_overlay %} jas_background-overlay{%- endif %}{%- if section.settings.use_parallax == false and section.settings.image != blank %} lazyload{%- endif %}{%- if section.settings.full_height %} jas-full-height{%- endif -%}" data-bgset="" data-sizes="auto" data-parent-fit="cover" style="position:relative;">
+
+    <video class="fullscreen" src="https://cdn.shopify.com/s/files/1/0253/4431/1386/files/Boat-Drone-Homepage.mp4?v=1613788866" playsinline autoplay muted loop>
+  </video>
+  
+  
+  <div class="jas-container clearfix">
+              <div class="container">
+           <div class="revolution-inner">
+               {%- case section.settings.style_text -%}
+                  {%- when '1' -%}
+                     {%- if section.settings.title != blank -%}<h2 class="h2_title tc tu fs__14 cw fwb mg__0">{{ section.settings.title }}</h2>{%- endif -%}
+                     {%- if section.settings.title_last != blank -%}<h2 class="h2_sub dab tc tu cw fs__50 fwb">{{ section.settings.title_last }}</h2>{%- endif -%}
+                     {%- if section.settings.link != blank and section.settings.button != blank -%}<p class="tc mg__0"><a class="cw tu button-o-w" href="{{section.settings.link}}">{{section.settings.button}}</a></p>{%- endif -%}
+                  {%- when '2' -%}
+                     {%- if section.settings.title != blank -%}<h2 class="h2_title fs__18 lh__1 f__libre tc cw">{{ section.settings.title }}</h2>{%- endif -%}
+                     {%- if section.settings.title_last != blank -%}<h2 class="h2_sub tu fs__60 mt__20 mb__20 fwb lh__1 cw tc">{{ section.settings.title_last }}</h2>{%- endif -%}
+                     {%- if section.settings.link != blank and section.settings.button != blank -%}<p class="tc mg__0"><a class="button-o-w tc cw" href="{{section.settings.link}}">{{section.settings.button}}</a></p>{%- endif -%}
+                  {%- when '3' -%}
+                     {%- if section.settings.title != blank -%}<h2 class="h2_title tu fs__60 fwb cw tc mb__20 mt__0 lh__1">{{ section.settings.title }}</h2>{%- endif -%}
+                     {%- if section.settings.title_last != blank -%}<h2 class="h2_sub fs__18 f__libre tc cw mb__30 lh__1">{{ section.settings.title_last }}</h2>{%- endif -%}
+                     {%- if section.settings.link != blank and section.settings.button != blank -%}<p class="tc mg__0"><a class="button button-o-w tc cw" href="{{section.settings.link}}">{{section.settings.button}}</a></p>{%- endif -%}
+                  {%- when '4' -%}
+                    <div class="tc">
+                     {%- if section.settings.title != blank -%}<h2 class="h2_title fs__50 tu cgreen fwb mg__0 ls__1">{{ section.settings.title }}</h2>{%- endif -%}
+                     {%- if section.settings.title_last != blank -%}<h2 class="h2_sub fs__14 f__libre cd mg__0 ls__1 mb__20">{{ section.settings.title_last }}</h2>{%- endif -%}
+                     {%- if section.settings.link != blank and section.settings.button != blank -%}<p class="mg__0"><a class="button button-o-w tc cw" href="{{section.settings.link}}">{{section.settings.button}}</a></p>{%- endif -%}
+                    </div>
+                  {%- when '5' -%}
+                     {%- if section.settings.title != blank -%}<h2 class="h2_title fs__20 f__libre tc cw lh__1 mg__0">{{ section.settings.title }}</h2>{%- endif -%}
+                     {%- if section.settings.title_last != blank -%}<h2 class="h2_sub tu fs__50 ls__1 mt__20 mb__20 fwb tc cw lh__1">{{ section.settings.title_last }}</h2>{%- endif -%}
+                  {%- when '6' -%}
+                    {%- if section.settings.title != blank -%}<h3 class="fs__18 lh__1 f__libre tc cw">{{ section.settings.title }}</h3>{%- endif -%}
+                    {%- if section.settings.title_last != blank -%}<h2 class="tu fs__60 mt__20 mb__20 fwb lh__1 cw tc">{{ section.settings.title_last }}</h2>{%- endif -%}
+                    {%- if section.settings.link != blank and section.settings.button != blank -%}<p style="text-align: center;"><a class="button-o-w tc cw" href="{{section.settings.link}}" rel="noopener">{{section.settings.button}}</a></p>{%- endif -%}
+               {%- endcase -%}
+           <p style="color:#fff;" class="mg__0 tc">{{section.settings.content_html}}</p>
+             {%- if section.settings.link != blank and section.settings.button != blank -%}                                                                                                 
+               <a class="button-o-w tc" href="{{section.settings.link}}">{{section.settings.button}}</a>         
+             {%- endif -%}
+           </div>
+    </div>
+                <div class="icons container-new" style="padding:0;">
+      <div class="jas-row ">
+        <div>
+          <div class="row">
+            <div class="logo-bar__item pr jas-col-xs-12 col-md-3">
+              <div class="flex-box">
+              
+              <div class="box-content2">
+                <img src="https://cdn.shopify.com/s/files/1/0253/4431/1386/files/prod3.png?v=1652707984">
+                <h3>MINI</h3>
+                <p style="text-align:center;border-top: 1px solid;border-bottom: 1px solid;margin: 1rem 0;padding: 1rem 0;"><span style="color:#8A572A;"><b>POWER :</b></span> 4,000 W<br><span style="color:#8A572A;"><b>TOTAL ENERGY:</b></span> 6 kWh <br><span style="color:#8A572A;"><b>SOLAR POWER:</b></span> 640 W</p>
+              <a href="https://hybridps.ca/products/the-mini" target="_blank" class="btn" style="background: #febb00;border-radius: 0; color:#ffffff;" tabindex="0">
+                          Learn More</a>
+                </div>
+              </div>
+              
+            </div>
+            <div class="logo-bar__item pr jas-col-xs-12 col-md-3">
+              <div class="flex-box">
+              
+                <div class="box-content2">
+                  <img src="https://cdn.shopify.com/s/files/1/0253/4431/1386/files/prod4.png?v=1652707984">
+                <h3>STARTER</h3>
+                <p style="text-align:center;border-top: 1px solid;border-bottom: 1px solid;margin: 1rem 0;padding: 1rem 0;"><span style="color:#8A572A;"><b>POWER :</b></span> 6,000 W<br><span style="color:#8A572A;"><b>TOTAL ENERGY:</b></span> 5 kWh <br><span style="color:#8A572A;"><b>SOLAR POWER:</b></span> 2,040 W</p>
+                <a href="https://hybridps.ca/products/the-starter" target="_blank" class="btn" style="background: #febb00;border-radius: 0; color:#ffffff;" tabindex="0">
+                          Learn More</a>
+                </div>
+              </div>   
+              
+            </div>
+            <div class="logo-bar__item pr jas-col-xs-12 col-md-3">
+              <div class="flex-box">
+              
+              <div class="box-content2">
+                <img src="https://cdn.shopify.com/s/files/1/0253/4431/1386/files/prod2.png?v=1652707984">
+                <h3>COTTAGER</h3>
+                <p style="text-align:center;border-top: 1px solid;border-bottom: 1px solid;margin: 1rem 0;padding: 1rem 0;"><span style="color:#8A572A;"><b>POWER :</b></span> 6,000 W<br><span style="color:#8A572A;"><b>TOTAL ENERGY:</b></span> 4 kWh <br><span style="color:#8A572A;"><b>SOLAR POWER:</b></span> 3,400 W</p>
+                <a href="https://hybridps.ca/products/the-cottager" target="_blank" class="btn" style="background: #febb00;border-radius: 0; color:#ffffff;" tabindex="0">
+                          Learn More</a>
+                </div>
+              </div>
+              
+            </div>
+          <div class="logo-bar__item pr jas-col-xs-12 col-md-3">
+              <div class="flex-box">
+              
+              <div class="box-content2">
+                <img src="https://cdn.shopify.com/s/files/1/0253/4431/1386/files/prod1.png?v=1652707984">
+                <h3>CHATEAU</h3>
+                <p style="text-align:center;border-top: 1px solid;border-bottom: 1px solid;margin: 1rem 0;padding: 1rem 0;"><span style="color:#8A572A;"><b>POWER :</b></span> 12,000 W<br><span style="color:#8A572A;"><b>TOTAL ENERGY:</b></span> 4 kWh <br><span style="color:#8A572A;"><b>SOLAR POWER:</b></span> 4760 W</p>
+                <a href="https://hybridps.ca/products/the-big-one" target="_blank" class="btn" style="background: #febb00;border-radius: 0; color:#ffffff;" tabindex="0">
+                          Learn More</a>
+                </div>
+              </div>
+              
+            </div></div>
+        </div>
+      </div>
+    </div>
+         
+    
+
+    </div>
+</div>
+<style>
+  
+  .dab{
+    font-size:35px !important;
+  }
+  
+  video.fullscreen {
+  position: absolute;
+  z-index: 0;
+  object-fit: cover;
+  width:100%;
+  height:100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  }
+
+
+  
+  video.fullscreen::-webkit-media-controls {
+     display:none !important;
+  }
+  
+   .container-new {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 55px 0;
+}
+.revolution-inner h2 {
+    font-size: 27px;
+}
+  
+  .revolution-inner h2.h2_sub {
+    line-height: 40px;
+    margin-bottom:20px;
+}
+
+  .icons {
+    margin: 0 auto;
+}
+  .flex-box{
+    display: flex;
+    flex: auto;
+    gap: 12px;
+        justify-content: center;
+  }
+  .jas-row {
+    justify-content: center;
+}
+  .logo-row{
+    display: flex;
+    padding-top:20px;
+    gap: 25px;
+  }
+  .logo-bar__item img{
+    filter: invert(85%) sepia(26%) saturate(2961%) hue-rotate(369deg) brightness(119%) contrast(102%);
+    width: 55px;
+    height: 100%;
+    display: block;
+  }
+  .box-content2 {
+    text-align: center;
+    background: #fff;
+    min-height: 355px;
+    padding: 37px;
+}
+  .box-content2 img{
+   	filter: none;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 auto 20px;
+  }
+  .box-content2 h3{
+    font-size:22px;
+    color: #000;
+    font-weight: 800;
+  }
+  @media(max-width:768px){
+    .logo-row{
+      flex-direction:column;
+    }
+    .box-content2{
+      margin:20px 0;
+    }
+  }
+</style>
+{% schema %}
+  {
+    "name": "Promotion Banner Parallax",
+    "class": "jas-section type_jas_promotion_banner_parallax clearfix",
+    "settings": [
+      {
+        "type": "header",
+        "content": "== General Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Background Image"
+      },
+      {
+        "type": "color",
+        "id": "section_bg_color",
+        "label": "Background color",
+        "default": "#ffa800"
+      },
+       {
+        "type": "checkbox",
+        "id": "full_height",
+        "label": "Full height row?",
+        "info": "if checked row will be set to full height.",
+        "default": false
+      },
+      {
+         "type": "header",
+         "content": "== CUSTOMIZE YOUR TEXT"
+      },
+      {
+        "type": "select",
+        "id": "style_text",
+        "label": "Style Text: (optional)",
+        "default": "1",
+        "options": [
+          {
+            "value": "1",
+            "label": "Style 1"
+          },
+          {
+            "value": "2",
+            "label": "Style 2"
+          },
+          {
+            "value": "3",
+            "label": "Style 3"
+          },
+          {
+            "value": "4",
+            "label": "Style 4 (home organic)"
+          },
+          {
+            "value": "5",
+            "label": "Style 5 (home fashion 2)"
+          },
+          {
+            "value": "6",
+            "label": "Style 6"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title 1: ",
+        "default": "Title 1"
+      },
+      {
+        "type": "text",
+        "id": "title_last",
+        "label": "Title 2: ",
+        "default": "Title 2"
+      },
+      {
+        "type": "html",
+        "id": "content_html",
+        "label": "Content: ",
+        "default": "Content"
+      },
+      {
+        "type": "text",
+        "id": "button",
+        "label": "Button Title: ",
+        "default": "Button Title"
+      },
+      {
+        "type":"url",
+        "id":"link",
+        "label":"Link",
+        "info": "Optional"
+      },
+     {
+        "type": "header",
+        "content": "== Design Options"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_left",
+        "label": "Margin left",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_right",
+        "label": "Margin right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_top",
+        "label": "Padding top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_right",
+        "label": "Padding right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_bottom",
+        "label": "Padding bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_left",
+        "label": "Padding left",
+        "info": "60px"
+      },
+      {
+        "type": "header",
+        "content": "== Gecko Extras"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_parallax",
+        "label": "Use Gecko parallax?",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "use_background_overlay",
+        "label": "Use background overlay?",
+        "default": false
+      }
+    ]
+  }
+{% endschema %}

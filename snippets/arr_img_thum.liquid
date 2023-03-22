@@ -1,0 +1,77 @@
+{%- if cv_color != 'jas-p-item' -%}
+   {%- if page_pr_img_size and product.images.size > 1 -%}
+      {%- for image in product.images -%}
+	        {%- assign alt = image.alt -%}
+	        {%- if alt contains 'jas_360' -%}{%- break -%}{%- endif -%}
+		     {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+		     {%- assign img_alt = alt | split:'|' | first | handleize | strip -%}
+				  <div class="bc_{{img_alt}} p-item jas_img_ptw shopify-product-gallery__image">
+						<a href="{{ image | img_url: product_image_zoom_size }}" class="jas-pr_metro-image-equal lazyload" data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover">
+							<img class="op_0 attachment-shop_single size-shop_single sp-post-image"
+				             src="{{ image | img_url: 'original' }}"
+				             data-image-id="{{ image.id }}"
+				             data-large_image="{{ image | img_url: product_image_zoom_size }}" data-large_image_width="{{ image.width }}" data-large_image_height="{{ image.height }}"
+				             alt="{{ image.alt | split:'|' | last | escape }}">
+				         <div class="jas-wrap-lazy"></div>
+						</a>
+					</div>
+		{%- endfor -%}
+   {%- else -%}
+      {%- for image in product.images -%}
+	        {%- assign alt = image.alt -%}
+	        {%- if alt contains 'jas_360' -%}{%- break -%}{%- endif -%}
+		     {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+		     {%- assign img_alt = alt | split:'|' | first | handleize | strip -%}
+				<div class="bc_{{img_alt}} p-item jas_img_ptw shopify-product-gallery__image">
+					<a href="{{ image | img_url: product_image_zoom_size }}">
+						<img class="attachment-shop_single size-shop_single sp-post-image {{ img_class }} lazyload"
+			             src="{{ image | img_url: 'original' }}"
+			             data-src="{{ img_url }}"
+			             data-aspectratio="{{ image.aspect_ratio }}"
+			             data-sizes="auto"
+			             data-image-id="{{ image.id }}"
+			             data-large_image="{{ image | img_url: product_image_zoom_size }}" data-large_image_width="{{ image.width }}" data-large_image_height="{{ image.height }}"
+			             alt="{{ image.alt | split:'|' | last | escape }}">
+			             <div class="jas-wrap-lazy"></div>
+					</a>
+				</div>
+		{%- endfor -%}
+   {%- endif -%}
+{%- else -%}
+   {%- if page_pr_img_size and product.images.size > 1 -%}
+      {%- for image in product.images -%}
+		     {%- assign alt = image.alt -%}
+	         {%- if alt contains 'jas_360' -%}{%- break -%}{%- endif -%}
+			     {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+					<div class="p-item jas_img_ptw shopify-product-gallery__image">
+							<a href="{{ image | img_url: product_image_zoom_size }}" class="jas-pr_metro-image-equal lazyload" data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover">
+								<img class="op_0 attachment-shop_single size-shop_single sp-post-image "
+					             src="{{ image | img_url: 'original' }}"
+					             data-image-id="{{ image.id }}"
+					             data-large_image="{{ image | img_url: product_image_zoom_size }}" data-large_image_width="{{ image.width }}" data-large_image_height="{{ image.height }}"
+					             alt="{{ image.alt | split:'|' | last | escape }}">
+					             <div class="jas-wrap-lazy"></div>
+							</a>
+						</div>
+		{%- endfor -%}
+   {%- else -%}
+      {%- for image in product.images -%}
+		     {%- assign alt = image.alt -%}
+	         {%- if alt contains 'jas_360' -%}{%- break -%}{%- endif -%}
+			     {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+					<div class="p-item jas_img_ptw shopify-product-gallery__image">
+						<a href="{{ image | img_url: product_image_zoom_size }}">
+							<img class="attachment-shop_single size-shop_single sp-post-image {{ img_class }} lazyload"
+				             src="{{ image | img_url: 'original' }}"
+				             data-src="{{ img_url }}"
+				             data-aspectratio="{{ image.aspect_ratio }}"
+				             data-sizes="auto"
+				             data-image-id="{{ image.id }}"
+				             data-large_image="{{ image | img_url: product_image_zoom_size }}" data-large_image_width="{{ image.width }}" data-large_image_height="{{ image.height }}"
+				             alt="{{ image.alt | escape }}">
+				             <div class="jas-wrap-lazy"></div>
+						</a>
+					</div>
+		{%- endfor -%}
+   {%- endif -%}
+{%- endif -%}

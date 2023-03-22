@@ -1,0 +1,59 @@
+{%- layout none -%}
+{%- assign limit = settings.products_per_page_search | plus:0 -%}
+{%- assign grid_columns = '15' -%}
+{%- assign grid_columns_mb = '6' -%}
+{%- assign settings_pr_img_size = settings.use_eq_height -%}
+{%- assign show_vendor = settings.show_vendor_search -%}
+{%- assign pr_style = settings.style_search -%}
+{%- assign shop_sidebar = settings.shop_sidebar -%}
+{%- assign use_pagination = settings.use_pagination_search -%}
+{%- assign section_settings_countdown = settings.sale_countdown_search -%}
+{%- assign countdown_timer_style = settings.search_countdown_style -%}
+{%- assign array_metro = ',2,10,18,26,32,40,48,56,64,72,80,' -%}
+{%- assign no_sidebar = true -%}
+{%- assign class_gl = '12' -%}
+{%- if settings.use_wishlist -%}{%- include 'nitro-wishlist' -%}{%- endif -%}
+{%- capture min_html -%}
+{%- paginate search.results by limit -%}
+<div class="jas-products-element">
+   <div class="products elements-grid row jas-products-holder pagination-arrows" id="jas_data_products">
+    {%- for item in search.results -%}
+      {%- if coll_style == 'metro' -%}
+         {%- assign index = forloop.index | plus:paginate.current_offset | downcase -%}
+         {%- if array_metro contains index -%}
+	            {%- assign grid_columns = '6 metro-item' -%}
+	            {%- assign settings_metro_img_size = true -%}
+	      {%- else -%}
+	          {%- assign grid_columns = '2' -%}
+	          {%- assign settings_metro_img_size = false -%}
+         {%- endif -%}
+      {%- else -%}
+         {%- assign grid_columns = '15' -%}
+      {%- endif -%}
+      {%- if item.object_type == 'product' -%}
+         {%- include 'jas_product_loop', product: item -%}
+      {%- else -%}
+        <div class="jas-grid-item jas-col-md-{{grid_columns}} jas-col-sm-{{class_sm}} jas-col-xs-{{grid_columns_mb}} mt__30 product has-post-thumbnail{%- if settings_pr_img_size %} user_custom{%- endif -%}">
+           <div class="product-inner pr">
+              <div class="jas-product-image pr oh{%- if settings_pr_img_size and settings_metro_img_size %} jas-pr_metro-image-equal{%- elsif settings_pr_img_size %} jas-product-image-equal{%- endif -%}">
+                 {%- include 'search_img',item:item -%}   
+              </div>
+              <div class="product-info mt__15">
+                 <h3 class="product-title pr fs__14 mg__0 fwm"><a class="cd chp" href="{{ item.url }}">{{ item.title }}</a></h3>
+              </div>
+           </div>
+        </div>
+      {%- endif -%}
+   {%- endfor -%}
+   </div>
+   <div id="shopify_result_count">{%- assign current_offset = paginate.current_offset | plus:1 -%}{%- assign current_product_size = search.results.size | plus:paginate.current_offset -%}{%- if current_tags == blank -%}{%- if limit > paginate.items -%}{{ 'collections.general.results_limit' | t: count: paginate.items }}{%- else -%}{{ 'collections.general.results_with_count' | t:count:current_offset,curent_count:current_product_size,pr_count:search.results_count }}{%- endif -%}{%- elsif limit > paginate.items -%}{{ 'collections.general.results_limit' | t: count: paginate.items }}{%- else -%}{%- assign current_offset = paginate.current_offset | plus:1 -%}{%- assign current_product_size = search.results.size | plus:paginate.current_offset -%}{{ 'collections.general.results_with_count' | t:count:current_offset,curent_count:current_product_size,pr_count:paginate.items }}{%- endif -%}</div>
+   {%- if paginate.pages > 1 -%}
+   <div class="products-footer" id="jas_data_arrow" data-status="{%- if paginate.next.is_link -%}have-posts{%- else -%}no-more-posts{%- endif -%}">
+      <a id="jas_section_previous" href="{%- if paginate.previous.is_link -%}{{ paginate.previous.url }}{%- else -%}javascript:void(0);{%- endif -%}" class="btn jas-products-load-prev{% unless paginate.previous.is_link %} disabled{% endunless %}">Load previous products</a>
+      <a id="jas_section_next" href="{%- if paginate.next.is_link -%}{{ paginate.next.url }}{%- else -%}javascript:void(0);{%- endif -%}" class="btn jas-products-load-next{% unless paginate.next.is_link %} disabled{% endunless %}">Load next products</a>
+   </div>
+   {%- endif -%}
+</div>
+{%- endpaginate -%}
+{%- endcapture -%}
+{{min_html | strip_newlines | remove: "  "}} 

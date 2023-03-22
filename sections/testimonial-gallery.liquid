@@ -1,0 +1,195 @@
+<div class="grid">
+  <div class="grid-sizer"></div>
+  {%- for block in section.blocks -%}
+   {% if block.settings.image1 !=blank %}
+    <div class="grid-item" data-index={{forloop.index}}> 
+	<div class="grid-item-inner">
+        {% assign count = 0 %}
+        {% if block.settings.image1 !=blank %}
+          {% assign count = count | plus : 1 %}
+        {% endif %}
+        {% if block.settings.image2 !=blank %}
+          {% assign count = count | plus : 1 %}
+        {% endif %}
+       {% if block.settings.image3 !=blank %}
+      		 {% assign count = count | plus : 1 %}
+        {% endif %}
+       {% if block.settings.image4 !=blank %}
+            {% assign count = count | plus : 1 %}
+        {% endif %}
+       {% if block.settings.image5 !=blank %}
+             {% assign count = count | plus : 1 %}
+        {% endif %}
+       {% if block.settings.image6 !=blank %}
+       {% assign count = count | plus : 1 %}
+        {% endif %}
+       {% if block.settings.image7 !=blank %}
+       {% assign count = count | plus : 1 %}
+        {% endif %}
+       {% if block.settings.image8 !=blank %}
+       {% assign count = count | plus : 1 %}
+        {% endif %}
+       {% if block.settings.image9 !=blank %}
+       {% assign count = count | plus : 1 %}
+        {% endif %}
+       {% if block.settings.image10 !=blank %}
+       {% assign count = count | plus : 1 %}
+        {% endif %}
+		<div class="testimonial-upper">
+      {% if count > 0 %}
+      <p class="image-over upper-heading">1/{{count}} Photos</p>
+      {% endif %}
+      <img  src="{{block.settings.image1| img_url:'master'}}" class="main-image">
+      <p class="image-over sub-heading">{{block.settings.sub_heading}}</p>
+	  </div>
+      <div class="grid-hover-content">
+	  
+        {% if count > 0 %}
+         <p class="image-over upper-heading">1/{{count}} Photos</p>
+        {% endif %}
+            <p class="hide-mobile heading">{{block.settings.heading}}</p>
+            <p class="hide-mobile sub-heading">{{block.settings.sub_heading}}</p>
+            <p class="hide-mobile content">{{block.settings.content}}</p>
+        {% if count > 0 %}
+       
+         <button data-index="{{forloop.index}}" class="see-more">See More</button>
+         
+        {% endif %}
+       </div>  
+      
+    </div></div>
+ {% endif %}
+  {% endfor%}
+ </div>
+<div class="grid-popup" id="testimonial-overlay">
+  {%- for block in section.blocks -%}
+      <div class="popup-content" data-index="{{forloop.index}}" id="testimonial-popup">
+        <div class="testimonial-close"><i class="fas fa-times"></i></div>
+         <div class="all-images-slider">
+              {% if block.settings.image1 !=blank %}
+           <div class="all-images-slider-inner"><img  src="{{block.settings.image1| img_url:'master'}}"></div>
+        {% endif %}
+        {% if block.settings.image2 !=blank %}
+           <div class="all-images-slider-inner"><img  src="{{block.settings.image2| img_url:'master'}}"> </div>
+        {% endif %}
+       {% if block.settings.image3 !=blank %}
+      		   <div class="all-images-slider-inner"><img  src="{{block.settings.image3| img_url:'master'}}"> </div>
+        {% endif %}
+       {% if block.settings.image4 !=blank %}
+             <div class="all-images-slider-inner"> <img  src="{{block.settings.image4| img_url:'master'}}"> </div>
+        {% endif %}
+       {% if block.settings.image5 !=blank %}
+               <div class="all-images-slider-inner"><img  src="{{block.settings.image5| img_url:'master'}}"> </div>
+        {% endif %}
+       {% if block.settings.image6 !=blank %}
+         <div class="all-images-slider-inner"><img  src="{{block.settings.image6| img_url:'master'}}"> </div>
+        {% endif %}
+       {% if block.settings.image7 !=blank %}
+         <div class="all-images-slider-inner"><img  src="{{block.settings.image7| img_url:'master'}}"> </div>
+        {% endif %}
+       {% if block.settings.image8 !=blank %}
+       <div class="all-images-slider-inner"> <img  src="{{block.settings.image8| img_url:'master'}}"> </div>
+        {% endif %}
+       {% if block.settings.image9 !=blank %}
+       <div class="all-images-slider-inner"> <img  src="{{block.settings.image9| img_url:'master'}}"> </div>
+        {% endif %}
+       {% if block.settings.image10 !=blank %}
+        <div class="all-images-slider-inner"><img  src="{{block.settings.image10| img_url:'master'}}"> </div>
+        {% endif %}
+        </div>
+           <div class="testimonial-details hide-mobile">
+          <p class="heading">{{block.settings.heading}}</p>
+            <p class="sub-heading">{{block.settings.sub_heading}}</p>
+            <p class="content">{{block.settings.content}}</p>
+       </div>
+  	  </div>
+    
+  {% endfor%}
+  
+</div>
+
+{% schema %}
+ {
+  "name": "Testimonials gallery",
+  "blocks": [
+    {
+      "type": "select",
+      "name": "Add New",
+      "settings": [
+		{
+          "id": "heading",
+          "type": "text",
+       		"label": "Heading"
+        },
+		{
+          "id": "sub_heading",
+          "type": "text",
+       		"label": "Sub Heading"
+        },
+		{
+          "id": "content",
+          "type": "text",
+       		"label": "Content"
+        },
+        {
+          "id": "image1",
+          "type": "image_picker",
+       		"label": "Upload Image 1"
+        },
+        {
+          "id": "image2",
+          "type": "image_picker",
+       		"label": "Upload Image 2"
+        },
+        {
+          "id": "image3",
+          "type": "image_picker",
+       		"label": "Upload Image 3"
+        },
+        {
+          "id": "image4",
+          "type": "image_picker",
+       		"label": "Upload Image 4"
+        },
+        {
+          "id": "image5",
+          "type": "image_picker",
+       		"label": "Upload Image 5"
+        },
+        {
+          "id": "image6",
+          "type": "image_picker",
+       		"label": "Upload Image 6"
+        },
+        {
+          "id": "image7",
+          "type": "image_picker",
+       		"label": "Upload Image 7"
+        },
+        {
+          "id": "image8",
+          "type": "image_picker",
+       		"label": "Upload Image 8"
+        },
+        {
+          "id": "image9",
+          "type": "image_picker",
+       		"label": "Upload Image 9"
+        },
+        {
+          "id": "image10",
+          "type": "image_picker",
+       		"label": "Upload Image 10"
+        }
+        
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

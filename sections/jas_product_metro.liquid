@@ -1,0 +1,412 @@
+{%- if settings.use_wishlist -%}{%- include 'nitro-wishlist' -%}{%- endif -%}
+{%- include 'style_mp_section' -%}
+{%- assign paginate_index = section.settings.paginate_index | plus: 0 -%}
+{%- assign show_vendor = section.settings.show_vendor -%}
+{%- assign settings_pr_img_size = section.settings.use_eq_height -%}
+{%- assign section_settings_countdown = section.settings.sale_countdown -%}
+{%- assign countdown_timer_style = section.settings.countdown_style -%}
+{%- assign use_pagination = section.settings.use_pagination -%}
+{%- assign collection = collections[section.settings.collection] -%}
+{%- assign grid_columns = '3' -%}
+{%- assign grid_columns_mb = section.settings.grid_columns_mb -%}
+{%- assign settings_pr_img_size = section.settings.use_eq_height -%}
+{%- assign current_page = '1' -%}
+{%- paginate collection.products by paginate_index -%}
+<div class="jas_custom_{{section.id}} {%- if section.settings.use_container %} jas-container{%- else %} jas-full{%- endif -%}">
+  {%- assign sett_title = section.settings.title -%}
+  {%- assign sett_sub_title = section.settings.sub_title -%}
+  {%- assign style_title = section.settings.style_title -%}
+  {%- include 'jas_section_title' -%}
+  <div class="products metro jas-row jas-masonry jas-products-holder {{section.settings.image_size}} {{section.settings.image_ratio}} position_{{section.settings.image_position}}{%- if settings_pr_img_size %} equal-nt{%- endif -%}"  data-masonry='{"selector":".product","layoutMode":"masonry","columnWidth":".grid-sizer"}'>
+      <div class="grid-sizer size-3"></div>
+      {%- case section.settings.conditions_setting -%}
+         {% when '1' %}
+            {%- for product in collection.products -%}
+               {%- if forloop.index == 2 or forloop.index == 10 or forloop.index == 18 or forloop.index == 26 -%}
+                  {%- assign grid_columns = '6 metro-item' -%}
+                  {%- assign settings_metro_img_size = true -%}
+               {%- else -%}
+                  {%- assign grid_columns = '3' -%}
+                  {%- assign settings_metro_img_size = false -%}
+               {%- endif -%}
+               {%- include 'jas_product_loop' -%}
+            {%- else -%}
+               {%- for i in (1..8) -%}
+                  <div class="jas-grid-item jas-col-md-{{grid_columns}} jas-col-sm-4 jas-col-xs-{{grid_columns_mb}} mt__30 product has-post-thumbnail">
+                     <div class="jas-product-image jas-product-image-equal pr oh">
+                        <a href="/admin/products" class="jas-product-img-element jas-pr-image-link">
+                           {%- capture current -%}{%- cycle 1, 2, 3, 4, 5, 6 -%}{%- endcapture -%}
+                           {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                        </a>
+                     </div>
+                     <div class="product-info mt__15">
+                        <h3 class="product-title pr fs__14 mg__0 fwm"><a class="cd chp" href="/admin/products">{{ 'homepage.onboarding.product_title' | t }}</a></h3>
+                        <span class="price"><ins>$30.00</ins> <del>$35.00</del></span>
+                     </div>
+                  </div>
+               {%- endfor -%}
+            {%- endfor -%}
+         {%- else -%}
+            {%- for block in section.blocks -%}
+               {%- assign product = all_products[block.settings.product_id] -%}
+               {%- if product != blank -%}
+                  {%- if block.settings.featured_show -%}
+                     {%- assign grid_columns = '6 metro-item' -%}
+                     {%- assign settings_metro_img_size = true -%}
+                  {%- else -%}
+                     {%- assign grid_columns = '3' -%}
+                     {%- assign settings_metro_img_size = false -%}
+                  {%- endif -%}
+                  {%- include 'jas_product_loop' -%}
+               {%- endif -%}
+            {%- endfor- %}
+      {%- endcase -%}
+  </div>
+  {%- comment -%}
+  {%- if paginate.pages > 1 and use_pagination != 'none' and section.settings.conditions_setting == '1' -%}
+  <div class="products-footer tc mt__40">
+      {%- if use_pagination == 'more-btn-infinite' or use_pagination == 'more-btn' -%}
+       {%- assign next_url =  paginate.next.url | split: '?' | last -%}
+      <a href="{{ collection.url }}?{{ next_url }}&q=paginate_{{paginate_index}}+columns_{{ section.settings.grid_column }}+columns_mb_{{ section.settings.grid_columns_mb }}+vendor_{{ show_vendor }}+img_size_{{ settings_pr_img_size }}+countdown_{{ section_settings_countdown }}&view=ajax" class="pr button-o btn-products-load-more{%- if use_pagination == 'more-btn-infinite' %} load-on-scroll{%- endif -%}"><span class="load-label">{{ 'products.grid_items.load_more' | t }}</span><span class="loading-label flex pa">{{ 'products.grid_items.loading' | t }}</span></a>
+      {%- else -%}
+      <a href="{{ collection.url }}" class="button-o">{{ 'products.grid_items.view_more' | t }}</a>
+      {%- endif -%}
+  </div>
+  {%- endif -%}
+  {%- endcomment -%}
+</div>
+{%- endpaginate -%}
+{%- schema -%}
+  {
+    "name": "Products Metro",
+    "class": "jas-section type_jas_product_metro",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Products Metro"
+      },
+      {
+        "type": "textarea",
+        "id": "sub_title",
+        "label": "Sub Text",
+        "default": "Sub Text"
+      },
+      {
+        "type": "select",
+        "id": "style_title",
+        "options": [
+         {
+            "value": "1",
+            "label": "Style 1"
+         },
+         {
+            "value": "2",
+            "label": "Style 2"
+          }
+        ],
+        "label": "Style title"
+      },
+      {
+        "id": "collection",
+        "type": "collection",
+        "label": "Collection"
+      },
+      {
+        "type": "radio",
+        "id": "conditions_setting",
+        "options": [
+         {
+            "value": "1",
+            "label": "Automatically select products based on conditions"
+          },
+          {
+            "value": "2",
+            "label": "Manually select products"
+          }
+          
+        ],
+        "label": "Conditions"
+      },
+      {
+        "type": "select",
+        "id": "grid_columns_mb",
+        "label": "Columns Mobile",
+        "default": "6",
+        "options": [
+          {
+            "value": "12",
+            "label": "1"
+          },
+          {
+            "value": "6",
+            "label": "2"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Show product vendors",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "sale_countdown",
+        "default": false,
+        "label": "Use Sale countdown",
+        "info": "Countdown to the end sale date will be shown. Be sure you have set final date of the product sale price. product.metafields.meta.countdown ( 2018/01/19 )"
+      },
+      {
+        "type": "select",
+        "id": "countdown_style",
+        "label": "Countdown style",
+        "default": "dark",
+        "options": [
+          {
+            "value": "light",
+            "label": "Countdown timer light"
+          },
+          {
+            "value": "dark",
+            "label": "Countdown timer dark"
+          }
+        ]
+      },
+      {
+       "type": "header",
+       "content": "== Automatically select products "
+      },
+      {
+        "type": "text",
+        "id": "paginate_index",
+        "label": "Items per page ( integer )",
+        "info": "Number of items to show per page.",
+        "default": "14"
+      },
+      {
+        "type": "header",
+        "content": "== Design Image"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_eq_height",
+        "label": "Use equal height images?",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "image_ratio",
+        "label": "Aspect Ratio",
+        "default": "ratio_nt",
+        "options": [
+          {
+            "value": "ratio2_1",
+            "label": "2:1"
+          },
+          {
+            "value": "ratio16_9",
+            "label": "16:9"
+          },
+          {
+            "value": "ratio8_5",
+            "label": "8:5"
+          },
+          {
+            "value": "ratio3_2",
+            "label": "3:2"
+          },
+          {
+            "value": "ratio4_3",
+            "label": "4:3 (Landscape)"
+          },
+          {
+            "value": "ratio1_1",
+            "label": "1:1 (Square)"
+          },
+          {
+            "value": "ratio_nt",
+            "label": "Ratio ASOS"
+          },
+          {
+            "value": "ratio2_3",
+            "label": "2:3 (Portrait)"
+          },
+          {
+            "value": "ratio1_2",
+            "label": "1:2"
+          },
+          {
+            "value": "ratio_cus1",
+            "label": "Ratio Custom 1"
+          },
+          {
+            "value": "ratio_cus2",
+            "label": "Ratio Custom 2"
+          },
+          {
+            "value": "ratio_cus3",
+            "label": "Ratio Custom 3"
+          },
+          {
+            "value": "ratio_cus4",
+            "label": "Ratio Custom 4"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_size",
+        "label": "Image Size",
+        "default": "nt_cover",
+        "options": [
+          {
+            "value": "nt_cover",
+            "label": "Full"
+          },
+          {
+            "value": "nt_contain",
+            "label": "Auto"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_position",
+        "info":"The first value is the horizontal position and the second value is the vertical.",
+        "options": [
+          {
+            "value": "default",
+            "label": "Default"
+          },
+          {
+            "value": "1",
+            "label": "Left Top"
+          },
+          {
+            "value": "2",
+            "label": "Left Center"
+          },
+          {
+            "value": "3",
+            "label": "Left Bottom"
+          },
+          {
+            "value": "4",
+            "label": "Right Top"
+          },
+          {
+            "value": "5",
+            "label": "Right Center"
+          },
+          {
+            "value": "6",
+            "label": "Right Bottom"
+          },
+          {
+            "value": "7",
+            "label": "Center Top"
+          },
+          {
+            "value": "8",
+            "label": "Center Center"
+          },
+          {
+            "value": "9",
+            "label": "Center Bottom"
+          }
+        ],
+        "label": "Image Position",
+        "default": "8"
+      },
+      {
+        "type": "header",
+        "content": "== Design Options"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_container",
+        "label": "Use container?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_left",
+        "label": "Margin left",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_right",
+        "label": "Margin right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_top",
+        "label": "Padding top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_right",
+        "label": "Padding right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_bottom",
+        "label": "Padding bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_left",
+        "label": "Padding left",
+        "info": "60px"
+      },
+      {
+       "type": "header",
+       "content": "== Manually select products"
+      }
+    ],
+    "blocks": [
+      {
+        "type":"collection_featured",
+         "name":"Choose product",
+        "settings": [
+          {
+             "type":"product",
+             "id":"product_id",
+             "label":"Choose product"
+           },
+           {
+           "type": "checkbox",
+           "id": "featured_show",
+           "label": "Products featured?",
+           "default": false
+         }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Products Metro",
+        "category": "== Collections"
+      }
+    ]
+  }
+{% endschema %}

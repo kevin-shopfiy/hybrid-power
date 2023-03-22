@@ -1,0 +1,211 @@
+{%- include 'style_mp_section' -%}
+<div class="jas_custom_{{section.id}} jas-banner-video jas-row jas-background-overlay{%- if section.settings.full_height %} jas-full-height{%- endif %} jas_video-bg-container{%- if section.settings.use_background_overlay %} jas_background-overlay{%- endif %}{%- if section.settings.image != blank %} lazyload{%- endif -%}" data-gl-parallax-image="{{ section.settings.video_url }}" data-gl-video-bg="{{ section.settings.video_url }}"{%- if section.settings.image != blank or section.settings.section_bg_color != blank %} data-bgset="{%- include 'bgset', image: section.settings.image -%}" data-sizes="auto" data-parent-fit="cover" style="{%- if section.settings.section_bg_color != blank -%}background-color: {{section.settings.section_bg_color}};{%- endif -%}{%- if section.settings.image != blank -%}background-image: url('{{ section.settings.image | img_url: '50x50' }}');{%- endif -%}"{%- endif -%}>
+   <div class="jas-container clearfix jas-z-index_44">
+      <div class="jas-row">
+         <div class="jas-col-xs-12">
+               {%- case section.settings.style_text -%}
+                  {%- when '1' -%}
+                     {%- if section.settings.title != blank -%}<h4 class="tc tu fs__14 cw fwb mg__0">{{ section.settings.title }}</h4>{%- endif -%}
+                     {%- if section.settings.title_last != blank -%}<h3 class="tc tu cw fs__50 fwb">{{ section.settings.title_last }}</h3>{%- endif -%}
+                     {%- if section.settings.link != blank and section.settings.button != blank -%}<p class="tc mg__0"><a class="cw tu button-o-w" href="{{section.settings.link}}">{{section.settings.button}}</a></p>{%- endif -%}
+                  {%- when '2' -%}
+                     {%- if section.settings.title != blank -%}<h3 class="fs__18 lh__1 f__libre tc cw">{{ section.settings.title }}</h3>{%- endif -%}
+                     {%- if section.settings.title_last != blank -%}<h2 class="tu fs__60 mt__20 mb__20 fwb lh__1 cw tc">{{ section.settings.title_last }}</h2>{%- endif -%}
+                     {%- if section.settings.link != blank and section.settings.button != blank -%}<p class="tc mg__0"><a class="button-o-w tc cw" href="{{section.settings.link}}" target="_blank">{{section.settings.button}}</a></p>{%- endif -%}
+                  {%- when '3' -%}
+                     {%- if section.settings.title != blank -%}<h2 class="tu fs__60 fwb cw tc mb__20 mt__0 lh__1">{{ section.settings.title }}</h2>{%- endif -%}
+                     {%- if section.settings.title_last != blank -%}<h3 class="fs__18 f__libre tc cw mb__30 lh__1">{{ section.settings.title_last }}</h3>{%- endif -%}
+                     {%- if section.settings.link != blank and section.settings.button != blank -%}<p class="tc mg__0"><a class="button button-o-w tc cw" href="{{section.settings.link}}" target="_blank">{{section.settings.button}}</a></p>{%- endif -%}
+                  {%- when '4' -%}
+                  <div class="tc">
+                     {%- if section.settings.title != blank -%}<h2 class="fs__50 tu cgreen fwb mg__0 ls__1">{{ section.settings.title }}</h2>{%- endif -%}
+                     {%- if section.settings.title_last != blank -%}<h4 class="fs__14 f__libre cd mg__0 ls__1 mb__20">{{ section.settings.title_last }}</h4>{%- endif -%}
+                     {%- if section.settings.link != blank and section.settings.button != blank -%}<p class="mg__0"><a class="button button-o-w tc cw" href="{{section.settings.link}}" target="_blank">{{section.settings.button}}</a></p>{%- endif -%}
+                  </div>
+                  {%- when '5' -%}
+                     {%- if section.settings.title != blank -%}<h3 class="fs__20 f__libre tc cw lh__1 mg__0">{{ section.settings.title }}</h3>{%- endif -%}
+                     {%- if section.settings.title_last != blank -%}<h2 class="tu fs__50 ls__1 mt__20 mb__20 fwb tc cw lh__1">{{ section.settings.title_last }}</h2>{%- endif -%}
+                     {%- if section.settings.link != blank and section.settings.button != blank -%}<p class="mg__0 tc"><a class="button-o-w tc" href="{{section.settings.link}}" target="_blank">{{section.settings.button}}</a></p>{%- endif -%}
+                  {%- when '6' -%}
+                    {%- if section.settings.title != blank -%}<h3 class="fs__18 lh__1 f__libre tc cw">{{ section.settings.title }}</h3>{%- endif -%}
+                    {%- if section.settings.title_last != blank -%}<h2 class="tu fs__60 mt__20 mb__20 fwb lh__1 cw tc">{{ section.settings.title_last }}</h2>{%- endif -%}
+                    {%- if section.settings.link != blank and section.settings.button != blank -%}<p style="text-align: center;"><a class="button-o-w tc cw" href="{{section.settings.link}}" target="_blank" rel="noopener">{{section.settings.button}}</a></p>{%- endif -%}
+               {%- endcase -%}
+         </div>
+      </div>
+   </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Promotion Banner video",
+    "class": "jas-section type_jas_promotion_banner_video clearfix",
+    "settings": [
+      {
+        "type": "header",
+        "content": "== General Settings"
+      },
+      {
+       "id": "video_url",
+       "type": "video_url",
+       "label": "Video URL",
+       "accept": ["youtube"],
+       "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+       "info": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+     },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image",
+        "info": "Fallback when autoplaying video is not supported on mobile devices"
+      },
+      {
+        "type": "color",
+        "id": "section_bg_color",
+        "label": "Background color",
+        "default": "#ffa800"
+      },
+      {
+        "type": "checkbox",
+        "id": "full_height",
+        "label": "Full height row?",
+        "info": "if checked row will be set to full height.",
+        "default": false
+      },
+      {
+         "type": "header",
+         "content": "== CUSTOMIZE YOUR TEXT"
+      },
+      {
+        "type": "select",
+        "id": "style_text",
+        "label": "Style Text: (optional)",
+        "default": "1",
+        "options": [
+          {
+            "value": "1",
+            "label": "Style 1"
+          },
+          {
+            "value": "2",
+            "label": "Style 2"
+          },
+          {
+            "value": "3",
+            "label": "Style 3"
+          },
+          {
+            "value": "4",
+            "label": "Style 4 (home organic)"
+          },
+          {
+            "value": "5",
+            "label": "Style 5 (home fashion 2)"
+          },
+          {
+            "value": "6",
+            "label": "Style 6 (home fashion 8)"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title 1: ",
+        "default": "Title 1"
+      },
+      {
+        "type": "text",
+        "id": "title_last",
+        "label": "Title 2: ",
+        "default": "Title 2"
+      },
+      {
+        "type": "text",
+        "id": "button",
+        "label": "Button Title: ",
+        "default": "Button Title"
+      },
+      {
+        "type":"url",
+        "id":"link",
+        "label":"Link",
+        "info": "Optional"
+      },
+     {
+        "type": "header",
+        "content": "== Design Options"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_container",
+        "label": "Use container?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_left",
+        "label": "Margin left",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_right",
+        "label": "Margin right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_top",
+        "label": "Padding top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_right",
+        "label": "Padding right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_bottom",
+        "label": "Padding bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_left",
+        "label": "Padding left",
+        "info": "60px"
+      },
+      {
+        "type": "header",
+        "content": "== Gecko Extras"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_background_overlay",
+        "label": "Use background overlay?",
+        "default": false
+      }
+    ],
+    "presets": [
+      {
+        "name": "Promotion Banner video",
+        "category": "== Banner"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,203 @@
+{%- include 'style_mp_section' -%}
+{%- assign image = section.settings.image -%}{%- assign url = section.settings.url -%}{%- assign color = section.settings.color -%}
+<div class="{{section.settings.al}}-xs nave jas_custom_{{section.id}} jas_banner_hero{%- if section.settings.use_container %} jas-container{%- else %} {%- endif -%}">
+    <div class="jas_hero_wrap pr oh">
+      {%- if image != blank -%}
+      <div class="banner_img lazyload" style="padding-bottom:{{ 1 | divided_by: image.aspect_ratio | times: 100}}%" data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover">
+      {%- else -%}
+      <div class="banner_img" style="padding-bottom:56.25%;background-image: url(https://placehold.it/1170x600.png?text=Banner+Image)">
+      {%- endif -%}
+       
+        <div class="hero-inner-text pa flex column {{section.settings.pos}}-xs {{section.settings.al}}-xs">
+          {%- if section.settings.title_2 != blank -%}<h2 class="h2_title {{color}} fw__5 mt__0 mb__20" style="color : {{section.settings.subheading_color}} !important;">{{section.settings.title_2}}</h2>{%- endif -%}
+          
+          {%- if section.settings.title != blank -%}<h2 class="h2_sub tu fs__50 cw {{color}} fw__7 mt__0 mb__5" style="color : {{section.settings.heading_color}} !important;">{{section.settings.title}}</h2>{%- endif -%}
+          
+          {%- if section.settings.content_2 != blank -%} <h4 style="color : {{section.settings.content_color}} !important;"> {{section.settings.content_2}} </h4> {%- endif -%}
+          
+          {%- if section.settings.btn_title != blank and url != blank -%}
+          
+             {%- if section.settings.style_btn == '2'  -%}
+             
+               <a href="{{url}}" class="button-o-w" style="background-color: {{section.settings.btn_color}}; color : {{ section.settings.color_id }}; border-color: {{ section.settings.color_border_id }} ">
+            {{section.settings.btn_title}}
+            </a>
+          
+             {%- else -%}
+          
+             <a href="{{url}}" target="_blank" class="not-button-0-w" style="background-color: {{section.settings.btn_color}}; color:{{section.settings.color_id}};" tabindex="0"><span class="icon-new"><i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
+                           </span>{{section.settings.btn_title}}</a>
+          
+             {%- endif -%}
+           
+            
+          
+          {%- endif -%}
+        
+         
+          
+          
+          <style>
+          
+          #shopify-section-{{section.id}} .jas_banner_hero .hero-inner-text a.button-o-w:hover {
+            background-color: {{section.settings.color_hover_id}} !important;
+            color: {{section.settings.color_hover_text_id}} !important;
+          }
+           #shopify-section-{{section.id}} .jas_banner_hero .hero-inner-text a.not-button-0-w:hover {
+            
+            color: {{section.settings.color_hover_text_id}} !important; 
+          } 
+            
+          
+          </style>
+          
+        </div>
+      </div>
+    </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Module Second Section",
+    "class": "jas-section type_jas_banner_hero clearfix",
+    "settings": [
+     {
+        "type": "header",
+        "content": "== Image Options"
+      },
+      {
+         "type": "image_picker",
+         "id": "image",
+         "label": "Background Image"
+       },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Banner title"
+      },
+      {
+        "type": "color",
+        "id": "heading_color",
+        "label": "Heading Text Color"
+        
+      },
+      {
+        "type": "text",
+        "id": "title_2",
+        "label": "Sub Heading",
+        "default": "Banner title 2" 
+      },
+      {
+        "type": "color",
+        "id": "subheading_color",
+        "label": "Sub Text Color"
+        
+      },
+      {
+        "type": "html",
+        "id": "content_2",
+        "label": "Content",
+        "default": "Enter Description"
+      },
+     {
+        "type": "color",
+        "id": "content_color",
+        "label": "Content Color",
+        "default": "#fff"
+      },
+      {
+        "type": "color",
+        "id": "color_id",
+        "label": "Button Text Color"
+      },
+      {
+        "type": "color",
+        "id": "color_border_id",
+        "label": "Button Border Color"
+      },
+     {
+        "type": "color",
+        "id": "color_hover_id",
+        "label": "Button Hover Color"
+      },
+      {
+        "type": "color",
+        "id": "color_hover_text_id",
+        "label": "Button Hover Text Color"
+      },
+      {
+            "type": "select",
+            "id": "style_btn",
+            "label": "Button Style",
+            "default": "1",
+            "options": [
+              {
+                "value": "1",
+                "label": "Style 1"
+              },
+              {
+                "value": "2",
+                "label": "Style 2"
+              }
+            ]
+          },
+    
+      {
+        "type": "text",
+        "id": "btn_title",
+        "label": "Button title",
+        "default": "Button title"
+      },
+      {
+        "type": "color",
+        "id": "btn_color",
+        "label": "Button Color",
+        "default": "#ef3288"
+      },
+       {
+        "label": "Link to",
+        "id": "url",
+        "type": "url"
+      },
+     
+      {
+        "type": "select",
+        "id": "al",
+        "options": [
+         {
+            "value": "left",
+            "label": "Left"
+         },
+         {
+            "value": "center ",
+            "label": "Center"
+          },
+         {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "label": "Text align"
+      },
+      {
+        "type": "header",
+        "content": "== Design Options"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_container",
+        "label": "Use container?",
+        "default": true
+      }
+      
+    ],
+    "presets": [
+      {
+        "name": "Module Second Section",
+        "category": "== Banner"
+      }
+    ]
+  }
+{% endschema %}

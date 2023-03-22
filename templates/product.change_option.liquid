@@ -1,0 +1,699 @@
+{% include 'shogun-products', content: product %}
+{{product.metafields.shogun.above}}
+{%- if collection == blank and product.collections.first != blank -%}{%- assign collection = product.collections.first -%}{%- endif -%}
+{%- case settings.design_products -%}
+  {%- when '2' -%}
+    {%- assign singles_wc = 'wc-single-2' -%}
+  {%- when '3' -%}
+    {%- assign singles_wc = 'wc-single-3' -%}
+  {%- when '4' -%}
+    {%- assign singles_wc = 'wc-single-4' -%}
+  {%- when '5' -%}
+    {%- assign singles_wc = 'wc-single-5' -%}
+  {%- when '7' -%}
+    {%- assign singles_wc = 'wc-single-1 jas_th_right' -%}
+  {%- else -%}
+    {%- assign singles_wc = 'wc-single-1' -%}
+ {%- endcase -%}
+ {%- assign page_pr_img_size = settings.use_eq_thumb_height -%}
+ {%- assign nav_pr_img_size = settings.use_eq_nav_height -%}
+
+{%- assign no_sold_out = product.available -%}
+{%- if no_sold_out -%}{%- assign remove_soldout = settings.remove_sold_out -%}{%- else -%}{%- assign remove_soldout = false -%}{%- endif -%}
+
+{%- if settings.pr_curent == '2' -%}{%- assign current_variant = product.selected_variant |default: product.variants.first -%}
+{%- if current_variant.available == false and remove_soldout and no_sold_out -%}{%- assign current_variant = product.first_available_variant -%}{%- endif -%}
+{%- else -%}{%- assign current_variant = product.selected_or_first_available_variant -%}{%- endif -%}
+
+
+{%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
+{%- assign product_image_zoom_size = 'master' -%}
+{%- assign product_image_scale = '2' -%}
+{%- assign cv_color = 'jas-p-item' -%}
+{%- assign jas_carousel = 'jas-carousel' -%}
+{%- assign jas_masonry = 'jas-masonry' -%}
+{%- assign featured_image_alt = featured_image.alt | split:'|' | first | handleize -%}
+  {%- if settings.show_grouped_variant_image and product.has_only_default_variant == false and product.images.size > 1 -%}
+  {%- for option in product.options_with_values -%}
+     {%- if settings.color_name_check != blank -%}{%- assign _gl_color_name = settings.color_name_check | replace: ' ,', ',' | replace: ', ', ',' | split: ',' -%}{%- assign gl_color_name = _gl_color_name | downcase -%}{%-else-%}{%- assign gl_color_name = '\nathan_dt\' -%}{%-endif-%}
+      {%- assign downcased_option = option.name | downcase -%}
+      {%- assign downcased_option_check = downcased_option | prepend: '"' | append: '"' | strip -%} 
+      {%- if downcased_option == 'color' or downcased_option == 'couleur' or downcased_option == 'colour' or gl_color_name contains downcased_option_check -%}
+        {%- assign po_position = option.position -%}
+        {%- assign jas_carousel = 'jas-group-carousel' -%}{%- assign jas_masonry = 'jas-masonry nt-masonry' -%}
+        {%- case po_position -%}
+           {%- when 1 -%}{%- assign cv_color = current_variant.option1 | handleize -%}
+           {%- when 2 -%}{%- assign cv_color = current_variant.option2 | handleize -%}
+           {%- else -%}{%- assign cv_color = current_variant.option3 | handleize -%}
+        {%- endcase -%}
+        {%- break -%}
+    {%- endif -%}   
+   {%- endfor -%}
+   {%- endif -%}
+{%- include 'jas_check_label' -%}
+{%- if settings.use_wishlist -%}{%- include 'nitro-wishlist' -%}{%- endif -%}
+{%- if product.metafields.external -%}
+  {%- assign check = product.metafields.external | first | last -%}
+  {%- if check contains 'https:' or check  contains 'http:' -%}{%- assign check_external = true -%}{%-else-%}{%- assign check_external = false -%}{%-endif-%}
+{%-endif-%}
+{%- if settings.show_share_btn and settings.share_type == '1' -%}
+   {%- assign gl_follow_social = false -%}
+{%- elsif settings.show_share_btn and settings.share_type == '2' -%}
+   {%- assign gl_follow_social = true -%}
+{%- endif -%}
+{%- assign estimateStartDate = settings.delivery_start -%}
+{%- assign estimateEndDate = settings.delivery_end -%}
+{%- if product.metafields.meta.estimateStartDate != blank -%}
+  {%- assign estimateStartDate = product.metafields.meta.estimateStartDate | plus:0 -%}
+{%- endif -%}
+{%- if product.metafields.meta.estimateEndDate != blank -%}
+   {%- assign estimateEndDate = product.metafields.meta.estimateEndDate | plus:0 -%}
+{%- endif -%}
+{%- if product.available -%}{%- assign remove_soldout = settings.remove_sold_out -%}{%- else -%}{%- assign remove_soldout = false -%}{%- endif -%}
+<div class="jas-wc-single {{singles_wc}} nt_single_{{settings.design_products}} mb__60">
+  {%- if settings.show_breadcrumb -%}
+  
+    <div class="jtpl_product_section_1">
+  
+	<div class="bgbl lh__1 pt__5 pb__5 pl__15 pr__15 clearfix">
+      <div class="flex between-xs{%- if settings.full_header_enable == false %} jas-container{%- endif -%}">
+   	   <nav class="shopify-breadcrumb dib">
+   	   	<a href="/">{{ 'general.breadcrumbs.home' | t }}</a>/
+         	<a href="{{ shop.url }}/products">All Products</a>
+   	   	{%- if collection.url != blank -%} / <a href="{{collection.url}}">{{collection.title}}</a>{%- endif -%}
+   	   	/ {{product.title}}
+   	   </nav>
+   	   {%- if collection.next_product or collection.previous_product -%}
+         {%- assign product_image_size = '219x' -%}
+         <div class="gecko-products-nav">
+            {%- if collection.previous_product -%}
+            <div class="product-btn product-prev">
+               <a href="{{ collection.previous_product.url }}">Previous product<span></span></a>
+               <div class="wrapper-short">
+                  <div class="product-short">
+                     {%- if collection.previous_product.images.size > 0 -%}
+                     <a href="{{collection.previous_product.url}}" class="product-thumb">
+                        <img width="219" height="280" data-src="{{ collection.previous_product.images[0].src | img_url: '70x' }}" class="lazyload attachment-shop_thumbnail size-shop_thumbnail sp-post-image" alt="{{ collection.previous_product.title | escape  }}">
+                     </a>
+                     {%- endif -%}
+                     <a href="{{ collection.previous_product.url }}" class="product-title">{{collection.previous_product.title}}</a>
+                     <span class="price">
+                         {%- if collection.previous_product.price_varies -%}
+                         {{ collection.previous_product.price_min | money }} – {{ collection.previous_product.price_max | money }}
+                         {%- elsif collection.previous_product.compare_at_price > collection.previous_product.price -%}<del>{{ collection.previous_product.compare_at_price  | money }}</del> <ins>{{ collection.previous_product.price | money }}</ins>
+                         {%- else -%}
+                         {{ collection.previous_product.price | money }}
+                         {%- endif -%}
+                     </span>
+                  </div>
+               </div>
+            </div>
+            {%- endif -%}
+            {%- if collection.next_product -%}
+            <div class="product-btn product-next">
+               <a href="{{collection.next_product.url}}">Next product<span></span></a>
+               <div class="wrapper-short">
+                  <div class="product-short">
+                     {%- if collection.next_product.images.size > 0 -%}
+                     <a href="{{collection.next_product.url}}" class="product-thumb">
+                        <img width="219" height="280" data-src="{{collection.next_product.images[0].src | img_url: '70x'}}" class="lazyload attachment-shop_thumbnail size-shop_thumbnail sp-post-image" alt="{{ collection.next_product.title | escape  }}">
+                     </a>
+                     {%- endif -%}
+                     <a href="{{collection.next_product.url}}" class="product-title">{{collection.next_product.title}}</a>
+                     <span class="price">
+                        {%- if collection.next_product.price_varies -%}
+                        {{ collection.next_product.price_min | money }} – {{ collection.next_product.price_max | money }}
+                        {%- elsif collection.next_product.compare_at_price > collection.next_product.price -%}<del>{{ collection.next_product.compare_at_price  | money }}</del> <ins>{{ collection.next_product.price | money }}</ins>
+                        {%- else -%}
+                        {{ collection.next_product.price | money }}
+                        {%- endif -%}
+                     </span>
+                  </div>
+               </div>
+            </div>
+            {%- endif -%}
+         </div>
+         {%- endif -%}
+      </div>
+	</div>
+  {%- endif -%}
+   {%- if settings.product_sidebar == 'left' -%}
+      {%- case settings.size_sidebar -%}
+        {% when '1' %}
+          {%- assign class_gl = 'jas-col-md-10 last-md' -%}
+          {%- assign class_sidebar = 'jas-col-md-2 first-md' -%}
+        {% when '2' %}
+          {%- assign class_gl = 'jas-col-md-9 last-md' -%}
+          {%- assign class_sidebar = 'jas-col-md-3 first-md' -%}
+        {% when '3' %}
+          {%- assign class_gl = 'jas-col-md-8 last-md' -%}
+          {%- assign class_sidebar = 'jas-col-md-4 first-md' -%}
+      {%- endcase -%}
+   {%- elsif settings.product_sidebar == 'right' -%}
+      {%- case settings.size_sidebar -%}
+        {% when '1' %}
+          {%- assign class_gl = 'jas-col-md-10' -%}
+          {%- assign class_sidebar = 'jas-col-md-2' -%}
+        {% when '2' %}
+          {%- assign class_gl = 'jas-col-md-9' -%}
+          {%- assign class_sidebar = 'jas-col-md-3' -%}
+        {% when '3' %}
+          {%- assign class_gl = 'jas-col-md-8' -%}
+          {%- assign class_sidebar = 'jas-col-md-4' -%}
+      {%- endcase -%}
+   {%- else -%}
+      {%- assign class_gl = 'jas-col-md-12' -%}
+   {%- endif -%}
+  
+	<div class="container{%- if settings.product_sidebar == 'contetn_full' %} contetn_full{%- endif-%}">
+		<div class="jas-row">
+			<div class="{{class_gl}} jas-col-xs-12">
+				<div class="product mt__40" id="product-{{product.id}}">
+					<div class="jas-row mb__50">
+                      
+                      
+                      
+						{%- case settings.design_products -%}
+						     {%- when '1' -%}
+						        {%- include 'product_layout_1' -%}
+						     {%- when '2' -%}
+						        {%- include 'product_layout_2' -%}
+						     {%- when '3' -%}
+						        {%- include 'product_layout_3' -%}
+						     {%- when '4' -%}
+						        {%- include 'product_layout_4' -%}
+						     {%- when '5' -%}
+						        {%- include 'product_layout_5' -%}
+						     {%- when '6' -%}
+						        {%- include 'product_thumb_bottom' -%} 
+						     {%- when '7' -%}
+						        {%- include 'product_thumb_right' -%}
+						     {%- else -%}
+						        {%- include 'product_thumb_out_side' -%}
+						{%- endcase -%}
+					</div>
+          {%- if singles_wc == 'wc-single-5' or product.template_suffix == 'layout_5' -%}
+                  <div class="jas-container">{%- endif -%}
+               {%- section 'product-page-description' -%}
+               {%- if settings.show_related_products -%}
+                  {%- assign countdown_timer_style = settings.related_countdown_style -%}
+                  {%- case settings.related_products_use -%}
+                     {%- when 'use_collection' -%}
+                        {%- include 'related-products-sectioned' -%}
+                      {%- when 'id' -%}
+                        {%- include 'related-products-id' -%}
+                     {%- when 'handle' -%}
+                        {%- include 'related-products-by-handle' -%}
+                     {%- else -%}
+                         {%- include 'related-products-by-tags' -%}
+                  {%- endcase -%}
+               {%- endif -%}
+               {%- if settings.show_recently_products -%}{%- include 'gl-recently-viewed' -%}{%-endif-%}
+               {%- if product.metafields.meta.hashtag != blank or product.metafields.meta.username != blank -%}{%- include 'pr_instagram' -%}{%-endif-%}
+		      {%- if singles_wc == 'wc-single-5' or product.template_suffix == 'layout_5' -%}</div>{%- endif -%}
+          </div>
+              
+                
+              
+			</div><!-- maint product -->
+			{%- if settings.product_sidebar == 'left' or settings.product_sidebar == 'right' -%}
+         <div class="sidebar mt__40 {{class_sidebar}} jas-col-xs-12">
+            {%- section 'section_sidebar_product' -%}
+         </div><!-- sidebar product -->
+         {%- endif -%}
+		</div><!-- .jas-row -->
+
+  
+</div>
+      
+  </div>
+    {%- assign enable_disable_accordion = product.metafields.section-2-enable['accordian_slider'] -%}
+{% if enable_disable_accordion == 1 %}
+  {{enable_disable_accordion}}
+   <div id="shopify-section-123456" class="shopify-section">
+          
+          <div class="container">
+             {% assign section-2-heading = product.metafields.section-2 %}
+            <h1>
+    {%- if section-2-heading != blank -%}
+      
+      {{section-2-heading['heading']}}
+      
+    {%- endif -%}  
+    </h1>
+            
+            <div class="home-imagebox-main  class-left-right">
+<div id="home-imagebox-inner" class="index-section home-section">    
+
+         <div class="section-2 jtpl_custom-section-2"> 
+  
+         <ul class="tabs vertical-tabs__control vertical-tabs__control--desktop">
+    {% assign protocols_count = '' %}
+    {% for key_value in product.metafields.section-2-title %}
+    <li><a href="#tab-{{ protocols_count.size }}">{{key_value[1]}}</a></li>
+    {% assign protocols_count = protocols_count | append: 'x' %}
+    {% endfor %}
+    
+    
+  </ul>
+
+          <div class="vertical-tabs__inner">
+          
+       {% assign protocols_countt = '' %}
+       
+       {% for key_value in product.metafields.section-2-title %}
+       <div class="" id="tab-{{ protocols_countt.size }}">
+      
+         {% assign percentage = product.metafields.section-2-perc %}
+         
+         <div class="percentage">
+           
+           {% if protocols_countt.size == 0 %}
+           
+           {{ percentage['perc-1'] }}
+           
+           {% endif %}
+           {% if protocols_countt.size == 1 %}
+           
+           {{ percentage['perc-2'] }}
+           
+           {% endif %}
+           {% if protocols_countt.size == 2 %}
+           
+           {{ percentage['perc-3'] }}
+           
+           {% endif %}
+           {% if protocols_countt.size == 3 %}
+           
+           {{ percentage['perc-4'] }}
+           
+           {% endif %}
+           {% if protocols_countt.size == 4 %}
+           
+           {{ percentage['perc-5'] }}
+           
+           {% endif %}
+         </div>
+         
+         {% assign text_1 = product.metafields.section-2-text-1 %}
+         
+         <div class="text-1">
+         {% if protocols_countt.size == 0 %}
+           
+           <span class="progress-text"> {{ text_1['text-1'] }} </span>
+           
+                
+         <div class="progress">
+           {% assign textbar_1 = product.metafields.section-2-bar %}
+           {% if textbar_1 != blank %}
+            {% assign textbar_color_1 = product.metafields.section-2-bar-color %}
+  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+  aria-valuemin="0" aria-valuemax="100" style="width:{{ textbar_1['bar-6'] }}; background-color:{{ textbar_color_1['bar-color-6'] }};">
+    
+  </div>
+           {%endif%}
+</div>
+           
+           {% endif %}
+           {% if protocols_countt.size == 1 %}
+           
+           <span class="progress-text">  {{ text_1['text-2'] }} </span>
+           
+                
+         <div class="progress">
+           {% assign textbar_4 = product.metafields.section-2-bar %}
+           {% if textbar_4 != blank %}
+            {% assign textbar_color_4 = product.metafields.section-2-bar-color %}
+  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50"
+  aria-valuemin="0" aria-valuemax="100" style="width:{{ textbar_4['bar-second8'] }};background-color:{{ textbar_color_4['bar-secondcolor-8'] }};">
+    
+  </div>
+            {%endif%}
+</div>
+           
+           {% endif %}
+           {% if protocols_countt.size == 2 %}
+           
+         <span class="progress-text">  {{ text_1['text-3'] }}
+           </span>
+                
+         <div class="progress">
+           {% assign textbar_5 = product.metafields.section-2-bar %}
+           {% if textbar_5 != blank %}
+            {% assign textbar_color_5 = product.metafields.section-2-bar-color %}
+  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60"
+  aria-valuemin="0" aria-valuemax="100" style="width:{{ textbar_5['bar-9-third'] }};background-color:{{ textbar_color_5['bar-color-thi-9'] }};">
+    
+  </div>
+           {%endif%}
+</div>
+           
+           {% endif %}
+           {% if protocols_countt.size == 3 %}
+           
+           <span class="progress-text">     {{ text_1['text-4'] }} </span>
+           
+                
+         <div class="progress">
+           {% assign textbar_6 = product.metafields.section-2-bar %}
+           {% if textbar_6 != blank %}
+            {% assign textbar_color_6 = product.metafields.section-2-bar-color %}
+  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+  aria-valuemin="0" aria-valuemax="100" style="width:{{ textbar_6['bar-four_textr-10'] }};background-color:{{ textbar_color_6['bar-tencolor-10'] }};">
+   
+  </div>
+           {%endif%}
+</div>
+           
+           {% endif %}
+           {% if protocols_countt.size == 4 %}
+           
+           <span class="progress-text">     {{ text_1['text-5'] }} </span>
+            
+                
+         <div class="progress">{% assign textbar_7 = product.metafields.section-2-bar %}
+           {% if textbar_7 != blank %}
+            {% assign textbar_color_7 = product.metafields.section-2-bar-color %}
+  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+  aria-valuemin="0" aria-valuemax="100" style="width:{{ textbar_7['bar-five_textr-11'] }};background-color:{{ textbar_color_7['bar-erlevencolor-11'] }};">
+    
+  </div>
+           {%endif%}
+</div>
+           
+           {% endif %}
+           
+           <div class="vertical-tabs__bar" style="width:100%;background:linear-gradient(91deg, #cc3333 50%, rgba(204, 51, 51, 0.4) 100%), linear-gradient(to bottom, #fff, #fff);"></div>
+           
+         </div>
+         
+    
+         
+         
+         {% assign text_2 = product.metafields.section-2-text-2 %}
+         
+         <div class="text-2">
+           
+           <span class="progress-text">
+         {% if protocols_countt.size == 0 %}
+           
+           {{ text_2['text-2-1'] }}
+           
+           {% endif %}
+           {% if protocols_countt.size == 1 %}
+           
+           {{ text_2['text-2-2'] }}
+           
+           {% endif %}
+           {% if protocols_countt.size == 2 %}
+           
+           {{ text_2['text-2-3'] }}
+           
+           {% endif %}
+           {% if protocols_countt.size == 3 %}
+           
+           {{ text_2['text-2-4'] }}
+           
+           {% endif %}
+           {% if protocols_countt.size == 4 %}
+           
+           {{ text_2['text-2-5'] }}
+           
+           {% endif %}
+           </span>
+            {% if protocols_countt.size == 0 %}
+             <div class="progress progress-second">
+                {% assign textbar_2 = product.metafields.section-2-bar %}
+           {% if textbar_2 != blank %} 
+                {% assign textbar_color_2 = product.metafields.section-2-bar-color %}
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+            aria-valuemin="0" aria-valuemax="100" style="width:{{ textbar_2['bar-7'] }};background-color:{{ textbar_color_2['bar-color-7'] }};">
+
+            </div>
+                         {%endif%}
+          </div>
+           {%endif%}
+             {% if protocols_countt.size == 1 %}
+             <div class="progress progress-second">
+                {% assign textbar_21 = product.metafields.section-2-bar %}
+           {% if textbar_21 != blank %} 
+                {% assign textbar_color_21 = product.metafields.section-2-bar-color %}
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+            aria-valuemin="0" aria-valuemax="100" style="width:{{textbar_21['bar-19-foutheen']}};background-color:{{ textbar_color_2['bar-color_fourth-14'] }};">
+
+            </div>
+                         {%endif%}
+          </div>
+           {%endif%}
+           
+             {% if protocols_countt.size == 2 %}
+             <div class="progress progress-second">
+                {% assign textbar_22 = product.metafields.section-2-bar %}
+           {% if textbar_22 != blank %} 
+                {% assign textbar_color_22 = product.metafields.section-2-bar-color %}
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+            aria-valuemin="0" aria-valuemax="100" style="width:{{textbar_22['bar-text-second-3']}};background-color:{{ textbar_color_22['bar-colorsecond-17'] }};">
+
+            </div>
+                         {%endif%}
+          </div>
+           {%endif%}
+           
+             {% if protocols_countt.size == 3 %}
+             <div class="progress progress-second">
+                {% assign textbar_23 = product.metafields.section-2-bar %}
+           {% if textbar_23 != blank %} 
+                {% assign textbar_color_23 = product.metafields.section-2-bar-color %}
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+            aria-valuemin="0" aria-valuemax="100" style="width:{{textbar_23['bar-20_text']}};background-color:{{ textbar_color_23['bar-color-200'] }};">
+
+            </div>
+                         {%endif%}
+          </div>
+           {%endif%}
+           
+           {% if protocols_countt.size == 4 %}
+             <div class="progress progress-second">
+                {% assign textbar_24 = product.metafields.section-2-bar %}
+           {% if textbar_24 != blank %} 
+                {% assign textbar_color_24 = product.metafields.section-2-bar-color %}
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+            aria-valuemin="0" aria-valuemax="100" style="width:{{textbar_24['bar-42']}};background-color:{{ textbar_color_24['bar-color-42'] }};">
+
+            </div>
+                         {%endif%}
+          </div>
+           {%endif%}
+           
+         </div>
+         {% assign text_3 = product.metafields.section-2-text-3 %}
+         <div class="text-3">
+         <span class="progress-text">
+           {% if protocols_countt.size == 0 %}
+           
+           {{ text_3['text-3-1'] }}
+           
+           {% endif %}
+           {% if protocols_countt.size == 1 %}
+           
+           {{ text_3['text-3-2'] }}
+           
+           {% endif %}
+           {% if protocols_countt.size == 2 %}
+           
+           {{ text_3['text-3-3'] }}
+           
+           {% endif %}
+           {% if protocols_countt.size == 3 %}
+           
+           {{ text_3['text-3-4'] }}
+           
+           {% endif %}
+           {% if protocols_countt.size == 4 %}
+           
+           {{ text_3['text-3-5'] }}
+           
+           {% endif %}
+           </span>
+         </div>
+         
+         <div class="content">
+          {% assign content = product.metafields.section-2-content %}
+           {% if protocols_countt.size == 0 %}
+           
+           {{ content['content-1'] }}
+           
+           {% endif %}
+           {% if protocols_countt.size == 1 %}
+           
+           {{ content['content-2'] }}
+           
+           {% endif %}
+           {% if protocols_countt.size == 2 %}
+           
+           {{ content['content-3'] }}
+           
+           {% endif %}
+           {% if protocols_countt.size == 3 %}
+           
+           {{ content['content-4'] }}
+           
+           {% endif %}
+           {% if protocols_countt.size == 4 %}
+           
+           {{ content['content-5'] }}
+           
+           {% endif %}
+           
+         </div>
+         
+       </div>
+    {% assign protocols_countt = protocols_countt | append: 'x' %}
+    {% endfor %}
+            
+          </div>
+             
+          
+             
+          </div>
+     
+              </div>
+            </div>
+  
+</div>
+      
+	</div>
+   {%endif%} 
+  
+{% include 'product-accordion' %}
+
+{% include 'tabular-section' %}
+
+{% section 'fifth-product-section' %} 
+
+{% section 'jas_product_section' %}
+
+
+
+
+
+
+<!-- RYVIU APP :: WIDGET -->
+<div class="lt-block-reviews"> 
+	<ryviu-widget  
+	    handle="{{product.handle}}"
+	    title_product="{{product.title}}"
+	    total_meta="{{ product.metafields.ryviu.r_count }}"
+		image_product="{{ product.featured_image.src | img_url: '180x' }}"></ryviu-widget>
+</div>
+<!-- / RYVIU APP -->
+
+{{product.metafields.shogun.below}}
+
+
+<script>
+  
+
+
+  function addAllItems(array){
+    
+  Shopify.queue = [];
+  
+  var newArray = array.split(',');
+    
+   for (var i = 0; i < newArray.length; i++) {
+    product = newArray[i]
+     Shopify.queue.push({
+     
+       variantId: product
+      
+     
+     });
+  } 
+    
+  
+  Shopify.moveAlong = function() {
+   
+    if (Shopify.queue.length) {
+      var request = Shopify.queue.shift();
+      var data = 'id='+ request.variantId + '&quantity=1'
+      
+      
+        $.ajax({
+        type: 'POST',
+        url: '/cart/add.js',
+        dataType: 'json',
+        data: data,
+        success: function(res){
+          Shopify.moveAlong();
+          setTimeout(function(){ 
+          window.location.href = '/cart';
+          }, 1000);
+        },
+        error: function(){
+          // if it's not last one Move Along else update the cart number with the current quantity
+          if (Shopify.queue.length){
+            Shopify.moveAlong()
+          } else {
+            // UPDATE CART THING
+            // console.log('$("#cart-number").replaceWith("<a href="/cart" id="cart-number">View cart (" + quantity + ")</a>")');
+          }
+        }
+      });
+    }
+    // If the queue is empty, we add 1 to cart
+    else 
+    {
+      // UPDATE CART THING
+      //quantity += 1;
+      //addToCartOk(quantity);
+    }
+  };
+  Shopify.moveAlong();
+};
+  
+  jQuery(document).ready(function(){
+    
+  
+   $('ul.tabs').each(function(){
+      var active, content, links = $(this).find('a');
+      active = links.first().addClass('active');
+      content = $(active.attr('href'));
+      links.not(':first').each(function () {
+        $($(this).attr('href')).hide();
+      });
+      $(this).find('a').click(function(e){
+        active.removeClass('active');
+        content.hide();
+        active = $(this);
+        content = $($(this).attr('href'));
+        active.addClass('active');
+        content.show();
+        return false;
+      });
+    });
+    
+  });
+  
+</script>  
+
+<style>
+  
+  .section-2.jtpl_custom-section-2 {
+    display: flex;
+    
+}
+  
+   .vertical-tabs__inner {
+    margin-left: 106px;
+   }
+  
+   li 
+   {
+    list-style: none;
+    padding: 0px 41px 5px 1px;
+   }
+
+  
+  </style>
+

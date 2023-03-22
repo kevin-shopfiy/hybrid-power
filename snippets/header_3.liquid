@@ -1,0 +1,26 @@
+<div class="header__mid pr pl__15 pr__15 {{settings.header_top_color}}{%- if settings.header_bg_image != blank %} lazyload{%- endif -%}"{%- if settings.header_bg_image != blank %} data-bgset="{%- include 'bgset', image: settings.header_bg_image -%}" data-sizes="auto" data-parent-fit="cover"{%- endif -%}>
+   {%- if settings.full_header_enable == false -%}<div class="jas-container">{%- endif -%}   
+      <div class="jas-row middle-xs">
+         <div class="hide-md visible-sm visible-xs jas-col-sm-3 jas-col-xs-3 flex start-md flex nta_menu middle-xs">
+            {%- include 'push_menu' -%}
+         </div>
+         <div class="jas-col-md-2 jas-col-sm-6 jas-col-xs-6 start-md center-sm center-xs jas_div_logo logo-new">
+            {%- include 'logo_menu' -%}
+         </div>
+         <div class="jas-col-md-8 hidden-sm jtpl_custom_menu_section">
+            <div class="jas-navigation flex center-xs nave">
+           {% comment %}{%- section 'mega_menu' -%}  {% endcomment %}
+           {%- section 'mega_menu_6' -%} 
+                                                      
+            </div>
+            <!-- .jas-navigation -->
+         </div>
+         <div class="jas-col-md-2 jas-col-sm-3 jas-col-xs-3 jtpl_after_menu_section">
+            <div class="jas-action flex end-xs middle-xs">
+               {%- include 'jas_action' -%}
+            </div><!-- .jas-action -->
+         </div>
+      </div>
+      <!-- .jas-row -->
+   {%- if settings.full_header_enable == false -%}</div><!-- .jas-container -->{%- endif -%}
+</div>

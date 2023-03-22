@@ -1,0 +1,9 @@
+{%- if style_title == '1' -%}
+  {%- if sett_title != blank -%}<h3 class="jas_title_1 pr {{mg_class}}">{{sett_title}}<span class="sub-title db">{{sett_sub_title}}</span></h3>{%- endif -%}
+{%- elsif style_title == '3' -%}
+  {%- if sett_title != blank -%}<div class="jas_title_3 flex between-md center-xs middle-xs _mb__20"><h3 class="f__libre mt__0 mb__0">{{sett_title}}</h3>{%- if sett_btn != blank and sett_url != blank -%}<a href="{{sett_url}}" style="color:{{sett_cl}}">{{sett_btn}}</a>{%- endif -%}</div>{%- endif -%}
+{%- elsif style_title == '4' -%}
+{%- if sett_title != blank -%}<h3 class="jas_title_4 fwb tc mt__0 mb__0 pr">{{sett_title}}</h3><div class="divider_rec cd"></div><span class="ssub-title db tc cd {{mg_class}}">{{sett_sub_title}}</span>{%- endif -%}
+{%- else' -%}
+  {%- if sett_title != blank -%}<h3 class="jas_title divider pr {{mg_class}}">{{sett_title}}<span class="sub-title db">{{sett_sub_title}}</span></h3>{%- endif -%}
+{%- endif -%}

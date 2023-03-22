@@ -1,0 +1,100 @@
+<footer id="jas-footer" class="footer-1 pr cw footer__collapsed_{{settings.footer_accordions}}{%- if settings.footer_accordions %} footer__collapsed{%- endif -%}" role="contentinfo">
+   <div class="footer__top {%- if settings.footer_bg_image != blank %} lazyload{%- endif -%}"{%- if settings.footer_bg_image != blank %} data-bgset="{%- include 'bgset', image: settings.footer_bg_image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ settings.footer_bg_image | img_url: '50x50' }});"{%- endif -%}>
+      <div class="jas-container pr">
+         {%- section 'jas_footer' -%}
+         <!-- .jas-row -->
+      </div>
+      <!-- .jas-container -->
+   </div>
+   <!-- .footer__top -->
+   {%- if settings.bottom_menu != blank or settings.copyright_text != blank -%}
+      {%- case settings.copyrights_layout -%}
+        {%- when 'centered' -%}
+            {%- assign class = 'jas-col-md-12 jas-col-sm-12 jas-col-xs-12 center-md center-sm center-xs mb__10' -%}
+            {%- assign class_2 = 'jas-col-md-12 jas-col-sm-12 jas-col-xs-12 center-md center-sm center-xs flex' -%}
+        {%- else -%}
+            {%- assign class = 'jas-col-md-6 jas-col-sm-12 jas-col-xs-12 start-md center-sm center-xs' -%}
+            {%- assign class_2 = 'jas-col-md-6 jas-col-sm-12 jas-col-xs-12 end-md end-sm center-xs flex' -%}
+      {%- endcase -%}
+      <div class="footer__bot">
+         <div class="jas-container pr tc">
+            {%- assign ck_footer__bot = false -%}
+            {%- if settings.bottom_menu != blank and settings.copyright_text != blank -%}
+                {%- assign ck_footer__bot = true -%}
+            {%- elsif settings.copyright_text != blank and settings.footer_payment_image != blank -%}
+                {%- assign ck_footer__bot = true -%}
+            {%- elsif settings.copyright_text != blank and shop.enabled_payment_types != blank -%}
+                {%- assign ck_footer__bot = true -%}
+            {%- endif -%}
+            {%- if ck_footer__bot -%}
+            <div class="jas-row">
+               {%- assign copyright_text = settings.copyright_text | split:'{{year}}' -%}
+               <div class="copyright {{class}}">{{ copyright_text[0] }} {{'now' | date:'%Y'}} {{ copyright_text[1] }}</div>
+               <div class="{{class_2}}">
+                  {%- if settings.bottom_menu != blank -%}
+                     <ul id="jas-footer-menu" class="clearfix">
+                        {%- for link in linklists[settings.bottom_menu].links -%}
+                           <li><a href="{{ link.url }}">{{ link.title | split: '[' | first  }}</a></li>
+                        {%- endfor -%}
+                     </ul>
+                  {%- elsif settings.footer_payment_image != blank and settings.payment_icons == '1' -%}
+                    {%- assign image = settings.footer_payment_image -%}
+                     <p><img src="{{ image | img_url: 'master' }}" alt="{{ image.alt | default: 'accept payment' }}"></p>
+                  {%- elsif settings.payment_icons == '2' -%}
+                     <div class="site-footer__payment-icons">
+                      {% unless shop.enabled_payment_types == empty %}
+                        {%- assign payment_icons_available = 'amazon_payments,american_express,apple_pay,bitcoin,cirrus,dankort,diners_club,discover,dogecoin,dwolla,forbrugsforeningen,interac,jcb,klarna,litecoin,maestro,master,paypal,stripe,shopify_pay,visa' | split: ',' -%}
+                        <ul class="payment-icons list--inline">
+                          {% for type in shop.enabled_payment_types %}
+                            {% if payment_icons_available contains type %}
+                              <li class="payment-icon">
+                                {%- if settings.pay_style == '1' -%}
+                                {%- assign icon_name = type | prepend: 'icon-' -%}{%- include icon_name -%}
+                                {%- else -%}
+                                {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+                                {%- endif -%}
+                              </li>
+                            {% endif %}
+                          {% endfor %}
+                        </ul>
+                      {% endunless %}
+                     </div>
+                  {%- endif -%}
+               </div>
+            </div>
+            {%- elsif settings.bottom_menu != blank -%}
+               <ul id="jas-footer-menu" class="clearfix">
+                  {%- for link in linklists[settings.bottom_menu].links -%}
+                     <li><a href="{{ link.url }}">{{ link.title | split: '[' | first  }}</a></li>
+                  {%- endfor -%}
+               </ul>
+            {%- elsif settings.copyright_text != blank -%}
+               {%- assign copyright_text = settings.copyright_text | split:'{{year}}' -%}
+               {{ copyright_text[0] }} {{'now' | date:'%Y'}} {{ copyright_text[1] }}
+            {%- elsif settings.footer_payment_image != blank and settings.payment_icons == '1' -%}
+                    {%- assign image = settings.footer_payment_image -%}
+                     <p><img src="{{ image | img_url: 'master' }}" alt="{{ image.alt | default: 'accept payment' }}"></p>
+                  {%- elsif settings.payment_icons == '2' -%}
+                     <div class="site-footer__payment-icons">
+                      {% unless shop.enabled_payment_types == empty %}
+                        {%- assign payment_icons_available = 'amazon_payments,american_express,apple_pay,bitcoin,cirrus,dankort,diners_club,discover,dogecoin,dwolla,forbrugsforeningen,interac,jcb,klarna,litecoin,maestro,master,paypal,stripe,shopify_pay,visa' | split: ',' -%}
+                        <ul class="payment-icons list--inline">
+                          {% for type in shop.enabled_payment_types %}
+                            {% if payment_icons_available contains type %}
+                              <li class="payment-icon">
+                                {%- if settings.pay_style == '1' -%}
+                                {%- assign icon_name = type | prepend: 'icon-' -%}{%- include icon_name -%}
+                                {%- else -%}
+                                {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+                                {%- endif -%}
+                              </li>
+                            {% endif %}
+                          {% endfor %}
+                        </ul>
+                      {% endunless %}
+                     </div>
+                  {%- endif -%}
+         </div>
+      </div><!-- .footer__bot -->
+   {%- endif -%}
+</footer>

@@ -1,0 +1,15 @@
+{%- if settings_pr_img_size and item.image -%}
+   <a data-chksrc="{{ item.image | img_url: '50x50' }}" class="jas_bg jas-product-img-element jas-pr-image-link lazyload" href="{{ item.url }}" data-bgset="{%- include 'bgset', image: item.image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ item.image | img_url: '50x50' }});">
+      {%- assign img_url = item.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+      <img src="{{ item.image | img_url: '50x50' }}" data-chksrc="{{ item.image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ item.image.aspect_ratio }}" data-sizes="auto" class="lazyload attachment-shop_catalog size-shop_catalog op_0" alt="{{item.image.alt}}">
+   </a>
+   <div class="jas-wrap-lazy"></div>
+{%- elsif item.image -%}
+   <a class="jas-product-img-element jas-pr-image-link" href="{{ item.url }}">
+      {%- assign img_url = item.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+      <img src="{{ item.image | img_url: '50x50' }}" data-chksrc="{{ item.image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ item.image.aspect_ratio }}" data-sizes="auto" class="lazyload attachment-shop_catalog size-shop_catalog" alt="{{item.image.alt}}">
+      <div class="jas-wrap-lazy"></div>
+   </a> 
+{%- endif -%}
+ 
+

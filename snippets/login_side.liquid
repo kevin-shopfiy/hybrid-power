@@ -1,0 +1,167 @@
+<div class="login_frm_side jas-side-login-none jas-push-menu-none">
+      <h3 class="mg__0 tc cw bgb tu ls__2" id="side_sign_in">{{ 'general.login_popup.sign_in' | t }}<i class="close-login pe-7s-close pa hide hidden"></i></h3>
+      <h3 class="mg__0 tc cw bgb tu ls__2" id="side_sign_up" style="display:none;">{{ 'general.login_popup.sign_up' | t }}<i class="close-login pe-7s-close pa hide hidden"></i></h3>
+      <div class="login_frm pr oh">
+        <div class="shopify-message resetSuccessside" style="display:none;">{{ 'customer.recover_password.success' | t }}</div>
+        <p class="text_content_success resetSuccessside" style="display:none;">{{ 'customer.recover_password.content_success' | t }}</p>
+        <ul id="gl_shopify_errorside" class="shopify-error" style="display:none;">
+           <li class="html_li" id="nthtml_frmside"></li>
+        </ul>
+        <div id="ntCustomerLoginFormSide">
+	         {%- form 'customer_login', id: "customer_login_side",class:'login' -%}
+	            <input type="hidden" name="checkout_url" value="{{settings.checkout_url}}" />
+	            {%- if form.errors -%}
+	               {%- assign gl_shopify_error = true -%}
+	               {%- for field in form.errors -%}
+	                  {%- if field == 'form' -%}
+	                     {%- assign error_html = form.errors.messages[field] -%}
+	                  {%- else -%}
+	                     {%- assign error_html = form.errors.translated_fields[field] | append:form.errors.messages[field] -%}
+	                  {%- endif -%}
+	               {%- endfor -%}
+	            {%- endif -%}
+	            <p class="shopify-FormRow shopify-FormRow--wide form-row form-row-wide">
+	              <label for="usernamelogin">{{ 'customer.login.email' | t }} <span class="required">*</span></label>
+	              <span class="pr db input--icon">
+	                <i class="pe-7s-user pa tc"></i>
+	                <input type="text" class="shopify-Input shopify-Input--text input-text{%- if form.errors contains 'email' %} input--error{%- endif -%}" name="customer[email]" id="usernamelogin" required="required">
+	              </span>
+	            </p>
+	            {%- if form.password_needed -%}
+	            <p class="shopify-FormRow shopify-FormRow--wide form-row form-row-wide">
+	              <label for="passwordlogin">{{ 'customer.login.password' | t }} <span class="required">*</span></label>
+	              <span class="pr db input--icon">
+	                <i class="pe-7s-door-lock pa tc"></i>
+	                <input class="shopify-Input shopify-Input--text input-text{%- if form.errors contains 'password' %} input--error{%- endif -%}" type="password" name="customer[password]" id="passwordlogin" required="required">
+	              </span>
+	            </p>
+	            {%- endif -%}
+	            <p class="form-row">
+	               <input type="submit" class="shopify-Button button" name="login" value="{{ 'customer.login.sign_in' | t }}">
+	            </p>
+	            {%- if form.password_needed -%}
+	            <p class="shopify-LostPassword lost_password">
+	               <a href="javascript:void(0)" onclick="showRecoverPasswordFormSide();return false;">{{ 'customer.login.forgot_password' | t }}</a>
+	            </p>
+	            {%- endif -%}
+	         {%- endform -%}
+	          <div id="recover_password_side" style="display: none;">
+                     {%- form 'recover_customer_password',id:'reset_password_side', class:'shopify-ResetPassword lost_reset_password' -%}
+                        <p>{{ 'customer.recover_password.subtext' | t }}</p>
+                        {%- if form.posted_successfully? -%}
+                           {%- assign reset_success = true -%}
+                        {%- endif -%}
+                        {%- if form.errors -%}
+                           {%- assign gl_shopify_error = true -%}
+                           {%- for field in form.errors -%}
+                              {%- if field == 'form' -%}
+                                 {%- assign error_html = form.errors.messages[field] -%}
+                              {%- else -%}
+                                 {%- assign error_html = form.errors.translated_fields[field] | append:form.errors.messages[field] -%}
+                              {%- endif -%}
+                           {%- endfor -%}
+                        {%- endif -%}
+                        <p class="shopify-form-row shopify-form-row--first form-row form-row-first jas__100">
+                           <label for="RecoverEmailside">{{ 'customer.recover_password.email' | t }}</label>
+                           <input type="email" value="" name="email" id="RecoverEmailside" class="shopify-Input shopify-Input--text input-text" autocorrect="off" autocapitalize="off">
+                        </p>
+                        <div class="clear"></div>
+                        <p class="shopify-form-row form-row">
+                           <input type="submit" class="shopify-Button button" value="{{ 'customer.recover_password.submit' | t }}">
+                           <button type="button" onclick="hideRecoverPasswordFormSide();return false;" class="shopify-Button button fr w__100 mt__20 mb__10">{{ 'customer.recover_password.cancel' | t }}</button>
+                        </p>
+                     {%- endform -%}
+	          </div>
+        </div>
+        <div id="ntCustomerRegisterFormSide" style="display: none;">
+            {%- form 'create_customer',id:'register_side',class:'register' -%}
+               {%- if form.errors -%}
+                  {%- assign gl_shopify_error = true -%}
+                  {%- for field in form.errors -%}
+                     {%- if field == 'form' -%}
+                        {%- assign error_html = form.errors.messages[field] -%}
+                     {%- else -%}
+                        {%- assign error_html = form.errors.translated_fields[field] | append:form.errors.messages[field] -%}
+                     {%- endif -%}
+                  {%- endfor -%}
+               {%- endif -%}
+               <p class="shopify-FormRow shopify-FormRow--wide form-row form-row-wide">
+                  <label for="FirstName1">{{ 'customer.register.first_name' | t }}</label>
+                  <input type="text" class="shopify-Input shopify-Input--text input-text" name="customer[first_name]" id="FirstName1"{%- if form.first_name %} value="{{ form.first_name }}"{%- endif %} autofocus>
+               </p>
+               <p class="shopify-FormRow shopify-FormRow--wide form-row form-row-wide">
+                  <label for="LastName1">{{ 'customer.register.last_name' | t }}</label>
+                  <input type="text" class="shopify-Input shopify-Input--text input-text" name="customer[last_name]" id="LastName1"{%- if form.last_name %} value="{{ form.last_name }}"{%- endif -%}>
+               </p>
+               <p class="shopify-FormRow shopify-FormRow--wide form-row form-row-wide">
+                  <label for="reg_emailSide">{{ 'customer.register.email' | t }} <span class="required">*</span></label>
+                  <input type="email" class="shopify-Input shopify-Input--text input-text{%- if form.errors contains 'email' %} input--error{%- endif -%}" name="customer[email]" required="required" id="reg_emailSide"{%- if form.email %} value="{{ form.email }}"{%- endif -%}>
+               </p>
+               <p class="shopify-FormRow shopify-FormRow--wide form-row form-row-wide">
+                  <label for="reg_passwordSide">{{ 'customer.register.password' | t }} <span class="required">*</span></label>
+                  <input type="password" class="shopify-Input shopify-Input--text input-text{%- if form.errors contains 'password' %} input--error{%- endif -%}" name="customer[password]" id="reg_passwordSide" required="required">
+               </p>
+            {%- if settings.use_privacy_policy -%}
+               <div class="shopify-privacy-policy-text"><p>{%- if settings.privacy_policy_link != blank -%}{%- assign page_url = pages[settings.privacy_policy_link].url -%}{{ 'customer.register.privacy_policy_html' | t:link: page_url }}{%- else -%}{{ 'customer.register.privacy_policy' | t }}{%- endif -%}</p></div>
+               {%- endif -%}
+               <p class="shopify-FormRow form-row">          
+                  <input type="submit" class="shopify-Button button" name="register" value="{{ 'customer.register.submit' | t }}">
+               </p>
+            {%- endform -%}
+        </div>
+      </div>
+     <div class="login_faq_side">
+        <span class="create-account-text">{{ 'general.login_popup.account_text' | t }}</span>
+        <p>{{ 'general.login_popup.registration_text' | t }}</p>
+        <a class="btn btn__link" href="/account/register" id="hideFormLogin" onclick="hideFormLogin();return false;">{{ 'general.login_popup.register' | t }}</a>
+        <a class="btn btn__link" href="/account/login" id="showFormLogin" onclick="showFormLogin();return false;" style="display:none">{{ 'general.login_popup.login' | t }}</a>
+     </div> 
+ <script type="text/javascript">
+  /*
+    Show/hide the recover password form when requested.
+  */
+  function showRecoverPasswordFormSide() {
+    document.getElementById('recover_password_side').style.display = 'block';
+    document.getElementById('customer_login_side').style.display='none';
+    document.getElementById('gl_shopify_errorside').style.display='none';
+  }
+
+  function hideRecoverPasswordFormSide() {
+    document.getElementById('recover_password_side').style.display = 'none';
+    document.getElementById('customer_login_side').style.display = 'block';
+  }
+  function showFormLogin() {
+    document.getElementById('ntCustomerRegisterFormSide').style.display = 'none';
+    document.getElementById("ntCustomerLoginFormSide").style.display = "block";
+    document.getElementById('hideFormLogin').style.display = 'inline-block';
+    document.getElementById('showFormLogin').style.display='none';
+    document.getElementById("side_sign_in").style.display = "block";
+    document.getElementById("side_sign_up").style.display = "none";
+ }
+ function hideFormLogin() {
+    document.getElementById('ntCustomerLoginFormSide').style.display = 'none';
+    document.getElementById("ntCustomerRegisterFormSide").style.display = "block";
+    document.getElementById('showFormLogin').style.display = 'inline-block';
+    document.getElementById('hideFormLogin').style.display='none';
+    document.getElementById("side_sign_in").style.display = "none";
+    document.getElementById("side_sign_up").style.display = "block";
+ }
+  // Allow deep linking to the recover password form
+  if (window.location.hash == '#recover') { showRecoverPasswordFormSide() }
+
+  // reset_success is only true when the reset form is
+  {% if reset_success -%}
+    var x = document.getElementsByClassName('resetSuccessside');
+    x[0].style.display = 'block';  x[1].style.display = 'block';
+  {% endif -%}
+  {% if gl_shopify_error -%}
+      {%- if error_html != blank -%}
+      var html = {{error_html | json }};
+      var element = document.getElementById("nthtml_frmside");
+         element.innerHTML = '';
+         element.innerHTML = '{{ 'customer.login.error' | t }} '+html;
+      {%- endif -%}
+      document.getElementById('gl_shopify_errorside').style.display = 'block';
+  {% endif -%}
+</script>
+</div>

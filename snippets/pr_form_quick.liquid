@@ -1,0 +1,135 @@
+{%- assign ck_inventory = settings.ck_inventory -%} 
+<div class="btn-atc atc-popup clearfix frm_quick_jas{%- if settings.btn_atc_full %} btn_atc_full{%- endif -%}">
+	{%- if product.has_only_default_variant == false and linklists[product.handle].links.size == 0 -%}
+	<div id="callBackVariant_quick" class="jas_{{current_variant.option1 | handleize}} jas1_{{current_variant.option2 | handleize}} jas2_{{current_variant.option3 | handleize}}">
+	{%- endif-%}
+	   {%- if settings.product_quantity_message and product.variants.size == 1 and sold_out == false -%}
+	      {%- if current_variant.inventory_management -%}
+            {%- if current_variant.inventory_quantity < ck_inventory and current_variant.inventory_quantity > 0 -%}
+               <div id="variantQuantity_quick" class="variant-quantity variantQuantity">{{ 'products.product.only_left' | t: count: current_variant.inventory_quantity }}</div>
+            {%- elsif current_variant.inventory_quantity <= 0 and current_variant.incoming -%}
+               {%- assign next_incoming_date = current_variant.next_incoming_date | date: format: 'month_day_year' -%}
+               <div id="variantQuantity_quick" class="variant-quantity variantQuantity">{{ 'products.product.will_not_ship_until' | t: date:next_incoming_date }}</div>
+            {%- endif -%}
+         {%- endif -%}  
+	   {%- endif -%}
+	   {%- if product.has_only_default_variant and sold_out and linklists[product.handle].links.size == 0 -%}
+	      {%- if settings.product_quantity_message -%}
+               {%- if current_variant.inventory_management -%}
+                  {%- if current_variant.inventory_quantity < ck_inventory and current_variant.inventory_quantity > 0 -%}
+                     <div id="variantQuantity_quick" class="variant-quantity variantQuantity">{{ 'products.product.only_left' | t: count: current_variant.inventory_quantity }}</div>
+                  {%- elsif current_variant.inventory_quantity <= 0 and current_variant.incoming -%}
+                     {%- assign next_incoming_date = current_variant.next_incoming_date | date: format: 'month_day_year' -%}
+                     <div id="variantQuantity_quick" class="variant-quantity variantQuantity">{{ 'products.product.will_not_ship_until' | t: date:next_incoming_date }}</div>
+                  {%- endif -%}
+               {%- endif -%}
+         {%- endif -%}
+	      <p class="stock out-of-stock mb__20" id="out-of-stock-gl_quick">{{ 'products.product.outofstock' | t }}</p>
+	      {%- if settings.use_wishlist and pages['wishlist'].empty? != true -%}{%- include 'jas-wishlist-product' -%}{%- endif -%}
+	   {%- elsif linklists[product.handle].links.size == 0 -%}
+	      {%- if check_external and product.has_only_default_variant -%}
+	          <div class="flex">
+	         <a href="{{ check }}" id="shopify_add_to_cart" rel="nofollow" class="single_add_to_cart_button button alt btn_external">{{ product.metafields.external | first | first }}</a>
+	         {%- if settings.use_wishlist and pages['wishlist'].empty? != true -%}{%- include 'jas-wishlist-product' -%}{%- endif -%}
+	         </div>
+	      {%- else -%}
+	            {%- form 'product', product, id: "cart-form-quick", class: "variations_form_qv variations_form product-form jas_cart clearfix" -%}
+	                  <select name="id" id="product-select-quick" class="product-form__variants hide hidden">
+	                  {%- for variant in product.variants -%}
+	                      {%- if variant.available -%}
+	                        <option {% if variant.id == current_variant.id %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}" class="{{variant.option1 | handleize }} nt1_{{variant.option2 | handleize }} nt2_{{variant.option3 | handleize }}">{{ variant.title | handle}}</option>
+	                      {%- else -%}
+	                        <option value="{{ variant.id }}"{%- if remove_soldout %} disabled="disabled"{%- endif %} class="nt_sold_out {{variant.option1 | handleize }} nt1_{{variant.option2 | handleize }} nt2_{{variant.option3 | handleize }}">{{ variant.title | handleize }}</option>
+	                      {%- endif -%}
+	                    {%- endfor -%}
+	                  </select>
+					{%- if product.has_only_default_variant == false -%}{%- include settings.swatch_design,select_id:'nt_select_quick',class_input:'qv' -%}{%- endif -%}
+					<div class="single_variation_wrap{%- if product.price_varies %} price_custom{%- endif -%}">
+						<div class="shopify-variation single_variation">
+							{%- if product.price_varies -%}
+							<div class="shopify-variation-price">
+								<span class="price productPrice" id="productPrice_quick">
+		                          {%- if on_sale -%}<ins id="product-price">{{ current_variant.price | money }}</ins><del id="old-product-price">{{ current_variant.compare_at_price | money }}</del>
+		                          {%- else -%}
+		                          <span id="product-price">{{ current_variant.price | money }}</span> 
+		                          {%- endif -%}
+		                        </span>
+							</div>
+							{%- endif -%}
+						</div>
+                      <div class="upo-quickview upo-quickview-{{product.id}}" data-handle='{{ product.handle }}'></div>
+                      <script>setTimeout(function(){if(window.UPO && window.UPO.modalProduct('.upo-quickview-{{product.id}}') ){}},1000);</script>
+						<div class="shopify-variation-add-to-cart variations_button shopify-variation-add-to-cart-enabled">
+						   {%- if settings.product_quantity_message -%}
+                           <div id="variantQuantity_quick" class="variant-quantity variantQuantity" style="display: none"></div>
+                           {%- endif -%}
+		                   <div class="flex">
+                                {%- if product.variants.size == 1 and sold_out -%}
+                                     <p class="stock out-of-stock" id="out-of-stock-gl_quick">{{ 'products.product.outofstock' | t }}</p>
+                                 {%- else -%}
+                                       <p class="stock out-of-stock" id="out-of-stock-gl_quick" style="display: none">{{ 'products.product.outofstock' | t }}</p>
+                                     {%- if check_external -%}
+                                       <a href="{{ check }}" id="shopify_add_to_cart_quick" rel="nofollow" class="shopify_add_to_cart ingle_add_to_cart_button button alt">{{ product.metafields.external | first | first }}</a>
+                                     {%- else -%}
+                                         <div class="quantity pr fl" id="shopify_quantity_quick">
+                                            <input type="number" step="1" min="1" max="{%- if current_variant.inventory_management != null -%}{{current_variant.inventory_quantity}}{%- else -%}999{%- endif -%}" name="quantity" value="1" title="Qty" class="qty input-text tc" size="4">
+                                            <div class="tc pa">
+                                               <a class="plus db cb" href="javascript:void(0);"><i class="fa fa-angle-up"></i></a>
+                                               <a class="minus db cb" href="javascript:void(0);"><i class="fa fa-angle-down"></i></a>
+                                            </div>
+                                         </div>
+                                         {%- if settings.btn_atc_full == false -%}
+                                         <button type="submit"{% if settings.pr_curent == '1' and product.has_only_default_variant == false and product.selected_variant == blank %} disabled="disabled" {% endif %} id="shopify_add_to_cart_quick" data-ntid="{{product.id}}" class="shopify_add_to_cart {{settings.button_art_to_cart_style}} ajax_form_cart single_add_to_cart_button button alt"><span class="bt__text">{%- if current_variant.inventory_quantity <= 0 and current_variant.available and current_variant.inventory_management == 'shopify' -%}{{ 'products.product.pre_orders' | t }}{%- else -%}{{ 'products.product.add_to_cart' | t }}{%- endif -%}</span></button>
+                                         {%- endif -%}
+                                     {%- endif -%}
+                               {%- endif -%}
+							   {%- if settings.use_wishlist and pages['wishlist'].empty? != true -%}{%- include 'jas-wishlist-product' -%}{%- endif -%}
+						   </div>
+                          {%- if settings.btn_atc_full -%}
+                               <button type="submit"{% if settings.pr_curent == '1' and product.has_only_default_variant == false and product.selected_variant == blank %} disabled="disabled" {% endif %} id="shopify_add_to_cart_quick" data-ntid="{{product.id}}" class="shopify_add_to_cart {{settings.button_art_to_cart_style}} ajax_form_cart single_add_to_cart_button button alt"><span class="bt__text">{%- if current_variant.inventory_quantity <= 0 and current_variant.available and current_variant.inventory_management == 'shopify' -%}{{ 'products.product.pre_orders' | t }}{%- else -%}{{ 'products.product.add_to_cart' | t }}{%- endif -%}</span></button>
+                          {%- endif -%}
+						{%- if settings.enable_payment_button and check_external == false -%}
+		                    {{ form | payment_button }}
+		                {%- endif -%}
+						</div>
+					</div>
+				{%- endform -%}
+			{%- endif -%}
+		{%- else -%}
+		   <form action="/cart" method="post" class="cart group_table" id="cart-form">
+		      <table cellspacing="0" class="group_table shop_table">
+		        <tbody>
+		          {%- include 'product_group' -%}
+		        </tbody>
+		      </table>
+             <div class="upo-quickview" data-handle='{{ product.handle }}'></div>
+<script>if(window.UPO && window.UPO.modalProduct('.upo-quickview') ){}</script>
+		      <div class="flex">
+			      {%- if check_external == false -%}
+	               <button type="submit" id="multi-variant-add-quick" data-ntid="{{product.id}}" class="{{settings.button_art_to_cart_style}} add_to_cart_button single_add_to_cart_button button alt">{{ 'products.product.add_to_cart' | t }}</button>
+	            {%- else -%}
+	               <a href="{{ check }}" id="shopify_add_to_cart_quick" rel="nofollow" class="single_add_to_cart_button button alt">{{ product.metafields.external | first | first }}</a>
+	            {%- endif -%}
+	            {%- if settings.use_wishlist and pages['wishlist'].empty? != true -%}{%- include 'jas-wishlist-product' -%}{%- endif -%}
+		      </div>
+		   </form>
+		{%- endif -%}
+	{%- if product.has_only_default_variant == false and linklists[product.handle].links.size == 0 -%}</div>{%- endif-%} 
+</div>
+{%- if sold_out == false and linklists[product.handle].links.size == 0 -%}
+{%- assign user_countdown = product.metafields.meta.countdown -%}
+{%- include 'gecko_count_down',jas_countdow_page:'jas_page',user_countdown:user_countdown,class:'jas_progress_bar_pr_quick' -%}
+{%- endif -%}  
+{%- if settings.enable_delivery_order and product.available -%}
+<div class="product_delivery_quick">
+   {{ 'products.jas_extra.estimateTimer_1' | t }}
+    <span id="jas_product_delivery_quick"></span> {{ 'products.jas_extra.estimateTimer_2' | t }} <span class="date_end_delivery" data-deliveryend="{{ estimateEndDate }}"></span>
+</div>
+{%- endif -%}
+{%- if settings.use_promo_shpping -%}
+    <div class="promo_shipping_text_quick jas_user_ship_quick"><span class="text_ship_fea_quick">{{ settings.product_motivator_text }}</span>{%- if settings.promotion_display_user_country -%}&nbsp;<span class="country_user_name_quick"></span>{%- endif -%}{%- if settings.promotion_display_user_Flag -%}&nbsp;<span class="jas_flagImg_quick jas_94"></span>&nbsp;{%- endif -%}</div>
+{%- endif -%}
+{%- if settings.product_img_trust_seal and settings.img_trust_seal != blank -%}
+   {%- assign image = settings.img_trust_seal -%}
+   <div class="product_img_trust_seal clearfix"><img alt="{{image.alt}}" src="{{ image | img_url: '500x' }}"></div>
+{%- endif -%}

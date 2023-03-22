@@ -1,0 +1,15 @@
+<i class="close-menu hidden-md visible-1024 pe-7s-close pa"></i>
+<div class="flex column center-xs pt__60 pb__60">
+	{%- include 'logo_menu' -%}
+	<div class="jas-action flex middle-xs center-xs pr">{%- include 'jas_action' -%}</div>
+	<div class="jas-navigation center-xs mt__30">
+	   {%- include 'jas_mobile_menu' -%}
+	</div><!-- .jas-navigation -->
+	{%- if settings.share_type_header == '1' -%}
+      {%- assign gl_follow_social = false -%}
+   {%- else -%}
+      {%- assign gl_follow_social = true -%}
+   {%- endif -%}
+   {%- include 'social-sharing', follow_social:gl_follow_social,style_social:'header' -%}
+   <!-- .jas-socials -->
+</div>

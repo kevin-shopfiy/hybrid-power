@@ -1,0 +1,226 @@
+{%- assign header_design = settings.header_design -%}
+{%- assign check_curency_lang = false -%}
+{%- assign top_color = 'cw' -%}
+{%- if settings.show_multiple_currencies %}
+   {%- assign check_curency_lang = true -%}
+{%- elsif settings.show_language_currencies -%}
+   {%- assign check_curency_lang = true -%}
+{%- endif -%}
+{%- if settings.header_top_color == 'dark' -%}
+   {%- assign top_color = 'cg' -%}
+{%- endif -%}
+<header id="jas-header" class="{% if template.name == 'index' or template.name == 'product'%}white-logo{% else %}black-logo{% endif %} header-{{header_design}} {{settings.header_icon_style}}{%- if header_design == '7' %} pf{%- if settings.header_bg_image != blank %} lazyload{%- endif %}{%- elsif settings.overlap_header_enable %} header__transparent{%- endif %}{%- if settings.body_logo_image_sticky != blank %} act_img_sticky{%- endif -%}" role="banner"{%- if settings.header_bg_image != blank and header_design == '7' %} data-bgset="{%- include 'bgset', image: settings.header_bg_image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ settings.header_bg_image | img_url: '50x50' }});"{%- endif -%}>
+{%- if customer and customer.tags contains 'wholesaler'-%}
+{% include 'wholesaler_header' %}
+{%- endif-%}  
+ {%- if header_design != '6' and header_design != '7' and settings.header_top_enable -%}
+      <div class="header__top pr bgbl pl__15 pr__15{%- if settings.header_top_bg_image != blank %} lazyload{%- endif -%}"{%- if settings.header_top_bg_image != blank %} data-bgset="{%- include 'bgset', image: settings.header_top_bg_image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ settings.header_top_bg_image | img_url: '50x50' }});"{%- endif -%}>
+         {%- if settings.full_header_enable == false -%}<div class="jas-container">{%- endif -%}
+            {%- comment -%}
+        <div class=" jas-row middle-xs">
+               {%- if settings.show_share_btn_header -%}
+               <div class="{%- if settings.header_top_text != blank and check_curency_lang == false -%}start-md start-sm jas-col-md-6{%-elsif settings.header_top_text == blank and check_curency_lang -%}start-md start-sm jas-col-md-6{%-elsif settings.header_top_text == blank and check_curency_lang == false -%}center-lg center-sm jas-col-md-12{%-else-%}start-md start-sm jas-col-md-4{%- endif %} jas-col-sm-6 jas-col-xs-12 flex center-xs hidden-sm">
+                  {%- if settings.share_type_header == '1' -%}
+                        {%- assign gl_follow_social = false -%}
+                     {%- else -%}
+                        {%- assign gl_follow_social = true -%}
+                     {%- endif -%}
+                     {%- include 'social-sharing', follow_social:gl_follow_social,style_social:'header' -%}
+               </div>
+               {%- endif -%}
+               {%- if settings.header_top_text != blank -%}
+                  <div class="{%- if settings.show_share_btn_header and check_curency_lang == false -%}tr jas-col-md-6{%-elsif settings.show_share_btn_header == false and check_curency_lang -%}tl jas-col-md-6{%-elsif settings.show_share_btn_header == false and check_curency_lang == false -%}tc jas-col-md-12{%-else-%}jas-col-md-4 tc{%- endif %} jas-col-sm-12 jas-col-xs-12">
+                     {%- comment -%}{%- assign text_customer_enter = 'Hi! My name is Gecko,I am Creative.,<span class="cp">Free shipping</span> for all order over <span class="money">$100.0</span>' -%}{%- endcomment -%}
+                     {%- assign text_customer_enter = settings.header_top_text -%}
+                     {%- assign arr_text_customer_enter =  text_customer_enter | split:',' -%}
+                      <div id="nt_typewrite" class="pr2 typewrite header-text {{top_color}}" data-period='{{settings.top_interval_time}}000' data-type='{{arr_text_customer_enter.size }}'>{{arr_text_customer_enter | first }}</div>
+                  </div>
+               {%- endif -%}
+               {%- if check_curency_lang %}
+                  <div class="{%- if settings.header_top_text != blank and settings.show_share_btn_header == false -%}end-lg end-sm jas-col-md-6{%-elsif settings.header_top_text == blank and settings.show_share_btn_header -%}end-lg end-sm jas-col-md-6{%-elsif settings.header_top_text == blank and settings.show_share_btn_header == false -%}center-lg center-sm jas-col-md-12{%-else-%}end-lg end-sm jas-col-md-4{%- endif %} jas-col-sm-6 jas-col-xs-12 hidden-sm flex center-xs">
+                     {%- if settings.show_language_currencies -%}{%- include 'jas_lang',top_color:top_color -%}{%- endif -%}
+                     {%- if settings.show_multiple_currencies %}
+                     
+                       {%- include 'currency-picker',top_color:top_color -%}
+                       
+                       {%- endif -%}
+                  </div>
+               {%- endif -%}
+            </div>
+         {%- endcomment -%}
+        <div class="left-header-top jas-row middle-xs">
+               <div class="start-md start-sm jas-col-md-4 jas-col-sm-6 jas-col-xs-12 flex center-xs hidden-sm">
+                 {%- if settings.show_language_currencies -%}{%- include 'jas_lang',top_color:top_color -%}{%- endif -%}
+                     {%- if settings.show_multiple_currencies %}{%- include 'currency-picker',top_color:top_color -%}{%- endif -%}
+                
+                 
+                  {%- assign mobile_link_list = settings.menu_mobile_a_s -%}
+                  {%- if mobile_link_list != blank -%}
+                   <div class="locate_distributor">
+                     
+                     {%- for block in section.blocks -%}
+                     {%- assign child_list_handle = link.title | handleize -%}
+            {%- assign child_list = link.title -%}
+                     
+                     {%- for child_link in link.links -%}
+                     <a href="{{ child_link.url }}"><span>{{ child_link.title | split: '[' | first }}</span></a>
+                     {%- endfor -%}
+                     
+                     {%- endfor -%}
+                     
+                     
+                     {%- if settings.enable_flag == true -%}
+                     <img class="custom-img-switcher" src="{{settings.flag_1 | img_url:'25x' }}"/>
+                     {%- endif -%}
+                     
+                     
+                   <a href="{{ shop.url }}/pages/store-locator-1"> Locate a Distributor </a>
+                     
+                     <ul class="store-lists">
+                       <li class="srore-list-countries">
+                         <a href ="https://hybridpsusa.com/">
+                           <img class="canadia-flg" src="{{'united-states-of-america_250x_prev_ui.png'| asset_img_url: '25x' }}"/></a>
+                       </li>
+                     </ul> 
+                   
+                     
+                   </div>
+                   {%- endif -%}
+                 
+                 
+               </div>
+              <div class="jas-col-md-4 tc jas-col-sm-12 jas-col-xs-12 custom">
+                     {% comment %}{%- assign text_customer_enter = 'Hi! My name is Gecko,I am Creative.,<span class="cp">Free shipping</span> for all order over <span class="money">$100.0</span>' -%}{% endcomment %}
+                     {%- assign text_customer_enter = settings.header_top_text -%}
+                     {%- assign arr_text_customer_enter =  text_customer_enter | split:',' -%}
+                
+                
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="24px" height="24px"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/> </svg>          
+  
+                <div id="nt_typewrite" class="pr typewrite header-text {{top_color}}" data-period='{{settings.top_interval_time}}000' data-type='{{arr_text_customer_enter.size }}'>{{arr_text_customer_enter | first }}</div>
+                  
+        </div>
+               <div class="right-top-header end-lg end-sm jas-col-md-4 jas-col-sm-6 jas-col-xs-12 hidden-sm flex center-xs">
+                  <!-- My Account-->
+                 {%- if settings.account_header_enable -%}
+                 
+                   
+               <ul class="clearfix">
+                  {%- if customer -%}
+                  <li><a class="db cg chp" href="{{ canonical_url }}pages/login"></a></li>
+                  <li><a class="db cg chp" href="/account/logout">{{ 'general.layout.customer.log_out' | t }}</a></li>
+                  {%- else -%}
+                  <li><a class="db cg chp{%- if customer == blank and settings.login_side %} jas-sp-login login_side_open_none{%- endif -%}" href="{%- if customer == blank and settings.login_side %}#login_side{%- else -%}/account/login{%- endif -%}">{{ 'general.layout.customer.log_in' | t }}</a></li>
+                   {%- endif -%}
+               </ul>
+                  
+            {%- endif -%}
+                 <!-- search bar -->
+                   {%- if settings.gecko_search_widget != 'disable' -%}
+                 <div class="sf-open cb chp pr gecko-search-{{settings.gecko_search_widget}} cursor-pointer" >Search<i class="pe-7s-search"></i>
+                    {%- if settings.gecko_search_widget == 'dropdown' -%}
+                        <div class="wrapper-search-dropdown tl">
+                           <span class="gecko-close-search">close</span>
+                           <form role="search" method="get" class="pr searchform{%- if settings.ajax_search %} gecko-ajax-search{%- endif -%}" action="/search">
+                              <div>
+                                 <label class="screen-reader-text" for="q"></label>
+                                 <input type="text" placeholder="{{ 'general.search.placeholder' | t }}" value="{{ search.terms | escape }}" name="q" id="q" autocomplete="off">
+                                 {%- if settings.only_search_products -%}<input type="hidden" name="type" value="product" />{%- endif -%}
+                                 <button type="submit" id="searchsubmit">{{ 'general.search.submit' | t }}</button>
+                              </div>
+                           </form>
+                           <div class="search-results-wrapper">
+                              <div class="gecko-search-results">
+                                 <ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content autocomplete-suggestions" style="display: none"></ul>
+                              </div>
+                           </div>
+                        </div>
+                     {%- endif -%}
+                  </div>
+               {%- endif -%}
+                 {%- if settings.left_header_top == 'share_btn' -%}
+                     {%- if settings.share_type_header == '1' -%}
+                        {%- assign gl_follow_social = false -%}
+                     {%- else -%}
+                        {%- assign gl_follow_social = true -%}
+                     {%- endif -%}
+                     {%- include 'social-sharing', follow_social:gl_follow_social,style_social:'header' -%}
+                 {%- elsif settings.left_header_top == 'text' -%}
+                     <div class="header-text {{top_color}}">{{settings.text_info}}</div>
+                       {%- endif -%}
+                     
+                  </div>
+            </div>
+            <!-- .jas-row -->
+         {%- if settings.full_header_enable == false -%}</div><!-- .jas-container -->{%- endif -%}
+      </div>
+      <!-- .header__top -->
+   {%- elsif header_design == '6' -%}
+      <div class="header__top bgbl pl__15 pr__15{%- if settings.header_top_bg_image != blank %} lazyload{%- endif -%}"{%- if settings.header_top_bg_image != blank %} data-bgset="{%- include 'bgset', image: settings.header_top_bg_image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ settings.header_top_bg_image | img_url: '50x50' }});"{%- endif -%}>
+         {%- if settings.full_header_enable == false -%}<div class="jas-container">{%- endif -%}  
+            <div class="jas-row middle-xs">
+               {%- if settings.show_share_btn_header -%}
+               <div class="jas-col-md-2 jas-col-sm-6 jas-col-xs-12 start-md start-sm center-xs">
+                  {%- if settings.share_type_header == '1' -%}
+                     {%- assign gl_follow_social = false -%}
+                  {%- else -%}
+                     {%- assign gl_follow_social = true -%}
+                  {%- endif -%}
+                  {%- include 'social-sharing', follow_social:gl_follow_social,style_social:'header' -%}
+               </div>
+               {%- endif -%}
+               <div class="jas-col-md-8 hidden-sm hidden-xs">
+                  <div class="jas-navigation flex center-xs hidden-sm">
+                     {%- section 'mega_menu' -%}
+                  </div><!-- .jas-navigation -->
+               </div>
+               {%- if check_curency_lang %}
+               <div class="jas-col-md-2 jas-col-sm-6 jas-col-xs-12 flex end-lg end-sm center-xs hidden-sm hidden-xs">
+                  {%- if settings.show_language_currencies and settings.language_link_list != blank -%}{%- include 'jas_lang',top_color:top_color -%}{%- endif -%}
+                  {%- if settings.show_multiple_currencies %}
+                  {%comment%}{%- include 'currency-picker',top_color:top_color -%}{%endcomment%}
+                  {%- endif -%}
+               </div>
+               {%- endif -%}
+            </div>
+            <!-- .jas-row -->
+         {%- if settings.full_header_enable == false -%}</div><!-- .jas-container -->{%- endif -%}
+      </div>
+   {%- endif -%}
+   {%- assign name_el_header = 'header_' | append:settings.header_design -%}
+   {%- include name_el_header -%}
+   <!-- .header__mid -->
+      {%- if settings.gecko_search_widget == 'full-screen' and header_design != '7' -%}
+         <form class="header__search w__100 dn pf{%- if settings.ajax_search %} gecko-ajax-search{%- endif -%}" role="search" method="get" action="/search">
+            <div class="pa">
+               <input class="w__100 jas-ajax-search ui-autocomplete-input" type="text" value="{{ search.terms | escape }}" name="q" id="q" placeholder="{{ 'general.search.placeholder' | t }}" autocomplete="off">
+               {%- if settings.only_search_products -%}<input type="hidden" name="type" value="product" />{%- endif -%}
+               <ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content autocomplete-suggestions"></ul>
+            </div>
+            <a id="sf-close" class="pa" href="#"><i class="pe-7s-close"></i></a>
+         </form>
+      {%- endif -%}
+      <!-- #header__search -->
+      <!-- .jas-canvas-menu -->
+</header>
+      {%- if settings.gecko_search_widget == 'full-screen' and header_design == '7' -%}
+         <form class="header__search w__100 dn pf{%- if settings.ajax_search %} gecko-ajax-search{%- endif -%}" role="search" method="get" action="/search">
+            <div class="pa">
+               <input class="w__100 jas-ajax-search ui-autocomplete-input" type="text" value="{{ search.terms | escape }}" name="q" id="q" placeholder="{{ 'general.search.placeholder' | t }}" autocomplete="off">
+               {%- if settings.only_search_products -%}<input type="hidden" name="type" value="product" />{%- endif -%}
+               <ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content autocomplete-suggestions"></ul>
+            </div>
+            <a id="sf-close" class="pa" href="#"><i class="pe-7s-close"></i></a>
+         </form>
+      {%- endif -%}
+{%- if header_design == '7' %}
+   <div class="header-7-mobile pl__15 pr__15 hidden-md visible-1024 top-menu w__100">
+      <div class="jas-row middle-xs">
+         <div class="jas-col-sm-3 jas-col-xs-3 flex nta_menu middle-xs">{%- include 'push_menu' -%}</div>
+         <div class="jas-col-sm-6 jas-col-xs-6 start-md center-sm center-xs">{%- include 'logo_menu' -%}</div>
+         <div class="jas-col-md-3 jas-col-sm-3 jas-col-xs-3">
+            <div class="jas-action flex end-xs middle-xs">{%- include 'jas_action' -%}</div>
+         </div>
+      </div>
+   </div>
+{%- endif -%}

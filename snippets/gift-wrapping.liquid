@@ -1,0 +1,18 @@
+{%- assign product_gift = all_products['gift-wrapping'] -%}
+{%- if settings.use_gift_wrapp and product_gift != blank -%}
+  <div id="is-a-gift" style="clear: left; margin: 30px 0" class="clearfix rte">
+    <p>
+      <input type="hidden" name="attributes[gift-wrapping]" value="" />
+      <input id="gift-wrapping" type="checkbox" name="attributes[gift-wrapping]" value="yes" {% if cart.attributes.gift-wrapping %} checked="checked"{% endif %} style="float: none" />
+      <label for="gift-wrapping" style="display:inline; padding-left: 5px; float: none;">
+      For {{ product_gift.price | money }} per item,
+      please wrap the products in this order.
+      </label>
+    </p>
+    <p>
+      <h2>Gift message (free and optional):</h2>
+      <label class="hide hidden" style="display:block" for="gift-note">Gift message (free and optional):</label>
+      <textarea name="attributes[gift-note]" id="gift-note" class="w__100">{{ cart.attributes.gift-note }}</textarea>
+    </p>
+  </div>
+{%- endif -%}

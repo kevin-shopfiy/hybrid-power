@@ -1,0 +1,599 @@
+{%- assign blocks = section.blocks | sort: 'collection.all_products_count' -%}
+{%- assign settings_pr_img_size = section.settings.use_eq_height -%}
+{%- assign categories_layout = section.settings.categories_layout -%}
+{%- case categories_layout -%}
+   {%- when 'default' -%}
+      {%- assign layout = "categories-style-default" -%}
+   {%- when 'masonry' -%}
+      {%- assign  layout = "categories-style-masonry categories-masonry" -%}
+   {%- when 'masonry_first' -%}
+      {%- assign layout = "categories-style-masonry-first categories-masonry" -%}
+   {%- when 'carousel' -%}
+      {%- assign layout = "categories-style-carousel" -%}
+{%- endcase -%}
+<div class="jas-container mt__60 mb__60 {{section.settings.image_size}}{%- if settings_pr_img_size %} jas_section_eqh{%- endif -%}">
+   <div class="jas-row {{ layout }} categories-space-{{ section.settings.space_categories }} mt__30{%- if section.settings.categories_layout == 'carousel' %} jas-carousel{%- endif -%}"{%- if section.settings.categories_layout == 'carousel' %} data-slick='{"slidesToShow": {{ section.settings.sidetoshow }},"slidesToScroll": 1, "autoplay": {{ section.settings.use_autoplay }}, "autoplaySpeed": {{ section.settings.slider_speed }}000,"rtl": {{ settings.use_rtl }}, "speed": {{ section.settings.speed }}, "infinite": {{section.settings.use_loop}}, "arrows": {{section.settings.use_arrows}},"dots": {{section.settings.use_dots}}, "responsive":[{"breakpoint": 1024,"settings":{"slidesToShow": {{ section.settings.sidetoshow_first}} }},{"breakpoint": 600,"settings":{"slidesToShow": {{ section.settings.sidetoshow_center}} }},{"breakpoint": 480,"settings":{"slidesToShow": {{ section.settings.sidetoshow_last}} }}]}'{%- endif -%}>
+      {%- if section.settings.categories_layout != 'carousel' %}<div class="jas-col-md-3 jas-item-category hide"></div>{%- endif -%}
+      {% if section.settings.display_type == 'all' %}
+         {% case section.settings.sort %}
+           {% when 'products_high' or 'products_low' %}
+             {%- assign collections = collections | sort: 'all_products_count' -%}
+           {% when 'date' or 'date_reversed' %}
+             {%- assign collections = collections | sort: 'published_at' -%}
+         {% endcase %}
+         {% if section.settings.sort == 'products_low' or section.settings.sort == 'date' or section.settings.sort == 'alphabetical' %}
+           {% for collection in collections %}
+            {%- assign number_of_collection = collection.all_products_count  -%}
+            {%- if collection.all_products_count > 0 -%}
+             <div class="jas-col-md-{{section.settings.width}} jas-col-sm-{{section.settings.width}} {{ section.settings.categories_design }} jas-col-xs-{{section.settings.mobile_width}} jas-item-category" {{ block.shopify_attributes }}>
+               <div class="jas-cat-content">
+                <a href="{{ collection.url }}" class="jas-cat-url">
+                     {%- if settings_pr_img_size and categories_layout != 'masonry' and categories_layout != 'masonry_first' -%}
+                        <div class="jas-cat-thumb jas-product-image-equal user_custom"> 
+                          {%- if collection.image != blank -%}
+                                 {%- assign img_url = collection.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                 <div class="db pr jas-pr-image-link lazyload" data-bgset="{%- include 'bgset', image: collection.image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ collection.image | img_url: '50x50' }});">
+                                   <img class="op_0 w__100 lazyload" src="{{ collection.image  | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ collection.image.aspect_ratio }}" data-sizes="auto" alt="{{ collection.image.alt | escape }}">
+                                 </div>
+                          {%- elsif collection.products.first and collection.products.first.images != empty -%}
+                             {%- assign image = collection.products.first.featured_image -%}
+                             {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                              <div class="jas-pr-image-link db pr lazyload" data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ image | img_url: '50x50' }});">
+                                <img class="op_0 w__100 lazyload" src="{{ image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ image.aspect_ratio }}" data-sizes="auto" alt="{{ image.alt | escape }}">
+                              </div>
+                          {%- endif -%}
+                           <div class="jas-wrap-lazy"></div>
+                       </div>
+                     {%- else -%}  
+                       <div class="jas-cat-thumb"> 
+                          {%- if collection.image != blank -%}
+                             {%- assign img_url = collection.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                             <img src="{{ collection.image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[157, 270, 303, 370, 377, 670, 570, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ collection.image.aspect_ratio }}"  data-sizes="auto" class="lazyload w__100 attachment-shop_catalog size-shop_catalog" alt="{{collection.image.alt}}" >
+                          {%- elsif collection.products.first and collection.products.first.images != empty -%}
+                             {%- assign image = collection.products.first.featured_image -%}
+                             {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                             <img src="{{ image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[157, 270, 303, 370, 377, 670, 570, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ image.aspect_ratio }}"  data-sizes="auto" class="lazyload w__100 attachment-shop_catalog size-shop_catalog" alt="{{image.alt}}" >
+                          {%- endif -%}
+                           <div class="jas-wrap-lazy"></div>
+                       </div>
+                     {%- endif -%}
+                    {%- if collection != blank and number_of_collection > 1 -%}
+                    <span class="jat-cat-pr-count">{{number_of_collection}} {{ section.settings.categories_count | strip_html }}</span>
+                    {%- endif -%}
+                 </a>
+                  <div class="hover-wrap">
+                     <a href="{{ collection.url }}" class="jas-cat-url-overlay"></a>
+                     <h3>{{ collection.title }}</h3>
+                     <a href="{{ collection.url }}">{{ section.settings.categories_view | strip_html }}</a>
+                  </div>
+              </div>
+            </div>
+            {%- endif -%}
+           {% endfor %}
+         {% else %}
+           {% for collection in collections reversed %}
+             {%- if collection.all_products_count > 0 -%}
+                <div class="jas-col-md-{{block.settings.width}} jas-col-sm-{{block.settings.width}} {{ section.settings.categories_design }} jas-col-xs-{{block.settings.mobile_width}} jas-item-category" {{ block.shopify_attributes }}>
+                  <div class="jas-cat-content">
+                   <a href="{{ collection.url }}" class="jas-cat-url">
+                          {%- if settings_pr_img_size and categories_layout != 'masonry' and categories_layout != 'masonry_first' -%}
+                           <div class="jas-cat-thumb jas-product-image-equal user_custom"> 
+                             {%- if collection.image != blank -%}
+                                    {%- assign img_url = collection.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                    <div class="jas-pr-image-link db pr lazyload" data-bgset="{%- include 'bgset', image: collection.image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ collection.image | img_url: '50x50' }});">
+                                      <img class="op_0 w__100 lazyload" src="{{ collection.image  | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ collection.image.aspect_ratio }}" data-sizes="auto" alt="{{ collection.image.alt | escape }}">
+                                    </div>
+                             {%- elsif collection.products.first and collection.products.first.images != empty -%}
+                                {%- assign image = collection.products.first.featured_image -%}
+                                {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                 <div class="jas-pr-image-link db pr lazyload" data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ image | img_url: '50x50' }});">
+                                   <img class="op_0 w__100 lazyload" src="{{ image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ image.aspect_ratio }}" data-sizes="auto" alt="{{ image.alt | escape }}">
+                                 </div>
+                             {%- endif -%}
+                              <div class="jas-wrap-lazy"></div>
+                          </div>
+                        {%- else -%}  
+                          <div class="jas-cat-thumb"> 
+                             {%- if collection.image != blank -%}
+                                {%- assign img_url = collection.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                <img src="{{ collection.image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[157, 270, 303, 370, 377, 670, 570, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ collection.image.aspect_ratio }}"  data-sizes="auto" class="lazyload w__100 attachment-shop_catalog size-shop_catalog" alt="{{collection.image.alt}}" >
+                             {%- elsif collection.products.first and collection.products.first.images != empty -%}
+                                {%- assign image = collection.products.first.featured_image -%}
+                                {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                <img src="{{ image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[157, 270, 303, 370, 377, 670, 570, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ image.aspect_ratio }}"  data-sizes="auto" class="lazyload w__100 attachment-shop_catalog size-shop_catalog" alt="{{image.alt}}" >
+                             {%- endif -%}
+                              <div class="jas-wrap-lazy"></div>
+                          </div>
+                        {%- endif -%}
+                       {%- if collection != blank and number_of_collection > 1 -%}
+                       <span class="jat-cat-pr-count">{{number_of_collection}} {{ section.settings.categories_count | strip_html }}</span>
+                       {%- endif -%}
+                    </a>
+                     <div class="hover-wrap">
+                        <a href="{{ collection.url }}" class="jas-cat-url-overlay"></a>
+                        <h3>{{ collection.title }}</h3>
+                        <a href="{{ collection.url }}">{{ section.settings.categories_view | strip_html }}</a>
+                     </div>
+                 </div>
+               </div>
+             {%- endif -%}
+           {% endfor %}
+         {% endif %}
+      {% else %}
+         {%- for block in section.blocks -%}
+            {%- assign collection = collections[block.settings.collection] -%}
+            {%- assign number_of_collection = collection.all_products_count  -%}
+            {%- assign block_image = block.settings.image -%}
+            <div class="jas-col-md-{{block.settings.width}} jas-col-sm-{{block.settings.width}} {{ section.settings.categories_design }} jas-col-xs-{{block.settings.mobile_width}} jas-item-category" {{ block.shopify_attributes }}>
+               <div class="jas-cat-content">
+                <a href="{%- if collection.empty? -%}/admin/collections{%- else -%}{{ collection.url }}{%- endif -%}" class="jas-cat-url">
+                     {%- if settings_pr_img_size and categories_layout != 'masonry' and categories_layout != 'masonry_first' -%}
+                        <div class="jas-cat-thumb jas-product-image-equal user_custom"> 
+                          {%- if block_image != blank -%}
+                             {%- assign img_url = block_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                             <div class="jas-pr-image-link db pr lazyload" data-bgset="{%- include 'bgset', image: block_image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ block_image | img_url: '50x50' }});">
+                                 <img class="op_0 w__100 lazyload" src="{{ block_imagee  | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ block_image.aspect_ratio }}" data-sizes="auto" alt="{{ block_image.alt | escape }}">
+                              </div>
+                          {%- elsif collection.image != blank -%}
+                                 {%- assign img_url = collection.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                 <div class="jas-pr-image-link db pr lazyload" data-bgset="{%- include 'bgset', image: collection.image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ collection.image | img_url: '50x50' }});">
+                                   <img class="op_0 w__100 lazyload" src="{{ collection.image  | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ collection.image.aspect_ratio }}" data-sizes="auto" alt="{{ collection.image.alt | escape }}">
+                                 </div>
+                          {%- elsif collection.products.first and collection.products.first.images != empty -%}
+                             {%- assign image = collection.products.first.featured_image -%}
+                             {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                              <div class="jas-pr-image-link db pr lazyload" data-bgset="{%- include 'bgset', image: image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ image | img_url: '50x50' }});">
+                                <img class="op_0 w__100 lazyload" src="{{ image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ image.aspect_ratio }}" data-sizes="auto" alt="{{ image.alt | escape }}">
+                              </div>
+                           {%- else -%}
+                              {%- capture current -%}{%- cycle 1, 2, 3 -%}{%- endcapture -%}
+                              {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                          {%- endif -%}
+                           <div class="jas-wrap-lazy"></div>
+                       </div>
+                     {%- else -%}  
+                       <div class="jas-cat-thumb"> 
+                          {%- if block_image != blank -%}
+                             {%- assign img_url = block_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                             <img src="{{ block_image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[157, 270, 303, 370, 377, 670, 570, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ block_image.aspect_ratio }}"  data-sizes="auto" class="lazyload w__100 attachment-shop_catalog size-shop_catalog" alt="{{block_image.alt}}" >
+                          {%- elsif collection.image != blank -%}
+                             {%- assign img_url = collection.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                             <img src="{{ collection.image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[157, 270, 303, 370, 377, 670, 570, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ collection.image.aspect_ratio }}"  data-sizes="auto" class="lazyload w__100 attachment-shop_catalog size-shop_catalog" alt="{{collection.image.alt}}" >
+                          {%- elsif collection.products.first and collection.products.first.images != empty -%}
+                             {%- assign image = collection.products.first.featured_image -%}
+                             {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                             <img src="{{ image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[157, 270, 303, 370, 377, 670, 570, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ image.aspect_ratio }}"  data-sizes="auto" class="lazyload w__100 attachment-shop_catalog size-shop_catalog" alt="{{image.alt}}" >
+                           {%- else -%}
+                              {%- capture current -%}{%- cycle 1, 2, 3 -%}{%- endcapture -%}
+                              {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                          {%- endif -%}
+                           <div class="jas-wrap-lazy"></div>
+                       </div>
+                     {%- endif -%}
+                    {%- if collection != blank and number_of_collection > 1 -%}
+                    <span class="jat-cat-pr-count">{{number_of_collection}} {{ section.settings.categories_count | strip_html }}</span>
+                    {%- endif -%}
+                 </a>
+                  <div class="hover-wrap">
+                     <a href="{%- if collection.empty? -%}/admin/collections{%- else -%}{{ collection.url }}{%- endif -%}" class="jas-cat-url-overlay"></a>
+                     <h3>{%- if collection.empty? -%}{{ 'homepage.onboarding.collection_title' | t }}{%- else -%}{{ collection.title }}{%- endif -%}</h3>
+                     <a href="{%- if collection.empty? -%}/admin/collections{%- else -%}{{ collection.url }}{%- endif -%}">{{ section.settings.categories_view | strip_html }}</a>
+                  </div>
+              </div>
+            </div>
+         {%- endfor -%}
+      {% endif %}
+   </div>
+</div>
+{%- schema -%}
+  {
+    "name": "Collections list page",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "All of your collections are listed by default. To customize your list, choose 'Selected' and add collections."
+      },
+      {
+        "type": "radio",
+        "id": "display_type",
+        "label": "Select collections to show",
+        "default": "all",
+        "options": [
+          {
+            "value": "all",
+            "label": "All"
+          },
+          {
+            "value": "selected",
+            "label": "Selected"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "sort",
+        "label": "Sort collections by:",
+        "info": "Sorting only applies when 'All' is selected",
+        "default": "alphabetical",
+        "options": [
+          {
+            "value": "products_high",
+            "label": "Product count, high to low"
+          },
+          {
+            "value": "products_low",
+            "label": "Product count, low to high"
+          },
+          {
+            "value": "alphabetical",
+            "label": "Alphabetically, A-Z"
+          },
+          {
+            "value": "alphabetical_reversed",
+            "label": "Alphabetically, Z-A"
+          },
+          {
+            "value": "date",
+            "label": "Date, old to new"
+          },
+          {
+            "value": "date_reversed",
+            "label": "Date, new to old"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "categories_count",
+        "label": "categories product count title",
+        "default": "products"
+      },
+      {
+        "type": "text",
+        "id": "categories_view",
+        "label": "categories view",
+        "default": "View products"
+      },
+      {
+        "type": "select",
+        "id": "categories_layout",
+        "options": [
+            {
+               "value": "default",
+               "label": "Default"
+             },
+             {
+               "value": "masonry",
+               "label": "Masonry"
+             },
+             {
+               "value": "masonry_first",
+               "label": "Masonry (with first wide)"
+             },
+             {
+               "value": "carousel",
+               "label": "Carousel"
+             }
+           ],
+           "label": "Layout",
+           "default": "default"
+         },
+         {
+           "type": "select",
+           "id": "categories_design",
+           "options": [
+            {
+               "value": "jas_cat_default",
+               "label": "Default"
+             },
+             {
+               "value": "jas_cat_alt",
+               "label": "Alternative"
+             },
+             {
+               "value": "jas_cat_center",
+               "label": "Center title"
+             },
+             {
+               "value": "jas_cat_bottom",
+               "label": "bottom title"
+             }
+           ],
+           "label": "Categories design",
+           "default": "jas_cat_default"
+         },
+         {
+           "type": "select",
+           "id": "space_categories",
+           "options": [
+            {
+               "value": "30",
+               "label": "30"
+             },
+             {
+               "value": "20",
+               "label": "20"
+             },
+             {
+               "value": "10",
+               "label": "10"
+             },
+             {
+               "value": "6",
+               "label": "6"
+             },
+             {
+               "value": "2",
+               "label": "2"
+             },
+             {
+               "value": "0",
+               "label": "0"
+             }
+           ],
+           "label": "Space between categories",
+           "default": "30"
+         },
+          {
+           "type": "header",
+           "content": "not support for Carousel layout:"
+          },
+          {
+           "type": "select",
+           "id": "width",
+           "options": [
+            {
+               "value": "3",
+               "label": "25%"
+             },
+             {
+               "value": "4",
+               "label": "33.33333333%"
+             },
+             {
+               "value": "6",
+               "label": "50%"
+             },
+             {
+               "value": "8",
+               "label": "66.66666667%"
+             },
+             {
+               "value": "12",
+               "label": "100%"
+             }
+           ],
+           "label": "== Select column width",
+           "default": "3"
+         },
+         {
+           "type": "select",
+           "id": "mobile_width",
+           "options": [
+            {
+               "value": "3",
+               "label": "25%"
+             },
+             {
+               "value": "4",
+               "label": "33.33333333%"
+             },
+             {
+               "value": "6",
+               "label": "50%"
+             },
+             {
+               "value": "8",
+               "label": "66.66666667%"
+             },
+             {
+               "value": "12",
+               "label": "100%"
+             }
+           ],
+           "label": "== Select column mobile width",
+           "default": "6"
+         },
+      {
+       "type": "header",
+       "content": "== settings Slider ( Only for Carousel layout )"
+      },
+{
+        "type": "range",
+        "id": "slider_speed",
+        "min": 1,
+        "max": 30,
+        "step": 1,
+        "label": "Autoplay Speed in milliseconds",
+        "unit": "sec",
+        "default": 6
+      },
+      {
+        "type": "checkbox",
+        "id": "use_autoplay",
+        "label": "Use autoplay?",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "use_arrows",
+        "label": "Use Arrows?",
+        "default": true
+      },
+{
+        "type": "checkbox",
+        "id": "use_dots",
+        "default": false,
+        "label": "Use pagination control?"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_loop",
+        "label": "Use Infinite loop sliding?",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "speed",
+        "min": 100,
+        "max": 1000,
+        "step": 100,
+        "label": "Slide/Fade animation speed",
+        "default": 300
+      },
+      {
+        "type": "range",
+        "id": "sidetoshow",
+        "min": 1,
+        "max": 12,
+        "step": 1,
+        "label": "slides To Show",
+        "default": 4
+      },
+      {
+       "type": "header",
+       "content": "=== breakpoint: 1024"
+      },
+      {
+        "type": "range",
+        "id": "sidetoshow_first",
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "label": "slides To Show",
+        "default": 3
+      },
+      {
+       "type": "header",
+       "content": "=== breakpoint: 600"
+      },
+      {
+        "type": "range",
+        "id": "sidetoshow_center",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "slides To Show",
+        "default": 2
+      },
+      {
+       "type": "header",
+       "content": "=== breakpoint: 480"
+      },
+      {
+        "type": "range",
+        "id": "sidetoshow_last",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "slides To Show",
+        "default": 2
+      },
+      {
+        "type": "header",
+        "content": "== Design Image"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_eq_height",
+        "label": "Use equal height images?",
+        "info":"not support for masonry layout",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "image_size",
+        "label": "Image size",
+        "default": "jas_cover",
+        "options": [
+          {
+            "value": "jas_cover",
+            "label": "Full"
+          },
+          {
+            "value": "jas_contain",
+            "label": "Auto"
+          }
+        ]
+      }
+    ],
+    "blocks": [
+      {
+        "type": "featured_collection",
+        "name": "Collection",
+        "settings": [
+          {
+            "label": "Collection",
+            "id": "collection",
+            "type": "collection"
+          },
+          {
+             "type": "image_picker",
+             "id": "image",
+             "label": "Image"
+           },
+          {
+           "type": "header",
+           "content": "not support for Carousel layout:"
+          },
+          {
+           "type": "select",
+           "id": "width",
+           "options": [
+            {
+               "value": "3",
+               "label": "25%"
+             },
+             {
+               "value": "4",
+               "label": "33.33333333%"
+             },
+             {
+               "value": "6",
+               "label": "50%"
+             },
+             {
+               "value": "8",
+               "label": "66.66666667%"
+             },
+             {
+               "value": "12",
+               "label": "100%"
+             }
+           ],
+           "label": "== Select column width",
+           "default": "3"
+         },
+         {
+           "type": "select",
+           "id": "mobile_width",
+           "options": [
+            {
+               "value": "3",
+               "label": "25%"
+             },
+             {
+               "value": "4",
+               "label": "33.33333333%"
+             },
+             {
+               "value": "6",
+               "label": "50%"
+             },
+             {
+               "value": "8",
+               "label": "66.66666667%"
+             },
+             {
+               "value": "12",
+               "label": "100%"
+             }
+           ],
+           "label": "== Select column mobile width",
+           "default": "6"
+         }
+        ]
+      }
+    ]
+  }
+{% endschema %}

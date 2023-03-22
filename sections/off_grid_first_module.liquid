@@ -1,0 +1,384 @@
+
+<!--  Alike Slider-1  -->
+
+{%- include 'style_mp_section' -%}
+<div class="first-module-section">
+<div class="Custom-slider-nav jas_custom_{{section.id}} {{section.settings.style_slider}}">
+   <div class="metaslider metaslider-flex ml-slider">
+      <div id="metaslider_container_{{section.id}}" class="{{section.settings.layout}} {{section.settings.layout_mb}}">
+         <div id="metaslider_{{section.id}}" class="flexslider{%- if section.settings.use_background_overlay == false %} off_overlay{%- endif -%}">
+            {%- if section.blocks.size > 0 -%}
+            <div class="slides jas-carousel" data-slick='{"slidesToShow": 1,"slidesToScroll": 1,"fade": true,"slidesToScroll": 1,"rtl": {{ settings.use_rtl }},"adaptiveHeight": true}'>
+               {%- for block in section.blocks -%}
+               <div id="div{{block.id}}" {{ block.shopify_attributes }} class="custom-added {{block.settings.alignment}}"> 
+                  {%- if block.settings.image == blank -%}
+                  {%- capture current -%}{%- cycle 1, 2 -%}{%- endcapture -%}
+                  {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                  {%- else -%}
+                    {%- assign image = block.settings.image -%}
+                    {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                       {%- if block.settings.video_id == blank -%}
+                     <div class="nt_banner_img pr oh bg_overlay_{{section.settings.overlay}}{%- if image != blank %} lazyload nt_bg_lz{%- if forloop.first == false %} js lazypreload{%- endif -%}{%- endif -%}"{%- if image != blank %} data-bgset="{% include 'bgset', image: block.settings.image %}" data-sizes="auto" data-parent-fit="cover" {%- endif %}{%- if image != blank and section.settings.use_custom_img == false %} style="padding-top:{{ 1 | divided_by: image.aspect_ratio | times: 100}}%;"{%- endif -%}>                   
+                      
+                      <div class="div_overlay"></div>
+                    </div>
+						{% endif %}
+                   {%- if block.settings.video_id != blank -%}
+                 <div class="section-packup-power-video" style="height: 600px;">
+                  <video autoplay muted loop playsinline class="packup-power-video">
+                    <source src="{{block.settings.video_id}}" type="video/mp4">
+                  </video>
+                </div>
+                 {% endif %}
+                 
+                  {%- endif -%}
+                 
+                  <div class="caption-wrap">
+                     {%- if block.settings.link != blank -%}<!--a href="{{block.settings.link}}" target="_blank" class="jas_category-link-overlay"></a-->{%- endif -%}
+                     <div class="caption 123">
+                        <div class="{{block.settings.alignment}}">
+                           {%- if block.settings.title != blank and section.settings.style_slider != 'handmade-slider' -%}{%- if section.settings.style_slider == 'furniture-slider' -%}<h3 class="h2_title tu fs__30 cw separate_bg" style="color:{{block.settings.color_title}}">{%- else -%}<h3 class="h2_title tu fs__14 cw" style="color:{{block.settings.color_title}}">{%- endif -%}{{block.settings.title}}</h3>
+                           {%- elsif block.settings.title != blank -%}<h2 class="h2_title" style="color:{{block.settings.color_title}}">{{block.settings.title}}</h2>
+                           {%- endif -%}
+                           {%- if block.settings.subheading != blank -%}<h2 class="h2_sub tu fs__50 cw" style="color:{{block.settings.color_subheading}}">{{block.settings.subheading}}</h2>{%- endif -%}
+                           {%- if block.settings.text_content != blank and section.settings.style_slider == 'furniture-slider' -%}
+                          
+                          <h4 style="color:{{block.settings.color_content}}">{{block.settings.text_content}}</h4>
+                          
+                          {%- elsif block.settings.text_content != blank -%}<h4 style="color:{{block.settings.color_content}}">{{block.settings.text_content}}</h4>{%- endif -%}
+                           
+                          {%- if block.settings.btn_title != blank and block.settings.link != blank -%}
+                          
+                          {%- if block.settings.style_btn == '2' -%}
+                          
+                          <a href="{{block.settings.link}}" target="_blank" class="button{%- if block.settings.style_btn == '2' -%}-o-w{%- endif -%}" style="{%- if block.settings.style_btn == '2' -%}color:{{block.settings.color_btn}};border-color:{{block.settings.color_border_colo}}{%- endif -%}">{{block.settings.btn_title}}</a>
+                          
+                          
+                          {%- else -%}
+                          {%if block.settings.link contains '#'%}
+                          <a href="{{block.settings.link}}" class="arrow-button slide" style="{{block.settings.color_border_colo}}; color:{{block.settings.color_btn}};" tabindex="0"><span class="icon-new"><i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
+                           </span>{{block.settings.btn_title}}</a>
+                          {%else%}
+                          <a href="{{block.settings.link}}" class="arrow-button" style="{{block.settings.color_border_colo}}; color:{{block.settings.color_btn}};" tabindex="0"><span class="icon-new"><i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
+                            </span>{{block.settings.btn_title}}</a>
+
+                          {%endif %}
+                          {%- endif -%}
+                          
+                          
+                          
+                          {%- endif -%}
+                           
+                          
+                          <style>
+                           .furniture-slider .metaslider .flexslider #div{{block.id}} .caption-wrap .caption {background-color: {{block.settings.bg_furniture}}}
+                             #div{{block.id}} a.button-o-w:hover,#div{{block.id}} a.button:hover {
+                                  border-color: {{block.settings.color_btn_hover}} !important;
+                                  background-color: {{block.settings.color_btn_hover}} !important;
+                                  color: #fff !important;
+                              }
+                             @media (min-width: 1025px) {
+                               #div{{block.id}} .h2_title { font-size: {{block.settings.size_title}}px} #div{{block.id}} .h2_sub { font-size: {{block.settings.size_subheading}}px}  
+                             }
+                           </style>
+                        </div>
+                     </div>
+                     
+                  </div>
+               </div>
+               {%- endfor -%}
+            </div>
+            {%- endif -%}
+            {%- if section.blocks.size == 0 -%}
+               <div class="tc placeholder-noblocks">
+                  {{ 'homepage.onboarding.no_content' | t }}
+               </div>
+            {%- endif -%}
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+{%- if section.settings.use_custom_img %}
+<style>
+   .jas_custom_{{section.id}} .nt_banner_img {background-position: top;background-repeat: no-repeat;background-size: cover; height:{{section.settings.desktop}} }
+   @media (max-width: 1024px) {.jas_custom_{{section.id}} .nt_banner_img{height:{{section.settings.notebook}} }}
+   @media (max-width: 778px) {.jas_custom_{{section.id}} .nt_banner_img{height:{{section.settings.tablet}} }}
+   @media (max-width: 480px) {.jas_custom_{{section.id}} .nt_banner_img{height:{{section.settings.mobile}} }}
+</style>
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Industry First Section",
+    "class": "jas-section type_slideshow1",
+    "max_blocks": 1,
+    "settings": [
+      {
+         "type": "select",
+         "id": "style_slider",
+         "label": "Slider Style",
+         "default": "handmade-slider",
+         "options": [
+           {
+             "value": "handmade-slider",
+             "label": "handmade"
+           }
+           
+         ]
+      },
+     
+     {
+        "type": "header",
+        "content": "== Design Height Image"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_custom_img",
+        "label": "Use custom height image?",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "desktop",
+        "label": "Desktop Large",
+        "info": "475px",
+        "default": "475px"
+      },
+      {
+        "type": "text",
+        "id": "notebook",
+        "label": "Notebook",
+        "info": "485px",
+        "default": "485px"
+      },
+      {
+        "type": "text",
+        "id": "tablet",
+        "label": "Tablet",
+        "info": "600px",
+        "default": "600px"
+      },
+      {
+        "type": "text",
+        "id": "mobile",
+        "label": "Mobile",
+        "info": "600px",
+        "default": "600px"
+      },
+     {
+        "type": "header",
+        "content": "== Design Options"
+      },
+      {
+        "type": "select",
+        "id": "layout",
+        "default": "nt_full",
+        "options": [
+         {
+            "value": "jas-container",
+            "label": "Container"
+         },
+         {
+            "value": "nt_full",
+            "label": "Full Width"
+          }
+        ],
+        "label": "Layout"
+      },
+      {
+        "type": "select",
+        "id": "layout_mb",
+        "default": "mb_nt_full",
+        "options": [
+         {
+            "value": "mb_nt_container",
+            "label": "Container"
+         },
+         {
+            "value": "mb_nt_full",
+            "label": "Full Width"
+          }
+        ],
+        "label": "Layout Mobile"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_background_overlay",
+        "label": "Use background overlay?",
+        "default": false
+      }
+    
+      
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image slide",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "video_id",
+            "label": "Video Url",
+            "info": "Upload your video (mp4) in files and upload URL here."       
+          }, 
+          {
+             "type": "checkbox",
+             "id": "muted",
+             "label": "Muted",
+             "default": false,
+             "info" : "Mute video"
+          },
+          {
+            "type": "checkbox",
+			"id": "autoplay",
+            "label": "Autoplay",
+            "default": false,
+            "info": "Autoplay your video"
+          },
+          {
+            "type": "select",
+            "id": "alignment",
+            "label": "Text alignment",
+            "default": "tc",
+            "options": [
+              {
+                "value": "tl",
+                "label": "Left"
+              },
+              {
+                "value": "tc",
+                "label": "Center"
+              },
+              {
+                "value": "tr",
+                "label": "Right"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Image slide"
+          },
+          {
+            "type": "range",
+            "id": "size_title",
+            "min": 10,
+            "max": 110,
+            "step": 1,
+            "label": "Font size Heading",
+            "info": "Only active for desktop",
+            "unit": "px",
+            "default": 20
+          },
+          {
+            "type": "color",
+            "id": "color_title",
+            "label": "__ Select Color Heading",
+            "default": "#fff"
+          },
+          {
+            "type": "text",
+            "id": "subheading",
+            "label": "Subheading",
+            "default": "New Arrivals collection"
+          },
+          {
+            "type": "range",
+            "id": "size_subheading",
+            "min": 10,
+            "max": 110,
+            "step": 1,
+            "label": "Font size Subheading",
+            "info": "Only active for desktop",
+            "unit": "px",
+            "default": 50
+          },
+          {
+            "type": "color",
+            "id": "color_subheading",
+            "label": "__ Select Color subheading",
+            "default": "#fff"
+          },
+          {
+            "type": "textarea",
+            "id": "text_content",
+            "label": "Text Content",
+            "default": "Integer sagittis, tellus ac venenatis venenatis, ipsum ligula auctor lectus, suscipit velit<br> quam quis turpis. Fusce scelerisque aliquet commodo."
+          },
+          {
+            "type": "color",
+            "id": "color_content",
+            "label": "__ Select Color Content",
+            "default": "#fff"
+          },
+          {
+            "type": "text",
+            "id": "btn_title",
+            "label": "Slide button title",
+            "default":"Start shopping"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Slide link2"
+          },
+          {
+            "type": "select",
+            "id": "style_btn",
+            "label": "Button Style",
+            "default": "1",
+            "options": [
+              {
+                "value": "1",
+                "label": "Style 1"
+              },
+              {
+                "value": "2",
+                "label": "Style 2"
+              }
+            ]
+          },
+          {
+            "type": "color",
+            "id": "color_btn",
+            "label": "__ Select Color button",
+            "default": "#fff"
+          },
+          {
+            "type": "color",
+            "id": "color_btn_hover",
+            "label": "__ Select Color button hover",
+            "default": "#b59677"
+          },
+          
+         {
+            "type": "color",
+            "id": "color_border_colo",
+            "label": "__ Select Color button border",
+            "default": "#000"
+          }
+        ]
+      }
+    ],
+    "presets": [{
+      "name": "Industry First Section",
+      "category": "== Slider",
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }]
+  }
+ 
+{% endschema %}

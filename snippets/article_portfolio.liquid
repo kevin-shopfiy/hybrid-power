@@ -1,0 +1,101 @@
+{%- if settings.use_wishlist -%}{%- include 'nitro-wishlist' -%}{%- endif -%}
+<div class="page-head pr tc{%- if article.image %} lazyload{%- endif -%}"{%- if article.image %} data-bgset="{%- include 'bgset', image: article.image -%}" data-sizes="auto" data-parent-fit="cover" style="background: url({{ article.image | img_url: '50x50' }}) no-repeat center center / cover;background-image: url({{ article.image | img_url: '50x50' }})"{%- endif -%}>
+     <div class="jas-container pr">
+        <h1 class="tu cw mb__10">{{ article.title }}</h1>
+        <time class="entry-date published updated f__libre" datetime="{{ article.published_at }}">{{ article.published_at | date: format: 'month_day_year' }}</time>
+        <div class="pr mt__10"></div>
+     </div>
+  </div>
+<div class="jas-container mt__60 mb__60">
+	<div class="jas-row jas-portfolio-single">
+		<div class="jas-container">
+			{%- include 'shortcode' load: article.content -%}
+			<div class="jas_empty_space" style="height: 60px"><span class="jas_empty_space_inner"></span></div>
+		</div>
+		<div class="jas-container tc">
+			<div class="portfolio-meta jas-row mb__60">
+				{%- if article.tags.size > 0 and article.metafields.portfolio.clients -%}
+			   <div class="jas-col-md-6 jas-col-sm-6 jas-col-xs-12">
+			   		<span class="mb__5 tu ls__2 db f__mont">{{ 'blogs.portfolio.categories' | t }} </span>
+			   		{%- for tag in article.tags limit:5 -%}
+				    <a href="{{ blogs[blog.handle].url }}/tagged/{{ tag | handle }}" rel="category {{ tag | handle }}">{{ tag | capitalize }}</a>{% unless forloop.last %}, {% endunless %}
+				  	{%- endfor -%}
+			   	</div>
+			   	<div class="jas-col-md-6 jas-col-sm-6 jas-col-xs-12">
+			   		<span class="mb__5 tu ls__2 db f__mont">{{ 'blogs.portfolio.clients' | t }} </span>
+			   		{{  article.metafields.portfolio.clients  }}
+			   	</div>
+			   	{%- elsif article.tags.size > 0 -%}
+			   	<div class="jas-col-md-12 jas-col-sm-12 jas-col-xs-12">
+			   		<span class="mb__5 tu ls__2 db f__mont">{{ 'blogs.portfolio.categories' | t }} </span>
+			   		{%- for tag in article.tags limit:5 -%}
+				    <a href="{{ blogs[blog.handle].url }}/tagged/{{ tag | handle }}" rel="category {{ tag | handle }}">{{ tag | capitalize }}</a>{% unless forloop.last %}, {% endunless %}
+				  	{%- endfor -%}
+			   	</div>
+				{%- elsif article.metafields.portfolio.clients -%}
+				<div class="jas-col-md-12 jas-col-sm-12 jas-col-xs-12">
+			   		<span class="mb__5 tu ls__2 db f__mont">{{ 'blogs.portfolio.clients' | t }} </span>
+			   		{{  article.metafields.portfolio.clients  }}
+			   	</div>
+			   	{%- endif -%}
+			</div>
+			{%- if settings.show_share_btn_portfolio -%}
+			   {%- if settings.share_type_portfolio == '1' -%}
+	               {%- assign gl_follow_social = false -%}
+	            {%- else -%}
+	               {%- assign gl_follow_social = true -%}
+	            {%- endif -%}
+	            {%- include 'social-sharing', follow_social:gl_follow_social -%}
+	        {%- endif -%}
+			{%- if blog.next_article or blog.previous_article -%}
+			<div class="portfolio-navigation mt__60 fs__40">
+				{% if blog.previous_article %}<a href="{{ blog.previous_article }}" class="pl__30 pr__30 cd chp"><i class="pe-7s-angle-left"></i></a>{% endif %}
+			   <a href="{{ blog.url }}" class="pl__30 pr__30 cd chp"><i class="pe-7s-keypad"></i></a>
+			   {% if blog.next_article %}<a href="{{ blog.next_article }}" class="pl__30 pr__30 cd chp"><i class="pe-7s-angle-right"></i></a>{% endif %}	
+			</div><!-- .portfolio-navigation -->
+			{%- endif -%}
+		</div>
+
+	</div><!-- .jas-row -->
+</div><!-- .jas-container -->
+{%- if settings.show_related_portfolio and blogs[blog.handle].articles_count > 1 -%}
+<div class="jas-container mb__60">
+	<h4 class="mg__0 mb__30 tu tc fwb">{{ settings.title_related_portfolio }}</h4>
+    <div class="jas-carousel {{settings.image_size_portfolio_related}} {%- if settings.use_eq_height_portfolio_related %} jas_section_eqh{%- endif -%}" data-slick='{"slidesToShow": {{settings.sidetoshow_portfolio_related}},"slidesToScroll": 1,"rtl": {{ settings.use_rtl }}, "autoplay": {{ settings.use_autoplay_portfolio_related }}, "autoplaySpeed": {{ settings.slider_speed_portfolio_related }}000,"arrows": {{settings.use_arrows_portfolio_related}}, "responsive":[{"breakpoint": 960,"settings":{"slidesToShow": 2}},{"breakpoint": 480,"settings":{"slidesToShow": 1}}]}'>
+	{% assign f_article = blogs[blog.handle].f_article | sort: 'title' %}
+	{% assign number_limit = settings.how_many_related_portfolio | plus:0 %}
+	{% for f_article in blogs[blog.handle].articles limit:number_limit %}
+		{%- if article.id != f_article.id -%}
+		<figure id="portfolio-{{ f_article.id }}" class="portfolio-item pl__10 pr__10 pr">
+			{%- if settings.use_eq_height_portfolio_related and f_article.image -%}
+	          <div class="article__grid-image-wrapper jas-product-image-equal pr user_custom mask db pr chp">
+	             <a class="db lazyload jas-pr-image-link" href="{{ f_articleurl }}" data-bgset="{%- include 'bgset', image: f_article.image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ f_article.image | img_url: '50x50' }});">
+	               <img class="op_0 article__grid-image w__100 lazyload" src="{{ f_article.image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ f_article.image.aspect_ratio }}" data-sizes="auto" alt="{{ f_article.image.alt | escape }}">
+	             </a>
+	              <div class="jas-wrap-lazy"></div>
+	          </div>
+	      {%- elsif f_article.image -%}
+	         {%- assign img_url = f_article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+	         <div class="article__grid-image-wrapper mask db pr chp">
+	             <a class="db" href="{{ f_articleurl }}">
+	               <img class="article__grid-image w__100 lazyload" src="{{ f_article.image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ f_article.image.aspect_ratio }}" data-sizes="auto" alt="{{ f_article.image.alt | escape }}">
+	               <div class="jas-wrap-lazy"></div>
+	             </a>
+	         </div>
+	      {%- endif -%}
+		   <figcaption class="pa tc ts__03">
+		      <h4 class="fs__14 tu mg__0"><a class="cd chp" href="{{ f_article.url }}">{{ f_article.title }}</a></h4>
+		      {%- if f_article.tags.size > 0 -%}
+		      <span>
+		      {%- for tag in f_article.tags limit:5 -%}
+		      <a href="{{ blogs[blog.handle].url }}/tagged/{{ tag | handle }}" rel="category {{ tag | handle }}">{{ tag | capitalize }}</a>{% unless forloop.last %}, {% endunless %}
+		      {%- endfor -%}
+		      </span>
+		      {%- endif -%}
+		   </figcaption>
+		</figure>
+		{%- endif -%}
+	{% endfor %}
+	</div>
+</div>
+{%- endif -%}

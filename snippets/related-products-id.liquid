@@ -1,0 +1,8 @@
+{%- assign settings_pr_img_size = settings.use_related_eq_height -%}{%- assign pr_style = settings.related_products_hover -%}
+<div class="related product-extra mt__60 {{pr_style}}" id="related_nt">
+   {%- assign sett_title = settings.title_pr_related -%}
+   {%- assign sett_sub_title = settings.sub_title_pr_related -%}
+   {%- assign style_title = settings.style_title_pr_related -%}
+   {%- include 'jas_section_title' -%}
+   <div id="related_nt_wrap" class="products jas-row jas-products-holder {{settings.related_image_size}} {{settings.related_img_ratio}} position_{{settings.related_img_position}}{%- if settings_pr_img_size %} equal-nt{%- endif -%}" data-slick='{"slidesToShow": {{ settings.related_sidetoshow }},"slidesToScroll": 1, "autoplay": {{ settings.related_use_autoplay }}, "autoplaySpeed": {{ settings.related_slider_speed }}000,"rtl": {{ settings.use_rtl }}, "infinite": {{settings.related_use_loop}}, "arrows": {{settings.related_use_arrows}},"dots": {{settings.related_use_dots}}, "responsive":[{"breakpoint": 1024,"settings":{"slidesToShow": {{ settings.related_sidetoshow_first}} }},{"breakpoint": 600,"settings":{"slidesToShow": {{ settings.related_sidetoshow_center}} }},{"breakpoint": 480,"settings":{"slidesToShow": {{ settings.related_sidetoshow_last}} }}]}'></div>
+ </div>

@@ -1,0 +1,221 @@
+<div class="fifth-module-section">
+<div class="container">
+<div class="home-imagebox-main {% if section.settings.text_alighment != blank %} {{section.settings.text_alighment}} {% endif %}" style="background-color : {{section.settings.background_color}} !important; ">
+<div id="home-imagebox" class="index-section">
+<div class="slider-left">
+  <h2 class="h2_title" style="color: {{section.settings.title_color}} !important;">
+      {% if section.settings.text != blank %}
+      {{section.settings.text}}
+      {% endif %}
+    </h2>
+  
+  <h2 class="h2_sub" style="color: {{section.settings.heading_color}} !important;">
+    {% if section.settings.text_1 != blank %}
+      {{section.settings.text_1}}
+      {% endif %}
+  </h2>
+  
+   <button type="button" style="background-color: {{section.settings.btn_color}}; color:{{section.settings.color_id}};">
+     <a href="{{section.settings.url}}" class="not-button-0-w" style="color: {{section.settings.btn_text_color}}; color:{{section.settings.color_id}};" tabindex="0">
+       {{section.settings.btn_title}}</a></button>
+  </div>
+    
+<div class="slideshow_battpackenergy_section" style="width:100% ; "> 
+  {% for block in section.blocks %}
+   <div class="battpackenergy_slideshow">
+   
+     <img src="{{ block.settings.image | img_url:'master'}}"/>
+  
+  
+  <div class="battpackenergy_section-hover">
+  <p class="h2_battpack" style="color: {{block.settings.heading_color}} !important;">
+      {% if block.settings.text_heading != blank %}
+      {{block.settings.text_heading}}
+      {% endif %}
+    </p>
+   <h2 class="battpack_text" style="color: {{block.settings.title_color}} !important;">
+      {% if block.settings.title != blank %}
+      {{block.settings.title}}
+      {% endif %}
+    </h2>
+ 
+   <button type="button" style="background-color: {{block.settings.btn_color}}; color:{{block.settings.color_id}};">
+     <a href="{{block.settings.url}}" class="arrow-button not-button-0-w" style="color: {{block.settings.btn_text_color}}; color:{{block.settings.color_id}};" tabindex="0">
+     <span class="icon-new">
+       <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
+     </span>
+       {{block.settings.btn_title}}</a></button>
+    
+  </div>
+     </div> 
+{%endfor%}
+  </div>
+<script>
+  jQuery('.slideshow_battpackenergy_section').slick({
+  dots: true,
+    infinite: true,
+  speed: 300,
+  slidesToShow: 3,
+  slidesToScroll: 1,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        infinite: true,
+        dots: true
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1
+      }
+    },
+    {
+      breakpoint: 557,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    }
+    // You can unslick at a given breakpoint now by adding:
+    // settings: "unslick"
+    // instead of a settings object
+  ]
+});
+  </script>
+</div>
+</div>
+</div>
+</div>
+{% schema %}
+  {
+    "name": "Industry Fifth Section",
+
+    "settings": [
+      {
+        "id": "text",
+        "type": "text",
+        "label": "Heading",
+        "default": "Title"
+      },
+{
+        "type": "color",
+        "id": "title_color",
+        "label": "Heading Color",
+        "default": "#000"
+      },
+      {
+        "id": "text_1",
+        "type": "richtext",
+        "label": "Text"
+      },
+{
+        "type": "color",
+        "id": "heading_color",
+        "label": "Heading Color",
+        "default": "#000"
+      },
+{
+        "type": "text",
+        "id": "btn_title",
+        "label": "Button title",
+        "default": "Button title"
+      },
+{
+        "type": "color",
+        "id": "btn_text_color",
+        "label": "Button Text Color",
+        "default": "#ef3288"
+      },
+      {
+        "type": "color",
+        "id": "btn_color",
+        "label": "Button Color",
+        "default": "#ef3288"
+      },
+          
+ 
+ {
+        "label": "Button Link",
+        "id": "url",
+        "type": "url"
+      }
+    ],
+ 
+"blocks": [
+      {
+        "type": "image",
+        "name": "Image slide",
+        "settings": [
+        
+        
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+              {
+        "id": "text_heading",
+        "type": "text",
+        "label": "Heading"
+        
+      }, 
+		{
+        "type": "color",
+        "id": "heading_color",
+        "label": "Heading Color",
+        "default": "#000"
+      },
+ {
+        "id": "title",
+        "type": "text",
+        "label": "Title"
+       
+      },
+ {
+                    "type": "color",
+                    "id": "title_color",
+                    "label": "Title Color",
+                    "default": "#000"
+                 },
+{
+        "type": "text",
+        "id": "btn_title",
+        "label": "Button title",
+        "default": "Button title"
+      },
+{
+        "type": "color",
+        "id": "btn_text_color",
+        "label": "Button Text Color",
+        "default": "#ef3288"
+      },
+      {
+        "type": "color",
+        "id": "btn_color",
+        "label": "Button Color",
+        "default": "#ef3288"
+      },
+          
+ 
+ {
+        "label": "Button Link",
+        "id": "url",
+        "type": "url"
+      }
+        ]
+      }
+    ]
+  }
+
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

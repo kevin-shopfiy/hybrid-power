@@ -1,0 +1,62 @@
+<div class="page-head pr tc page_about_bg_image{%- if settings.about_bg_image != blank %} page_jas_bg_image lazyload{%- endif -%}"{%- if settings.about_bg_image != blank %} data-bgset="{%- include 'bgset', image: settings.about_bg_image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url({{ settings.about_bg_image | img_url: '50x50' }});"{%- endif -%}>
+   <div class="jas-container pr">
+      <h1 class="tu mb__10 cw">{{ page.title }}</h1>
+      {%- if settings.description_about_us.size > 0 -%}<p>{{ settings.description_about_us | strip_html }}</p>{%- endif -%}
+   </div>
+</div>
+<div class="jas-container mt__60 mb__60">
+	{%- comment -%}text>testimonials>member>page_content{%- endcomment -%}
+   {%- if settings.sort_faq != blank -%}
+     {%- assign _sort_faq = settings.sort_faq | replace: ' >', '>' | replace: '> ', '>' | split: '>' | uniq -%}
+     {%- for el_faq in _sort_faq -%}
+			{%- case forloop.index -%} 
+				{%- when 1 -%}
+					{%- if el_faq  == 'text' -%}
+						{%- section 'text_columns' -%}
+					{%- elsif el_faq  == 'testimonials' -%}
+						{%- section 'testimonials' -%} 
+					{%- elsif el_faq  == 'member' -%}
+						{%- section 'jas_member' -%} 
+					{%- elsif el_faq  == 'page_content' -%}
+						{{page.content}}
+					{%- endif -%}
+				{%- when 2 -%}
+					{%- if el_faq  == 'text' -%}
+						{%- section 'text_columns' -%}
+					{%- elsif el_faq  == 'testimonials' -%}
+						{%- section 'testimonials' -%} 
+					{%- elsif el_faq  == 'member' -%}
+						{%- section 'jas_member' -%} 
+					{%- elsif el_faq  == 'page_content' -%}
+						{{page.content}}
+					{%- endif -%}
+				{%- when 3 -%}
+					{%- if el_faq  == 'text' -%}
+						{%- section 'text_columns' -%}
+					{%- elsif el_faq  == 'testimonials' -%}
+						{%- section 'testimonials' -%} 
+					{%- elsif el_faq  == 'member' -%}
+						{%- section 'jas_member' -%} 
+					{%- elsif el_faq  == 'page_content' -%}
+						{{page.content}}
+					{%- endif -%}
+				{%- when 4 -%}
+					{%- if el_faq  == 'text' -%}
+						{%- section 'text_columns' -%}
+					{%- elsif el_faq  == 'testimonials' -%}
+						{%- section 'testimonials' -%} 
+					{%- elsif el_faq  == 'member' -%}
+						{%- section 'jas_member' -%} 
+					{%- elsif el_faq  == 'page_content' -%}
+						{{page.content}}
+					{%- endif -%}
+			{%- endcase -%}
+				{% comment %}{%- section 'el_faq' -%}{% endcomment %}
+		{%- endfor -%}
+   {%- else -%}
+	   {% if page.content.size > 0 %}<p>{{ page.content }}</p>{% endif %}
+	  {%- section 'text_columns' -%}
+	  {%- section 'testimonials' -%}
+	  {%- section 'jas_member' -%}
+	{%- endif -%}
+</div>

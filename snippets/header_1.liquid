@@ -1,0 +1,18 @@
+<div class="header__mid pr pl__15 pr__15{%- if settings.header_bg_image != blank %} lazyload{%- endif -%}"{%- if settings.header_bg_image != blank %} data-bgset="{%- include 'bgset', image: settings.header_bg_image -%}" data-sizes="auto" data-parent-fit="cover"{%- endif -%}>
+   {%- if settings.full_header_enable == false -%}<div class="jas-container">{%- endif -%} 
+      <div class="jas-row middle-xs pt__10 pb__10">
+         <div class="jas-col-md-3 jas-col-sm-3 jas-col-xs-3 flex middle-xs nta_menu middle-xs">
+            {%- include 'push_menu' -%}
+         </div>
+         <div class="jas-col-md-6 jas-col-sm-6 jas-col-xs-6 tc">
+            {%- include 'logo_menu' -%}
+         </div>
+         <div class="jas-col-md-3 jas-col-sm-3 jas-col-xs-3">
+            <div class="jas-action flex end-xs middle-xs">
+               {%- include 'jas_action' -%}
+            </div><!-- .jas-action -->
+         </div>
+      </div>
+   {%- if settings.full_header_enable == false -%}</div><!-- .jas-container -->{%- endif -%}
+<!-- .jas-row -->
+</div>

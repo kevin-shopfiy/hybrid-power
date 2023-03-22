@@ -1,0 +1,58 @@
+{%- layout none -%}
+{%- assign grid_columns = '12' -%}
+{%- assign grid_columns_mb = '12' -%}
+{%- if search.terms contains 'nathan_related' -%}
+	{%- assign show_vendor = settings.show_vendor_related -%}
+	{%- assign settings_pr_img_size = settings.use_related_eq_height -%}
+	{%- assign section_settings_countdown = settings.related_sale_countdown -%}
+	{%- assign countdown_timer_style = settings.related_countdown_style -%}
+   {%- assign num_limit = settings.many_related_products -%}
+{%- elsif search.terms contains 'nathan_upsell' -%}
+   {%- assign grid_columns = '3' -%}
+   {%- assign grid_columns_mb = '6' -%}
+	{%- assign show_vendor = false -%}
+	{%- assign settings_pr_img_size = false -%}
+	{%- assign section_settings_countdown = false -%}
+	{%- assign countdown_timer_style = false -%}
+	{%- assign num_limit = 4 -%}
+{%- else -%}
+	{%- assign show_vendor = settings.show_vendor_recently -%}
+	{%- assign settings_pr_img_size = settings.use_recently_eq_height -%}
+	{%- assign section_settings_countdown = settings.recently_sale_countdown -%}
+	{%- assign countdown_timer_style = settings.recently_countdown_style -%}
+	{%- assign num_limit = settings.many_recently_products -%}
+{%- endif -%}
+{%- if search.terms contains 'nathan_upsell' -%}
+    {%- assign pr_include = 'product_upsell_loop' -%}
+{%- elsif search.terms contains 'widget_rencet' -%}
+	{%- assign num_limit = 5 -%}
+	{%- assign pr_include = 'product_group_loop' -%}
+{%- else -%}
+	{%- assign pr_include = 'jas_product_loop' -%}
+{%- endif -%}
+{%- capture min_html -%}
+{%- if search.terms != blank -%}
+	{%- if search.results_count > 0 -%}
+   <!-- limit {{num_limit}}  -->
+	   {%- paginate search.results by num_limit -%}
+	    {%- for item in search.results -%}
+	         {%- assign product = item -%}
+	         {%- include pr_include -%}
+	    {%- endfor -%}
+	    {%- endpaginate -%}
+	{%- else -%}
+	   {%- if search.terms contains 'nathan_upsell' -%}no_pr_ntt4
+		{%- elsif search.terms contains 'nathan_related' -%}
+		<style type="text/css">
+	   {%- if search.terms contains 'nathan_related' -%}#related_nt{%- else -%}#recently-viewed-products{%- endif -%}{display:none !important;}
+	   </style>
+	   {%- endif -%}
+	{%- endif -%}
+{%- endif -%}
+{%- endcapture -%}
+{%- if search.results_count == 1 -%}
+{{min_html | strip_newlines | remove: "  " | remove: "jas-product-image-equal" }} 
+{%- else -%}
+{{min_html | strip_newlines | remove: "  " }} 
+{%- endif -%}
+{% comment %}https://demo-gecko-plus-2.myshopify.com/search?q=tag:557451247682&type=product{% endcomment %}

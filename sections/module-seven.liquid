@@ -1,0 +1,313 @@
+
+
+{%- include 'style_mp_section' -%}
+<style>
+   .jas_custom_{{section.id}} .jas_custom_color input[type=email]{
+   color:{{section.settings.section_placeholder_color}};
+   }
+   .jas_custom_{{section.id}} .jas_custom_color .mc4wp-form ::-webkit-input-placeholder {
+   color:{{section.settings.section_placeholder_color}};
+   }
+   .jas_custom_{{section.id}} .jas_custom_color .mc4wp-form ::-moz-placeholder {
+   color: {{section.settings.section_placeholder_color}};
+   }
+   .jas_custom_{{section.id}} .jas_custom_color .mc4wp-form :-moz-placeholder {
+   color: {{section.settings.section_placeholder_color}};
+   }
+   .jas_custom_{{section.id}} .jas_custom_color .mc4wp-form input[type=email],.jas_custom_{{section.id}} .signup-newsletter-form {
+   border-color: {{section.settings.section_email_color}};
+   }
+   .jas_custom_{{section.id}} .jas_custom_color .mc4wp-form :-ms-input-placeholder {
+   color: {{section.settings.section_placeholder_color}};
+   }
+     .jas_custom_{{section.id}} .jas_custom_color .mc4wp-form input[type=email]:-webkit-autofill,
+   .jas_custom_{{section.id}} .jas_custom_color .mc4wp-form input[type=email]:-webkit-autofill:hover, 
+   .jas_custom_{{section.id}} .jas_custom_color .mc4wp-form input[type=email]:-webkit-autofill:focus{
+   
+  -webkit-text-fill-color: {{section.settings.section_placeholder_color}};
+  -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+  transition: background-color 5000s ease-in-out 0s;
+   }
+  /* .jas_custom_{{section.id}} .jas_custom_color .mc4wp-form input[type=submit] {
+   background-color: #888888;
+   border-color: #888888;
+   color: #fff;
+   }*/
+</style>
+<div class="newslettor-main jas_custom_{{section.id}} jas-banner-parallax{%- if section.settings.use_parallax == false %} gecko-parallax{%- endif %}{%- if section.settings.use_background_overlay %} jas_background-overlay{%- endif %}{%- if section.settings.use_parallax == false and section.settings.image != blank %} lazyload{%- endif %}{%- if section.settings.full_height %} jas-full-height{%- endif -%}"{%- if section.settings.use_parallax and section.settings.image != blank %} data-jas-parallax='1.5' data-jas-parallax-image='{{ section.settings.image | img_url: '50x50' }}'{%- endif %}{%- if section.settings.image != blank or section.settings.section_bg_color != blank %} data-bgset="{%- include 'bgset', image: section.settings.image -%}" data-sizes="auto" data-parent-fit="cover" style="{%- if section.settings.section_bg_color != blank -%}background-color: {{section.settings.section_bg_color}};{%- endif -%}{%- if section.settings.image != blank and section.settings.use_parallax == false -%}background-image: url('{{ section.settings.image | img_url: '50x50' }}');{%- endif -%} {%- endif -%}>
+   <div class="jas-row ">
+      <div class="jas-col-xs-12 jas_custom_color {% if section.settings.text_alighment != blank %}{{section.settings.text_alighment}}{% endif %}">
+        <div class="jas-row">
+         {%- if section.settings.style == '1' -%}
+            {%- if section.settings.title != blank -%}
+            <div class="flex end-md center-sm center-xs jas-col-sm-6 jas-col-xs-12 newslettor-main-text">
+               <h2 class="h2_sub tu cw fs__14 mg__0" style="line-height: 40px;color:{{section.settings.section_title_color}}">{{ section.settings.title }}</h2>
+            </div>
+            {%- endif -%}
+            <div class="newslettor-main-form {%- if section.settings.title != blank -%}flex start-md start-sm center-xs jas-col-sm-6 jas-col-xs-12{%- else -%}flex center-xs jas-col-sm-12 jas-col-xs-12{%- endif -%}">
+              
+              {%- if settings.platform_email == '3' -%}
+                <form id="klaviyo_frm_{{section.id}}" class="mc4wp-form klaviyo_sub_frm" action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" novalidate="novalidate">
+                  <input type="hidden" name="g" value="{{settings.klaviyo_list_id}}">
+                      <div class="mc4wp-form-fields">
+                         <div class="signup-newsletter-form dib 1">
+                            <input type="email" name="email" placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}"  value="{%- if customer -%}{{ customer.email }}{%- endif -%}" class="input-text" required="required">
+                         <div class="newsletter-submit-btn">   <input type="submit" value="{{ 'general.newsletter_form.submit' | t }}" class="klaviyo_btn submit-btn{%- if settings.use_agree_checkbox_mail %} mail_agree{%- endif -%}">
+                           </div>
+                           </div>
+                         {%- if settings.use_agree_checkbox_mail -%}{%- include 'conditions_mail',html:'p',margin:'mt__15' -%}{%- endif -%}
+                      </div>
+                     <div class="mc4wp-response klaviyo_messages">
+                       <div class="shopify-message success_message" style="display:none;">{{ 'general.newsletter_form.confirmation' | t }}</div>
+                       <div class="shopify-error error_message" style="display:none;">{{ form.errors | default_errors }}</div>
+                     </div> <!-- / Klaviyo for shopify -->
+                     {%- if settings.use_agree_checkbox_mail -%}<div class="mc4wp-response mail_agree_err"></div>{%- endif -%}
+                </form>
+       
+              {%- elsif settings.platform_email == '4' -%}
+              
+                 <form id="mc4wp-form-{{section.id}}" role="form" action="{%- if settings.use_ajax_mailChimp -%}{{ settings.mcsp_form_action | replace: '/post?u', '/post-json?u' }}{%- else -%}{{ settings.mcsp_form_action }}{%- endif -%}" class="mc4wp-form mc4wp-form-{{section.id}}{%- if settings.use_ajax_mailChimp %} jas_ajax_mcsp{%- endif -%}" method="post">
+                    <div class="mc4wp-form-fields">
+                       <div class="signup-newsletter-form dib">
+                          <input type="email" name="EMAIL" placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}"  value="{%- if customer -%}{{ customer.email }}{%- endif -%}" class="input-text" required="required">
+                        <div class="newsletter-submit-btn">  <input type="submit" value="{{ 'general.newsletter_form.submit' | t }}" class="submit-btn{%- if settings.use_agree_checkbox_mail %} mail_agree{%- endif -%}">
+                         </div>
+                         </div>
+                         {%- if settings.use_agree_checkbox_mail -%}{%- include 'conditions_mail',html:'p',margin:'mt__15' -%}{%- endif -%}
+                    </div>
+                    <div class="mc4wp-response"></div>
+                   {%- if settings.use_agree_checkbox_mail -%}<div class="mc4wp-response mail_agree_err"></div>{%- endif -%}
+                 </form> <!-- / MailChimp for shopify -->
+              
+               {%- else -%}
+              
+                 {%- form 'customer', class:'mc4wp-form' -%}
+                    <input type="hidden" name="contact[tags]" value="newsletter">
+                    <div class="mc4wp-form-fields">
+                       <div class="signup-newsletter-form dib">
+                          <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}"  value="{%- if customer -%}{{ customer.email }}{%- endif -%}" class="input-text" required="required">
+                        <div class="newsletter-submit-btn">  <input type="submit" value="{{ 'general.newsletter_form.submit' | t }}" class="submit-btn{%- if settings.use_agree_checkbox_mail %} mail_agree{%- endif -%}">
+                         </div>
+                         </div>
+                         {%- if settings.use_agree_checkbox_mail -%}{%- include 'conditions_mail',html:'p',margin:'mt__15' -%}{%- endif -%}
+                    </div>
+                     <div class="mc4wp-response">
+                        {%- if form.posted_successfully? -%}<div class="shopify-message">{{ 'general.newsletter_form.confirmation' | t }}</div>{%- elsif form.errors -%}<div class="shopify-error">{{ form.errors | default_errors }}</div>{%- endif -%}
+                     </div>
+                     {%- if settings.use_agree_checkbox_mail -%}<div class="mc4wp-response mail_agree_err"></div>{%- endif -%}
+                 {%- endform -%}
+               {%- endif -%}
+              <p style="color:{{section.settings.content_color}} !important;">{{section.settings.content}}</p>
+            </div>
+          
+         {%- else -%}
+            <div class="jas_custom_color center-xs jas-col-xs-12">
+               <h2 style="font-size: 26px;color:{{section.settings.section_title_color}};line-height: 1;text-align: center" class="jas_custom_heading font-title">{{ section.settings.title }}</h2>
+               <div class="color-scheme-light">
+                  {%- if section.settings.use_newsletter_mailchimp -%}
+                     <form id="mc4wp-form-{{section.id}}" role="form" action="{%- if section.settings.use_ajax_mailChimp -%}{{ settings.mcsp_form_action | replace: '/post?u', '/post-json?u' }}{%- else -%}{{ settings.mcsp_form_action }}{%- endif -%}" class="mc4wp-form mc4wp-form-{{section.id}}{%- if section.settings.use_ajax_mailChimp %} jas_ajax_mcsp{%- endif -%}" method="post">
+                        <div class="mc4wp-form-fields">
+                           <div class="db">
+                              <input type="email" name="EMAIL" placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}"  value="{%- if customer -%}{{ customer.email }}{%- endif -%}" class="input-text" required="required">
+                              <input type="submit" value="{{ 'general.newsletter_form.submit' | t }}" class="button-o{%- if settings.use_agree_checkbox_mail %} mail_agree{%- endif -%}">
+                           </div>
+                        </div>
+                         {%- if settings.use_agree_checkbox_mail -%}{%- include 'conditions_mail',html:'p',margin:'mt__15' -%}{%- endif -%}
+                        <div class="mc4wp-response"></div>
+                     </form> <!-- / MailChimp for shopify Plugin -->
+                 
+                 <p>{{section.settings.content}}</p>
+                 
+                  {%- else -%}
+                     {%- form 'customer', class:'mc4wp-form' -%}
+                        <input type="hidden" name="contact[tags]" value="newsletter">
+                        <div class="mc4wp-form-fields">
+                           <div class="db">
+                              <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}"  value="{%- if customer -%}{{ customer.email }}{%- endif -%}" class="input-text" required="required">
+                              <input type="submit" value="{{ 'general.newsletter_form.submit' | t }}" class="button-o{%- if settings.use_agree_checkbox_mail %} mail_agree{%- endif -%}">
+                           </div>
+                        </div>
+                         {%- if settings.use_agree_checkbox_mail -%}{%- include 'conditions_mail',html:'p',margin:'mt__15' -%}{%- endif -%}
+                        <div class="mc4wp-response">
+                           {%- if form.posted_successfully? -%}<div class="shopify-message">{{ 'general.newsletter_form.confirmation' | t }}</div>{%- elsif form.errors -%}<div class="shopify-error">{{ form.errors | default_errors }}</div>{%- endif -%}
+                        </div>
+                     {%- endform -%}
+                 <p>{{section.settings.content}}</p>
+                 
+                  {%- endif -%}
+               </div>
+            </div>
+         {%- endif -%}
+       </div>
+      </div>
+   </div>
+{%- schema -%}
+  {
+    "name": "Module Seven Newsletter",
+    "class":"jas-section type_jas_newsletter clearfix",
+    "settings": [
+       {
+        "type": "select",
+        "id": "style",
+        "label": "Newsletter Style: (optional)",
+        "default": "1",
+        "options": [
+          {
+            "value": "1",
+            "label": "Style 1"
+          },
+          {
+            "value": "2",
+            "label": "Style 2"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Get notified of exclusive deals and new styles"
+      },
+      
+      {
+        "type": "html",
+        "id": "content",
+        "label": "Description",
+        "default": "Enter the description under text area."
+      },   
+  
+      {
+        "type": "color",
+        "id": "content_color",
+        "label": "Description Color",
+        "default": "#fff"
+      }, 
+  
+      {
+       "type": "select",
+            "id": "text_alighment",
+            "label": "Text alignment",
+            "default": "class-left-right",
+            "options": [
+              {
+                "value": "class-left-right",
+                "label": "Text to left"
+              },
+              {
+                "value": "class-right-left",
+                "label": "Text to Right"
+              }
+             
+            ]
+
+      },
+    
+                                                                   
+      {
+        "type": "color",
+        "id": "section_title_color",
+        "label": "color title",
+        "default": "#fff"
+      },
+       {
+        "type": "color",
+        "id": "section_placeholder_color",
+        "label": "color placeholder",
+        "default": "#fff"
+      },
+      {
+        "type": "color",
+        "id": "section_email_color",
+        "label": "color border input email",
+        "default": "#fff"
+      },
+      {
+        "type": "header",
+        "content": "== Design Options"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Background Image"
+      },
+      {
+        "type": "color",
+        "id": "section_bg_color",
+        "label": "Background color",
+        "default": "#000"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_left",
+        "label": "Margin left",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_right",
+        "label": "Margin right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_top",
+        "label": "Padding top",
+        "default": "50px",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_right",
+        "label": "Padding right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_bottom",
+        "label": "Padding bottom",
+        "default": "50px",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_left",
+        "label": "Padding left",
+        "info": "60px"
+      },
+      {
+        "type": "header",
+        "content": "== Gecko Extras"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_parallax",
+        "label": "Use Gecko parallax?",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "use_background_overlay",
+        "label": "Use background overlay?",
+        "default": false
+      }
+    ],
+    "presets": [
+      {
+        "name": "Module Seven",
+        "category": "Promotional"
+      }
+    ]
+  }
+{% endschema %}

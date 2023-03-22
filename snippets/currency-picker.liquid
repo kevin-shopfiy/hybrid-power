@@ -1,0 +1,52 @@
+
+
+{%- comment -%}https://gist.github.com/carolineschnapp/773649{%- endcomment -%}
+{%- assign supported_codes = settings.supported_currencies | split: '|' -%}
+{%- assign codes = 'USD,EUR,GBP,CAD,ALL,DZD,AOA,ARS,AMD,AWG,AUD,BBD,AZN,BDT,BSD,BHD,BYR,BZD,BTN,BAM,BRL,BOB,BWP,BND,BGN,MMK,KHR,KYD,XAF,CLP,CNY,COP,CRC,HRK,CZK,DKK,DOP,XCD,EGP,ETB,XPF,FJD,GMD,GHS,GTQ,GYD,GEL,HNL,HKD,HUF,ISK,INR,IDR,ILS,JMD,JPY,JEP,JOD,KZT,KES,KWD,KGS,LVL,LBP,LTL,MGA,MKD,MOP,MVR,MXN,MYR,MUR,MDL,MAD,MNT,MZN,NAD,NPR,ANG,NZD,NIO,NGN,NOK,OMR,PKR,PGK,PYG,PEN,PHP,PLN,QAR,RON,RUB,RWF,WST,SAR,STD,RSD,SCR,SGD,SYP,ZAR,KRW,LKR,SEK,CHF,TWD,THB,TZS,TTD,TND,TRY,UGX,UAH,AED,UYU,VUV,VEF,VND,XBT,XOF,ZMW' | split: ',' -%}
+{%- assign check = true -%}
+{%- unless currency_header -%}
+{%- assign currency_header = false -%}
+{%- endunless -%}
+{%- for code in supported_codes -%}
+  {%- assign array_money = code | split: '-' -%}
+  {%- assign data_currency = array_money | first | upcase | strip -%}
+  {%- assign name_money = array_money | last | strip -%}
+  {%- if data_currency == shop.currency and codes contains data_currency -%}
+     {%- assign check = false -%}
+     {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+
+{%- if currency_header -%}
+<ul>
+     {%- if check and codes contains shop.currency -%}
+         <li><a data-currency="{{ shop.currency }}" class="currency-item cw chp selected" href="javascript:void(0);"><i class="jas_flag flag_{{ shop.currency }}"></i> {{ shop.currency }}</a></li>
+      {%- endif -%}
+      {%- for code in supported_codes -%}
+           {%- assign array_money = code | split: '-' -%}
+           {%- assign data_currency = array_money | first | upcase | strip -%}
+           {%- assign name_money = array_money | last | strip -%}
+           {%- if codes contains data_currency -%}
+            <li><a data-currency="{%- if data_currency contains 'EUR' -%}EUR{%- else -%}{{data_currency}}{%- endif -%}" class="currency-item chp{%- if shop.currency == data_currency %} selected{%- endif -%}" href="javascript:void(0);"><i class="jas_flag flag_{{ data_currency }}"></i> {{ name_money }}</a></li>
+           {%- endif -%}
+      {% endfor %}
+   </ul>
+{%- else -%}
+<div class="jas-currency dib pr currencies">
+   <span class="current"><span class="jas_94 selected_flag"><i class="jas_flag flag_{{ shop.currency }}"></i></span> <span class="selected-currency">{{ shop.currency }}</span><i class="fa fa-angle-down ml__5"></i></span>
+   <ul class="pa ts__03555">
+     {%- if check and codes contains shop.currency -%}
+       <a data-currency="{{ shop.currency }}" class="currency-item {{top_color}} chp selected" href="javascript:void(0);"><i class="jas_flag flag_{{ shop.currency }}"></i> {{ shop.currency }}</a></li>
+      {%- endif -%}
+      {%- for code in supported_codes -%}
+           {%- assign array_money = code | split: '-' -%}
+           {%- assign data_currency = array_money | first | upcase | strip -%}
+           {%- assign name_money = array_money | last | strip -%}
+           {%- if codes contains data_currency -%}
+            <li><a data-currency="{%- if data_currency contains 'EUR' -%}EUR{%- else -%}{{data_currency}}{%- endif -%}" class="currency-item {{top_color}} chp{%- if shop.currency == data_currency %} selected{%- endif -%}" href="javascript:void(0);"><i class="jas_flag flag_{{ data_currency }}"></i> {{ name_money }}</a></li>
+           {%- endif -%}
+      {% endfor %}
+   </ul>
+</div>
+{%- endif -%}

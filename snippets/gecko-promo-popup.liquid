@@ -1,0 +1,128 @@
+{%- assign template_id = template | split: '.' | first -%}
+{%- assign st = 'display_newsletter_' | append: template_id -%}
+{%- if settings[st] -%}
+<div class="gecko-promo-popup popup-quick-view mfp-hide">
+    <div class="gecko-popup-inner">
+        <div class="ypop-container-inner">
+           <div class="ypop-header{%- if settings.newsletter_bg != blank %} lazyload{%- endif -%}"{%- if settings.newsletter_bg != blank %} data-bgset="{%- include 'bgset', image: settings.newsletter_bg -%}" data-sizes="auto" data-parent-fit="cover"{%- endif -%}>
+              <h2 class="ypop-title">{{'general.promo_popup.title' | t }}</h2>
+           </div>
+           <div class="ypop-content-wrapper">
+              <div class="ypop-content">
+                 {%- if settings.show_nt_jackpot and none -%}
+                   <div class="jackpot_roller pt__15 pb__15 pr oh">
+                        <div class="cardList pr oh">
+                            <div class="line"></div>
+                            <div class="nt-carousel flex">
+                                {%- capture loop -%}
+                                {%- for i in (1..6) -%}
+                                {%- assign icon = 'icon_' | append:i -%}
+                                {%- assign icon_id = settings[icon] -%}
+                                {%- assign label = 'label_' | append:i -%}
+                                {%- assign label_id = settings[label] -%}
+                                {%- if label_id != blank -%}
+                                <div class="card card_{{i}} tc">
+                                    <div class="card_wrap">
+                                        <div class="card_img flex c_center alin_center"><i class="{{icon_id}}" aria-hidden="true"></i></div>
+                                        <div class="card_text">{{label_id}}</div>
+                                    </div>
+                                </div>
+                                {%- endif -%}
+                               {%- endfor -%}
+                               {%- endcapture -%}
+                               {{loop}}{{loop}}
+                            </div>
+                        </div>
+                    </div>
+                 {%- endif -%}
+                 {{settings.promo_popup_description}}
+                 <div class="ypop-content-type">
+                    <div class="ypop-form-newsletter-wrapper">
+                       <div class="message-box"></div>
+                       {%- if settings.platform_email == '3' -%}
+                         {%- if settings.klaviyo_list_id != blank -%}
+                           
+                            <form id="klaviyo_frm_19041994" class="class-form klaviyo_sub_frm" action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" novalidate="novalidate">
+                               <input type="hidden" name="g" value="{{settings.klaviyo_list_id}}">
+                               <fieldset>
+                                  <ul class="group">
+                                     <li>
+                                        <div class="newsletter_form_email">
+                                           <input type="email" name="email" placeholder="{{ 'general.promo_popup.email_placeholder' | t }}"  value="{%- if customer -%}{{ customer.email }}{%- endif -%}" class="input-text" required="required">
+                                        </div>
+                                     </li>
+                                   {%- if settings.use_agree_checkbox_mail -%}{%- include 'conditions_mail',html:'li',margin:'tc' -%}{%- endif -%}
+                                     <li class="ypop-submit">               
+                                        <button type="submit" class="klaviyo_btn btn submit-field mailchimp-subscription-ajax-submit{%- if settings.use_agree_checkbox_mail %} mail_agree{%- endif -%}">{{ 'general.promo_popup.submit' | t }}</button>
+                                     </li>
+                                  </ul>
+                               </fieldset>
+                               <div class="mc4wp-response klaviyo_messages">
+                                 <div class="shopify-message success_message" style="display:none;">{{ 'general.newsletter_form.confirmation' | t }}</div>
+                                 <div class="shopify-error error_message" style="display:none;">{{ form.errors | default_errors }}</div>
+                               </div> 
+                               {%- if settings.use_agree_checkbox_mail -%}<div class="mc4wp-response mail_agree_err"></div>{%- endif -%}<!-- / Klaviyo for shopify -->
+                            </form>
+                      
+                          {%- else -%}
+                           This Klaviyo list ID doesn’t currently include any content. Add Klaviyo list ID to this section using the sidebar.
+                          {%- endif -%} 
+                      
+                       {%- elsif settings.platform_email == '4' -%}
+                         {%- if settings.mcsp_form_action != blank -%}
+                         <form method="post" role="form" action="{%- if settings.use_ajax_mailChimp -%}{{ settings.mcsp_form_action | replace: '/post?u', '/post-json?u' }}{%- else -%}{{ settings.mcsp_form_action }}{%- endif -%}" class="{%- if settings.use_ajax_mailChimp -%}jas_ajax_mcsp{%- endif -%}">
+                           <fieldset>
+                              <ul class="group">
+                                 <li>
+                                    <div class="newsletter_form_email">
+                                       <input type="text" name="EMAIL" placeholder="{{ 'general.promo_popup.email_placeholder' | t }}" id="yit_mailchimp_newsletter_form_email_ypop" value="{%- if customer -%}{{ customer.email }}{%- endif -%}" class="ck_ntemail email-field text-field autoclear" required="required">
+                                    </div>
+                                 </li>
+                               {%- if settings.use_agree_checkbox_mail -%}{%- include 'conditions_mail',html:'li',margin:'tc' -%}{%- endif -%}
+                                 <li class="ypop-submit">               
+                                    <button type="submit" class="btn submit-field mailchimp-subscription-ajax-submit{%- if settings.use_agree_checkbox_mail %} mail_agree{%- endif -%}">{{ 'general.promo_popup.submit' | t }}</button>
+                                 </li>
+                              </ul>
+                           </fieldset>
+                           <div class="mc4wp-response"></div>
+                           {%- if settings.use_agree_checkbox_mail -%}<div class="mc4wp-response mail_agree_err"></div>{%- endif -%}
+                        </form>
+                        {%- else -%}
+                            This Mailchimp Form Action URL doesn’t currently include any content. Add Mailchimp Form Action URL to this section using the sidebar.
+                        {%- endif -%}
+                      {%- else -%}
+                        {%- form 'customer', class:'class-form' -%}
+                           <input type="hidden" name="contact[tags]" value="newsletter">
+                           <fieldset>
+                              <ul class="group{%- if form.posted_successfully? %} hide{%- endif -%}">
+                                 <li>
+                                    <div class="newsletter_form_email">
+                                       <input type="email" name="contact[email]" placeholder="{{ 'general.promo_popup.email_placeholder' | t }}" id="yit_mailchimp_newsletter_form_email_ypop" value="{%- if customer -%}{{ customer.email }}{%- endif -%}" class="ck_ntemail email-field text-field autoclear" required="required">
+                                    </div>
+                                 </li>
+                               {%- if settings.use_agree_checkbox_mail -%}{%- include 'conditions_mail',html:'li',margin:'tc' -%}{%- endif -%}
+                                 <li class="ypop-submit">               
+                                    <button type="submit" class="btn submit-field frm_shopify_email_none{%- if settings.use_agree_checkbox_mail %} mail_agree{%- endif -%}">{{ 'general.promo_popup.submit' | t }}</button>
+                                 </li>
+                              </ul>
+                           </fieldset>
+                           <div class="mc4wp-response{%- if form.posted_successfully? %} frm_nt_success mt__20{%- endif -%}">
+                           {%- if form.posted_successfully? -%}<div class="shopify-message dib">{{ 'general.newsletter_form.confirmation' | t }}</div>{%- elsif form.errors -%}<div class="shopify-error dib">{{ form.errors | default_errors }}</div>{%- endif -%}
+                           </div>
+                           {%- if settings.use_agree_checkbox_mail -%}<div class="mc4wp-response mail_agree_err"></div>{%- endif -%}
+                        {%- endform -%}
+                      {%- endif -%}
+                    </div>
+                 </div>
+              </div>
+           </div>
+           <!-- ypop-border -->
+           <div class="ypop-footer">{{ 'general.promo_popup.footer' | t }}</div>
+           <div class="ypop-checkzone">
+              <label for="hideforever_ypop">
+              <input type="checkbox" id="hideforever_ypop" name="no-view" class="no-view yith-popup-checkbox"><span>&nbsp;</span>{{'general.promo_popup.checkbox' | t }}</label>
+           </div>
+        </div>
+    </div>
+</div>
+{%- endif -%}

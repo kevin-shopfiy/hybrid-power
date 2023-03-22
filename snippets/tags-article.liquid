@@ -1,0 +1,7 @@
+{%- if article.tags.size > 0 -%}
+<span class="cat pr">{{ 'blogs.article.in' | t }} 
+  {%- for tag in article.tags limit:5 -%}
+    <a href="{{ blogs[blog.handle].url }}/tagged/{{ tag | handle }}" rel="category {{ tag | handle }}">{{ tag }}</a>{% unless forloop.last %}, {% endunless %}
+  {%- endfor -%}
+ </span>
+{%- endif -%}

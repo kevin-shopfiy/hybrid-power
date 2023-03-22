@@ -1,0 +1,19 @@
+<div class="jas-col-xs-6 jas-col-md-3">
+  <div class="popup__cart-product center-xs">
+    <img width="270" height="344" src="{{ product.featured_image | img_url: '270x' }}" class="sp-post-image" alt="{{product.title}}" title="{{product.title}}">
+    <h4 class="ls__0"><a href="{{product.url | within: collection}}">{{product.title}}</a></h4>
+    <span class="price">{{ product.price | money }}</span>
+    {%- assign check = product.metafields.external | first | last  -%}
+    {%- if linklists[product.handle].links.size > 0 -%}
+       <a class="button modal_btn_add_to_cart ls__0" href="{{product.url | within: collection}}">{{ 'products.product.view' | t }}</a>
+    {%- elsif product.available == false -%}
+       <a class="button modal_btn_add_to_cart ls__0" href="{{product.url | within: collection}}">{{ 'products.product.read_more' | t }}</a>
+    {%- elsif check contains 'https:' or check  contains 'http:' -%}
+       <a class="button modal_btn_add_to_cart ls__0" href="{{ check }}">{{ product.metafields.external | first | first }}</a>
+    {%- elsif product.has_only_default_variant -%}
+       <a class="button modal_btn_add_to_cart ajax_modal_add ls__0" href="{{product.url | within: collection}}" data-ntid="{{product.id}}" data-pid="{{ product.variants.first.id}}">{{ 'products.product.add_to_cart' | t }}</a>
+    {%- else -%}
+       <a class="button modal_btn_add_to_cart ls__0" href="{{product.url | within: collection}}">{{ 'products.product.select_option' | t }}</a>
+    {%- endif -%}
+  </div>
+</div>

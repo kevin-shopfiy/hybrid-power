@@ -1,0 +1,132 @@
+{%- include 'style_mp_section' -%}
+<div class="jas_custom_{{section.id}}">
+   <div class="jas-container clearfix">
+      <div class="jas-row">
+         <div class="jas-col-md-6 jas-col-sm-12 jas-col-xs-12">
+           <div class="box_shadow_3d">
+              {%- assign block_image = section.settings.image -%}
+              {%- if block_image != blank -%}
+               {%- assign img_url = block_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+               <img src="{{ block_image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[157, 270, 303, 370, 377, 670, 570, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ block_image.aspect_ratio }}"  data-sizes="auto" class="lazyload ts__05 w__100 attachment-shop_catalog size-shop_catalog" alt="{{block_image.alt}}" >
+               <div class="jas-wrap-lazy"></div>
+               {%- else -%}
+               <img src="https://placehold.it/850x550" alt="placehold" class="ts__05 w__100">
+              {%- endif -%}
+           </div>
+         </div>
+         <div class="jas-col-md-6 jas-col-sm-12 jas-col-xs-12 middle-xs flex">
+            <div class="custom_jewellery about-shop tl">
+               <h3>{{section.settings.title}}</h3>
+               <p>{{section.settings.content | strip_html }}</p>
+               {%- if section.settings.link != blank and section.settings.button != blank -%}
+               <p><a href="{{section.settings.link}}" class="button">{{section.settings.button}}</a></p>
+               {%- endif -%}
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Store information 2",
+    "class": "jas-section type_jas_store_info_2 clearfix",
+    "settings": [
+      {
+        "type": "header",
+        "content": "== General Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+         "type": "header",
+         "content": "== CUSTOMIZE YOUR TEXT"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title: ",
+        "default": "About Us"
+      },
+      {
+        "type": "textarea",
+        "id": "content",
+        "label": "Content info: ",
+        "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci odio, vehicula ac massa pellentesque, hendrerit ullamcorper tellus. Nullam pharetra nisl eget iaculis faucibus. "
+      },
+      {
+        "type": "text",
+        "id": "button",
+        "label": "Button Title: ",
+        "default": "Visit Shop Page"
+      },
+      {
+        "type":"url",
+        "id":"link",
+        "label":"Link",
+        "info": "Optional"
+      },
+     {
+        "type": "header",
+        "content": "== Design Options"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_left",
+        "label": "Margin left",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_right",
+        "label": "Margin right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_top",
+        "label": "Padding top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_right",
+        "label": "Padding right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_bottom",
+        "label": "Padding bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_left",
+        "label": "Padding left",
+        "info": "60px"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Store information 2",
+        "category": "== Store information"
+      }
+    ]
+  }
+{% endschema %}

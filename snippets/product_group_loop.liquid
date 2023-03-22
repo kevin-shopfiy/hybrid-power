@@ -1,0 +1,22 @@
+{%- assign on_sale = false -%}
+{%- if product.compare_at_price_min > product.price_min -%}
+  {%- assign on_sale = true -%}
+{%- endif -%}
+{%- assign c = block.settings.featured_product_list_collection -%}
+<li>
+   <a href="{{product.url | within: collection}}" title="{{ product.title }}">
+   	{%- assign image_0 = product.images[0] -%}
+	{%- if image_0 != blank -%}
+	<img width="80" height="102" src="{{ image_0 | img_url: image_size }}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="{{image_0.alt | escape }}">		
+   {%- endif -%}
+   <span class="product-title flex">{{ product.title }}</span>
+   </a>
+   <span class="price db">
+   {%- if product.price_varies -%}
+	{{ product.price_min | money }}–{{ product.price_max | money }}
+	{%- elsif on_sale -%}<ins>{{ product.price | money }}</ins> <del>{{ product.compare_at_price  | money }}</del>
+	{%- else -%}
+	{{ product.price | money }}
+	{%- endif -%}
+	</span>
+</li>

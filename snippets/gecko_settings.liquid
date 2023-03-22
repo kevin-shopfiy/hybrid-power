@@ -1,0 +1,163 @@
+{%- capture gecko_settings_json -%}
+<script type="text/javascript">
+/* <![CDATA[ */
+var nathan_settings = {  
+   scrollTop: 100,
+   popupEffect: 'mfp-move-horizontal',
+   product_images_captions:'no',
+   show_multiple_currencies:{{settings.show_multiple_currencies |json}},
+   show_multiple_visitor:{{settings.show_multiple_visitor |json}},
+   productreviews:{{settings.show_product_rating |json}},
+   shop_equal_img:{{settings.use_eq_height |json}},
+   na: {{ 'products.product.na' | t | json }},
+   shop_currency: {{ shop.currency | json }},
+   moneyFormat: {{ shop.money_format | json }},
+   add_to_cart_action:{{ settings.gecko_options_add_to_cart_action | json }},
+   added_to_cart: {{ 'products.popup.added_to_cart' | t | json }},
+   view_cart: {{ 'products.popup.view_cart' | t | json }},
+   wishlist:{{settings.use_wishlist |json}},
+   continue_shopping: {{ 'products.popup.continue_shopping' | t | json }},
+   info_wishlist: {{ 'products.popup.info_wishlist' | t | json }},
+   login: {{ 'products.popup.login' | t | json }},
+   nowishlist: {{ 'products.grid_items.no_products_wishlist' | t | json }},
+   mc_submit:{{'general.newsletter_form.submit' | t | json}},
+   mc_subscribing:{{'general.newsletter_form.subscribing' | t | json}},
+   save_note:{{settings.cart_notes_enable_widget |json}},
+   conditions: {{ 'cart.general.conditions' | t | json }},
+   style_search:{{ settings.gecko_search_widget | json }},
+   live_search:{%- if settings.ajax_search -%}{{ 'yes' | json }}{%- else -%}{{ 'no' | json }}{%- endif -%},
+   ajax_search_product:{%- if settings.only_search_products -%}{{ 'yes' | json }}{%- else -%}{{ 'no' | json }}{%- endif -%},
+   header_sticky:{%- if settings.sticky_header_enable -%}{{ 'yes' | json }}{%- else -%}{{ 'no' | json }}{%- endif -%},
+   countdown_days_page:{{settings.days | json }},
+   countdown_hours_page:{{settings.hours | json }},
+   countdown_mins_page:{{settings.minutes | json }},
+   countdown_sec_page:{{settings.seconds | json }},
+   favicon_counter:{%- if settings.show_favicon_counter -%}{{ 'yes' | json }}{%- else -%}{{ 'no' | json }}{%- endif -%},
+   cart_count:{{cart.item_count | json }},
+   favanimation: {{settings.favicon_animation | json }},
+   favbgColor: {{settings.favicon_bgColor | json }},
+   favtextColor: {{settings.favicon_textColor | json }},
+   ajax_scroll:{%- if settings.ajax_scroll_top -%}{{ 'yes' | json }}{%- else -%}{{ 'no' | json }}{%- endif -%},
+   cookies_version:{{settings.cookies_version | json }},
+   expires_popup:7,
+   expires_cookies_law:7,
+   promo_version:{{settings.popup_version | json }},
+   enable_popup:{%- if settings.enable_popup -%}{{ 'yes' | json }}{%- else -%}{{ 'no' | json }}{%- endif -%},
+   promo_popup_hide_mobile:{%- if settings.promo_popup_hide_mobile -%}{{ 'yes' | json }}{%- else -%}{{ 'no' | json }}{%- endif -%},
+   {%- assign now_count_time = 'now' | date: "%H:%M, %a" -%}
+   catelog_title:{{ 'general.catelog.title' | t: now_count:now_count_time | json }},
+   catelog_info:{{ 'general.catelog.info' | t | json }},
+   catelog_info_2:{{ 'general.catelog.info_2' | t | json }},
+   catelog_btn:{{ 'general.catelog.btn' | t | json }},
+   supported_codes_ship:{{ settings.supported_codes_ship |json}},
+   no_shipping_text:{{ settings.no_shipping_text |json}},
+   use_agree_checkbox:{%- if settings.use_agree_checkbox_pop_up or settings.use_agree_checkbox -%}{{ 'yes' | json }}{%- else -%}{{ 'no' | json }}{%- endif -%},
+   use_additional_checkout_buttons:{%- if settings.use_additional_checkout_buttons -%}{{ 'yes' | json }}{%- else -%}{{ 'no' | json }}{%- endif -%},
+    backtop:{{ settings.show_backtop |json}},
+   backtop_mobile:{{ settings.show_backtop_mobile |json}},
+   in_stock:{{ 'products.product.in_stock' | t | json }},
+   outofstock:{{ 'products.product.outofstock' | t | json }},
+   pre_orders:{{ 'products.product.pre_orders' | t | json }},
+   add_to_cart:{{ 'products.product.add_to_cart' | t | json }},
+   ck_inventory:{{ settings.ck_inventory | json }},
+   only_left:{{ 'products.product.only_left' | t: count: '1' | json }},
+   will_not_ship_until:{{ 'products.product.will_not_ship_until' | t: date: '[date]' | json }},
+   will_be_in_stock_after:{{ 'products.product.will_be_in_stock_after' | t: date: '[date]' | json }},
+   save_js:{{ 'products.product.save_js' | t: saved_amount: '[sale]' | json }},
+   please_notify_me:{{ 'products.product.please_notify_me' | t | json }},
+   product_quantity_message:{{ settings.product_quantity_message | json }},
+   use_notify_me:{{ settings.use_notify_me | json }},
+   use_clicking_variant_image:{%- if settings.use_clicking_variant_image and product.has_only_default_variant == false -%}true{%- else -%}false{%- endif -%},
+   has_variant:{%- if product.has_only_default_variant == false and product.variants.size > 1 and linklists[product.handle].links.size == 0 -%}true{%- else -%}false{%- endif -%},
+   has_grouped:{%- if linklists[product.handle].links.size > 0 -%}true{%- else -%}false{%- endif -%},
+   enableHistoryState:false,
+   ntla_ck:{{settings.show_first_img | json }},
+   nt_suffix:{{product.template_suffix | json }},
+   stock_from:{{settings.stock_from | json }},
+   stock_to:{{settings.stock_to | json }},
+   {%- assign stock_message = settings.stock_message | split:'{{stock_number}}' -%}
+   stock_message_first:{{stock_message[0] | strip | json }},
+   stock_message_last:{{stock_message[1] | strip | json }},
+   stock_bg_process:{{settings.stock_bg_process | json }},
+   stock_countdown:{%- if product.available and settings.gecko_stock_countdown -%}true{%- else -%}false{%- endif -%},
+   real_time:{{settings.show_real_time_visitor | json }},
+   real_time_min:{{settings.real_time_min | json }},
+   real_time_max:{{settings.real_time_max | json }},
+   real_interval_time:{{settings.real_interval_time |append:'000' | plus:0| json }},
+   flash_sold:{%- if settings.use_flash_sold and product.available -%}true{%- else -%}false{%- endif -%},
+   flash_sold_min:{{ settings.flash_sold_min_qty | json }},
+   flash_sold_max:{{ settings.flash_sold_max_qty | json }},
+   flash_min_time:{{ settings.flash_sold_min_time | json }},
+   flash_max_time:{{ settings.flash_sold_max_time | json }},
+   use_promo_shpping:{{ settings.use_promo_shpping | json }},
+   we_only_stock:{{ 'products.product.we_only_stock' | t: max: '[max]' | json }},
+   enable_delivery_option:{{settings.enable_delivery_option | json }},
+   enable_delivery_order:{{settings.enable_delivery_order | json }},
+   delivery_off_days:{{ settings.delivery_off_days | json }},
+   delivery_cutoff:{{ settings.delivery_cutoff | json }},
+   {%- if settings.show_multiple_currencies -%}
+      Currency_format:{{ settings.currency_format | default: 'money_with_currency_format' | json }},
+      shop_money_with_currency_format: {{ shop.money_with_currency_format | strip_html | json }},
+      shop_money_format: {{ shop.money_format | strip_html | json }},
+      {%- assign default_currency = settings.default_currency -%}
+      {%- assign codes = 'USD,EUR,GBP,CAD,ARS,AUD,BBD,BDT,BSD,BHD,BRL,BOB,BND,BGN,ILS,MMK,KYD,CLP,CNY,COP,CRC,HRK,CZK,DKK,DOP,XCD,EGP,XPF,FJD,GHS,GTQ,GYD,GEL,HKD,HUF,ISK,INR,IDR,NIS,JMD,JPY,JOD,KZT,KES,KWD,LVL,LTL,MXN,MYR,MUR,MDL,MAD,MNT,MZN,ANG,NZD,NGN,NOK,OMR,PKR,PYG,PEN,PHP,PLN,QAR,RON,RUB,SAR,RSD,SCR,SGD,SYP,ZAR,KRW,LKR,SEK,CHF,TWD,THB,TZS,TTD,TRY,UAH,AED,UYU,VEB,VND,ZMK' -%}
+      {%- if codes contains default_currency -%}
+      {%- else -%}
+      {%- assign default_currency = shop.currency -%}
+      {%- endif -%}
+      default_currency:{{ default_currency | json }},
+   {%- endif-%}
+   shop_currency:{{ shop.currency | json }},
+   submitButton: {{ settings.shipping_calculator_submit_button_label | default: 'Calculate shipping' | json }},
+  submitButtonDisabled: {{ settings.shipping_calculator_submit_button_label_disabled | default: 'Calculating...' | json }},
+  customerIsLoggedIn:  {% if customer %}true{% else %}false{% endif %},
+  sticky_show_mobile:{{ settings.show_sticky_add_mobile | json }},
+  shopify3d_default:{%- if product.has_only_default_variant and product.variants.first.metafields.shopify3d.assets != blank -%}true{%- else -%}false{%- endif -%},
+   {%- if product.has_only_default_variant and product.variants.first.metafields.shopify3d.assets != blank -%}
+    shopify3d:{{ product.variants.first.metafields.shopify3d.assets.usdz[0].scene | json}},
+   {%- endif -%}
+   "ajax_scroll_offset":"100",
+   "load_more":"Load More",
+   "popup_remove":"Removed from the cart",
+   "popup_undo":"Undo?",
+   "loading":"Loading...",
+   "countdown_days":"days",
+   "countdown_hours":"hr",
+   "countdown_mins":"min",
+   "countdown_sec":"sc",
+   "order_hours":" hours ",
+   "order_mins":" minutes",
+   "order_date_format":"ww mm dd yyyy",
+   "order_dayNames":"Sunday Monday Tuesday Wednesday Thursday Friday Saturday",
+   "added_popup":"no",
+   "categories_toggle":"yes",
+   "popup_delay":"{{settings.time_popup_delay}}",
+   "popup_event":"{{settings.show_popup_after}}",
+   "popup_scroll":"{{settings.scroll_popup_delay}}",
+   "popup_pages":"{{settings.number_pages}}",
+   "ajax_add_to_cart":"1",
+   "all_results":"View all results",
+   "zoom_enable":"yes",
+   "close":"Close (Esc)",
+   "share_fb":"Share on Facebook",
+   "pin_it":"Pin it",
+   "tweet":"Tweet",
+   "download_image":"Download image",
+   "nt_jackpot":{{settings.show_nt_jackpot |json}},
+   "messenger_mail":{{ 'general.agree_mail.conditions' | t | json }},
+   {%- if settings.show_nt_jackpot and none -%}
+      {%- capture arr_jackpot -%}
+        {%- for i in (1..6) -%}
+            {%- assign num = 'probability_' | append:i -%}
+            {%- assign num_id = settings[num] -%}
+            {%- if num_id > 0 -%}{%- for x in (1..num_id) -%}{{i}},{%- endfor -%}{%- endif -%}
+        {%- endfor -%}ntnt
+      {%- endcapture -%}
+      "arr_jackpot": {{arr_jackpot | remove: " " | remove: ",ntnt" | json}},
+   {%- endif -%}
+   "delete_address":{{ 'general.layout.delete_address' | t | json }}
+};
+/* ]]> */
+</script>
+ {%- endcapture -%}
+{{ gecko_settings_json | strip_newlines | remove: '  ' }}

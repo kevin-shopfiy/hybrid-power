@@ -1,0 +1,102 @@
+<div class="page-width jas-container jas_section_eqh" data-section-id="{{ section.id }}">
+  {%- if settings.use_wishlist -%}{%- include 'nitro-wishlist' -%}{%- endif -%}
+  {%- assign sett_title = section.settings.title -%}
+  {%- assign sett_sub_title = section.settings.sub_title -%}
+  {%- include 'jas_section_title' -%}
+  <div class="custom-content jas-parent-equal products jas-row">
+    {%- for block in section.blocks -%}
+      {%- assign product = all_products[block.settings.product] -%}
+      {%- include 'jas_product_loop' -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Products Manually",
+    "class": "jas-section type_products_manually",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "featured products"
+      },
+      {
+        "type": "text",
+        "id": "sub_title",
+        "label": "Sub Title",
+        "default": "Sub featured products"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "product",
+        "name": "Product",
+        "settings": [
+          {
+            "type": "product",
+            "id": "product",
+            "label": "Product"
+          },
+          {
+           "type": "select",
+           "id": "width",
+           "options": [
+            {
+               "value": "3",
+               "label": "25%"
+             },
+             {
+               "value": "4",
+               "label": "33.33333333%"
+             },
+             {
+               "value": "6",
+               "label": "50%"
+             },
+             {
+               "value": "8",
+               "label": "66.66666667%"
+             },
+             {
+               "value": "12",
+               "label": "100%"
+             }
+           ],
+           "label": "== Select column width",
+           "default": "3"
+         },
+         {
+           "type": "select",
+           "id": "mobile_width",
+           "options": [
+            {
+               "value": "3",
+               "label": "25%"
+             },
+             {
+               "value": "4",
+               "label": "33.33333333%"
+             },
+             {
+               "value": "6",
+               "label": "50%"
+             },
+             {
+               "value": "8",
+               "label": "66.66666667%"
+             },
+             {
+               "value": "12",
+               "label": "100%"
+             }
+           ],
+           "label": "== Select column mobile width",
+           "default": "6"
+         }
+        ]
+      }
+    ]
+  }
+{% endschema %}

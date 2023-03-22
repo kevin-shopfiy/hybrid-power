@@ -1,0 +1,83 @@
+<style>
+  .single_variation .wholesale__text{
+    display:none;
+  } 
+  span.wholesale__text {
+    text-transform: uppercase;
+  }
+  .wholesaler_header_wrapper {
+    background: #994407;
+    color: white;
+    padding: 10px 0px;
+    text-transform: uppercase;
+  }
+  .wholesaler_header_wrapper .wholesale_container .custom{
+    display: -webkit-flex;
+    -webkit-justify-content: center;
+    -webkit-align-items: center;
+  }
+  .wholesaler_header_wrapper .wholesale_container .right-top-header {
+    align-items: center;
+    -webkit-align-items: center;
+  }
+  .wholesale_account {
+    line-height: initial;
+    display: flex;
+    align-items: center;
+    display: -webkit-flex;
+    margin: 0 9px;
+  }
+  .wholesale_account a{
+    margin: 0 9px;
+    color: white;
+    line-height: 26px;
+  }
+  .hidden_class{
+  display:none;
+  }
+</style>
+
+<div class="wholesaler_header_wrapper pr pl__15 pr__15">
+  <div class="wholesale_container jas-row middle-xs">
+    <div class="jas-col-md-4 jas-col-sm-6 jas-col-xs-12 flex center-xs hidden-sm"></div>
+    <div class="jas-col-md-4 jas-col-sm-6 jas-col-xs-12 center-xs custom">WHOLESALE STORE</div>
+    <div class="right-top-header end-lg jas-col-md-4 jas-col-sm-6 jas-col-xs-12 flex center-xs">
+      <div class="wholesale_account">
+       
+            <a href="/account">{{ 'customer.account.title' | t }}</a>
+        	<span>|</span>
+     		{{ 'customer.account.log_out' | t | customer_logout_link }}
+       
+      </div>
+    </div>
+  </div>
+
+</div>
+<!--============ wholesale sticky custom code ==============-->
+<script>  
+//   $(window).scroll(function() {  
+//    var  a = $(".header__mid").outerHeight();
+//    var  s = $("#jas-header .header__top").outerHeight();
+//    var  o = a + s;
+//    var scroll = $(window).scrollTop();
+//     if (scroll > s + 40) {
+//      $('.wholesaler_header_wrapper').css('display','none')
+//     }else{
+//      $('.wholesaler_header_wrapper').css('display','block')
+//     }
+// })
+//   if($('.template-product').length > 0){
+//     var myInterval = setInterval(check_wholesale_text, 1000);
+//     function check_wholesale_text(){
+//       console.log('wholesale__text length :'+$('.wholesale__text').length);
+//       if($('.wholesale__text').length > 0 ){
+//         clearInterval(myInterval);
+//         var wholesale__text_html = $('.wholesale__text')[0].outerHTML;
+//         $('.single_variation_wrap').before( wholesale__text_html);
+
+//       }
+//     }
+//   }
+
+</script>
+<!--========= end wholesale sticky custom code ===========-->

@@ -1,0 +1,510 @@
+{%- assign enable_disable_accordion = product.metafields.section-2-enable['accordian_slider'] -%}
+{% if enable_disable_accordion == 1 %}
+<div class="jas_custom_jas_product_section jas-banner-parallax gecko-parallax jas-full-height" data-bgset="" data-sizes="auto" data-parent-fit="cover">
+
+<style> 
+		.custom-brand-module-2 .accordion { 
+			text-align: center; 
+		} 
+		
+		.custom-brand-module-2 .accordion.width { 
+			display: flex; 
+			width: 100%; 
+		} 
+		
+		.custom-brand-module-2 .accordion.width .card { 
+			flex-direction: row; 
+			min-width: min-content; 
+		} 
+		
+		.custom-brand-module-2 .accordion.width .card .card-header { 
+			cursor: pointer; 
+			transform: rotate(180deg); 
+			writing-mode: vertical-rl;
+		} 
+		
+		.custom-brand-module-2 .card-body { 
+			width: 100%; 
+			background-color: ; 
+		} 
+		
+		.custom-brand-module-2 .collapsing.width { 
+			transition: width 0.5s ease; 
+			height: 100%; 
+			width: 10px; 
+		} 
+		
+		.custom-brand-module-2 h1 { 
+			color: #788188;  
+		} 
+	</style> 
+
+
+<div class="custom-brand-module-2">
+   <div class="clearfix">
+     {%- assign tab_name_1 = product.metafields.section-3['tab-name-1'] -%}
+     {%- assign tab_name_2 = product.metafields.section-3['tab-name-2'] -%}  
+     {%- assign tab_name_3 = product.metafields.section-3['tab-name-3'] -%}  
+     {%- assign tab_name_4 = product.metafields.section-3['tab-name-4'] -%} 
+     {%- assign tab_name_5 = product.metafields.section-3['tab-name-5'] -%}
+     {%- assign tab_name_6 = product.metafields.section-3['tab-name-6'] -%}   
+     
+     {% if tab_name_1 != blank or tab_name_2 != blank  or tab_name_3 != blank or tab_name_4 != blank  or tab_name_5 != blank or tab_name_6 != blank %} 
+     <div class="accordion-main 11">
+       <div class="container">
+         <div class="accordion-inner desktop">
+           <button class="arrow left-arrow"><i class="fas fa-chevron-left"></i></button>
+           <div class="accordion width " id="accordionHorizontalExample"> 
+
+
+             {% assign protocols_countt = '' %}
+             {% assign counts = 0 %}
+             {% for key_value in product.metafields.section-3-tab %}
+             {% unless template.suffix == 'battery' %}
+             {% if protocols_countt.size == 0 %}
+             {% assign counts = counts | plus: 1 %}
+
+             {%- assign tab_name_1 = product.metafields.section-3['tab-name-1'] -%}
+             {%- assign title_name_1 = product.metafields.section-3['tab-heading-1'] -%}
+             {%- assign title_icon_1 = product.metafields.section-3-tab['tab-icon-1'] -%}
+             {%- assign title_content_1 = product.metafields.section-3['tab-content-1'] -%}
+             {%- assign tab_back_color_1 = product.metafields.section-3['tab-back-color-1'] -%} 
+             {%- assign tab_heading_color_1 = product.metafields.section-3['tab-heading-color-1'] -%} 
+
+             <div class="card"> 
+               <div class="card-header custom_cart_header"
+                    data-index="{{counts}}" 
+                    data-toggle="collapse"
+                    data-target="#collapseOne" aria-expanded="true" style="background-color: {{tab_back_color_1}} !important;"> 
+                 <p style="color:{{tab_heading_color_1}} !important;">{{tab_name_1}}</p> 
+               </div> 
+               <div id="collapseOne"
+                    class="custom_collapse collapse show width"
+                    data-parent="#accordionHorizontalExample"> 
+                 <div class="card-body" style="color: #A9A9A9;"> 
+
+                   <div class="icon"><img src="{{title_icon_1}}"></div>
+                   <h2>{{title_name_1}}</h2>
+                   <p>{{title_content_1}}</p>
+                 </div> 
+               </div> 
+             </div>
+
+             {% endif %}
+
+             {% if protocols_countt.size == 1 %}
+             {% assign counts = counts | plus: 1 %}
+             {%- assign tab_name_2 = product.metafields.section-3['tab-name-2'] -%} 
+             {%- assign title_name_2 = product.metafields.section-3['tab-heading-2'] -%}
+             {%- assign title_icon_2 = product.metafields.section-3-tab['tab-icon-2'] -%}
+             {%- assign title_content_2 = product.metafields.section-3['tab-content-2'] -%}
+             {%- assign tab_back_color_2 = product.metafields.section-3['tab-back-color-2'] -%} 
+             {%- assign tab_heading_color_2 = product.metafields.section-3['tab-heading-color-2'] -%} 
+             <div class="card"> 
+               <div class="card-header custom_cart_header"
+                    data-index="{{counts}}"
+                    data-toggle="collapse"
+                    data-target="#collapseTwo" style="background-color: {{tab_back_color_2}} !important;"> 
+                 <p style="color:{{tab_heading_color_2}} !important;">{{tab_name_2}}</p> 
+               </div> 
+               <div id="collapseTwo"
+                    class="custom_collapse collapse width"
+                    data-parent="#accordionHorizontalExample"> 
+                 <div class="card-body"> 
+                   <div class="icon"><img src="{{title_icon_2}}"></div>
+                   <h2>{{title_name_2}}</h2>
+                   <p>{{title_content_2}}</p>
+                 </div> 
+               </div> 
+             </div>
+
+             {% endif %}
+             {% endunless %}
+
+             {% if protocols_countt.size == 2 %}
+             {% assign counts = counts | plus: 1 %}
+             {%- assign tab_name_3 = product.metafields.section-3['tab-name-3'] -%} 
+             {%- assign title_name_3 = product.metafields.section-3['tab-heading-3'] -%}
+             {%- assign title_icon_3 = product.metafields.section-3-tab['tab-icon-3'] -%}
+             {%- assign title_content_3 = product.metafields.section-3['tab-content-3'] -%}
+             {%- assign tab_back_color_3 = product.metafields.section-3['tab-back-color-3'] -%}
+             {%- assign tab_heading_color_3 = product.metafields.section-3['tab-heading-color-3'] -%} 
+             <div class="card"> 
+               <div class="card-header custom_cart_header"
+                    data-index="{{counts}}"
+                    data-toggle="collapse"
+                    data-target="#collapseThree"  {% if template.suffix == 'battery' %}aria-expanded="true"{% endif %} style="background-color: {{tab_back_color_1}} !important;"> 
+                 <p style="color:{{tab_heading_color_3}} !important;">{{tab_name_3}}</p> 
+               </div> 
+               <div id="collapseThree"
+                    class="custom_collapse collapse  {% if template.suffix == 'battery' %}show{% endif %} width"
+                    data-parent="#accordionHorizontalExample"> 
+                 <div class="card-body"> 
+                   <div class="icon"><img src="{{title_icon_3}}"></div>
+                   <h2>{{title_name_3}}</h2>
+                   <p>{{title_content_3}}</p>
+                 </div> 
+               </div> 
+             </div>
+
+             {% endif %}
+             {% unless template.suffix == 'battery' %}
+             {% if protocols_countt.size == 3 %}
+             {% assign counts = counts | plus: 1 %}
+             {%- assign tab_name_4 = product.metafields.section-3['tab-name-4'] -%} 
+             {%- assign title_name_4 = product.metafields.section-3['tab-heading-4'] -%}
+             {%- assign title_icon_4 = product.metafields.section-3-tab['tab-icon-4'] -%}
+             {%- assign title_content_4 = product.metafields.section-3['tab-content-4'] -%}
+             {%- assign tab_back_color_4 = product.metafields.section-3['tab-back-color-4'] -%}
+             {%- assign tab_heading_color_4 = product.metafields.section-3['tab-heading-color-3'] -%} 
+             <div class="card"> 
+               <div class="card-header custom_cart_header"
+                    data-index="{{counts}}"
+                    data-toggle="collapse"
+                    data-target="#collapseFour" style="background-color: {{tab_back_color_4}} !important;"> 
+                 <p style="color:{{tab_heading_color_4}} !important;">{{tab_name_4}}</p> 
+               </div> 
+               <div id="collapseFour"
+                    class="custom_collapse collapse width"
+                    data-parent="#accordionHorizontalExample"> 
+                 <div class="card-body"> 
+                   <div class="icon"><img src="{{title_icon_4}}"></div>
+                   <h2>{{title_name_4}}</h2>
+                   <p>{{title_content_4}}</p>
+                 </div> 
+               </div> 
+             </div>
+
+             {% endif %}
+             {% endunless %}
+             {% if protocols_countt.size == 4 %}
+             {% assign counts = counts | plus: 1 %}
+             {%- assign tab_name_5 = product.metafields.section-3['tab-name-5'] -%} 
+             {%- assign title_name_5 = product.metafields.section-3['tab-heading-5'] -%}
+             {%- assign title_icon_5 = product.metafields.section-3-tab['tab-icon-5'] -%}
+             {%- assign title_content_5 = product.metafields.section-3['tab-content-5'] -%}
+             {%- assign tab_back_color_5 = product.metafields.section-3['tab-back-color-5'] -%}
+             {%- assign tab_heading_color_5 = product.metafields.section-3['tab-heading-color-5'] -%}
+             <div class="card"> 
+               <div class="card-header custom_cart_header"
+                    data-index="{{counts}}"
+                    data-toggle="collapse"
+                    data-target="#collapseFive" style="background-color: {{tab_back_color_5}} !important;"> 
+                 <p style="color:{{tab_heading_color_5}} !important;">{{tab_name_5}}</p> 
+               </div> 
+               <div id="collapseFive"
+                    class="custom_collapse collapse width"
+                    data-parent="#accordionHorizontalExample"> 
+                 <div class="card-body"> 
+                   <div class="icon"><img src="{{title_icon_5}}"></div>
+                   <h2>{{title_name_5}}</h2>
+                   <p>{{title_content_5}}</p>
+                 </div>  
+               </div> 
+             </div>
+
+             {% endif %}
+             {% unless template.suffix == 'battery' %}
+             {% if protocols_countt.size == 5 %}
+             {% assign counts = counts | plus: 1 %}
+             {%- assign tab_name_6 = product.metafields.section-3['tab-name-6'] -%} 
+             {%- assign title_name_6 = product.metafields.section-3['tab-heading-6'] -%}
+             {%- assign title_icon_6 = product.metafields.section-3-tab['tab-icon-6'] -%}
+             {%- assign title_content_6 = product.metafields.section-5['tab-content-6'] -%}
+             {%- assign tab_back_color_6=product.metafields.section-3['tab-back-color-6'] -%}
+             {%- assign tab_heading_color_6= product.metafields.section-3['tab-heading-color-6']  -%}
+
+             <div class="card"> 
+               <div class="card-header custom_cart_header"
+                    data-index="{{counts}}"
+                    data-toggle="collapse"
+                    data-target="#collapseSix" style="background-color: {{tab_back_color_6}} !important;"> 
+                 <p style="color:{{tab_heading_color_6}} !important;">{{tab_name_6}}</p> 
+               </div> 
+               <div id="collapseSix"
+                    class="custom_collapse collapse width"
+                    data-parent="#accordionHorizontalExample"> 
+                 <div class="card-body"> 
+                   <div class="icon"><img src="{{title_icon_6}}"></div>
+                   <h2>{{tab_name_6}}</h2>
+                   <p>{{title_content_6}}</p>
+                 </div> 
+               </div> 
+             </div>
+
+             {% endif %}
+             {% endunless %}
+
+             {% assign protocols_countt = protocols_countt | append: 'x' %}
+
+             {% endfor %}
+
+             <script> 
+
+               jQuery(document).ready(function(){
+
+                 var horizontalAccordions = $(".accordion.width"); 
+
+                 horizontalAccordions.each(function() { 
+                   var accordion = $(this); 
+                   var collapse = accordion.find(".collapse"); 
+                   var bodies = collapse.find("> *"); 
+
+                   bodies.width(bodies.eq(0).width()); 
+                   collapse.not(".show").each(function() { 
+                     $(this).parent().find("[data-toggle='collapse']") 
+                     .addClass("collapsed"); 
+                   }); 
+                 }); 
+               });
+
+
+             </script> 
+           </div>
+           <button class="arrow right-arrow"><i class="fas fa-chevron-right"></i></button>
+         </div>
+
+
+         <div class="accordion mobile" id="accordionExample">  
+
+           {% assign protocols_counttt = '' %}
+           {% for key_value in product.metafields.section-3-tab %}
+           {% assign count = forloop.length %} 
+           {% unless template.suffix == 'battery' %}
+           {% if protocols_counttt.size == 0 %}
+           {%- assign tab_name_1 = product.metafields.section-3['tab-name-1'] -%} 
+           {%- assign title_name_1 = product.metafields.section-3['tab-heading-1'] -%}
+           {%- assign title_icon_1 = product.metafields.section-3-tab['tab-icon-1'] -%}
+           {%- assign title_content_1 = product.metafields.section-3['tab-content-1'] -%}
+           {%- assign tab_back_color_1 = product.metafields.section-3['tab-back-color-1'] -%} 
+           {%- assign tab_heading_color_1 = product.metafields.section-3['tab-heading-color-1'] -%} 
+
+           <div class="card">
+             <div class="card-header" id="headingOnee">
+               <h2 class="mb-0">
+                 <button style="background-color: {{tab_back_color_1}} !important;" class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOnee" aria-expanded="true" aria-controls="collapseOnee">
+                   <p style="color:{{tab_heading_color_1}} !important;">{{tab_name_1}}</p> 
+                 </button>
+               </h2>
+             </div>
+
+             <div id="collapseOnee" class="collapse show" aria-labelledby="headingOnee" data-parent="#accordionExample">
+               <div class="card-body">
+
+                 <div class="icon"><img src="{{title_icon_1}}"></div>
+                 <h2>{{title_name_1}}</h2>
+                 <p>{{title_content_1}}</p>
+               </div>
+             </div>
+           </div>
+           {% endif %}
+
+
+           {% if protocols_counttt.size == 1 %}
+           {%- assign tab_name_2 = product.metafields.section-3['tab-name-2'] -%} 
+           {%- assign title_name_2 = product.metafields.section-3['tab-heading-2'] -%}
+           {%- assign title_icon_2 = product.metafields.section-3-tab['tab-icon-2'] -%}
+           {%- assign title_content_2 = product.metafields.section-3['tab-content-2'] -%}
+           {%- assign tab_back_color_2 = product.metafields.section-3['tab-back-color-2'] -%} 
+           {%- assign tab_heading_color_2 = product.metafields.section-3['tab-heading-color-2'] -%} 
+
+           <div class="card">
+             <div class="card-header" id="headingTwoo">
+               <h2 class="mb-0">
+                 <button style="background-color: {{tab_back_color_2}} !important;" class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwoo" aria-expanded="true" aria-controls="collapseTwoo">
+                   <p style="color:{{tab_heading_color_2}} !important;">{{tab_name_2}}</p> 
+                 </button>
+               </h2>
+             </div>
+
+             <div id="collapseTwoo" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+               <div class="card-body">
+
+                 <div class="icon"><img src="{{title_icon_2}}"></div>
+                 <h2>{{title_name_2}}</h2>
+                 <p>{{title_content_2}}</p>
+               </div>
+             </div>
+           </div>
+           {% endif %}
+           {% endunless %}
+           {% if protocols_counttt.size == 2 %}
+           {%- assign tab_name_3 = product.metafields.section-3['tab-name-3'] -%} 
+           {%- assign title_name_3 = product.metafields.section-3['tab-heading-3'] -%}
+           {%- assign title_icon_3 = product.metafields.section-3-tab['tab-icon-3'] -%}
+           {%- assign title_content_3 = product.metafields.section-3['tab-content-3'] -%}
+           {%- assign tab_back_color_3 = product.metafields.section-3['tab-back-color-3'] -%} 
+           {%- assign tab_heading_color_3 = product.metafields.section-3['tab-heading-color-3'] -%} 
+
+           <div class="card">
+             <div class="card-header" id="headingThreee">
+               <h2 class="mb-0">
+                 <button style="background-color: {{tab_back_color_3}} !important;" class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseThreee" aria-expanded="true" aria-controls="collapseThree">
+                   <p style="color:{{tab_heading_color_3}} !important;">{{tab_name_3}}</p> 
+                 </button>
+               </h2>
+             </div>
+
+             <div id="collapseThreee" class="collapse {% if template.suffix == 'battery' %}show{% endif %}" aria-labelledby="headingOnee" data-parent="#accordionExample">
+               <div class="card-body">
+
+                 <div class="icon"><img src="{{title_icon_3}}"></div>
+                 <h2>{{title_name_3}}</h2>
+                 <p>{{title_content_3}}</p>
+               </div>
+             </div>
+           </div>
+           {% endif %}
+
+           {% unless template.suffix == 'battery' %}
+           {% if protocols_counttt.size == 3 %}
+           {%- assign tab_name_4 = product.metafields.section-3['tab-name-4'] -%} 
+           {%- assign title_name_4 = product.metafields.section-3['tab-heading-4'] -%}
+           {%- assign title_icon_4 = product.metafields.section-3-tab['tab-icon-4'] -%}
+           {%- assign title_content_4 = product.metafields.section-3['tab-content-4'] -%}
+           {%- assign tab_back_color_4 = product.metafields.section-3['tab-back-color-4'] -%} 
+           {%- assign tab_heading_color_4 = product.metafields.section-3['tab-heading-color-4'] -%} 
+
+           <div class="card">
+             <div class="card-header" id="headingFourrr">
+               <h2 class="mb-0">
+                 <button style="background-color: {{tab_back_color_4}} !important;" class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseFourrr" aria-expanded="true" aria-controls="collapseFourrr">
+                   <p style="color:{{tab_heading_color_4}} !important;">{{tab_name_4}}</p> 
+                 </button>
+               </h2>
+             </div>
+
+             <div id="collapseFourrr" class="collapse" aria-labelledby="headingOneeee" data-parent="#accordionExample">
+               <div class="card-body">
+
+                 <div class="icon"><img src="{{title_icon_4}}"></div>
+                 <h2>{{title_name_4}}</h2>
+                 <p class="four">{{title_content_4}}</p>
+               </div>
+             </div>
+           </div>
+           {% endif %}
+           {% endunless %}
+
+           {% if protocols_counttt.size == 4 %}
+           {%- assign tab_name_5 = product.metafields.section-3['tab-name-5'] -%} 
+           {%- assign title_name_5 = product.metafields.section-3['tab-heading-5'] -%}
+           {%- assign title_icon_5 = product.metafields.section-3-tab['tab-icon-5'] -%}
+           {%- assign title_content_5 = product.metafields.section-3['tab-content-5'] -%}
+           {%- assign tab_back_color_5 = product.metafields.section-3['tab-back-color-5'] -%} 
+           {%- assign tab_heading_color_5 = product.metafields.section-3['tab-heading-color-5'] -%} 
+
+           <div class="card">
+             <div class="card-header" id="headingFiveee">
+               <h2 class="mb-0">
+                 <button style="background-color: {{tab_back_color_5}} !important;" class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseFiveee" aria-expanded="true" aria-controls="collapseFiveee">
+                   <p style="color:{{tab_heading_color_5}} !important;">{{tab_name_5}}</p> 
+                 </button>
+               </h2>
+             </div>
+
+             <div id="collapseFiveee" class="collapse" aria-labelledby="headingOneeeeeee" data-parent="#accordionExample">
+               <div class="card-body">
+
+                 <div class="icon"><img src="{{title_icon_5}}"></div>
+                 <h2>{{title_name_5}}</h2>
+                 <p>{{title_content_5}}</p>
+               </div>
+             </div>
+           </div>
+           {% endif %}
+
+           {% unless template.suffix == 'battery' %}
+           {% if protocols_counttt.size == 5 %}
+           {%- assign tab_name_6 = product.metafields.section-3['tab-name-6'] -%} 
+           {%- assign title_name_6 = product.metafields.section-3['tab-heading-6'] -%}
+           {%- assign title_icon_6 = product.metafields.section-3-tab['tab-icon-6'] -%}
+           {%- assign title_content_6 = product.metafields.section-5['tab-content-6'] -%}
+           {%- assign tab_back_color_6 = product.metafields.section-3['tab-back-color-6'] -%} 
+           {%- assign tab_heading_color_6 = product.metafields.section-3['tab-heading-color-6'] -%} 
+
+           <div class="card">
+             <div class="card-header" id="headingSixxx">
+               <h2 class="mb-0">
+                 <button style="background-color: {{tab_back_color_6}} !important;" class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseSixxx" aria-expanded="true" aria-controls="collapseSixxx">
+                   <p style="color:{{tab_heading_color_6}} !important;">{{tab_name_6}}</p> 
+                 </button>
+               </h2>
+             </div>
+
+             <div id="collapseSixxx" class="collapse" aria-labelledby="headingOneeee" data-parent="#accordionExample">
+               <div class="card-body">
+
+                 <div class="icon"><img src="{{title_icon_6}}"></div>
+                 <h2>{{tab_name_6}}</h2>
+                 <p>{{title_content_6}}</p>
+               </div>
+             </div>
+           </div>
+           {% endif %}
+           {% endunless %}
+           {% assign protocols_counttt = protocols_counttt | append: 'x' %} 
+
+           {% endfor %}
+
+         </div>
+       </div>
+     </div>
+     {%endif%}
+    <div>
+     
+     
+  </div>
+
+  </div>
+  </div>
+</div>
+
+{% endif %}
+  <script type="text/javascript">
+    $(document).ready(function(){
+
+    // slide- 
+    $(document).on('click','.left-arrow',function(){
+  var index= 0;
+   var next_index = 0 ;
+ $(".custom_cart_header").each(function(){
+   var current = $(this).attr("aria-expanded");
+   console.log("aria-expanded left", current);
+   if( current == "true"){ 
+    index = $(this).attr("data-index");
+    next_index= parseInt(index)+1; 
+     console.log("left",next_index);
+   }
+  });
+    $(".custom_cart_header").attr("aria-expanded","false");
+    $(".custom_collapse").removeClass("show");
+   $(".custom_cart_header[data-index='"+next_index+"']").trigger("click");
+      var count = $(".custom_cart_header").length;
+      if(next_index > count){
+    $(".custom_cart_header[data-index='1']").trigger("click");
+    }
+});
+
+$(document).on('click','.right-arrow',function(){
+  var index= 0;
+   var next_index = 0 ;
+ $(".custom_cart_header").each(function(){
+   var current = $(this).attr("aria-expanded");
+   console.log("aria-expanded right", current);
+   if( current == "true"){
+    index = $(this).attr("data-index");
+    next_index= parseInt(index)+1; 
+      console.log("right",next_index);
+   }
+  });
+    $(".custom_cart_header").attr("aria-expanded","false");
+    $(".custom_collapse").removeClass("show");
+   $(".custom_cart_header[data-index='"+next_index+"']").trigger("click");
+   if(next_index > 1){
+    $(".custom_cart_header[data-index='1']").trigger("click");
+    }
+});
+
+   });
+  </script>

@@ -1,0 +1,24 @@
+<div class="jas-col-md-6 jas-col-sm-6 jas-col-xs-12 pr jas_thumbs_img{%- if page_pr_img_size or nav_pr_img_size %} jas_section_eqh {{settings.image_size_thumb}} nav_{{settings.image_size_nav}}{%- endif -%}">
+	{%- include 'product_labels' -%}
+	<div class="single-product-thumbnail pr bc_{{cv_color}}{%- if page_pr_img_size or nav_pr_img_size %} page_pr_img_size{%- endif -%}">
+       <div class="p-thumb images shopify-product-gallery {{jas_masonry}} image-action-{{settings.main_click}} tc" data-masonry='{"selector":".p-item", "layoutMode":"masonry"}'>
+			{%- include 'arr_img_thum_2' -%}
+		</div>
+		{%- include 'group_btn_pr' -%}
+	</div>
+</div>
+<div class="jas-col-md-6 jas-col-sm-6 jas-col-xs-12 pr">
+	<div class="summary entry-summary ts__05{%- if product.images.size > 2 %} jas-sidebar-sticky{%- endif -%}">
+		{%- include 'pr_info_one' -%}
+		{%- include 'pr_form' -%}
+		{%- include 'product_meta' -%}
+		{%- if pages[settings.delivery_return].content != blank -%}
+		   {%- include 'delivery_return' -%}
+		{%- endif -%}
+		{%- if settings.show_share_btn -%}
+		<div class="social-share">
+		  {%- include 'social-sharing', follow_social:gl_follow_social -%}
+		</div>
+		{%- endif -%}
+	</div><!-- .summary test-->
+</div>

@@ -1,0 +1,390 @@
+{%- if settings.color_name_check != blank -%}{%- assign _gl_color_name = settings.color_name_check | replace: ' ,', ',' | replace: ', ', ',' | split: ',' -%}{%- assign gl_color_name = _gl_color_name | downcase -%}{%-else-%}{%- assign gl_color_name = '\nathan_dt\' -%}{%-endif-%}
+{%- if settings.size_name_check != blank -%}{%- assign _gl_size_name = settings.size_name_check | replace: ' ,', ',' | replace: ', ', ',' | split: ',' -%}{%- assign gl_size_name = _gl_size_name | downcase -%}{%-else-%}{%- assign gl_size_name = '\nathan_dt\' -%}{%-endif-%}
+{%- assign lang_option = 'Größe'| downcase -%}
+{%- if select_id == 'nt_select_quick'-%}
+   {%- assign select_id = 'nt_select_quick' -%} 
+{%- else -%}
+   {%- assign select_id = 'nt_select_pr_' -%}
+   {%- assign select_class = 'nt_select_pr_' -%}    
+{%- endif -%}
+{%- assign bclass = 'is-selected-no' -%}
+
+{%- assign selected_variant = product.selected_variant -%}
+{%- assign pr_variants = product.variants -%}
+{%- assign size = product.options_with_values.size -%}
+{%- if product.available -%}{%- assign remove_soldout = settings.remove_sold_out -%}{%- else -%}{%- assign remove_soldout = false -%}{%- endif -%}
+{%- case settings.pr_curent -%}
+  {%- when '1' -%}{%- assign current_variant = product.selected_or_first_available_variant -%}{%- if selected_variant != blank -%}{%- assign bclass = 'is-selected-none' -%}{%- else -%}{%- assign bclass = 'is-selected-no' -%}{%- endif -%}
+  {%- when '2' -%}{%- assign current_variant = selected_variant |default: pr_variants.first -%}{%- assign bclass = 'is-selected-none' -%}{%- if current_variant.available == false and remove_soldout and product.available -%}{%- assign current_variant = product.first_available_variant -%}{%- endif -%}
+  {%- else -%}{%- assign current_variant = product.selected_or_first_available_variant -%}{%- assign bclass = 'is-selected-none' -%}
+{%- endcase -%}
+
+{%- if pr_variants.size == 1 -%}{%- assign current_variant = pr_variants.first -%}{%- assign bclass = 'is-selected' -%}{%- endif -%}
+
+<div class="variations var_avai_{{product.available}} variant_square">
+  
+  <h4 class="jtpl-swatch-class" style="color:#ffc90f;">Choose your Add-ons</h4>
+  
+  <div class="jtpl-swatch-box">
+  
+  {% assign protocols_count = '' %}
+  
+  {%- for option in product.options_with_values -%}
+  
+  
+  
+      {%- assign option_index = forloop.index0 -%}
+      {%- case option_index -%}{%- when 0 -%}{%- assign selected_value = current_variant.option1 -%}{%- when 1 -%}{%- assign selected_value = current_variant.option2 -%}{%- else -%}{%- assign selected_value = current_variant.option3 -%}{%- endcase -%}
+      
+      {%- assign downcased_option = option.name | downcase -%}
+      {%- assign downcased_option_check = downcased_option | prepend: '"' | append: '"' | strip -%} 
+      {%- if downcased_option == 'color' or downcased_option == 'couleur' or downcased_option == 'colour' or gl_color_name contains downcased_option_check -%}
+		   <div class="{{select_class}}{{ option_index }} swatch swatch_nt_js is-label is-ntcolor" data-option-index="{{ option_index }}" id="{{select_id}}_{{ option_index }}">
+		   	<h4 class="swatch__title nave">{{option.name}}: <span class="nt_name_current">{%- if bclass != 'is-selected-no' -%}{{selected_value}}{%- endif -%}</span></h4>
+             <ul class="swatches-select swatch__list is-flex" data-attribute="pa_{{option.name | handleize}}" data-id="{{ option_index }}" data-size="{{size}}">
+               {%- for value in option.values -%}
+               
+               
+              
+               
+               
+               <li data-index="{{ forloop.index0 }}" aria-label='{{ value }}' class="gecko-swatch bg_css_{{ value | handleize }} swatch-size-{{settings.swatch_size}}{%- if selected_value == value %} {{bclass}}{%- endif -%}" data-value='{{ value | handleize }}' data-bcvalue='bc_{{ value | handleize }}'>{{value}}</li>
+               {%- endfor -%}
+             </ul>
+		   </div>
+		{%- else -%}
+		   <div class="{{select_class}}{{ option_index }} swatch swatch_nt_js is-label" data-option-index="{{ option_index }}" id="{{select_id}}_{{ option_index }}">
+		   	{%- if downcased_option == 'size' or downcased_option == 'sizes' or downcased_option == 'taille' or downcased_option == lang_option or gl_size_name contains downcased_option_check -%}
+		   	   {%- if select_id != 'nt_select_quick' and settings.size_chart -%}
+		   	       <h4 aria-label='{{ value }}' class="nave1 swatch__title{%- if product.metafields.meta.image_size_chart != blank or collection.metafields.meta.image_size_chart != blank or settings.image_size_chart != blank %} extra-link{%- endif -%}">{{option.name}}: <span class="nt_name_current">{%- if bclass != 'is-selected-no' -%}{{selected_value}}{%- endif -%}</span>{%- if product.metafields.meta.image_size_chart != blank or collection.metafields.meta.image_size_chart != blank or settings.image_size_chart != blank %}<a class="cd chp jas-magnific-image f__libre" href="{%- if product.metafields.meta.image_size_chart != blank -%}{{product.metafields.meta.image_size_chart}}{%- elsif collection.metafields.meta.image_size_chart != blank-%}{{collection.metafields.meta.image_size_chart}}{%- else -%}{{ settings.image_size_chart | img_url: '1x1' | replace: '_1x1', ''  }}{%- endif -%}">{{ 'products.product.product_size_guide' | t }}</a>{%- endif -%}</h4>
+		   	   {%- else -%}
+		   	       <h4 aria-label='{{ value }}' class="nave11 swatch__title">{{option.name}}: <span class="nt_name_current">{%- if bclass != 'is-selected-no' -%}{{selected_value}}{%- endif -%}</span></h4>
+		   	   {%- endif -%}
+		   	{%- else -%}
+		   	<h4 class="nave111 swatch__title {% if product.handle contains 'batt-pack-energy-extended-range' %} batt-pack-energy-extended-range {% endif %}" data-price="{{product.price}}">
+              
+             
+              {% if protocols_count.size == 0 %}
+              {% assign add_ons_icon_1 = product.metafields.section-1['add_ons_icon-1'] %}
+              {% assign add_ons_content_1 = product.metafields.section-1['add_ons_text-1'] %}
+              {% if add_ons_icon_1 != blank %}
+              <div class="ico"><img class="main-image" src="{{add_ons_icon_1}}">
+              <img class="on-hover-image" src="https://cdn.shopify.com/s/files/1/0253/4431/1386/files/cold-weather-yellow.png?v=1602043270">
+              </div>
+              
+              {% endif %}
+              
+              {% if add_ons_content_1 != blank %}
+              <div class="hover-text" style="display:none;"><span>{{add_ons_content_1}}</span></div>
+              
+              {% endif %}
+              
+              {% endif %}
+             
+              
+               
+              {% if protocols_count.size == 1 %}
+              {% assign add_ons_icon_2 = product.metafields.section-1['add_ons_icon-2'] %}
+              {% assign add_ons_content_2 = product.metafields.section-1['add_ons_text-2'] %}
+              {% if add_ons_icon_2 != blank %}
+              <div class="ico"><img class="main-image" src="{{add_ons_icon_2}}">
+              <img class="on-hover-image" src="https://cdn.shopify.com/s/files/1/0253/4431/1386/files/solar-charging-kit-yellow.png?v=1602043277">
+              </div>
+              {% endif %}
+              {% if add_ons_content_2 != blank %}
+              <div class="hover-text" style="display:none;"><span>{{add_ons_content_2}}</span></div>
+              {% endif %}
+              {% endif %}
+              
+              {% if protocols_count.size == 2 %}
+              {% assign add_ons_icon_3 = product.metafields.section-1['add_ons_icon-3'] %}
+              {% assign add_ons_content_3 = product.metafields.section-1['add_ons_text-3'] %}
+              {% if add_ons_icon_3 != blank %}
+               <div class="ico"><img class="main-image" src="{{add_ons_icon_3}}">
+              <img class="on-hover-image" src="https://cdn.shopify.com/s/files/1/0253/4431/1386/files/solar-charging-kit-yellow.png?v=1602043277">
+              </div>
+              {% endif %}
+              {% if add_ons_content_3 != blank %}
+              <div class="hover-text" style="display:none;"><span>{{add_ons_content_3}}</span></div>
+              {% endif %}
+              {% endif %}
+              
+               
+              <span class="option_name">{{option.name}}:
+              <span style="display:none;" class="nt_name_current">{%- if bclass != 'is-selected-no' -%}{{selected_value}}{%- endif -%}</span>
+		   	
+              </span></h4>
+              
+              {%- endif -%}
+             <ul style="display:none;" class="swatches-select swatch__list is-flex" data-attribute="pa_{{option.name | handleize}}" data-id="{{ option_index }}" data-size="{{size}}">
+               
+               
+               
+               
+               {%- for value in option.values -%}
+               <li data-id = "{{value}}" data-index="{{ forloop.index0 }}" aria-label='{{ value }}' class="gecko-swatch bg_css_{{ value | handleize }} swatch-size-{{settings.swatch_size}}{%- if selected_value == value %} {{bclass}}{%- endif -%}" data-value='{{ value | handleize }}' data-bcvalue='bc_{{ value | handleize }}'>{{value}}</li>
+               {%- endfor -%}
+             </ul>
+		   </div>
+  {%- endif -%}
+
+ {% assign protocols_count = protocols_count | append: 'x' %}
+
+   {%- endfor -%}
+
+  </div>
+  
+</div>
+<button type="button" class="chat-with-us">Need installation? Chat with us</button>
+<script>
+ function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+  jQuery(document).ready(function(){
+    
+    
+     var C_price = jQuery(".product-form .shopify-variation .shopify-variation-price").attr("data-c_price");
+     var C_final_pricee = C_price/100;
+     var final_pricee = numberWithCommas(C_final_pricee);
+     var final_priceee =  "$"+final_pricee+" CAD";
+     
+    
+     jQuery(".template-product .shopify-variation-price #productPrice span").text(final_priceee);
+    
+    
+     var valuee = jQuery("#cart-form .product-select_pr").val();
+    
+     
+    // jQuery(".mainBundledActionBtn").attr("onclick", "addAllItems('"+valuee+",36555389894809'); return false;");
+    
+  
+     jQuery(".variations_form .variant_square div.swatch").each(function(index){
+      
+      
+      if(index != 3){
+        
+        jQuery(this).on("click",".swatch__title", function(){
+          
+          
+          
+          
+        var is_selected_val = jQuery(this).next('ul').find(".is-selected").text();
+        var swatch_val = jQuery.trim(jQuery(this).find(".option_name").text());
+        var array_swatch_val = swatch_val.split(":");
+         
+        if(is_selected_val == "No"){
+          
+          
+          /* check if extended is selected or not */
+          
+          var is_extended_selected =jQuery(".variant_square .jtpl-swatch-box").find(".extended").find(".is-selected").text();
+          
+         
+          
+          if(is_extended_selected == "Yes"){
+            
+             var variant_id_of_others =jQuery("#cart-form .product-select_pr").val();
+         	var variant_id_of_extended = '36555389894809';
+         	jQuery(".mainBundledActionBtn").attr("onclick", "addAllItems('"+variant_id_of_others+','+variant_id_of_extended+"'); return false;") 
+    
+            
+            
+             jQuery(this).next('ul').find("li:eq(1)").trigger("click");
+             jQuery(this).addClass("active");
+            
+            
+            
+             var check_actual_price = jQuery("#cart-form .shopify-variation .shopify-variation-price #productPrice span").text();
+             var actual_final_price = check_actual_price.replace(/[^\d\.]/g, '');
+             
+             
+             var extended_selected_price = jQuery(".jtpl-swatch-box .extended").find("h4 ").attr("data-price");
+         
+             var extended_selected_pricee = extended_selected_price/100;
+            
+             var final_actual_price_inclusing_extended = parseInt(actual_final_price) + parseInt(extended_selected_pricee);
+            
+             var final_actual_price_inclusing_extended_with_curr = numberWithCommas(final_actual_price_inclusing_extended);
+            
+            var final_actual_price_inclusing_extended_with_currr = '$'+final_actual_price_inclusing_extended_with_curr+' CAD';
+            
+            setTimeout(function(){ 
+          
+             jQuery(".single_variation #productPrice .money").text(final_actual_price_inclusing_extended_with_currr);
+            
+          }, 200);
+             
+            
+            
+          }else{
+          var variant_id_of_others =jQuery("#cart-form .product-select_pr").val();
+         	
+         	jQuery(".mainBundledActionBtn").attr("onclick", "addAllItems("+variant_id_of_others+"); return false;") 
+    
+            
+             
+         jQuery(this).next('ul').find("li:eq(1)").trigger("click");
+             jQuery(this).addClass("active");
+          
+            
+          }
+
+          /* end if */
+
+          
+        }else{
+          
+          
+          var is_extended_selected =jQuery(".variant_square .jtpl-swatch-box").find(".extended").find(".is-selected").text();
+
+          jQuery( this ).next('ul').find("li:eq(0)").trigger("click"); 
+          jQuery(this).removeClass("active");
+
+        }
+
+      });
+        
+      } else{
+      
+        jQuery(this).on("click",".extended_title", function(){
+
+        var is_selected_val = jQuery(this).next('ul').find(".is-selected").text();
+        var swatch_val = jQuery.trim(jQuery(this).find(".option_name").text());
+        var array_swatch_val = swatch_val.split(":");
+          
+         
+          
+        if(is_selected_val == "No"){
+          
+         	var variant_id_of_others =jQuery("#cart-form .product-select_pr").val();
+         	var variant_id_of_extended = '36555389894809';
+         	jQuery(".mainBundledActionBtn").attr("onclick", "addAllItems('"+variant_id_of_others+','+variant_id_of_extended+"'); return false;") 
+          
+           /* Update Price */
+          
+          var price_of_extended_product = $(".get_extended_price .money").text();
+          
+          var c_price_extnded = jQuery(this).attr("data-price");
+          
+          var check_actual_price = jQuery("#cart-form .shopify-variation .shopify-variation-price #productPrice span").text();
+          
+          var actual_final_price = check_actual_price.replace(/[^\d\.]/g, '');
+          
+          var c_final_price = c_price_extnded/100;
+          
+          var extended_final_prive = parseInt(actual_final_price) + parseInt(c_final_price);
+          
+          var c_final_pricee = '$'+numberWithCommas(extended_final_prive)+' CAD';
+          
+          
+          setTimeout(function(){ 
+          
+             jQuery(".single_variation #productPrice .money").text(c_final_pricee);
+            
+          }, 200);
+  
+        /* end update */ 
+          
+          
+        jQuery(this).addClass("active");
+          
+          jQuery("span.extended").hide();
+          jQuery("span.non_extended").show();
+          
+          jQuery("span.non_extended_4").hide();
+          jQuery("span.extended_4").show();
+          
+          jQuery("span.non_extended_5").hide();
+          jQuery("span.extended_5").show();
+          
+          jQuery("span.non_extended_6").hide();
+          jQuery("span.extended_6").show();
+          
+          jQuery("span.non_extended_9").hide();
+          jQuery("span.extended_9").show();
+          
+          jQuery(this).next('ul').find("li:eq(0)").trigger("click");
+          
+        }else{
+          
+          var variant_id_of_others =jQuery("#cart-form .product-select_pr").val();
+         
+          jQuery(".mainBundledActionBtn").attr("onclick", "addAllItems("+variant_id_of_others+"); return false;") 
+         
+          
+          jQuery(this).removeClass("active");
+          jQuery("span.extended").show();
+          jQuery("span.non_extended").hide();
+          
+          jQuery("span.non_extended_4").show();
+          jQuery("span.extended_4").hide();
+          
+          jQuery("span.non_extended_5").show();
+          jQuery("span.extended_5").hide();
+          
+          jQuery("span.non_extended_6").show();
+          jQuery("span.extended_6").hide();
+          
+          jQuery("span.non_extended_9").show();
+          jQuery("span.extended_9").hide();
+
+          jQuery( this ).next('ul').find("li:eq(1)").trigger("click"); 
+        }
+          
+        });
+      
+      }
+
+    });
+    
+
+  });
+  
+  //USD currency is selected, can we update the measurement, weight & temperature 
+  $(document).on("click",".currencies li:not(.black_menu) a",function(ev) {
+   ev.preventDefault();
+  var current_cntry_value = $(this).text();
+  var current_cntry_cntry = current_cntry_value.trim()
+
+  if(current_cntry_cntry == "USD"){
+
+  jQuery("span.value.non_extended_8").hide();
+  jQuery("span.value.extended_8").show();
+  jQuery("span.value.non_extended_11").hide();
+  jQuery("span.value.extended_11").show();  
+
+   var range_package_class_status = $('.extended_title').hasClass('active');
+if(range_package_class_status == true){
+
+ jQuery("span.value.non_extended_6").hide();
+ jQuery("span.value.extended_6").hide();
+ jQuery("span.value.currency_extended_6").show();
+
+}
+else{
+   
+   jQuery("span.value.currency_extended_6").hide();
+}
+
+}else{
+
+  jQuery("span.value.non_extended_8").show();
+  jQuery("span.value.extended_8").hide();
+  jQuery("span.value.non_extended_11").show();
+  jQuery("span.value.extended_11").hide();
+  jQuery("span.value.currency_extended_6").hide();
+  var range_package_class_status = $('.extended_title').hasClass('active');
+  if(range_package_class_status == true){
+  jQuery("span.value.extended_6").show();
+  }
+  else{
+  jQuery("span.value.non_extended_6").show();
+}
+}
+});
+  $('.chat-with-us').click(function() {
+  window.tidioChatApi.open();
+});
+
+  
+  </script>

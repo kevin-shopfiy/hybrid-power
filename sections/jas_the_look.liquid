@@ -1,0 +1,611 @@
+{%- if settings.use_wishlist -%}{%- include 'nitro-wishlist' -%}{%- endif -%}
+{%- include 'style_mp_section' -%}
+{%- assign show_vendor = section.settings.show_vendor -%}
+{%- assign pr_style = section.settings.style -%}
+{%- assign settings_pr_img_size = section.settings.use_eq_height -%}
+{%- assign section_settings_countdown = section.settings.sale_countdown -%}
+{%- assign grid_columns = '12' -%}
+{%- assign class_sm = '6' -%}
+{%- assign grid_columns_mb = section.settings.grid_columns_mb -%}
+{%- assign image_banner = section.settings.image -%}
+<div class="jas_custom_{{section.id}} {{pr_style}}{%- if section.settings.use_container %} jas-container{%- else %} jas-full{%- endif -%}">
+  {%- assign sett_title = section.settings.title -%}
+  {%- assign sett_sub_title = section.settings.sub_title -%}
+  {%- assign style_title = section.settings.style_title -%}
+  {%- include 'jas_section_title' -%}
+  <div class="jas-row products {{section.settings.image_size}} {{section.settings.image_ratio}} position_{{section.settings.image_position}}{%- if settings_pr_img_size %} equal-nt{%- endif -%}">
+      {%- case section.settings.layout -%}
+         {%- when 'left' -%}
+            {%- if image_banner == blank -%}
+               <div class="jas-col-xs-12 jas-col-sm-6 mt__30 pr">
+                  <div class="jas_nt_bg lazyload w__100 h__100" data-bgset="https://placehold.it/1728x972/eee/999 1728w 972h,https://placehold.it/1920x1080/eee/999 1920w 1080h" data-sizes="auto" data-parent-fit="cover" style="background-image: url('https://placehold.it/50x50/eee/999');">
+                     <div class="jas_empty_space"><span class="jas_empty_space_inner"></span></div>
+                     <div class="jas_empty_space"><span class="jas_empty_space_inner"></span></div>
+                     <div class="jas-wrap-lazy"></div>
+                  </div>
+               </div>
+            {%- else -%}
+               <div class="jas-col-xs-12 jas-col-sm-6 mt__30 pr">
+                  <div class="jas_nt_bg lazyload w__100 h__100" data-bgset="{%- include 'bgset',image: image_banner -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ image_banner | img_url: '50x50' }}');"> 
+                     <div class="jas_empty_space"><span class="jas_empty_space_inner"></span></div>
+                     <div class="jas_empty_space"><span class="jas_empty_space_inner"></span></div>
+                     <div class="jas-wrap-lazy"></div>
+                  </div>
+               </div>
+            {%- endif -%}
+            <div class="jas-col-xs-12 jas-col-sm-3">
+               <div class="jas-row">
+                  {%- for i in (1..2) -%}
+                     {%- assign settings_pr = 'product_' | append:i -%}
+                     {%- assign product = section.settings[settings_pr] -%}
+                     {%- if product != blank -%}
+                        {%- assign product = all_products[product] -%}
+                        {%- include 'jas_product_loop' -%}
+                     {%- endif -%}
+                  {%- endfor -%}
+                  {%- if section.settings.product_1 == blank and section.settings.product_2 == blank -%}
+                      <div class="jas-grid-item jas-col-md-12 jas-col-sm-6 jas-col-xs-{{grid_columns_mb}} mt__30 product has-post-thumbnail">
+                        <div class="jas-product-image jas-product-image-equal pr oh">
+                           <a href="/admin/products" class="jas-product-img-element jas-pr-image-link">
+                              {{ 'product-' | append: 1 | placeholder_svg_tag: 'placeholder-svg' }}
+                           </a>
+                        </div>
+                        <div class="product-info mt__15">
+                           <h3 class="product-title pr fs__14 mg__0 fwm"><a class="cd chp" href="/admin/products">{{ 'homepage.onboarding.product_title' | t }}</a></h3>
+                           <span class="price"><ins>$30.00</ins> <del>$35.00</del></span>
+                        </div>
+                     </div>
+                     <div class="jas-grid-item jas-col-md-12 jas-col-sm-6 jas-col-xs-{{grid_columns_mb}} mt__30 product has-post-thumbnail">
+                        <div class="jas-product-image jas-product-image-equal pr oh">
+                           <a href="/admin/products" class="jas-product-img-element jas-pr-image-link">
+                              {{ 'product-' | append: 2 | placeholder_svg_tag: 'placeholder-svg' }}
+                           </a>
+                        </div>
+                        <div class="product-info mt__15">
+                           <h3 class="product-title pr fs__14 mg__0 fwm"><a class="cd chp" href="/admin/products">{{ 'homepage.onboarding.product_title' | t }}</a></h3>
+                           <span class="price"><ins>$30.00</ins> <del>$35.00</del></span>
+                        </div>
+                     </div>
+                  {%- endif -%}
+               </div>
+            </div>
+            <div class="jas-col-xs-12 jas-col-sm-3">
+               <div class="jas-row">
+                  {%- for i in (3..4) -%}
+                     {%- assign settings_pr = 'product_' | append:i -%}
+                     {%- assign product = section.settings[settings_pr] -%}
+                     {%- if product != blank -%}
+                        {%- assign product = all_products[product] -%}
+                        {%- include 'jas_product_loop' -%}
+                     {%- endif -%}
+                  {%- endfor -%}
+                  {%- if section.settings.product_3 == blank and section.settings.product_4 == blank -%}
+                      <div class="jas-grid-item jas-col-md-12 jas-col-sm-6 jas-col-xs-{{grid_columns_mb}} mt__30 product has-post-thumbnail">
+                        <div class="jas-product-image jas-product-image-equal pr oh">
+                           <a href="/admin/products" class="jas-product-img-element jas-pr-image-link">
+                              {{ 'product-' | append: 3 | placeholder_svg_tag: 'placeholder-svg' }}
+                           </a>
+                        </div>
+                        <div class="product-info mt__15">
+                           <h3 class="product-title pr fs__14 mg__0 fwm"><a class="cd chp" href="/admin/products">{{ 'homepage.onboarding.product_title' | t }}</a></h3>
+                           <span class="price"><ins>$30.00</ins> <del>$35.00</del></span>
+                        </div>
+                     </div>
+                     <div class="jas-grid-item jas-col-md-12 jas-col-sm-6 jas-col-xs-{{grid_columns_mb}} mt__30 product has-post-thumbnail">
+                        <div class="jas-product-image jas-product-image-equal pr oh">
+                           <a href="/admin/products" class="jas-product-img-element jas-pr-image-link">
+                              {{ 'product-' | append: 4 | placeholder_svg_tag: 'placeholder-svg' }}
+                           </a>
+                        </div>
+                        <div class="product-info mt__15">
+                           <h3 class="product-title pr fs__14 mg__0 fwm"><a class="cd chp" href="/admin/products">{{ 'homepage.onboarding.product_title' | t }}</a></h3>
+                           <span class="price"><ins>$30.00</ins> <del>$35.00</del></span>
+                        </div>
+                     </div>
+                  {%- endif -%}
+               </div>
+            </div>
+         {%- when 'center' -%}
+            <div class="jas-col-xs-12 jas-col-sm-3">
+               <div class="jas-row">
+                  {%- for i in (1..2) -%}
+                     {%- assign settings_pr = 'product_' | append:i -%}
+                     {%- assign product = section.settings[settings_pr] -%}
+                     {%- if product != blank -%}
+                        {%- assign product = all_products[product] -%}
+                        {%- include 'jas_product_loop' -%}
+                     {%- endif -%}
+                  {%- endfor -%}
+                  {%- if section.settings.product_1 == blank and section.settings.product_2 == blank -%}
+                      <div class="jas-grid-item jas-col-md-12 jas-col-sm-6 jas-col-xs-{{grid_columns_mb}} mt__30 product has-post-thumbnail">
+                        <div class="jas-product-image jas-product-image-equal pr oh">
+                           <a href="/admin/products" class="jas-product-img-element jas-pr-image-link">
+                              {{ 'product-' | append: 1 | placeholder_svg_tag: 'placeholder-svg' }}
+                           </a>
+                        </div>
+                        <div class="product-info mt__15">
+                           <h3 class="product-title pr fs__14 mg__0 fwm"><a class="cd chp" href="/admin/products">{{ 'homepage.onboarding.product_title' | t }}</a></h3>
+                           <span class="price"><ins>$30.00</ins> <del>$35.00</del></span>
+                        </div>
+                     </div>
+                     <div class="jas-grid-item jas-col-md-12 jas-col-sm-6 jas-col-xs-{{grid_columns_mb}} mt__30 product has-post-thumbnail">
+                        <div class="jas-product-image jas-product-image-equal pr oh">
+                           <a href="/admin/products" class="jas-product-img-element jas-pr-image-link">
+                              {{ 'product-' | append: 2 | placeholder_svg_tag: 'placeholder-svg' }}
+                           </a>
+                        </div>
+                        <div class="product-info mt__15">
+                           <h3 class="product-title pr fs__14 mg__0 fwm"><a class="cd chp" href="/admin/products">{{ 'homepage.onboarding.product_title' | t }}</a></h3>
+                           <span class="price"><ins>$30.00</ins> <del>$35.00</del></span>
+                        </div>
+                     </div>
+                  {%- endif -%}
+               </div>
+            </div>
+            {%- if image_banner == blank -%}
+               <div class="jas-col-xs-12 jas-col-sm-6 mt__30 pr">
+                  <div class="jas_nt_bg lazyload w__100 h__100" data-bgset="https://placehold.it/1728x972/eee/999 1728w 972h,https://placehold.it/1920x1080/eee/999 1920w 1080h" data-sizes="auto" data-parent-fit="cover" style="background-image: url('https://placehold.it/50x50/eee/999');">
+                     <div class="jas_empty_space"><span class="jas_empty_space_inner"></span></div>
+                     <div class="jas_empty_space"><span class="jas_empty_space_inner"></span></div>
+                     <div class="jas-wrap-lazy"></div>
+                  </div>
+               </div>
+            {%- else -%}
+               <div class="jas-col-xs-12 jas-col-sm-6 mt__30 pr">
+                  <div class="jas_nt_bg lazyload w__100 h__100" data-bgset="{%- include 'bgset',image: image_banner -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ image_banner | img_url: '50x50' }}');"> 
+                     <div class="jas_empty_space"><span class="jas_empty_space_inner"></span></div>
+                     <div class="jas_empty_space"><span class="jas_empty_space_inner"></span></div>
+                     <div class="jas-wrap-lazy"></div>
+                  </div>
+               </div>
+            {%- endif -%}
+            <div class="jas-col-xs-12 jas-col-sm-3">
+               <div class="jas-row">
+                  {%- for i in (3..4) -%}
+                     {%- assign settings_pr = 'product_' | append:i -%}
+                     {%- assign product = section.settings[settings_pr] -%}
+                     {%- if product != blank -%}
+                        {%- assign product = all_products[product] -%}
+                        {%- include 'jas_product_loop' -%}
+                     {%- endif -%}
+                  {%- endfor -%}
+                  {%- if section.settings.product_3 == blank and section.settings.product_4 == blank -%}
+                      <div class="jas-grid-item jas-col-md-12 jas-col-sm-6 jas-col-xs-{{grid_columns_mb}} mt__30 product has-post-thumbnail">
+                        <div class="jas-product-image jas-product-image-equal pr oh">
+                           <a href="/admin/products" class="jas-product-img-element jas-pr-image-link">
+                              {{ 'product-' | append: 3 | placeholder_svg_tag: 'placeholder-svg' }}
+                           </a>
+                        </div>
+                        <div class="product-info mt__15">
+                           <h3 class="product-title pr fs__14 mg__0 fwm"><a class="cd chp" href="/admin/products">{{ 'homepage.onboarding.product_title' | t }}</a></h3>
+                           <span class="price"><ins>$30.00</ins> <del>$35.00</del></span>
+                        </div>
+                     </div>
+                     <div class="jas-grid-item jas-col-md-12 jas-col-sm-6 jas-col-xs-{{grid_columns_mb}} mt__30 product has-post-thumbnail">
+                        <div class="jas-product-image jas-product-image-equal pr oh">
+                           <a href="/admin/products" class="jas-product-img-element jas-pr-image-link">
+                              {{ 'product-' | append: 4 | placeholder_svg_tag: 'placeholder-svg' }}
+                           </a>
+                        </div>
+                        <div class="product-info mt__15">
+                           <h3 class="product-title pr fs__14 mg__0 fwm"><a class="cd chp" href="/admin/products">{{ 'homepage.onboarding.product_title' | t }}</a></h3>
+                           <span class="price"><ins>$30.00</ins> <del>$35.00</del></span>
+                        </div>
+                     </div>
+                  {%- endif -%}
+               </div>
+            </div>
+         {%- when 'right' -%}
+            <div class="jas-col-xs-12 jas-col-sm-3">
+               <div class="jas-row">
+                  {%- for i in (1..2) -%}
+                     {%- assign settings_pr = 'product_' | append:i -%}
+                     {%- assign product = section.settings[settings_pr] -%}
+                     {%- if product != blank -%}
+                        {%- assign product = all_products[product] -%}
+                        {%- include 'jas_product_loop' -%}
+                     {%- endif -%}
+                  {%- endfor -%}
+                  {%- if section.settings.product_1 == blank and section.settings.product_2 == blank -%}
+                      <div class="jas-grid-item jas-col-md-12 jas-col-sm-6 jas-col-xs-{{grid_columns_mb}} mt__30 product has-post-thumbnail">
+                        <div class="jas-product-image jas-product-image-equal pr oh">
+                           <a href="/admin/products" class="jas-product-img-element jas-pr-image-link">
+                              {{ 'product-' | append: 1 | placeholder_svg_tag: 'placeholder-svg' }}
+                           </a>
+                        </div>
+                        <div class="product-info mt__15">
+                           <h3 class="product-title pr fs__14 mg__0 fwm"><a class="cd chp" href="/admin/products">{{ 'homepage.onboarding.product_title' | t }}</a></h3>
+                           <span class="price"><ins>$30.00</ins> <del>$35.00</del></span>
+                        </div>
+                     </div>
+                     <div class="jas-grid-item jas-col-md-12 jas-col-sm-6 jas-col-xs-{{grid_columns_mb}} mt__30 product has-post-thumbnail">
+                        <div class="jas-product-image jas-product-image-equal pr oh">
+                           <a href="/admin/products" class="jas-product-img-element jas-pr-image-link">
+                              {{ 'product-' | append: 2 | placeholder_svg_tag: 'placeholder-svg' }}
+                           </a>
+                        </div>
+                        <div class="product-info mt__15">
+                           <h3 class="product-title pr fs__14 mg__0 fwm"><a class="cd chp" href="/admin/products">{{ 'homepage.onboarding.product_title' | t }}</a></h3>
+                           <span class="price"><ins>$30.00</ins> <del>$35.00</del></span>
+                        </div>
+                     </div>
+                  {%- endif -%}
+               </div>
+            </div>
+            <div class="jas-col-xs-12 jas-col-sm-3">
+               <div class="jas-row">
+                  {%- for i in (3..4) -%}
+                     {%- assign settings_pr = 'product_' | append:i -%}
+                     {%- assign product = section.settings[settings_pr] -%}
+                     {%- if product != blank -%}
+                        {%- assign product = all_products[product] -%}
+                        {%- include 'jas_product_loop' -%}
+                     {%- endif -%}
+                  {%- endfor -%}
+                  {%- if section.settings.product_3 == blank and section.settings.product_4 == blank -%}
+                      <div class="jas-grid-item jas-col-md-12 jas-col-sm-6 jas-col-xs-{{grid_columns_mb}} mt__30 product has-post-thumbnail">
+                        <div class="jas-product-image jas-product-image-equal pr oh">
+                           <a href="/admin/products" class="jas-product-img-element jas-pr-image-link">
+                              {{ 'product-' | append: 3 | placeholder_svg_tag: 'placeholder-svg' }}
+                           </a>
+                        </div>
+                        <div class="product-info mt__15">
+                           <h3 class="product-title pr fs__14 mg__0 fwm"><a class="cd chp" href="/admin/products">{{ 'homepage.onboarding.product_title' | t }}</a></h3>
+                           <span class="price"><ins>$30.00</ins> <del>$35.00</del></span>
+                        </div>
+                     </div>
+                     <div class="jas-grid-item jas-col-md-12 jas-col-sm-6 jas-col-xs-{{grid_columns_mb}} mt__30 product has-post-thumbnail">
+                        <div class="jas-product-image jas-product-image-equal pr oh">
+                           <a href="/admin/products" class="jas-product-img-element jas-pr-image-link">
+                              {{ 'product-' | append: 4 | placeholder_svg_tag: 'placeholder-svg' }}
+                           </a>
+                        </div>
+                        <div class="product-info mt__15">
+                           <h3 class="product-title pr fs__14 mg__0 fwm"><a class="cd chp" href="/admin/products">{{ 'homepage.onboarding.product_title' | t }}</a></h3>
+                           <span class="price"><ins>$30.00</ins> <del>$35.00</del></span>
+                        </div>
+                     </div>
+                  {%- endif -%}
+               </div>
+            </div>
+            {%- if image_banner == blank -%}
+               <div class="jas-col-xs-12 jas-col-sm-6 mt__30 pr">
+                  <div class="jas_nt_bg lazyload w__100 h__100" data-bgset="https://placehold.it/1728x972/eee/999 1728w 972h,https://placehold.it/1920x1080/eee/999 1920w 1080h" data-sizes="auto" data-parent-fit="cover" style="background-image: url('https://placehold.it/50x50/eee/999');">
+                     <div class="jas_empty_space"><span class="jas_empty_space_inner"></span></div>
+                     <div class="jas_empty_space"><span class="jas_empty_space_inner"></span></div>
+                     <div class="jas-wrap-lazy"></div>
+                  </div>
+               </div>
+            {%- else -%}
+               <div class="jas-col-xs-12 jas-col-sm-6 mt__30 pr">
+                  <div class="jas_nt_bg lazyload w__100 h__100" data-bgset="{%- include 'bgset',image: image_banner -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ image_banner | img_url: '50x50' }}');"> 
+                     <div class="jas_empty_space"><span class="jas_empty_space_inner"></span></div>
+                     <div class="jas_empty_space"><span class="jas_empty_space_inner"></span></div>
+                     <div class="jas-wrap-lazy"></div>
+                  </div>
+               </div>
+            {%- endif -%}
+      {%- endcase -%}
+  </div>
+</div>
+{%- schema -%}
+  {
+    "name": "Complete The Look",
+    "class": "jas-section type_jas_the_look",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Complete The Look"
+      },
+      {
+        "type": "textarea",
+        "id": "sub_title",
+        "label": "Sub Text",
+        "default": "Lorem ipsum dolor sit ame"
+      },
+      {
+        "type": "select",
+        "id": "style",
+        "label": "Product Style",
+        "default": "jas_default",
+        "options": [
+          {
+            "value": "jas_default",
+            "label": "style 1 (Default)"
+          },
+          {
+            "value": "jas_pr_tc",
+            "label": "style 2 (text center)"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "grid_columns_mb",
+        "label": "Columns Mobile",
+        "default": "6",
+        "options": [
+          {
+            "value": "12",
+            "label": "1"
+          },
+          {
+            "value": "6",
+            "label": "2"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Show product vendors",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "sale_countdown",
+        "default": false,
+        "label": "Use Sale countdown",
+        "info": "Countdown to the end sale date will be shown. Be sure you have set final date of the product sale price. product.metafields.meta.countdown ( 2018/01/19 )"
+      },
+      {
+        "type": "header",
+        "content": "== Design Image"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_eq_height",
+        "label": "Use equal height images?",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "image_ratio",
+        "label": "Aspect Ratio",
+        "default": "ratio_nt",
+        "options": [
+          {
+            "value": "ratio2_1",
+            "label": "2:1"
+          },
+          {
+            "value": "ratio16_9",
+            "label": "16:9"
+          },
+          {
+            "value": "ratio8_5",
+            "label": "8:5"
+          },
+          {
+            "value": "ratio3_2",
+            "label": "3:2"
+          },
+          {
+            "value": "ratio4_3",
+            "label": "4:3 (Landscape)"
+          },
+          {
+            "value": "ratio1_1",
+            "label": "1:1 (Square)"
+          },
+          {
+            "value": "ratio_nt",
+            "label": "Ratio Elessi"
+          },
+          {
+            "value": "ratio2_3",
+            "label": "2:3 (Portrait)"
+          },
+          {
+            "value": "ratio1_2",
+            "label": "1:2"
+          },
+          {
+            "value": "ratio_cus1",
+            "label": "Ratio Custom 1"
+          },
+          {
+            "value": "ratio_cus2",
+            "label": "Ratio Custom 2"
+          },
+          {
+            "value": "ratio_cus3",
+            "label": "Ratio Custom 3"
+          },
+          {
+            "value": "ratio_cus4",
+            "label": "Ratio Custom 4"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_size",
+        "label": "Image Size",
+        "default": "nt_cover",
+        "options": [
+          {
+            "value": "nt_cover",
+            "label": "Full"
+          },
+          {
+            "value": "nt_contain",
+            "label": "Auto"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_position",
+        "info":"The first value is the horizontal position and the second value is the vertical.",
+        "options": [
+          {
+            "value": "default",
+            "label": "Default"
+          },
+          {
+            "value": "1",
+            "label": "Left Top"
+          },
+          {
+            "value": "2",
+            "label": "Left Center"
+          },
+          {
+            "value": "3",
+            "label": "Left Bottom"
+          },
+          {
+            "value": "4",
+            "label": "Right Top"
+          },
+          {
+            "value": "5",
+            "label": "Right Center"
+          },
+          {
+            "value": "6",
+            "label": "Right Bottom"
+          },
+          {
+            "value": "7",
+            "label": "Center Top"
+          },
+          {
+            "value": "8",
+            "label": "Center Center"
+          },
+          {
+            "value": "9",
+            "label": "Center Bottom"
+          }
+        ],
+        "label": "Image Position",
+        "default": "8"
+      },
+      {
+        "type": "header",
+        "content": "== Banner"
+      },
+      {
+         "type": "image_picker",
+         "id": "image",
+         "label": "image"
+      },
+      {
+        "type": "select",
+        "id": "layout",
+        "label": "Position",
+        "default": "center",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "== Product column 1"
+      },
+      {
+         "type": "product",
+      "id": "product_1",
+      "label": "Choose product 1"
+      },
+      {
+      "type": "product",
+      "id": "product_2",
+      "label": "Choose product 2"
+      },
+       {
+        "type": "header",
+        "content": "== Product column 2"
+      },
+      {
+         "type": "product",
+      "id": "product_3",
+      "label": "Choose product 3"
+      },
+      {
+      "type": "product",
+      "id": "product_4",
+      "label": "Choose product 4"
+      },
+      {
+        "type": "header",
+        "content": "== Design Options"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_container",
+        "label": "Use container?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_left",
+        "label": "Margin left",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_right",
+        "label": "Margin right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_top",
+        "label": "Padding top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_right",
+        "label": "Padding right",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_bottom",
+        "label": "Padding bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding_left",
+        "label": "Padding left",
+        "info": "60px"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Complete The Look",
+        "category": "== Collections"
+      }
+    ]
+  }
+{% endschema %}

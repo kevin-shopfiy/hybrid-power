@@ -1,0 +1,41 @@
+<article id="post-{{ article.id }}" class="mb__30 post">
+   <div class="post-thumbnail pr mb__25">
+   	{%- if settings.use_eq_height_blog_main and article.image -%}
+         <div class="article__grid-image-wrapper jas-product-image-equal pr user_custom">
+            <a class="db pr lazyload jas-pr-image-link" href="{{ article.url }}" data-bgset="{%- include 'bgset', image: article.image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ article.image | img_url: '50x50' }});">
+              <img class="op_0 article__grid-image w__100 lazyload" src="{{ article.image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ article.image.aspect_ratio }}" data-sizes="auto" alt="{{ article.image.alt | escape }}">
+            </a>
+             <div class="jas-wrap-lazy"></div>
+         </div>
+      {%- elsif article.image -%}
+         {%- assign img_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+         <div class="article__grid-image-wrapper">
+            <a class="db pr" href="{{ article.url }}">
+              <img class="article__grid-image w__100 lazyload" src="{{ article.image | img_url: '50x50' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ article.image.aspect_ratio }}" data-sizes="auto" alt="{{ article.image.alt | escape }}">
+              <div class="jas-wrap-lazy"></div>
+            </a>
+         </div>
+      {%- endif -%}
+      <div class="pa inside-thumb tc cg">
+         <div class="post-meta fs__12">
+            <span class="author vcard pr">{{ 'blogs.article.by' | t }} <span class="url fn n cw">{{ article.author }}</span></span>
+            {% include 'tags-article' %}
+            {% if blog.comments_enabled? %}<span class="comment-number pr"><a href="{{ article.url }}#comments">{{ 'blogs.comments.with_count' | t: count: article.comments_count }}</a></span>{% endif %}
+         </div>
+         <h2 class="post-title fs__14 ls__1 mt__10 mb__5 tu"><a class="chp" href="{{ article.url }}" rel="bookmark">{{ article.title }}</a></h2>
+         <span class="posted-on fs__12"><a class="cg" href="{{ article.url }}">{{ article.published_at | time_tag: format: 'month_day_year' }}</a></span>       				
+      </div>
+   </div>
+   <div class="post-content">
+      {% if article.excerpt.size > 0 %}
+        {{ article.excerpt | strip_html | truncatewords: 20 }}
+      {% else %}
+        {{ article.content | strip_html | truncatewords: 20 }}
+      {% endif %}
+      <div class="post-action flex between-xs middle-xs mt__30">
+         {% if blog.comments_enabled? %}<div class="comments-link"><i class="pe-7s-comment dib pr mr__5"></i><a href="{{ article.url }}#comments">{{ 'blogs.comments.with_count' | t: count: article.comments_count }}</a></div>{% endif %}
+         <a class="read-more pr" href="{{ article.url }}">{{ 'blogs.article.read_more' | t }} <span>→</span></a>
+      </div>
+   </div>
+   <!-- .post-content -->
+</article>

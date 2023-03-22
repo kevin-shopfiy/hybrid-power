@@ -1,0 +1,94 @@
+<div class="testimonial-header">
+  {% section 'testimonial-header' %}
+</div>
+<div class="testimonial-gallery jas-container">
+   {% section 'testimonial-gallery' %}
+</div>
+<style type="text/css">
+/* ---- isotope ---- */
+
+/* clear fix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- .grid-item ---- */
+
+.grid-sizer,
+.grid-item {
+  width: 50%;
+}
+
+.grid-item {
+  float: left;
+}
+
+.grid-item img {
+  display: block;
+  max-width: 100%;
+}
+
+
+
+
+
+
+
+</style>
+<script type="text/javascript">
+
+if ( $(window).width() > 767) {
+ var $grid = $('.grid').isotope({
+  itemSelector: '.grid-item',
+  percentPosition: true,
+  masonry: {
+    columnWidth: '.grid-sizer'
+  }
+});
+// layout Isotope after each image loads
+$grid.imagesLoaded().progress( function() {
+  $grid.isotope('layout');
+}); 
+
+}
+  $(document).ready(function(){
+
+$('.all-images-slider').slick({
+  dots: true,
+  infinite: true,
+  speed: 500,
+});
+    
+$(".see-more").click(function(){
+var current = $(this).attr("data-index");
+  $('#testimonial-overlay').fadeIn(300);
+$(".popup-content").hide();
+$(".popup-content[data-index='"+current+"']").show();
+$('.all-images-slider').slick('unslick');
+$('.all-images-slider').slick({
+  dots: true,
+  infinite: true,
+  adaptiveHeight: true,
+  speed: 500,
+});
+
+
+
+});  
+  $('.testimonial-close').click(function() {
+    $('#testimonial-overlay').fadeOut(300);
+  });  
+ $(".testimonial-header a.arrow-button.slide").click(function(){
+  $('html, body').animate({
+        scrollTop: $(".testimonial-gallery").offset().top
+    }, 1000);
+
+
+});
+ 
+  
+});	
+
+</script>

@@ -1,0 +1,22 @@
+{%-comment-%}<div class="nn product_meta">
+{%- if settings.show_pr_vendor and product.vendor != blank -%}
+  <span class="posted_in">{{ 'products.product.product_vendor' | t }} 
+     {{ product.vendor | link_to_vendor }}
+  </span>
+  {%- endif -%}
+  {%- if settings.show_sku -%}<span class="sku_wrapper">{{ 'products.product.product_sku' | t }} <span class="sku variant-sku" id="productSku{{prefix}}" itemprop="sku">{%- if current_variant.sku != blank -%}{{current_variant.sku}}{%-else-%}{{ 'products.product.na' | t }}{%-endif-%}</span></span>{%- endif -%}
+  {%- if product.collections.size > 0 and settings.show_category_product -%}
+  <span class="posted_in">{{ 'products.product.product_category' | t }} 
+  {% for collection in product.collections limit:10 -%}
+    {{ collection.title | link_to: collection.url }}{%- if forloop.last == false -%},{%- endif %}
+    {%- endfor -%}
+  </span>
+  {%- endif -%}
+  {%- if product.tags.size > 0 and settings.show_tag_product and product.collections.size > 0 -%}
+  <span class="tagged_as">{{ 'products.product.product_tag' | t }}
+     {%- for tag in product.tags limit:10 -%}
+     <a href="{%- if collection != blank -%}{{ collection.url }}{%- else -%}{{ product.collections.first.url }}{%- endif -%}/{{ tag | handle }}">{{ tag | remove:'type ' | remove:'Type ' }}</a>{%- unless forloop.last -%}, {% endunless -%}
+     {%- endfor -%}
+  </span>
+  {%- endif -%}
+</div>{%-endcomment-%}

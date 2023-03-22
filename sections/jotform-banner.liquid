@@ -1,0 +1,63 @@
+<div class="page-head cstm_jot_thankyou pr tc{%- if section.settings.banner_img != blank %} page_jas_bg_image lazyload{%- endif -%}"{%- if section.settings.banner_img != blank %} data-bgset="{%- include 'bgset', image: section.settings.banner_img -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url({{ section.settings.banner_img | img_url: 'master' }}); background-repeat:no;"{%- endif -%}>
+  
+  <div class="jas-container pr">
+    <div class="cstm_heading">
+      {% if section.settings.banner_txt != blank  %} <h1 class="tu cw cstm_jot_head1">{{ section.settings.banner_txt }}</h1>{% endif %}
+      {% if section.settings.banner_txt2 != blank  %}<h1 class="tu cw cstm_jot_head2">{{ section.settings.banner_txt2 }}</h1>{% endif %}
+     {% if section.settings.banner_subtxt != blank  %} <p>{{ section.settings.banner_subtxt }}</p>{% endif %}
+    </div>
+    <div class="cstm_btn_action">
+      {% if section.settings.icon_img != blank %}<span class="cstm_joticon"><img src="{{ section.settings.icon_img |img_url:"master" }}"></span>{% endif %}
+       {% if section.settings.banner_btnurl != blank and section.settings.banner_btn != blank %} <a href="{{ section.settings.banner_btnurl }}" class="cstm_jotreturn btn">{{ section.settings.banner_btn }}</a>{% endif  %}
+     </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Thankyou-section",
+    "settings": [
+       {
+        "type":"image_picker",
+        "id":"banner_img",
+        "label":"Banner Image"
+      },
+      {
+        "type":"text",
+        "id":"banner_txt",
+        "label":"Heading"
+      },
+      {
+        "type":"text",
+        "id":"banner_txt2",
+        "label":"Heading"
+      },{
+        "type":"text",
+        "id":"banner_subtxt",
+        "label":"Sub Heading"
+      },{
+       "type":"image_picker",
+        "id":"icon_img",
+        "label":"Icon Image"
+      }
+      ,{
+        "type":"header",
+        "content":"CTA Block"
+      },{
+        "type":"text",
+        "id":"banner_btn",
+        "label":"CTA Text"
+      },
+      {
+        "type":"url",
+        "id":"banner_btnurl",
+        "label":"CTA Url"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

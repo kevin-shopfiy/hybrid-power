@@ -1,0 +1,48 @@
+{% capture block_title %}{%include 'shortcode-render' render:'title' default:'MY COLLECTIONS' %}{% endcapture %}
+{% capture style %}{%include 'shortcode-render' render:'style' default:'style1' %}{% endcapture %}
+{% capture padding %}{%include 'shortcode-render' render:'padding' default:'10' %}{% endcapture %}
+{% capture total %}{%include 'shortcode-render' render:'total' default:'15' %}{% endcapture %}
+{% assign total_collection =  total | plus:0 %}
+{%- if style == 'style1' -%}
+<div class="mt__30 jas_separator jas_separator_align_center jas_sep_width_100 jas_sep_double jas_sep_pos_align_center jas_sep_color_grey jas_custom_1479922305779 jas_separator-has-text">
+   <span class="jas_sep_holder jas_sep_holder_l"><span class="jas_sep_line"></span></span>
+   <h4>{{ block_title | strip_html }}</h4>
+   <span class="jas_sep_holder jas_sep_holder_r"><span class="jas_sep_line"></span></span>
+</div>
+<div class="clearfix"></div>
+{%- endif -%}
+<!-- jas_grid start -->
+<div class="jas_grid-container clearfix wpb_content_element jas_masonry_media_grid mt__30 mb__30">
+	<div class="jas_grid jas_pageable-wrapper jas_hook_hover SlickPhotoswipGallery">
+		<div class="jas-row jas_row clearfix jas-masonry{%- if padding == '10' %} jas_grid-gutter-10px{%- else %} jas_grid-gutter-15px{%- endif -%}" data-masonry='{"selector":".jas_visible-item", "layoutMode":"masonry"}'>
+			{% for index_gallery in (1..total_collection)  %}
+			{%- assign 50_current = 'src50_' | append: index_gallery -%}
+			{%- assign handle_current = 'src' | append: index_gallery -%}
+			{%- assign current_img_url = 'img_url' | append: index_gallery -%}
+			{%- assign current_aspectratio =  'aspectratio' | append: index_gallery -%}
+           	{%- assign current_alt =  'alt' | append: index_gallery -%}
+           	{%- assign current_wh =  'wh' | append: index_gallery -%}
+
+           	{% capture src %}{%include 'shortcode-render' render:handle_current %}{% endcapture %}
+           	{% capture src_50 %}{%include 'shortcode-render' render:50_current %}{% endcapture %}
+           	{% capture img_url %}{%include 'shortcode-render' render:current_img_url %}{% endcapture %}
+           	{% capture aspectratio %}{%include 'shortcode-render' render:current_aspectratio %}{% endcapture %}
+			{% capture collections_alt %}{%include 'shortcode-render' render:current_alt default:shop.name %}{% endcapture %}
+			{% capture wh %}{%include 'shortcode-render' render:current_wh default:'870'%}{% endcapture %}
+			
+			<a href="{{ src }}" title="{{ collections_alt | strip_html }}" data-size="{{wh}}" class="db jas_grid-item jas_clearfix jas-col-xs-12 jas-col-sm-4 jas_visible-item">
+			   <div class="jas_grid-item-mini jas_clearfix jas_is-hover">
+			      <div class="jas_gitem-animated-block pr">
+			        <div class="jas_gitem-zone jas_gitem-zone-a jas_gitem-is-link">
+			           <img src="{{src_50}}" class="w__100 em-zone-img lazyload" alt="{{ collections_alt | strip_html }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{aspectratio}}" data-sizes="auto">
+			           <div class="jas-wrap-lazy"></div>
+			        </div>
+			      </div>
+			   </div>
+			   <div class="jas_clearfix"></div>
+			</a>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+<!-- jas_grid end -->

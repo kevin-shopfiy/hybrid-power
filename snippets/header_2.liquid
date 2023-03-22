@@ -1,0 +1,26 @@
+<div class="header__mid pr pl__30 pr__30{%- if settings.header_bg_image != blank %} lazyload{%- endif -%}"{%- if settings.header_bg_image != blank %} data-bgset="{%- include 'bgset', image: settings.header_bg_image -%}" data-sizes="auto" data-parent-fit="cover" style="background-image: url('{{ settings.header_bg_image | img_url: '50x50' }});"{%- endif -%}>
+   {%- if settings.full_header_enable == false -%}<div class="jas-container">{%- endif -%}   
+      <div class="jas-row middle-xs">
+         <div class="jas-col-md-5 jas-col-sm-4 jas-col-xs-3 flex">
+            <div class="jas-col-md-3 flex pl__30 start-md middle-xs nta_menu">
+               {%- include 'push_menu' -%}
+            </div>
+            <div class="jas-navigation jas-col-md-9 hidden-sm hidden-xs flex end-xs">
+               {%- section 'mega_menu' -%}
+            </div>
+         </div>
+         <div class="jas-col-md-2 jas-col-sm-4 jas-col-xs-6 tc jas_div_logo_2">
+            {%- include 'logo_menu' -%}
+         </div>
+         <div class="jas-col-md-5 jas-col-sm-4 jas-col-xs-3 flex end-xs">
+            <div class="jas-navigation hidden-sm hidden-xs jas-col-md-9">
+               {%- section 'mega_menu_2' -%}
+            </div>
+            <div class="jas-action flex pr__30 end-xs middle-xs jas-col-md-3 jas-col-xs-3">
+               {%- include 'jas_action' -%}
+            </div><!-- .jas-action -->
+         </div>
+      </div>
+      <!-- .jas-row -->
+   {%- if settings.full_header_enable == false -%}</div><!-- .jas-container -->{%- endif -%}
+</div>
