@@ -93,7 +93,7 @@
                             {%- assign add_to_cart_color = product.metafields.section-1['add_to_cart_color'] -%}  
                              {%- assign add_to_cart_text_color = product.metafields.section-1['add_to_cart_text_color'] -%}  
                  {% unless product.handle contains "batt-pack-energy" %}    
-<button style="background-color: {{add_to_cart_color}} !important; color: {{add_to_cart_text_color}} !important;" id="mainBundledActionBtn" class="mainBundledActionBtn bundle_add_to_cart btn dfsd" onclick=""> 
+<button style="background-color: #65818d !important; color: {{add_to_cart_text_color}} !important;" id="mainBundledActionBtn" class="mainBundledActionBtn bundle_add_to_cart btn dfsd" onclick=""> 
                   {%- if current_variant.inventory_quantity <= 0 and current_variant.available and current_variant.inventory_management == 'shopify' -%}{{ 'products.product.pre_orders' | t }}{%- else -%}{{ 'products.product.add_to_cart' | t }}{%- endif -%}</span>
                 </button>
 {% endunless %}
@@ -111,7 +111,7 @@
                            {%- assign spec_sheet_button_text_color = product.metafields.section-1['spec_sheet_button_text_color'] -%}
                            {%- assign spec_sheet_button_border_color = product.metafields.section-1['spec_sheet_button_border_color'] -%}  
                         
-                            <a  target="_blank" style="color: {{spec_sheet_button_text_color}} !important; border-color:{{spec_sheet_button_border_color}} !important;" class="Naveen single_add_to_cart_button button alt" href="{{spec_sheet_url}}">{{spec_sheet_text}}</a>
+                            <a  target="_blank" style="color: {{spec_sheet_button_text_color}} !important; border-color:{{spec_sheet_button_border_color}} !important;" class="a Naveen single_add_to_cart_button button alt" href="{{spec_sheet_url}}">{{spec_sheet_text}}</a>
                             
                               {% endif %}
                                 {% if product.handle contains "batt-pack-energy" %}
