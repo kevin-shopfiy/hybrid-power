@@ -1998,6 +1998,7 @@ div#shopify-section-product-page-description .jas_custom_jas_product_section.jas
   flex-wrap: wrap;
   -webkit-flex-wrap: wrap;
   margin-top: 50px;
+  flex-direction: column;
 }
 .jas_custom_jas_product_section.jas-banner-parallax.gecko-parallax div#myTabContent .tab-pane .tab-content-inner {
   width: 100%;
@@ -2486,12 +2487,18 @@ button {
   flex-wrap: wrap;
   -webkit-flex-wrap: wrap;
 }
+/* customize */
+.shopify-variation .shopify-variation-price .productPrice {
+  color: #fff;
+  margin-right: 10px !important;
+  padding-top: 10px;
+}
 .shopify-variation-add-to-cart span#productPrice {
   margin: 0;
 }
-.shopify-variation-add-to-cart span#productPrice span {
+/* .shopify-variation-add-to-cart span#productPrice span {
   margin: 10px 0 0 0;
-}
+} */
 .shopify-variation-add-to-cart .out_of_stock_main {
   width: 100%;
   flex: 0 0 100%;

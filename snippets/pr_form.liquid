@@ -57,17 +57,17 @@
      				 <div class="single_variation_wrap{%- if product.price_varies %} price_custom{%- endif %}{%- if settings.enable_payment_button %} product-form__item--payment-button{%- endif -%}">
 						
 						<div class="shopify-variation-add-to-cart variations_button shopify-variation-add-to-cart-enabled">
-						{%- if settings.product_quantity_message -%}
+						          {%- if settings.product_quantity_message -%}
 	                        <div id="variantQuantity" class="variant-quantity variantQuantity" style="display: none"></div>
 	                    {%- endif -%}
 	                        <div class="flex">
-		                        {%- if product.variants.size == 1 and sold_out -%}
-		                            <p class="stock out-of-stock" id="out-of-stock-gl">{{ 'products.product.outofstock' | t }}</p>
-		                        {%- else -%}
-		                            <p class="stock out-of-stock" id="out-of-stock-gl" style="display: none">{{ 'products.product.outofstock' | t }}</p>
-		                           {%- if check_external -%}
+                              {%- if product.variants.size == 1 and sold_out -%}
+                                  <p class="stock out-of-stock" id="out-of-stock-gl">{{ 'products.product.outofstock' | t }}</p>
+                              {%- else -%}
+		                          <p class="stock out-of-stock" id="out-of-stock-gl" style="display: none">{{ 'products.product.outofstock' | t }}</p>
+		                          {%- if check_external -%}
 		                             <a href="{{ check }}" id="shopify_add_to_cart" rel="nofollow" class="shopify_add_to_cart single_add_to_cart_button button alt btn_external">{{ product.metafields.external | first | first }}</a>
-		                           {%- else -%}
+		                          {%- else -%}
                               {% comment %}
 		                               <div class="quantity pr fl" id="shopify_quantity">
 		                                  <input type="number" step="1" min="1" max="{%- if current_variant.inventory_management != null -%}{{current_variant.inventory_quantity}}{%- else -%}999{%- endif -%}" name="quantity" value="1" title="Qty" class="qty input-text tc" size="4">
@@ -78,45 +78,43 @@
 		                               </div>
                               {% endcomment %}
                               {%- if wholesaler == true -%}
-                              <div class="wholesale__text">WHOLESALE PRICE</div>
+                                <div class="wholesale__text">WHOLESALE PRICE</div>
                               {%- endif -%}
-                            <div class="shopify-variation single_variation">
-							
-							<div class="shopify-variation-price" data-c_price="{{current_variant.price}}">
-								<span class="price productPrice n" id="productPrice">
-                         
-                        </span>
-							</div>
-						
-						</div>
-		                               {%- if settings.btn_atc_full == false -%}
-                            {%- assign add_to_cart_color = product.metafields.section-1['add_to_cart_color'] -%}  
-                             {%- assign add_to_cart_text_color = product.metafields.section-1['add_to_cart_text_color'] -%}  
-                 {% unless product.handle contains "batt-pack-energy" %}    
-<button style="background-color: #65818d !important; color: {{add_to_cart_text_color}} !important;" id="mainBundledActionBtn" class="mainBundledActionBtn bundle_add_to_cart btn dfsd" onclick=""> 
-                  {%- if current_variant.inventory_quantity <= 0 and current_variant.available and current_variant.inventory_management == 'shopify' -%}{{ 'products.product.pre_orders' | t }}{%- else -%}{{ 'products.product.add_to_cart' | t }}{%- endif -%}</span>
-                </button>
-{% endunless %}
-{% if product.handle contains "batt-pack-energy" %}
-                <button style="background-color: {{add_to_cart_color}} !important; color: {{add_to_cart_text_color}} !important;"  class="custom-whislist-btn" onclick=""> 
-    JOIN OUR WAITLIST</span>
-                </button>
-                            {% endif %}
+                              <div class="shopify-variation single_variation">
+                                <div class="shopify-variation-price" data-c_price="{{current_variant.price}}">
+                                  <span class="price productPrice b" id="productPrice">
+                                         
+                                  </span>
+                                </div>
+                                    
+                              </div>
+		                          {%- if settings.btn_atc_full == false -%}
+                                {%- assign add_to_cart_color = product.metafields.section-1['add_to_cart_color'] -%}  
+                                {%- assign add_to_cart_text_color = product.metafields.section-1['add_to_cart_text_color'] -%}  
+                              {% unless product.handle contains "batt-pack-energy" %}    
+                              <button style="background-color: {{add_to_cart_color}} !important; color: {{add_to_cart_text_color}} !important; text-transform: uppercase !important;" id="mainBundledActionBtn" class="mainBundledActionBtn bundle_add_to_cart btn dfsd" onclick=""> 
+                                {%- if current_variant.inventory_quantity <= 0 and current_variant.available and current_variant.inventory_management == 'shopify' -%}{{ 'products.product.pre_orders' | t }}{%- else -%}{{ 'products.product.add_to_cart' | t }}{%- endif -%}</span>
+                              </button> 
+                              {% endunless %}
+
+                              {% if product.handle contains "batt-pack-energy" %}
+                                  <button style="background-color: {{add_to_cart_color}} !important; color: {{add_to_cart_text_color}} !important; text-transform: uppercase !important;"  class="custom-whislist-btn" onclick=""> ADD TO CART</button>
+                              {% endif %} 
                             
-                            {%- assign spec_sheet_text = product.metafields.section-1['spec_sheet_text'] -%}    
+                              {%- assign spec_sheet_text = product.metafields.section-1['spec_sheet_text'] -%}    
                               {%- assign spec_sheet_url = product.metafields.section-1['spec_sheet_url']  -%}
                             
                               {% if spec_sheet_text != blank %}
                             
                            {%- assign spec_sheet_button_text_color = product.metafields.section-1['spec_sheet_button_text_color'] -%}
                            {%- assign spec_sheet_button_border_color = product.metafields.section-1['spec_sheet_button_border_color'] -%}  
-                        
+                              
                             <a  target="_blank" style="color: {{spec_sheet_button_text_color}} !important; border-color:{{spec_sheet_button_border_color}} !important;" class="a Naveen single_add_to_cart_button button alt" href="{{spec_sheet_url}}">{{spec_sheet_text}}</a>
                             
                               {% endif %}
-                                {% if product.handle contains "batt-pack-energy" %}
+                                {% comment %} {% if product.handle contains "batt-pack-energy" %}
                                 <a   style="color: {{spec_sheet_button_text_color}} !important; border-color:#ac612d !important;" class="Naveen single_add_to_cart_button button alt collections-custom-button" href="https://hybridps.ca/collections/portable-power-packs">SEE OTHER OPTIONS</a>
-                                {% endif %}
+                                {% endif %} {% endcomment %}
                                
                               {%- endif -%}
 		                           {%- endif -%}
@@ -222,7 +220,7 @@
 	               <button type="submit" id="multi-variant-add" data-ntid="{{product.id}}" class="Naveen {{settings.button_art_to_cart_style}} add_to_cart_button single_add_to_cart_button button alt">{{ 'products.product.add_to_cart' | t }}</button>
 	           
                       <button id="mainBundledActionBtn" class="mainBundledActionBtn bundle_add_to_cart btn" onclick="addAllItems('36611627024537');"> 
-                    Add to cart
+                    ADD TO CART
                   </button>
                 
                 {%- else -%}
@@ -377,3 +375,190 @@ div#mc_embed_signup_scroll,h2 {
 
 <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='MMERGE5';ftypes[5]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
 <!--End mc_embed_signup-->
+
+<script>
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+jQuery(document).ready(function(){
+    
+    
+  var C_price = jQuery(".product-form .shopify-variation .shopify-variation-price").attr("data-c_price");
+  
+  var C_final_pricee = C_price/100;
+  console.log(C_final_pricee, "---->a")
+  var final_pricee = numberWithCommas(C_final_pricee);
+  console.log(final_pricee, "---->b")
+  var final_priceee =  "$"+final_pricee+" CAD";
+  console.log(final_priceee, "---->d")
+  
+  jQuery(".shopify-variation-price #productPrice").text(final_priceee);
+
+ 
+ 
+  var valuee = jQuery("#cart-form .product-select_pr").val();
+ 
+  
+ // jQuery(".mainBundledActionBtn").attr("onclick", "addAllItems('"+valuee+",36555389894809'); return false;");
+ 
+
+  jQuery(".variations_form .variant_square div.swatch").each(function(index){
+    
+   if(index != 3){
+     
+     jQuery(this).on("click",".swatch__title", function(){
+       
+       
+     var is_selected_val = jQuery(this).next('ul').find(".is-selected").text();
+     var swatch_val = jQuery.trim(jQuery(this).find(".option_name").text());
+     var array_swatch_val = swatch_val.split(":");
+
+     if(is_selected_val == "No"){
+
+       var is_extended_selected =jQuery(".variant_square .jtpl-swatch-box").find(".extended").find(".is-selected").text();
+
+       if(is_extended_selected == "Yes"){
+         
+          var variant_id_of_others =jQuery("#cart-form .product-select_pr").val();
+        var variant_id_of_extended = '36555389894809';
+        jQuery(".mainBundledActionBtn").attr("onclick", "addAllItems('"+variant_id_of_others+','+variant_id_of_extended+"'); return false;") 
+   
+          jQuery(this).next('ul').find("li:eq(1)").trigger("click");
+          jQuery(this).addClass("active");
+    
+          var check_actual_price = jQuery("#cart-form .shopify-variation .shopify-variation-price #productPrice span").text();
+          
+          var actual_final_price = check_actual_price.replace(/[^\d\.]/g, '');
+          
+          
+          var extended_selected_price = jQuery(".jtpl-swatch-box .extended").find("h4 ").attr("data-price");
+      
+          var extended_selected_pricee = extended_selected_price/100;
+         
+          var final_actual_price_inclusing_extended = parseInt(actual_final_price) + parseInt(extended_selected_pricee);
+         
+          var final_actual_price_inclusing_extended_with_curr = numberWithCommas(final_actual_price_inclusing_extended);
+          
+         var final_actual_price_inclusing_extended_with_currr = '$'+final_actual_price_inclusing_extended_with_curr+' CAD';
+         
+         setTimeout(function(){ 
+       
+          jQuery(".single_variation #productPrice .money").text(final_actual_price_inclusing_extended_with_currr);
+         
+       }, 200);
+  
+       }else{
+       var variant_id_of_others =jQuery("#cart-form .product-select_pr").val();
+        
+        jQuery(".mainBundledActionBtn").attr("onclick", "addAllItems("+variant_id_of_others+"); return false;") 
+ 
+         
+          
+      jQuery(this).next('ul').find("li:eq(1)").trigger("click");
+          jQuery(this).addClass("active");
+       
+         
+       }
+
+     }else{
+       
+       
+       var is_extended_selected =jQuery(".variant_square .jtpl-swatch-box").find(".extended").find(".is-selected").text();
+
+       jQuery( this ).next('ul').find("li:eq(0)").trigger("click"); 
+       jQuery(this).removeClass("active");
+
+     }
+
+   });
+     
+   } else{
+   
+     jQuery(this).on("click",".extended_title", function(){
+
+     var is_selected_val = jQuery(this).next('ul').find(".is-selected").text();
+     var swatch_val = jQuery.trim(jQuery(this).find(".option_name").text());
+     var array_swatch_val = swatch_val.split(":");
+   
+     if(is_selected_val == "No"){
+       
+        var variant_id_of_others =jQuery("#cart-form .product-select_pr").val();
+        var variant_id_of_extended = '36555389894809';
+        jQuery(".mainBundledActionBtn").attr("onclick", "addAllItems('"+variant_id_of_others+','+variant_id_of_extended+"'); return false;") 
+       
+       
+       
+       var price_of_extended_product = $(".get_extended_price .money").text();
+       
+       var c_price_extnded = jQuery(this).attr("data-price");
+       
+       var check_actual_price = jQuery("#cart-form .shopify-variation .shopify-variation-price #productPrice span").text();
+       
+       var actual_final_price = check_actual_price.replace(/[^\d\.]/g, '');
+       
+       var c_final_price = c_price_extnded/100;
+       
+       var extended_final_prive = parseInt(actual_final_price) + parseInt(c_final_price);
+       
+       var c_final_pricee = '$'+numberWithCommas(extended_final_prive)+' CAD';
+               
+       setTimeout(function(){ 
+       
+          jQuery(".single_variation #productPrice .money").text(c_final_pricee);
+         
+       }, 200);
+
+     jQuery(this).addClass("active");
+       
+       jQuery("span.extended").hide();
+       jQuery("span.non_extended").show();
+       
+       jQuery("span.non_extended_4").hide();
+       jQuery("span.extended_4").show();
+       
+       jQuery("span.non_extended_5").hide();
+       jQuery("span.extended_5").show();
+       
+       jQuery("span.non_extended_6").hide();
+       jQuery("span.extended_6").show();
+       
+       jQuery("span.non_extended_9").hide();
+       jQuery("span.extended_9").show();
+       
+       jQuery(this).next('ul').find("li:eq(0)").trigger("click");
+       
+     }else{
+       
+       var variant_id_of_others =jQuery("#cart-form .product-select_pr").val();
+      
+       jQuery(".mainBundledActionBtn").attr("onclick", "addAllItems("+variant_id_of_others+"); return false;") 
+      
+       
+       jQuery(this).removeClass("active");
+       jQuery("span.extended").show();
+       jQuery("span.non_extended").hide();
+       
+       jQuery("span.non_extended_4").show();
+       jQuery("span.extended_4").hide();
+       
+       jQuery("span.non_extended_5").show();
+       jQuery("span.extended_5").hide();
+       
+       jQuery("span.non_extended_6").show();
+       jQuery("span.extended_6").hide();
+       
+       jQuery("span.non_extended_9").show();
+       jQuery("span.extended_9").hide();
+
+       jQuery( this ).next('ul').find("li:eq(1)").trigger("click"); 
+     }
+       
+     });
+   
+   }
+
+ });
+
+});
+
+</script>
