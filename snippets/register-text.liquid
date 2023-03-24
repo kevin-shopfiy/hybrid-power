@@ -1,0 +1,102 @@
+{%- assign register-product = product.metafields.section-5['register-product'] -%}
+{%- assign register-product-text-title = product.metafields.section-5['register-product-text-title'] -%}
+{%- assign register-product-text-content = product.metafields.section-5['register-product-text-content'] -%}
+{%- assign register-product-text-title-right = product.metafields.section-5['register-product-text-title-right'] -%}
+{%- assign register-product-text-content-right = product.metafields.section-5['register-product-text-content-right'] -%}
+{% if register-product == 1 %}
+    <div class="container register-text-custom">
+        <div class="register-text-left">
+            <div class="register-text--title">
+                <h2>{{ register-product-text-title }}</h2>
+            </div>
+            <div class="register-text--content">
+                <div class="text">{{ register-product-text-content }}</div>
+            </div>
+        </div>
+        <div class="register-text-right">
+            <div class="register-text--title">
+                <h2>{{ register-product-text-title-right }}</h2>
+            </div>
+            <div class="register-text--content">
+                <div class="text">{{ register-product-text-content-right }}</div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+<style>
+    .register-text-custom {
+        width: 100%;
+        display: flex;
+        gap: 10%;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+    .register-text-custom .register-text-left {
+        width: 45%;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #fff;
+    }
+    .register-text-custom .register-text-right {
+        width: 45%;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        align-items: center;
+        background: #fff;
+    }
+    .register-text-custom .register-text--title h2{
+        font-size: 20px;
+        color: #cb7208;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+    }
+    .register-text-custom .register-text--content {
+        padding: 0 20px;
+    }
+    .register-text-custom .register-text--content .text p{
+        font-size: 16px;
+        text-align: left;
+    }
+    .register-text-custom .register-text--content .text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: justify;
+    }
+    .register-text-custom .register-text--content .text li {
+        padding: 10px 0;
+    }
+    .register-text-custom .register-text--content .text li::marker {
+        font-family: FontAwesome;
+        content: "\f00c";
+        color: #cb7208;
+        box-shadow: none;
+        transition: all ease-in-out .2s;
+        font-size: 14px;
+    }
+    .register-text-custom .register-text--content .text li span {
+        padding-left: 8px;
+    }
+    @media(max-width: 746px) {
+        .register-text-custom {
+            flex-direction: column;
+            padding-top: 50px !important;
+            padding-bottom: 50px !important; 
+        }
+        .register-text-custom .register-text-left {
+            width: 100%;
+        }
+        .register-text-custom .register-text-right {
+            width: 100%;
+            margin-top: 50px;
+        }
+    }
+</style>

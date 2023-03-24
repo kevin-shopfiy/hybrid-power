@@ -103,8 +103,18 @@
         <span class="jas_flash_total_day nt_flash_total_day{%- if quick_review == 'quick_review' -%}_quick{%- endif -%}"></span> {{ 'products.jas_extra.flash_sold' | t }} <span class="jas_flash_in_hour nt_flash_in_hour{%- if quick_review == 'quick_review' -%}_quick{%- endif -%}"></span> {{ 'products.jas_extra.flash_hours' | t }}
     </div>
 {%- endif -%}
+{%- assign register-product = product.metafields.section-5['register-product'] -%}
+{%- assign register-date = product.metafields.section-5['register-date'] -%}
+{%- assign register-region = product.metafields.section-5['register-region'] -%}
+{% if register-product %}
+  <div class="register-data">
+    <h2 class="register-date">{{ register-date }}</h2>
+    <h2 class="register-region">{{ register-region }}
+  </div>
+{% endif %}
 {%- if settings.show_product_page_rating -%}
-   <a href="#shopify-section-product-page-description" class="shopify-product-rating dib">
+  
+   <a href="#shopify-section-product-page-description" {% if register-product %} style="display: none;" {% endif %} class="shopify-product-rating dib">
      {%- if settings.app_review == '1' -%}
          <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
       {%- elsif settings.app_review == '2' -%}
@@ -131,28 +141,49 @@
 	       {{  product.metafields.meta.description_excerpt }}
         {%- elsif product.metafields.global.description -%}
            {{ product.metafields.global.description }}
-	     {% elsif product.description contains  '[' %}
+	      {% elsif product.description contains  '[' %}
 	       {% assign pr_des = product.description | split: '[' %}
 
 	       {% assign pr_des = pr_des[1] | split: ']' | first | append:']' | prepend:'[' %}
 	       {{ product.description | remove: pr_des | strip_html | truncatewords: prodcut_excerpt_length }}
-	     {%-else-%}
+	      {%-else-%}
 	       {{ product.description | strip_html | truncatewords: prodcut_excerpt_length }}
-	     {%-endif-%}
+	      {%-endif-%}
           
           {%- assign tab_name_5 = product.metafields.section-4['tab-name-5'] -%} 
           {%- if tab_name_5 != blank -%}
-     <a href="#" class="read-more-desc" style="color:#fff">{{tab_name_5}} </a>
-          {%endif%}
-	   </p>
+        <a href="#" class="c read-more-desc" style="color:#fff">{{tab_name_5}} </a>
+        {%endif%}
+	  </p>
       
 {%- endif -%}
 <script>
     $("a.read-more-desc").click(function() {
+      console.log("scrolling---------------")
     $('html, body').animate({
-        scrollTop: $("ul#myTab").offset().top - 400
+        scrollTop: $(".course-description").offset().top - 400
+       
       }, 1000);
- $(".custom_description_slide").trigger("click");
 
+ $(".custom_description_slide").trigger("click"); 
+    
   });
       </script>
+<style>
+  .register-data {
+    display: flex;
+    margin:0;
+
+  }
+  .register-data .register-date {
+    color: #ffc90f;
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+  .register-data .register-region {
+    color: #fff;
+    font-size: 16px;
+    text-transform: uppercase;
+    padding-left: 3px;
+  }
+</style>

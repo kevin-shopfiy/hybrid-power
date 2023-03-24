@@ -73,7 +73,7 @@
 <div class="jas-wc-single {{singles_wc}} nt_single_{{settings.design_products}} mb__60">
   {%- if settings.show_breadcrumb -%}
   
-    <div class="jtpl_product_section_1">
+  <div class="f jtpl_product_section_1">
   
 	<div class="bgbl lh__1 pt__5 pb__5 pl__15 pr__15 clearfix">
       <div class="flex between-xs{%- if settings.full_header_enable == false %} jas-container{%- endif -%}">
@@ -567,6 +567,14 @@
     {%endif%}
 
   
+
+
+{% include 'register-course' %}
+
+{% include 'register-text' %}
+
+{% include 'register-trainer' %}
+
 {% include 'product-accordion' %}
 
 {% include 'tabular-section' %}

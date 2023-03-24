@@ -61,9 +61,9 @@
                        {%- if check_external -%}
                           <a href="{{ check }}" id="nt_sticky_add" rel="nofollow" class="shopify_add_to_cart btn_primary single_add_to_cart_button button btn_external{%- if settings.enable_payment_button %} mr__15{%- endif -%}">{{ product.metafields.external | first | first }}</a>
                        {%- elsif current_variant.inventory_quantity <= 0 and current_variant.available and current_variant.inventory_management == 'shopify' -%}
-                          <button type="submit" id="nt_sticky_add" data-ntid="{{product.id}}" class="shopify_add_to_cart btn_primary ajax_form_cart single_add_to_cart_button button btn--loader{%- if settings.enable_payment_button %} mr__15{%- endif -%}"><span class="bt__text">{{ 'products.product.pre_orders' | t }}</span><span class="btn--loader-balls"></span></button>
+                          <button type="submit" id="nt_sticky_add" data-ntid="{{product.id}}" class="c-1 shopify_add_to_cart btn_primary ajax_form_cart single_add_to_cart_button button btn--loader{%- if settings.enable_payment_button %} mr__15{%- endif -%}"><span class="bt__text">{{ 'products.product.pre_orders' | t }}</span><span class="btn--loader-balls"></span></button>
                        {%- else -%}
-                          <button type="submit" id="nt_sticky_add" data-ntid="{{product.id}}" class="shopify_add_to_cart btn_primary ajax_form_cart single_add_to_cart_button button btn--loader{%- if settings.enable_payment_button %} mr__15{%- endif -%}"><span class="bt__text">{{ 'products.product.add_to_cart' | t }}</span><span class="btn--loader-balls"></span></button>
+                          <button type="submit" id="nt_sticky_add" data-ntid="{{product.id}}" class="c-2 shopify_add_to_cart btn_primary ajax_form_cart single_add_to_cart_button button btn--loader{%- if settings.enable_payment_button %} mr__15{%- endif -%}"><span class="bt__text">{{ 'products.product.add_to_cart' | t }}</span><span class="btn--loader-balls"></span></button>
                        {%- endif -%} 
                        <p class="stock out-of-stock" id="nt_outstock_sticky" style="display:none">{{ 'products.product.outofstock' | t }}</p>
                        {%- if settings.enable_payment_button -%}
@@ -82,9 +82,9 @@
                        {%- if check_external -%}
                           <a href="{{ check }}" id="nt_sticky_add" rel="nofollow" class="shopify_add_to_cart btn_primary single_add_to_cart_button button btn_external{%- if settings.enable_payment_button %} mr__15{%- endif -%}">{{ product.metafields.external | first | first }}</a>
                        {%- elsif current_variant.inventory_quantity <= 0 and current_variant.available and current_variant.inventory_management == 'shopify' -%}
-                          <button type="submit" id="nt_sticky_add" data-ntid="{{product.id}}" class="shopify_add_to_cart btn_primary ajax_form_cart single_add_to_cart_button button btn--loader{%- if settings.enable_payment_button %} mr__15{%- endif -%}"><span class="bt__text">{{ 'products.product.pre_orders' | t }}</span></button>
+                          <button type="submit" id="nt_sticky_add" data-ntid="{{product.id}}" class="c-3 shopify_add_to_cart btn_primary ajax_form_cart single_add_to_cart_button button btn--loader{%- if settings.enable_payment_button %} mr__15{%- endif -%}"><span class="bt__text">{{ 'products.product.pre_orders' | t }}</span></button>
                        {%- else -%}
-                          <button type="submit" id="nt_sticky_add" data-ntid="{{product.id}}" class="shopify_add_to_cart btn_primary ajax_form_cart single_add_to_cart_button button btn--loader{%- if settings.enable_payment_button %} mr__15{%- endif -%}"><span class="bt__text">{{ 'products.product.add_to_cart' | t }}</span></button>
+                          <button type="submit" id="nt_sticky_add" data-ntid="{{product.id}}" class="c-4 shopify_add_to_cart btn_primary ajax_form_cart single_add_to_cart_button button btn--loader{%- if settings.enable_payment_button %} mr__15{%- endif -%}"><span class="bt__text">{{ 'products.product.add_to_cart' | t }}</span></button>
                        {%- endif -%} 
                        {%- if settings.enable_payment_button -%}
                          {{ form | payment_button }}

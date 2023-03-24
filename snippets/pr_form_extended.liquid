@@ -86,7 +86,7 @@
                                                     {%- assign add_to_cart_color = product.metafields.section-1['add_to_cart_color'] -%}  
                                {%- assign add_to_cart_text_color = product.metafields.section-1['add_to_cart_text_color'] -%}  
                                 
-		                               <button type="submit"{% if settings.pr_curent == '1' and product.has_only_default_variant == false and product.selected_variant == blank %} disabled="disabled" {% endif %} id="shopify_add_to_cart" data-ntid="{{product.id}}" class="shopify_add_to_cart {{settings.button_art_to_cart_style}} ajax_form_cart single_add_to_cart_button button alt" style="background-color: {{add_to_cart_color}} !important; color: {{add_to_cart_text_color}} !important;"><span class="bt__text">{%- if current_variant.inventory_quantity <= 0 and current_variant.available and current_variant.inventory_management == 'shopify' -%}{{ 'products.product.pre_orders' | t }}{%- else -%}{{ 'products.product.add_to_cart' | t }}{%- endif -%}</span></button>
+		                               <button type="submit"{% if settings.pr_curent == '1' and product.has_only_default_variant == false and product.selected_variant == blank %} disabled="disabled" {% endif %} id="shopify_add_to_cart" data-ntid="{{product.id}}" class="a shopify_add_to_cart {{settings.button_art_to_cart_style}} ajax_form_cart single_add_to_cart_button button alt" style="background-color: {{add_to_cart_color}} !important; color: {{add_to_cart_text_color}} !important;"><span class="bt__text">{%- if current_variant.inventory_quantity <= 0 and current_variant.available and current_variant.inventory_management == 'shopify' -%}{{ 'products.product.pre_orders' | t }}{%- else -%}{{ 'products.product.add_to_cart' | t }}{%- endif -%}</span></button>
 		                               {%- endif -%}
 		                           {%- endif -%}
 		                        {%- endif -%}
@@ -106,7 +106,7 @@
                               
                               </div>
 							{%- if settings.btn_atc_full -%}
-							    <button type="submit"{% if settings.pr_curent == '1' and product.has_only_default_variant == false and product.selected_variant == blank %} disabled="disabled"{% endif %} id="shopify_add_to_cart" data-ntid="{{product.id}}" class="shopify_add_to_cart {{settings.button_art_to_cart_style}} ajax_form_cart single_add_to_cart_button button alt"><span class="bt__text">{%- if current_variant.inventory_quantity <= 0 and current_variant.available and current_variant.inventory_management == 'shopify' -%}{{ 'products.product.pre_orders' | t }}{%- else -%}{{ 'products.product.add_to_cart' | t }}{%- endif -%}</span></button>
+							    <button type="submit"{% if settings.pr_curent == '1' and product.has_only_default_variant == false and product.selected_variant == blank %} disabled="disabled"{% endif %} id="shopify_add_to_cart" data-ntid="{{product.id}}" class="a-1 shopify_add_to_cart {{settings.button_art_to_cart_style}} ajax_form_cart single_add_to_cart_button button alt"><span class="bt__text">{%- if current_variant.inventory_quantity <= 0 and current_variant.available and current_variant.inventory_management == 'shopify' -%}{{ 'products.product.pre_orders' | t }}{%- else -%}{{ 'products.product.add_to_cart' | t }}{%- endif -%}</span></button>
 							{%- endif -%}
 						{%- if settings.enable_payment_button and check_external == false -%}
 		                    {{ form | payment_button }}

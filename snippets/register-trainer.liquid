@@ -1,0 +1,92 @@
+{%- assign register-product = product.metafields.section-5['register-product'] -%}
+{%- assign register-product-image = product.metafields.section-5['register-product-image'] -%}
+{%- assign register-product-subtitle = product.metafields.section-5['register-product-subtitle'] -%}
+{%- assign register-product-title = product.metafields.section-5['register-product-title'] -%}
+{%- assign register-product-text = product.metafields.section-5['register-product-text'] -%}
+
+{% if register-product == 1 %}
+    <div class="jas-custom">
+        <div class="container register-intro-custom">
+            <div class="register-intro-image">
+                <img src="{{ register-product-image }}" alt="{{}}">
+            </div>
+            <div class="register-intro-content">
+                <div class="register-intro--subtitle">
+                    <div> {{ register-product-subtitle }}</div>
+                </div>
+                <div class="register-intro--title">
+                    <div>{{ register-product-title }} </div>
+                </div>
+                <div class="register-intro--text">
+                    <div>{{ register-product-text }} </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+<style>
+    .jas-custom {
+        background-color: #f2f2f2;
+    }
+    .register-intro-custom {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f2f2f2;
+    }
+    .register-intro-custom .register-intro-image {
+        width: 30%;
+        height: 100%;
+    }
+    .register-intro-custom .register-intro-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .register-intro-custom .register-intro-content {
+        width: 60%;
+        height: 100%;
+
+    }
+    .register-intro-custom .register-intro--subtitle {
+        font-size: 16px;
+        color: #fff;
+        text-transform: uppercase;
+        color: #000;
+        padding-bottom: 15px;
+        font-weight: 700;
+    }
+    .register-intro-custom .register-intro--title {
+        font-size: 24px;
+        text-transform: uppercase;
+        color: #cb7208;
+        padding-bottom: 15px;
+        font-weight: 700;
+    }
+    .register-intro-custom .register-intro--text {
+        font-size: 14px;
+        
+    }
+    @media(max-width: 746px) {
+        .register-intro-custom {
+            flex-direction: column;
+            padding-top: 50px !important;
+            padding-bottom: 50px !important;
+        }
+        .register-intro-custom .register-intro-image {
+            width: 100%;
+        }
+        .register-intro-custom .register-intro-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-top: 50px;
+        }
+
+    }
+</style>
