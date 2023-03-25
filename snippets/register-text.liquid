@@ -73,17 +73,25 @@
     }
     .register-text-custom .register-text--content .text li {
         padding: 10px 0;
+        display: flex
     }
+    .register-text-custom .register-text--content .text li svg{
+        width: 16px;
+    }
+    
+
     .register-text-custom .register-text--content .text li::marker {
         font-family: FontAwesome;
         content: "\f00c";
         color: #cb7208;
         box-shadow: none;
         transition: all ease-in-out .2s;
-        font-size: 14px;
+        font-size: 0px;
     }
     .register-text-custom .register-text--content .text li span {
         padding-left: 8px;
+        display: block;
+        width: 100%;
     }
     @media(max-width: 746px) {
         .register-text-custom {
@@ -97,6 +105,11 @@
         .register-text-custom .register-text-right {
             width: 100%;
             margin-top: 50px;
+            padding: 40px 0;
         }
+        .register-text-custom .register-text--content .text {
+            text-align: unset;
+        }
+        
     }
 </style>

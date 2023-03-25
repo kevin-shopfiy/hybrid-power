@@ -3,7 +3,7 @@
 {%- include 'gecko_count_down',jas_countdow_page:'jas_page',user_countdown:user_countdown,class:'jas_progress_bar_pr' -%}
 {%- endif -%} 
 {%- assign ck_inventory = settings.ck_inventory -%} 
-<div class="btn-atc atc-popup clearfix{%- if settings.btn_atc_full %} btn_atc_full{%- endif -%}">
+<div class="c btn-atc atc-popup clearfix{%- if settings.btn_atc_full %} btn_atc_full{%- endif -%}">
 	{%- if product.has_only_default_variant == false and linklists[product.handle].links.size == 0 -%}
 	<div id="callBackVariant" class="jas_{{current_variant.option1 | handleize}} jas1_{{current_variant.option2 | handleize}} jas2_{{current_variant.option3 | handleize}}">
 	{%- endif-%}

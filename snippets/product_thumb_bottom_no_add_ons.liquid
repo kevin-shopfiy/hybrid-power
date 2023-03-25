@@ -9,8 +9,9 @@
 		</div>
 		{% comment %}{%- include 'group_btn_pr' -%}{% endcomment %}
 	</div>
-  
-  <div class="bottom-cutom-icon">
+  {%- assign register-product = product.metafields.section-5['register-product'] -%}
+
+  <div class="bottom-cutom-icon" {% if register-product %} style="display: none;" {% endif %}>
     
     {%- assign section_icon_text_1 = product.metafields.section-1['section_icon_text_1'] -%} 
     {%- assign section_icon_text_2 = product.metafields.section-1['section_icon_text_2'] -%} 
@@ -40,6 +41,7 @@
 	<div class="summary entry-summary">
 		{%- include 'pr_info_one_no_add_ons' -%}
 		{%- include 'pr_form_no_add_ons' -%}
+    {%- include 'register-badge' -%}
 		{%- include 'product_meta_no_add_ons' -%}
 		{%- if pages[settings.delivery_return].content != blank -%}
 		   {%- include 'delivery_return_no_add_ons' -%}

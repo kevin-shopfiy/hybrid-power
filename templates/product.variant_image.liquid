@@ -66,7 +66,7 @@
 {%- if product.metafields.meta.estimateEndDate != blank -%}
    {%- assign estimateEndDate = product.metafields.meta.estimateEndDate | plus:0 -%}
 {%- endif -%}
-<div class="jas-wc-single {{singles_wc}} mb__60">
+<div class="jas-wc-single {{singles_wc}}">
   {%- if settings.show_breadcrumb -%}
   <div class="bgbl lh__1 pt__5 pb__5 pl__15 pr__15 clearfix">
       <div class="flex between-xs{%- if settings.full_header_enable == false %} jas-container{%- endif -%}">

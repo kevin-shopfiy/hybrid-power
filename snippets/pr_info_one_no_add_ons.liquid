@@ -104,12 +104,17 @@
     </div>
 {%- endif -%}
 {%- assign register-product = product.metafields.section-5['register-product'] -%}
+{%- assign register-course-date = product.metafields.section-5['register-course-date'] -%}
 {%- assign register-date = product.metafields.section-5['register-date'] -%}
+{%- assign register-divider = product.metafields.section-5['register-divider'] -%}
 {%- assign register-region = product.metafields.section-5['register-region'] -%}
 {% if register-product %}
   <div class="register-data">
-    <h2 class="register-date">{{ register-date }}</h2>
-    <h2 class="register-region">{{ register-region }}
+    <h2 class="yellow register-course-data">{{ register-course-date }}</h2>
+    <h2 class="register-divider">{{ register-divider }}</h2>
+    <h2 class="yellow register-date">{{ register-date }}</h2>
+    <h2 class="register-divider">{{ register-divider }}</h2>
+    <h2 class="yellow register-region">{{ register-region }}</h2>
   </div>
 {% endif %}
 {%- if settings.show_product_page_rating -%}
@@ -134,7 +139,7 @@
 
 	{%- assign _prodcut_excerpt_length = settings.prodcut_excerpt_length | plus:0 -%}
 	{%- assign prodcut_excerpt_length = _prodcut_excerpt_length | default: 31 -%}
-	<div class="Shopify-product-details__short-description" style="color:#fff;">
+	<div class="a Shopify-product-details__short-description" style="color:#fff;">
 
 		<p class="p_des_ex">
 	      {%- if product.metafields.meta.description_excerpt -%}
@@ -157,6 +162,7 @@
 	  </p>
       
 {%- endif -%}
+
 <script>
     $("a.read-more-desc").click(function() {
       console.log("scrolling---------------")
@@ -173,17 +179,30 @@
   .register-data {
     display: flex;
     margin:0;
-
+    
   }
-  .register-data .register-date {
+  .register-data .yellow {
     color: #ffc90f;
     font-size: 16px;
     text-transform: uppercase;
+    text-align: center;
   }
-  .register-data .register-region {
+  .register-data .register-divider {
     color: #fff;
     font-size: 16px;
     text-transform: uppercase;
-    padding-left: 3px;
+    padding: 0 3px;
+
   }
+  @media(max-width: 746px) {
+    .register-data .yellow {
+      text-align: center;
+      font-size: 14px;
+    }
+    .register-data {
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
 </style>

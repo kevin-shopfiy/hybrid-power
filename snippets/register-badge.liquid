@@ -1,0 +1,37 @@
+{%- assign register-product = product.metafields.section-5['register-product'] -%}
+{% if register-product %}
+    <div class="register-badge-wrapper">
+      <div class="reigster-badge-image">
+        <div class="image-item">
+          {%- assign register-badge-1 = product.metafields.section-5['register-badge-1'] -%}
+          {%- assign register-badge-2 = product.metafields.section-5['register-badge-2'] -%}
+          {%- assign register-badge-3 = product.metafields.section-5['register-badge-3'] -%}
+          <img src="{{ register-badge-1 }}" alt="{{}}">
+          <img src="{{ register-badge-2 }}" alt="{{}}">
+          <img src="{{ register-badge-3 }}" alt="{{}}">
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <style>
+    .register-badge-wrapper {
+    padding: 50px 0;
+    }
+    .register-badge-wrapper .reigster-badge-image{
+    width: 100%;
+    }
+    .register-badge-wrapper .reigster-badge-image .image-item {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    }
+    .register-badge-wrapper .reigster-badge-image .image-item img {
+    width: 30%;
+    }
+    @media(max-width:746px) {
+    .register-badge-wrapper {
+        padding: 30px 0;
+        }
+    }
+  </style> 
